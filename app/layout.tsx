@@ -1,5 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
+import { MotionProvider } from "@/components/animation/MotionConfig";
+import { Footer } from "@/components/layout/Footer";
+import { Navbar } from "@/components/layout/Navbar";
 import "./globals.css";
 
 const inter = Inter({
@@ -32,8 +35,26 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
-      <body>{children}</body>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${inter.variable} ${spaceGrotesk.variable}`}
+    >
+      <body className="flex min-h-screen flex-col">
+        <a
+          href="#main-content"
+          className="sr-only rounded-md bg-accent px-4 py-2 text-sm font-medium text-background focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-60"
+        >
+          Skip to content
+        </a>
+        <MotionProvider>
+          <Navbar />
+          <main id="main-content" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </MotionProvider>
+      </body>
     </html>
   );
 }

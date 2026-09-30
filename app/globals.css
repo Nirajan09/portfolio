@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Design tokens: single source of truth for colors */
+/* ---------- Design tokens: single source of truth ---------- */
 :root {
   --background: #070b14;
   --background-secondary: #0b1120;
@@ -22,7 +22,6 @@
   --warning: #f59e0b;
 }
 
-/* Expose tokens as Tailwind utilities (bg-surface, text-muted, border-border, ...) */
 @theme inline {
   --color-background: var(--background);
   --color-background-secondary: var(--background-secondary);
@@ -48,12 +47,39 @@
     system-ui, sans-serif;
 }
 
+/* ---------- Radii, shadows, motion (kept restrained per spec) ---------- */
+@theme {
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+
+  --shadow-glow: 0 0 0 1px rgb(34 211 238 / 0.25),
+    0 8px 30px -8px rgb(34 211 238 / 0.25);
+
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Motion durations (used by Motion variants in later phases) */
+:root {
+  --duration-micro: 150ms;
+  --duration-normal: 250ms;
+  --duration-large: 500ms;
+  --duration-entrance: 600ms;
+}
+
+/* ---------- Base ---------- */
 html {
   background-color: var(--background);
   color-scheme: dark;
+  scroll-behavior: smooth;
+  /* Navbar is 4rem tall; keeps anchored headings clear of it */
+  scroll-padding-top: 5rem;
 }
 
 body {
+  position: relative;
+  isolation: isolate;
   background-color: var(--background);
   color: var(--text-primary);
   font-family: var(--font-sans);
@@ -61,7 +87,39 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Global background: faint cyan/violet/blue glows, fixed behind everything */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60rem 40rem at 50% -10%, rgb(34 211 238 / 0.07), transparent 60%),
+    radial-gradient(45rem 35rem at 100% 25%, rgb(139 92 246 / 0.06), transparent 60%),
+    radial-gradient(40rem 30rem at 0% 65%, rgb(59 130 246 / 0.05), transparent 60%);
+}
+
 ::selection {
   background: color-mix(in srgb, var(--accent) 30%, transparent);
   color: var(--text-primary);
+}
+
+/* ---------- Focus (visible for keyboard users only) ---------- */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ---------- Reduced motion: neutralise CSS transitions/animations ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
