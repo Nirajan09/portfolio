@@ -60,20 +60,19 @@ function createGlowSprite({ r, g, b }: Rgb, size = 48) {
   return sprite;
 }
 
-type InteractiveMeshProps = { className?: string };
-
 /**
- * Canvas 2D network background. All animation state lives in refs/closures,
- * so React never re-renders while it runs. Fills its nearest positioned parent.
+ * Site-wide canvas 2D network background, fixed behind all content.
+ * All animation state lives in closures, so React never re-renders while it
+ * runs. Full strength at the top of the page, dimmed once you scroll past the
+ * hero so it never competes with text.
  */
-export function InteractiveMesh({ className }: InteractiveMeshProps) {
+export function InteractiveMesh() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const parent = canvas?.parentElement;
     const ctx = canvas?.getContext("2d");
-    if (!canvas || !parent || !ctx) return;
+    if (!canvas || !ctx) return;
 
     const rand = mulberry32(SEED);
     const sprites = PALETTE.map((color) => createGlowSprite(color));
@@ -86,7 +85,6 @@ export function InteractiveMesh({ className }: InteractiveMeshProps) {
     let h = 0;
     let link = 140;
     let reduced = motionQuery.matches;
-    let inView = true;
     let running = false;
     let raf = 0;
     let last = 0;
@@ -215,7 +213,7 @@ export function InteractiveMesh({ className }: InteractiveMeshProps) {
     };
 
     const start = () => {
-      if (running || reduced || document.hidden || !inView) return;
+      if (running || reduced || document.hidden) return;
       running = true;
       last = performance.now();
       raf = requestAnimationFrame(frame);
@@ -227,7 +225,7 @@ export function InteractiveMesh({ className }: InteractiveMeshProps) {
     };
 
     const resize = () => {
-      const rect = parent.getBoundingClientRect();
+      const rect = canvas.getBoundingClientRect();
       const nw = Math.round(rect.width);
       const nh = Math.round(rect.height);
       if (nw === 0 || nh === 0 || (nw === w && nh === h)) return;
@@ -257,15 +255,19 @@ export function InteractiveMesh({ className }: InteractiveMeshProps) {
       if (!running) draw(); // static frame (reduced motion / paused)
     };
 
+    // Canvas is fixed at the viewport origin, so client coords are canvas coords.
     const onPointerMove = (event: PointerEvent) => {
       if (reduced || event.pointerType === "touch") return;
-      const rect = parent.getBoundingClientRect();
-      mouse.x = event.clientX - rect.left;
-      mouse.y = event.clientY - rect.top;
+      mouse.x = event.clientX;
+      mouse.y = event.clientY;
       mouse.active = true;
     };
     const onPointerLeave = () => {
       mouse.active = false;
+    };
+    const onScroll = () => {
+      const t = Math.min(1, window.scrollY / (window.innerHeight * 0.7));
+      canvas.style.opacity = String(1 - 0.55 * t);
     };
     const onVisibility = () => (document.hidden ? stop() : start());
     const onMotionChange = () => {
@@ -280,17 +282,14 @@ export function InteractiveMesh({ className }: InteractiveMeshProps) {
     };
 
     const resizeObserver = new ResizeObserver(resize);
-    const intersectionObserver = new IntersectionObserver(([entry]) => {
-      inView = entry.isIntersecting;
-      if (inView) start();
-      else stop();
-    });
 
     resize();
-    resizeObserver.observe(parent);
-    intersectionObserver.observe(parent);
-    parent.addEventListener("pointermove", onPointerMove, { passive: true });
-    parent.addEventListener("pointerleave", onPointerLeave);
+    onScroll();
+    resizeObserver.observe(canvas);
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("blur", onPointerLeave);
+    document.documentElement.addEventListener("pointerleave", onPointerLeave);
     document.addEventListener("visibilitychange", onVisibility);
     motionQuery.addEventListener("change", onMotionChange);
     start();
@@ -298,9 +297,10 @@ export function InteractiveMesh({ className }: InteractiveMeshProps) {
     return () => {
       stop();
       resizeObserver.disconnect();
-      intersectionObserver.disconnect();
-      parent.removeEventListener("pointermove", onPointerMove);
-      parent.removeEventListener("pointerleave", onPointerLeave);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("blur", onPointerLeave);
+      document.documentElement.removeEventListener("pointerleave", onPointerLeave);
       document.removeEventListener("visibilitychange", onVisibility);
       motionQuery.removeEventListener("change", onMotionChange);
     };
@@ -310,7 +310,7 @@ export function InteractiveMesh({ className }: InteractiveMeshProps) {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className={className ?? "absolute inset-0 size-full"}
+      className="pointer-events-none fixed inset-0 -z-1 size-full"
     />
   );
 }

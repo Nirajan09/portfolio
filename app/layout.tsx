@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import { MotionProvider } from "@/components/animation/MotionConfig";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { InteractiveMesh } from "@/components/background/InteractiveMesh";
 import "./globals.css";
 
 const inter = Inter({
@@ -41,6 +42,7 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable}`}
     >
       <body className="flex min-h-screen flex-col">
+        <InteractiveMesh />
         <a
           href="#main-content"
           className="sr-only rounded-md bg-accent px-4 py-2 text-sm font-medium text-background focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-60"

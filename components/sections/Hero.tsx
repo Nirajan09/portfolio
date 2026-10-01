@@ -1,6 +1,5 @@
 import { ArrowRight, Mail } from "lucide-react";
 import { Stagger, StaggerItem } from "@/components/animation/Stagger";
-import { InteractiveMesh } from "@/components/background/InteractiveMesh";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -16,8 +15,6 @@ export function Hero() {
       id="home"
       className="relative isolate flex min-h-svh items-center overflow-hidden"
     >
-      {/* Layer 1: mesh */}
-      <InteractiveMesh className="absolute inset-0 z-0 size-full" />
 
       {/* Layer 2: vignette keeps text contrast and blends into the next section */}
       <div
