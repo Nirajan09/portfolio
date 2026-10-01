@@ -1,13 +1,14 @@
 import { Reveal } from "@/components/animation/Reveal";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { About } from "@/components/sections/About";
+import { Experience } from "@/components/sections/Experience";
 import { Hero } from "@/components/sections/Hero";
 import { Projects } from "@/components/sections/Projects";
 import { Services } from "@/components/sections/Services";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { navItems } from "@/data/navigation";
 
-// Placeholders below Projects are TEMPORARY; each is replaced in Phases 8-10.
+// Placeholders below Experience are TEMPORARY; each is replaced in Phases 9-10.
 export default function Home() {
   return (
     <>
@@ -15,10 +16,13 @@ export default function Home() {
       <About />
       <Services />
       <Projects />
+      <Experience />
       {navItems
         .filter(
           (item) =>
-            !["home", "about", "services", "projects"].includes(item.id),
+            !["home", "about", "services", "projects", "experience"].includes(
+              item.id,
+            ),
         )
         .map((item) => (
           <PageContainer
