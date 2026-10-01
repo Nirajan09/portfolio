@@ -13,7 +13,7 @@ export function Certifications() {
       <Reveal>
         <SectionHeading
           eyebrow="Certifications"
-          title="Certifications"
+          title="Learning and credentials"
           description="Courses and credentials I've completed."
         />
       </Reveal>
