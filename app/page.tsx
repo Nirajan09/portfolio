@@ -2,17 +2,19 @@ import { Reveal } from "@/components/animation/Reveal";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { About } from "@/components/sections/About";
 import { Hero } from "@/components/sections/Hero";
+import { Services } from "@/components/sections/Services";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { navItems } from "@/data/navigation";
 
-// Placeholders below About are TEMPORARY; each is replaced in Phases 6-10.
+// Placeholders below Services are TEMPORARY; each is replaced in Phases 7-10.
 export default function Home() {
   return (
     <>
       <Hero />
       <About />
+      <Services />
       {navItems
-        .filter((item) => item.id !== "home" && item.id !== "about")
+        .filter((item) => !["home", "about", "services"].includes(item.id))
         .map((item) => (
           <PageContainer
             as="section"
