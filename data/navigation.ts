@@ -1,4 +1,6 @@
-export const navItems = [
+import { certifications } from "./certifications";
+
+const allNavItems = [
   { label: "Home", id: "home" },
   { label: "About", id: "about" },
   { label: "Services", id: "services" },
@@ -8,6 +10,11 @@ export const navItems = [
   { label: "Contact", id: "contact" },
 ] as const;
 
-export type NavItem = (typeof navItems)[number];
+export type NavItem = (typeof allNavItems)[number];
+
+// Certifications only appears in navigation once there is something to show.
+export const navItems: readonly NavItem[] = allNavItems.filter(
+  (item) => item.id !== "certifications" || certifications.length > 0,
+);
 
 export const navHref = (id: NavItem["id"]) => `/#${id}`;

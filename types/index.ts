@@ -24,3 +24,15 @@ export type Experience = {
   /** Real, factual bullet points. Omitted until provided. */
   highlights?: readonly string[];
 };
+
+export type Certification = {
+  id: string;
+  title: string;
+  issuer: string;
+  /** Display string, e.g. "Mar 2025". */
+  date: string;
+  description?: string;
+  credentialUrl?: string;
+  /** Certificate image in /public. Enables the preview modal. */
+  image?: { src: string; alt: string };
+};
