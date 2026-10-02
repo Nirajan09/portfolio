@@ -5,6 +5,13 @@ import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { InteractiveMesh } from "@/components/background/InteractiveMesh";
 import "./globals.css";
+import { JsonLd } from "@/components/seo/JsonLd";
+import {
+  allowIndexing,
+  personJsonLd,
+  siteConfig,
+  websiteJsonLd,
+} from "@/lib/seo";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,10 +28,33 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.nirajantiwari.com.np"),
-  title: "Nirajan Tiwari | Full Stack Developer",
-  description:
-    "Full Stack Developer building modern web applications with React, Next.js, Django and Node.js.",
+  metadataBase: new URL(siteConfig.url),
+  title: { default: siteConfig.title, template: `%s | ${siteConfig.name}` },
+  description: siteConfig.description,
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  alternates: { canonical: "/" },
+  robots: allowIndexing
+    ? {
+        index: true,
+        follow: true,
+        googleBot: { index: true, follow: true, "max-image-preview": "large" },
+      }
+    : { index: false, follow: false },
+  openGraph: {
+    type: "website",
+    siteName: siteConfig.name,
+    locale: siteConfig.locale,
+    url: "/",
+    title: siteConfig.title,
+    description: siteConfig.description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.title,
+    description: siteConfig.description,
+  },
 };
 
 export const viewport: Viewport = {
@@ -42,6 +72,8 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable}`}
     >
       <body className="flex min-h-screen flex-col">
+        <JsonLd data={personJsonLd()} />
+        <JsonLd data={websiteJsonLd()} />
         <InteractiveMesh />
         <a
           href="#main-content"
