@@ -77,6 +77,9 @@ export function Navbar() {
           aria-label={`${personal.name}, back to top`}
           className="font-display text-xl font-bold tracking-tight text-primary"
           onClick={() => setOpen(false)}
+          data-track="nav_click"
+          data-track-target="home"
+          data-track-location="logo"
         >
           {personal.initials}
           <span className="text-accent">.</span>
@@ -94,8 +97,13 @@ export function Navbar() {
                     aria-current={isActive ? "true" : undefined}
                     className={cn(
                       "block px-3 py-2 text-sm font-medium transition-colors duration-200",
-                      isActive ? "text-primary" : "text-muted hover:text-primary",
+                      isActive
+                        ? "text-primary"
+                        : "text-muted hover:text-primary",
                     )}
+                    data-track="nav_click"
+                    data-track-target={item.id}
+                    data-track-location="navbar"
                   >
                     {item.label}
                   </Link>
@@ -151,8 +159,13 @@ export function Navbar() {
                         onClick={() => setOpen(false)}
                         className={cn(
                           "flex h-12 items-center justify-between text-base font-medium transition-colors",
-                          isActive ? "text-accent" : "text-secondary hover:text-primary",
+                          isActive
+                            ? "text-accent"
+                            : "text-secondary hover:text-primary",
                         )}
+                        data-track="nav_click"
+                        data-track-target={item.id}
+                        data-track-location="mobile_menu"
                       >
                         {item.label}
                       </Link>

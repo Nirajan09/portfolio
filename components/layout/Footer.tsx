@@ -50,16 +50,34 @@ export function Footer() {
             </h2>
             <div className="mt-4 flex flex-wrap gap-3">
               {github && (
-                <IconButton href={github} label="GitHub">
+                <IconButton
+                  href={github}
+                  label="GitHub"
+                  data-track="social_click"
+                  data-track-network="github"
+                  data-track-location="footer"
+                >
                   <GithubIcon className="size-5" />
                 </IconButton>
               )}
               {linkedin && (
-                <IconButton href={linkedin} label="LinkedIn">
+                <IconButton
+                  href={linkedin}
+                  label="LinkedIn"
+                  data-track="social_click"
+                  data-track-network="linkedin" // or "linkedin" / "email"
+                  data-track-location="footer"
+                >
                   <LinkedinIcon className="size-5" />
                 </IconButton>
               )}
-              <IconButton href={`mailto:${personal.email}`} label="Email">
+              <IconButton
+                href={`mailto:${personal.email}`}
+                label="Email"
+                data-track="social_click"
+                data-track-network="email"
+                data-track-location="footer"
+              >
                 <Mail className="size-5" aria-hidden="true" />
               </IconButton>
               {personal.resumeUrl && (
@@ -72,7 +90,8 @@ export function Footer() {
         </div>
 
         <div className="mt-10 border-t border-border pt-6 text-sm text-muted">
-          &copy; {new Date().getFullYear()} {personal.name}. All rights reserved.
+          &copy; {new Date().getFullYear()} {personal.name}. All rights
+          reserved.
         </div>
       </PageContainer>
     </footer>

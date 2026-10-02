@@ -15,7 +15,6 @@ export function Hero() {
       id="home"
       className="relative isolate flex min-h-svh items-center overflow-hidden"
     >
-
       {/* Layer 2: vignette keeps text contrast and blends into the next section */}
       <div
         aria-hidden="true"
@@ -64,7 +63,13 @@ export function Hero() {
 
           <StaggerItem>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-              <Button href="/#projects" size="lg" className="w-full sm:w-auto">
+              <Button
+                href="/#projects"
+                size="lg"
+                className="w-full sm:w-auto"
+                data-track="hero_cta_click"
+                data-track-label="view_work"
+              >
                 View My Work
                 <ArrowRight
                   className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
@@ -76,6 +81,8 @@ export function Hero() {
                 variant="secondary"
                 size="lg"
                 className="w-full sm:w-auto"
+                data-track="hero_cta_click"
+                data-track-label="connect"
               >
                 Let&apos;s Connect
               </Button>
@@ -85,16 +92,34 @@ export function Hero() {
           <StaggerItem>
             <div className="mt-8 flex items-center gap-3">
               {github && (
-                <IconButton href={github} label="GitHub">
+                <IconButton
+                  href={github}
+                  label="GitHub"
+                  data-track="social_click"
+                  data-track-network="github"
+                  data-track-location="hero"
+                >
                   <GithubIcon className="size-5" />
                 </IconButton>
               )}
               {linkedin && (
-                <IconButton href={linkedin} label="LinkedIn">
+                <IconButton
+                  href={linkedin}
+                  label="LinkedIn"
+                  data-track="social_click"
+                  data-track-network="linkedin"
+                  data-track-location="hero"
+                >
                   <LinkedinIcon className="size-5" />
                 </IconButton>
               )}
-              <IconButton href={`mailto:${personal.email}`} label="Email">
+              <IconButton
+                href={`mailto:${personal.email}`}
+                label="Email"
+                data-track="social_click"
+                data-track-network="email"
+                data-track-location="hero"
+              >
                 <Mail className="size-5" aria-hidden="true" />
               </IconButton>
             </div>

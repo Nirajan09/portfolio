@@ -1,5 +1,6 @@
 import { Mail, MapPin, Phone } from "lucide-react";
 import type { ReactNode } from "react";
+
 import { Reveal } from "@/components/animation/Reveal";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { Section } from "@/components/layout/Section";
@@ -13,19 +14,31 @@ type InfoRowProps = {
   label: string;
   value: string;
   href?: string;
+  /** Reports a social_click with this network name when clicked. */
+  network?: string;
 };
 
-function InfoRow({ icon, label, value, href }: InfoRowProps) {
+function InfoRow({
+  icon,
+  label,
+  value,
+  href,
+  network,
+}: InfoRowProps) {
   const content = (
     <>
       <span className="flex size-11 shrink-0 items-center justify-center rounded-md border border-border bg-surface text-accent transition-colors duration-200 group-hover:border-accent/40">
         {icon}
       </span>
+
       <span className="min-w-0">
         <span className="block text-xs font-medium uppercase tracking-widest text-muted">
           {label}
         </span>
-        <span className="mt-0.5 block truncate text-base text-primary">{value}</span>
+
+        <span className="mt-0.5 block truncate text-base text-primary">
+          {value}
+        </span>
       </span>
     </>
   );
@@ -37,7 +50,15 @@ function InfoRow({ icon, label, value, href }: InfoRowProps) {
       {href ? (
         <a
           href={href}
-          {...(href.startsWith("http") && { target: "_blank", rel: "noopener noreferrer" })}
+          {...(href.startsWith("http") && {
+            target: "_blank",
+            rel: "noopener noreferrer",
+          })}
+          {...(network && {
+            "data-track": "social_click",
+            "data-track-network": network,
+            "data-track-location": "contact",
+          })}
           className={`${className} transition-colors duration-200 hover:text-accent`}
         >
           {content}
@@ -49,7 +70,8 @@ function InfoRow({ icon, label, value, href }: InfoRowProps) {
   );
 }
 
-const stripProtocol = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
+const stripProtocol = (url: string) =>
+  url.replace(/^https?:\/\/(www\.)?/, "");
 
 export function Contact() {
   const { github, linkedin } = personal.socials;
@@ -74,31 +96,37 @@ export function Contact() {
                 value={personal.email}
                 href={`mailto:${personal.email}`}
               />
+
               <InfoRow
                 icon={<Phone className="size-5" aria-hidden="true" />}
                 label="Phone"
                 value={personal.phone}
                 href={`tel:${personal.phone.replace(/-/g, "")}`}
               />
+
               <InfoRow
                 icon={<MapPin className="size-5" aria-hidden="true" />}
                 label="Location"
                 value={personal.location}
               />
+
               {github && (
                 <InfoRow
                   icon={<GithubIcon className="size-5" />}
                   label="GitHub"
                   value={stripProtocol(github)}
                   href={github}
+                  network="github"
                 />
               )}
+
               {linkedin && (
                 <InfoRow
                   icon={<LinkedinIcon className="size-5" />}
                   label="LinkedIn"
                   value={stripProtocol(linkedin)}
                   href={linkedin}
+                  network="linkedin"
                 />
               )}
             </ul>

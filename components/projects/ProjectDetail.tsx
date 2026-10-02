@@ -14,7 +14,8 @@ type ProjectDetailProps = {
   related: readonly Project[];
 };
 
-const subheading = "font-display text-2xl font-semibold tracking-tight text-primary";
+const subheading =
+  "font-display text-2xl font-semibold tracking-tight text-primary";
 
 /**
  * Only renders sections for which the project has real information
@@ -43,13 +44,26 @@ export function ProjectDetail({ project, related }: ProjectDetailProps) {
           {(links?.live || links?.repo) && (
             <div className="mt-8 flex flex-wrap gap-3">
               {links.live && (
-                <Button href={links.live} size="lg">
+                <Button
+                  href={links.live}
+                  size="lg"
+                  data-track="project_external_link"
+                  data-track-project={project.slug}
+                  data-track-kind="live"
+                >
                   Live demo
                   <ExternalLink className="size-4" aria-hidden="true" />
                 </Button>
               )}
               {links.repo && (
-                <Button href={links.repo} variant="secondary" size="lg">
+                <Button
+                  href={links.repo}
+                  variant="secondary"
+                  size="lg"
+                  data-track="project_external_link"
+                  data-track-project={project.slug}
+                  data-track-kind="repo"
+                >
                   <GithubIcon className="size-4" />
                   Source code
                 </Button>

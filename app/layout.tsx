@@ -6,6 +6,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { InteractiveMesh } from "@/components/background/InteractiveMesh";
 import "./globals.css";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { Analytics } from "@/components/analytics/Analytics";
+import { ClickTracker } from "@/components/analytics/ClickTracker";
 import {
   allowIndexing,
   personJsonLd,
@@ -88,6 +90,8 @@ export default function RootLayout({
           </main>
           <Footer />
         </MotionProvider>
+        <ClickTracker />
+        <Analytics />
       </body>
     </html>
   );

@@ -1,9 +1,17 @@
 "use client";
 
-import { CircleCheck, LoaderCircle, RotateCcw, Send, TriangleAlert } from "lucide-react";
+import {
+  CircleCheck,
+  LoaderCircle,
+  RotateCcw,
+  Send,
+  TriangleAlert,
+} from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
+
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 import {
   CONTACT_FIELDS,
   CONTACT_LIMITS,
@@ -15,7 +23,12 @@ import {
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-const emptyValues: ContactInput = { name: "", email: "", subject: "", message: "" };
+const emptyValues: ContactInput = {
+  name: "",
+  email: "",
+  subject: "",
+  message: "",
+};
 
 const controlClass = (invalid: boolean) =>
   cn(
@@ -51,6 +64,7 @@ function Field({
 }: FieldProps) {
   const id = `contact-${name}`;
   const errorId = `${id}-error`;
+
   const shared = {
     id,
     name,
@@ -69,6 +83,7 @@ function Field({
         <label htmlFor={id} className="text-sm font-medium text-primary">
           {label}
         </label>
+
         {multiline && (
           <span aria-hidden="true" className="text-xs text-muted">
             {value.length}/{maxLength}
@@ -106,27 +121,53 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
   const [errors, setErrors] = useState<ContactErrors>({});
   const [status, setStatus] = useState<Status>("idle");
   const [serverMessage, setServerMessage] = useState("");
+
   const formRef = useRef<HTMLFormElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
 
+  // Tracks the first interaction with the form only once.
+  const startedRef = useRef(false);
+
   // Move focus to the confirmation so screen reader users hear it.
   useEffect(() => {
-    if (status === "success") successRef.current?.focus();
+    if (status === "success") {
+      successRef.current?.focus();
+    }
   }, [status]);
+
+  const handleFocus = () => {
+    if (startedRef.current) return;
+
+    startedRef.current = true;
+    trackEvent("contact_form_start");
+  };
 
   const focusField = (field: ContactField) => {
     const element = formRef.current?.elements.namedItem(field);
-    if (element instanceof HTMLElement) element.focus();
+
+    if (element instanceof HTMLElement) {
+      element.focus();
+    }
   };
 
   const setValue = (field: ContactField, value: string) => {
-    setValues((current) => ({ ...current, [field]: value }));
+    setValues((current) => ({
+      ...current,
+      [field]: value,
+    }));
+
     // Clear a field's error as soon as the visitor starts correcting it.
-    if (errors[field]) setErrors((current) => ({ ...current, [field]: undefined }));
+    if (errors[field]) {
+      setErrors((current) => ({
+        ...current,
+        [field]: undefined,
+      }));
+    }
   };
 
   const validateOne = (field: ContactField) => {
     const result = validateContact(values);
+
     setErrors((current) => ({
       ...current,
       [field]: result.ok ? undefined : result.errors[field],
@@ -135,13 +176,20 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     if (status === "submitting") return;
 
     const result = validateContact(values);
+
     if (!result.ok) {
       setErrors(result.errors);
+
       const first = CONTACT_FIELDS.find((field) => result.errors[field]);
-      if (first) focusField(first);
+
+      if (first) {
+        focusField(first);
+      }
+
       return;
     }
 
@@ -150,31 +198,59 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
     setStatus("submitting");
 
     const honeypot = formRef.current?.elements.namedItem("website");
-    const website = honeypot instanceof HTMLInputElement ? honeypot.value : "";
+    const website =
+      honeypot instanceof HTMLInputElement ? honeypot.value : "";
 
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...result.data, website }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...result.data,
+          website,
+        }),
       });
-      const payload: { ok?: boolean; message?: string; errors?: ContactErrors } | null =
-        await response.json().catch(() => null);
+
+      const payload: {
+        ok?: boolean;
+        message?: string;
+        errors?: ContactErrors;
+      } | null = await response.json().catch(() => null);
 
       if (response.ok && payload?.ok) {
+        trackEvent("contact_form_submit", {
+          result: "success",
+        });
+
         setValues(emptyValues);
         setStatus("success");
         return;
       }
+
       if (response.status === 400 && payload?.errors) {
         setErrors(payload.errors);
         setStatus("idle");
         return;
       }
-      setServerMessage(payload?.message ?? "Something went wrong. Please try again.");
+
+      trackEvent("contact_form_submit", {
+        result: "error",
+      });
+
+      setServerMessage(
+        payload?.message ?? "Something went wrong. Please try again.",
+      );
       setStatus("error");
     } catch {
-      setServerMessage("Network error. Please check your connection and try again.");
+      trackEvent("contact_form_submit", {
+        result: "error",
+      });
+
+      setServerMessage(
+        "Network error. Please check your connection and try again.",
+      );
       setStatus("error");
     }
   };
@@ -190,12 +266,16 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
         <div className="flex size-12 items-center justify-center rounded-full border border-success/30 bg-success/10 text-success">
           <CircleCheck className="size-6" aria-hidden="true" />
         </div>
+
         <h3 className="font-display text-2xl font-semibold text-primary">
           Message sent
         </h3>
+
         <p className="text-base leading-relaxed text-muted">
-          Thanks for reaching out. I&apos;ll reply to the email address you provided.
+          Thanks for reaching out. I&apos;ll reply to the email address you
+          provided.
         </p>
+
         <Button variant="secondary" onClick={() => setStatus("idle")}>
           <RotateCcw className="size-4" aria-hidden="true" />
           Send another message
@@ -205,7 +285,13 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} noValidate className="space-y-5">
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit}
+      onFocus={handleFocus}
+      noValidate
+      className="space-y-5"
+    >
       <p className="text-sm text-muted">All fields are required.</p>
 
       <div className="grid gap-5 sm:grid-cols-2">
@@ -219,6 +305,7 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
           autoComplete="name"
           maxLength={CONTACT_LIMITS.name}
         />
+
         <Field
           name="email"
           label="Email"
@@ -254,8 +341,12 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
       />
 
       {/* Honeypot: hidden from people and assistive tech; bots tend to fill it. */}
-      <div aria-hidden="true" className="absolute left-[-9999px] h-0 w-0 overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="absolute left-[-9999px] h-0 w-0 overflow-hidden"
+      >
         <label htmlFor="contact-website">Leave this field empty</label>
+
         <input
           id="contact-website"
           name="website"
@@ -270,7 +361,11 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
           role="alert"
           className="flex items-start gap-3 rounded-md border border-error/30 bg-error/10 px-4 py-3 text-sm text-primary"
         >
-          <TriangleAlert className="mt-0.5 size-4 shrink-0 text-error" aria-hidden="true" />
+          <TriangleAlert
+            className="mt-0.5 size-4 shrink-0 text-error"
+            aria-hidden="true"
+          />
+
           <p>
             {serverMessage} You can also email me directly at{" "}
             <a
@@ -292,7 +387,10 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
       >
         {status === "submitting" ? (
           <>
-            <LoaderCircle className="size-4 animate-spin" aria-hidden="true" />
+            <LoaderCircle
+              className="size-4 animate-spin"
+              aria-hidden="true"
+            />
             Sending…
           </>
         ) : (
