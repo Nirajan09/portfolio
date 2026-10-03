@@ -1,5 +1,6 @@
 export const personal = {
   name: "Nirajan Tiwari",
+  firstName:"Nirajan",
   initials: "NT",
   role: "Full Stack Developer",
   location: "Kathmandu, Nepal",
