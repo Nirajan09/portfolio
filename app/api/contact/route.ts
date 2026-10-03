@@ -9,19 +9,21 @@ const fail = (message: string, status: number, init?: ResponseInit) =>
   NextResponse.json({ ok: false, message }, { status, ...init });
 
 export async function POST(request: Request) {
-  // 1. Same-origin requests only.
-  const origin = request.headers.get("origin");
-  const host =
-    request.headers.get("x-forwarded-host") ?? request.headers.get("host");
-  let originHost: string | null = null;
-  try {
-    originHost = origin ? new URL(origin).host : null;
-  } catch {
-    originHost = null;
+   // 1. Same-origin requests only. Browsers send Sec-Fetch-Site and cannot
+  //    forge it; fall back to comparing Origin with our host when it's absent.
+  const fetchSite = request.headers.get("sec-fetch-site");
+  let sameOrigin = fetchSite === "same-origin";
+  if (!fetchSite) {
+    const origin = request.headers.get("origin");
+    const host =
+      request.headers.get("x-forwarded-host") ?? request.headers.get("host");
+    try {
+      sameOrigin = Boolean(origin) && new URL(origin as string).host === host;
+    } catch {
+      sameOrigin = false;
+    }
   }
-  if (!originHost || originHost !== host) {
-    return fail("Request not allowed.", 403);
-  }
+  if (!sameOrigin) return fail("Request not allowed.", 403);
 
   // 2. Rate limit per client IP.
   const ip =
