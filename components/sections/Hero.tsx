@@ -15,17 +15,8 @@ export function Hero() {
       id="home"
       className="relative isolate flex min-h-svh items-center overflow-hidden"
     >
-      {/* Layer 2: vignette keeps text contrast and blends into the next section */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(ellipse_70%_65%_at_25%_50%,rgb(7_11_20/0.78),transparent_75%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-40 bg-linear-to-t from-background to-transparent"
-      />
 
-      {/* Layer 3: content */}
+      {/* Layer 2: content */}
       <PageContainer className="relative z-20 py-28">
         <Stagger className="max-w-3xl">
           <StaggerItem>
