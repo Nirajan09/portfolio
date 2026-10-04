@@ -15,4 +15,5 @@ export const personal = {
     linkedin: "",
   },
   resumeUrl: "",
+  photo: null as { src: string; alt: string } | null,
 } as const;

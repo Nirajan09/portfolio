@@ -122,3 +122,14 @@ body::before {
     scroll-behavior: auto !important;
   }
 }
+
+ /* Slow vertical drift for the hero's floating chips */
+  @keyframes float {
+    0%,
+    100% {
+      translate: 0 0;
+    }
+    50% {
+      translate: 0 -8px;
+    }
+  }
