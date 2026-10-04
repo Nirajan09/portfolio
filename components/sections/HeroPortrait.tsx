@@ -1,6 +1,8 @@
 import { MapPin } from "lucide-react";
 import Image from "next/image";
+import type { ReactNode } from "react";
 import { personal } from "@/data/personal";
+import { cn } from "@/lib/utils";
 
 // Floating chips around the portrait. Decorative: the same facts are in the
 // hero copy, so screen readers skip them. Negative delays desync the drift.
@@ -11,8 +13,34 @@ const chips = [
   { label: "Node.js", dot: "bg-accent", place: "-right-2 bottom-20 sm:-right-6", delay: "[animation-delay:-5.5s]", hideOnMobile: true },
 ] as const;
 
-const chipStyle =
-  "inline-flex items-center gap-2 rounded-lg border border-border bg-surface/80 px-3 py-2 text-sm font-medium text-primary shadow-lg shadow-black/25 backdrop-blur-md";
+/** Glass chip: drifts, lifts and glows on hover, with a light sheen sweep. */
+function Chip({
+  floatDelay,
+  className,
+  children,
+}: {
+  floatDelay: string;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <span
+      className={cn(
+        "group relative inline-flex items-center gap-2 overflow-hidden rounded-lg border border-border bg-surface/80 px-3 py-2 text-sm font-medium text-primary shadow-lg backdrop-blur-md",
+        "animate-float transition-[scale,border-color,box-shadow] duration-300 ease-standard",
+        "hover:scale-105 hover:border-accent/50 hover:shadow-glow",
+        floatDelay,
+        className,
+      )}
+    >
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/10 to-transparent transition-[translate] duration-700 ease-standard group-hover:translate-x-full"
+      />
+      {children}
+    </span>
+  );
+}
 
 export function HeroPortrait() {
   const { photo } = personal;
@@ -59,25 +87,38 @@ export function HeroPortrait() {
         />
       </div>
 
-      {/* Chips: outer div positions, inner span floats (separate transforms) */}
+      {/* Outer div positions + plays the pop-in; inner chip floats and reacts to hover */}
       <div aria-hidden="true">
-        {chips.map((chip) => (
+        {chips.map((chip, index) => (
           <div
             key={chip.label}
-            className={`absolute ${chip.place} ${chip.hideOnMobile ? "hidden sm:block" : ""}`}
+            className={cn(
+              "absolute animate-chip-in",
+              chip.place,
+              chip.hideOnMobile && "hidden sm:block",
+            )}
+            style={{ animationDelay: `${0.75 + index * 0.12}s` }}
           >
-            <span className={`${chipStyle} animate-float ${chip.delay}`}>
-              <span className={`size-2 rounded-full ${chip.dot}`} />
+            <Chip floatDelay={chip.delay}>
+              <span
+                className={cn(
+                  "size-2 rounded-full transition-[scale] duration-300 group-hover:scale-150",
+                  chip.dot,
+                )}
+              />
               {chip.label}
-            </span>
+            </Chip>
           </div>
         ))}
 
-        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2">
-          <span className={`${chipStyle} animate-float whitespace-nowrap [animation-delay:-3s]`}>
+        <div
+          className="absolute -bottom-4 left-1/2 -translate-x-1/2 animate-chip-in"
+          style={{ animationDelay: `${0.75 + chips.length * 0.12}s` }}
+        >
+          <Chip floatDelay="[animation-delay:-3s]" className="whitespace-nowrap">
             <MapPin className="size-4 text-accent" />
             {personal.location}
-          </span>
+          </Chip>
         </div>
       </div>
     </div>

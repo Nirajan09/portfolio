@@ -120,6 +120,7 @@ body::before {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+    animation-delay: 0ms !important;
   }
 }
 
@@ -131,5 +132,18 @@ body::before {
     }
     50% {
       translate: 0 -8px;
+    }
+  }
+
+/* One-time pop-in for the hero chips (opacity + scale only, so it never
+     fights the float animation's translate) */
+@keyframes chip-in {
+    from {
+      opacity: 0;
+      scale: 0.6;
+    }
+    to {
+      opacity: 1;
+      scale: 1;
     }
   }
