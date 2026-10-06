@@ -2,7 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion } from "motion/react";
+import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  useSpring,
+} from "motion/react";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { navHref, navItems } from "@/data/navigation";
@@ -11,20 +16,19 @@ import { cn } from "@/lib/utils";
 import { PageContainer } from "./PageContainer";
 
 /**
- * Underline that wipes in from the left on hover/focus and retracts out to the
- * right on leave (the origin flips with the state). The active link keeps it
- * drawn, with a soft glow. Uses transform only, so there is no layout work.
+ * Hover underline for inactive desktop links. It wipes in from the left on
+ * hover/focus and retracts out to the right on leave (the origin flips with
+ * the state). Uses transform only, so there is no layout work.
  */
-function Underline({ active }: { active: boolean }) {
+function Underline() {
   return (
     <span
       aria-hidden="true"
       className={cn(
         "absolute -bottom-1.5 left-0 h-px w-full bg-accent",
-        "transition-[scale,box-shadow] duration-300 ease-standard",
-        active
-          ? "origin-left scale-x-100 shadow-[0_0_10px_rgb(34_211_238/0.7)]"
-          : "origin-right scale-x-0 group-hover:origin-left group-hover:scale-x-100 group-focus-visible:origin-left group-focus-visible:scale-x-100",
+        "origin-right scale-x-0 transition-[scale] duration-300 ease-standard",
+        "group-hover:origin-left group-hover:scale-x-100",
+        "group-focus-visible:origin-left group-focus-visible:scale-x-100",
       )}
     />
   );
@@ -37,6 +41,14 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState<string>("home");
+
+  // Page scroll progress, drawn as a thin gradient line on the header's edge.
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 140,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
   // Transparent at the top, translucent surface after scrolling.
   useEffect(() => {
@@ -99,12 +111,25 @@ export function Navbar() {
     <header
       className={cn(
         "fixed inset-x-0 top-0 z-50 border-b",
-        "transition-[background-color,border-color,backdrop-filter] duration-300",
+        "transition-[background-color,border-color,backdrop-filter,box-shadow] duration-300",
         scrolled || open
-          ? "border-border bg-background/70 backdrop-blur-xl"
+          ? "border-border bg-background/70 shadow-[0_8px_30px_-12px_rgb(0_0_0/0.6)] backdrop-blur-xl"
           : "border-transparent bg-transparent",
       )}
     >
+      {/* Scroll progress line: only visible once the page has scrolled */}
+      <motion.span
+        aria-hidden="true"
+        style={{ scaleX: progress, transformOrigin: "left" }}
+        className={cn(
+          "pointer-events-none absolute inset-x-0 -bottom-px h-0.5",
+          "bg-linear-to-r from-accent via-blue to-violet",
+          "shadow-[0_0_10px_rgb(34_211_238/0.6)]",
+          "transition-opacity duration-300",
+          scrolled ? "opacity-100" : "opacity-0",
+        )}
+      />
+
       <PageContainer className="flex h-16 items-center justify-between">
         {/* Logo: the dot swells and glows. Nothing moves under the cursor. */}
         <Link
@@ -141,7 +166,7 @@ export function Navbar() {
                     href={navHref(item.id)}
                     aria-current={isActive ? "true" : undefined}
                     className={cn(
-                      "group block rounded-md px-3 py-2 text-sm font-medium",
+                      "group relative block rounded-lg px-3.5 py-2 text-sm font-medium",
                       "transition-colors duration-200",
                       isActive
                         ? "text-primary"
@@ -151,9 +176,23 @@ export function Navbar() {
                     data-track-target={item.id}
                     data-track-location="navbar"
                   >
+                    {/* Active pill glides between links as the section changes */}
+                    {isActive && (
+                      <motion.span
+                        layoutId="nav-active-pill"
+                        aria-hidden="true"
+                        className="absolute inset-0 rounded-lg border border-accent/30 bg-accent/10 shadow-[0_0_16px_-4px_rgb(34_211_238/0.5)]"
+                        transition={{
+                          type: "spring",
+                          stiffness: 380,
+                          damping: 32,
+                        }}
+                      />
+                    )}
+
                     <span className="relative">
                       {item.label}
-                      <Underline active={isActive} />
+                      {!isActive && <Underline />}
                     </span>
                   </Link>
                 </li>
@@ -166,10 +205,10 @@ export function Navbar() {
         <button
           type="button"
           className={cn(
-            "-mr-2 inline-flex h-11 items-center gap-2 rounded-md px-3",
+            "inline-flex h-10 items-center gap-2 rounded-lg border border-border bg-surface/60 px-3",
             "text-sm font-medium text-secondary",
-            "transition-[background-color,color,scale] duration-200",
-            "hover:bg-surface hover:text-primary",
+            "transition-[background-color,border-color,color,scale] duration-200",
+            "hover:border-accent/40 hover:text-primary",
             "active:scale-95",
             "md:hidden",
           )}
@@ -192,7 +231,7 @@ export function Navbar() {
         {open && (
           <motion.div
             id="mobile-menu"
-            className="border-t border-border bg-background/80 backdrop-blur-xl md:hidden"
+            className="relative border-t border-border bg-background/80 backdrop-blur-xl md:hidden"
             initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
@@ -201,8 +240,14 @@ export function Navbar() {
               ease: "easeOut",
             }}
           >
+            {/* Gradient hairline across the top of the panel */}
+            <span
+              aria-hidden="true"
+              className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-accent/50 to-transparent"
+            />
+
             <PageContainer as="nav" aria-label="Mobile">
-              <ul className="flex flex-col py-2">
+              <ul className="flex flex-col gap-1 py-3">
                 {navItems.map((item) => {
                   const isActive = currentId === item.id;
 
@@ -213,28 +258,27 @@ export function Navbar() {
                         aria-current={isActive ? "true" : undefined}
                         onClick={() => setOpen(false)}
                         className={cn(
-                          "group relative flex h-12 items-center rounded-md",
+                          "group relative flex h-12 items-center rounded-lg border px-4",
                           "text-base font-medium",
-                          "transition-colors duration-200",
+                          "transition-[color,background-color,border-color] duration-200",
                           isActive
-                            ? "text-accent"
-                            : "text-secondary hover:text-primary focus-visible:text-primary",
+                            ? "border-accent/30 bg-accent/10 text-accent"
+                            : "border-transparent text-secondary hover:border-border hover:bg-surface/70 hover:text-primary focus-visible:text-primary",
                         )}
                         data-track="nav_click"
                         data-track-target={item.id}
                         data-track-location="mobile_menu"
                       >
                         {/* Only the label slides, so the tap target stays put */}
-                        <span className="relative transition-transform duration-200 ease-standard group-hover:translate-x-1">
+                        <span className="transition-transform duration-200 ease-standard group-hover:translate-x-1">
                           {item.label}
-                          <Underline active={isActive} />
                         </span>
 
                         {isActive && (
                           <motion.span
                             layoutId="mobile-nav-indicator"
                             aria-hidden="true"
-                            className="absolute right-0 size-1.5 rounded-full bg-accent shadow-[0_0_8px_var(--color-accent)]"
+                            className="absolute right-4 size-1.5 rounded-full bg-accent shadow-[0_0_8px_var(--color-accent)]"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                           />
