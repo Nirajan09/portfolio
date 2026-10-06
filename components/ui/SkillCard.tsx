@@ -94,7 +94,7 @@ export function SkillCard({ group, index }: SkillCardProps) {
         {/* Oversized index number as a quiet decorative detail */}
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute -right-1 -top-3 select-none font-display text-7xl font-bold leading-none text-primary/[0.04] transition-colors duration-300 group-hover:text-accent/10"
+          className="pointer-events-none absolute -right-1 -top-3 select-none font-display text-7xl font-bold leading-none text-primary/4 transition-colors duration-300 group-hover:text-accent/10"
         >
           {String(index + 1).padStart(2, "0")}
         </span>

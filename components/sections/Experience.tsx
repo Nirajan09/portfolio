@@ -1,7 +1,8 @@
 import { Reveal } from "@/components/animation/Reveal";
-import { ExperienceTimeline } from "@/components/experience/ExperienceTimeline";
+import { CareerTimeline } from "@/components/experience/CareerTimeline";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { education } from "@/data/education";
 import { experience } from "@/data/experience";
 
 export function Experience() {
@@ -11,14 +12,14 @@ export function Experience() {
         <div className="lg:sticky lg:top-28 lg:self-start">
           <Reveal>
             <SectionHeading
-              eyebrow="Experience"
-              title="Where I've worked"
-              description="Professional roles in web development, from a frontend internship to full-stack engineering."
+              eyebrow="Experience & Education"
+              title="My journey"
+              description="Professional roles in web development, from a frontend internship to full-stack engineering, and the education behind them."
             />
           </Reveal>
         </div>
 
-        <ExperienceTimeline items={experience} />
+        <CareerTimeline experience={experience} education={education} />
       </div>
     </Section>
   );
