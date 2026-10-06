@@ -1,4 +1,4 @@
-import { ArrowRight, Mail } from "lucide-react";
+import { ArrowRight, Download, Mail } from "lucide-react";
 import { Reveal } from "@/components/animation/Reveal";
 import { Stagger, StaggerItem } from "@/components/animation/Stagger";
 import { PageContainer } from "@/components/layout/PageContainer";
@@ -8,6 +8,17 @@ import { IconButton } from "@/components/ui/IconButton";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
 import { personal } from "@/data/personal";
 import { HeroPortrait } from "./HeroPortrait";
+import { TypingRole } from "@/components/animation/TypingRole";
+
+// Put your PDF in /public and keep this path in sync (e.g. public/resume.pdf)
+const RESUME_HREF = "/resume.pdf";
+
+const ROLES = [
+  personal.role, // keep your real title first (read by screen readers / reduced motion)
+  "React & Next.js Engineer",
+  "Django & Node.js Developer",
+  "Frontend to backend, end to end",
+];
 
 export function Hero() {
   const { github, linkedin } = personal.socials;
@@ -17,7 +28,12 @@ export function Hero() {
       id="home"
       className="relative isolate flex min-h-svh items-center overflow-hidden"
     >
-      {/* Content */}
+      {/* Soft spotlight behind the headline: one quiet glow, no extra motion */}
+      {/* <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-40 top-1/4 -z-10 size-144 rounded-full bg-accent/10 blur-[120px]"
+      /> */}
+
       <PageContainer className="relative z-20 py-28">
         <div className="grid items-center gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-10">
           <Stagger className="max-w-3xl">
@@ -32,19 +48,20 @@ export function Hero() {
             </StaggerItem>
 
             <StaggerItem>
-              <p className="mt-8 text-lg text-muted sm:text-xl">Hi, I&apos;m</p>
-            </StaggerItem>
-
-            <StaggerItem>
-              <h1 className="mt-1 text-balance font-display text-5xl font-bold tracking-tight text-primary sm:text-6xl lg:text-7xl">
+              <h1 className="mt-8 text-balance font-display text-5xl font-bold tracking-tight text-primary sm:text-6xl lg:text-7xl">
+                <span className="block text-lg font-medium tracking-normal text-muted sm:text-xl">
+                  Hi, I&apos;m
+                </span>
                 {personal.name}
               </h1>
             </StaggerItem>
 
+            {/* The one animated moment in the hero */}
             <StaggerItem>
-              <p className="mt-3 font-display text-2xl font-medium text-secondary sm:text-3xl">
-                {personal.role}
-              </p>
+              <TypingRole
+                roles={ROLES}
+                className="mt-4 font-display text-2xl font-medium text-accent sm:text-3xl"
+              />
             </StaggerItem>
 
             <StaggerItem>
@@ -55,7 +72,7 @@ export function Hero() {
             </StaggerItem>
 
             <StaggerItem>
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Button
                   href="/#projects"
                   size="lg"
@@ -63,58 +80,75 @@ export function Hero() {
                   data-track="hero_cta_click"
                   data-track-label="view_work"
                 >
-                  View My Work
+                  View my work
                   <ArrowRight
                     className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
                     aria-hidden="true"
                   />
                 </Button>
                 <Button
-                  href="/#contact"
+                  href={RESUME_HREF}
                   variant="secondary"
                   size="lg"
                   className="w-full sm:w-auto"
-                  data-track="hero_cta_click"
-                  data-track-label="connect"
+                  download
+                  data-track="resume_download"
+                  data-track-location="hero"
                 >
-                  Let&apos;s Connect
+                  <Download className="size-4" aria-hidden="true" />
+                  Download resume
                 </Button>
               </div>
             </StaggerItem>
 
             <StaggerItem>
-              <div className="mt-8 flex items-center gap-3">
-                {github && (
+              <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-border pt-6">
+                <div className="flex items-center gap-3">
+                  {github && (
+                    <IconButton
+                      href={github}
+                      label="GitHub"
+                      data-track="social_click"
+                      data-track-network="github"
+                      data-track-location="hero"
+                    >
+                      <GithubIcon className="size-5" />
+                    </IconButton>
+                  )}
+                  {linkedin && (
+                    <IconButton
+                      href={linkedin}
+                      label="LinkedIn"
+                      data-track="social_click"
+                      data-track-network="linkedin"
+                      data-track-location="hero"
+                    >
+                      <LinkedinIcon className="size-5" />
+                    </IconButton>
+                  )}
                   <IconButton
-                    href={github}
-                    label="GitHub"
+                    href={`mailto:${personal.email}`}
+                    label="Email"
                     data-track="social_click"
-                    data-track-network="github"
+                    data-track-network="email"
                     data-track-location="hero"
                   >
-                    <GithubIcon className="size-5" />
+                    <Mail className="size-5" aria-hidden="true" />
                   </IconButton>
-                )}
-                {linkedin && (
-                  <IconButton
-                    href={linkedin}
-                    label="LinkedIn"
-                    data-track="social_click"
-                    data-track-network="linkedin"
-                    data-track-location="hero"
-                  >
-                    <LinkedinIcon className="size-5" />
-                  </IconButton>
-                )}
-                <IconButton
-                  href={`mailto:${personal.email}`}
-                  label="Email"
-                  data-track="social_click"
-                  data-track-network="email"
-                  data-track-location="hero"
+                </div>
+
+                <a
+                  href="/#contact"
+                  data-track="hero_cta_click"
+                  data-track-label="connect"
+                  className="group inline-flex items-center gap-1.5 text-sm font-medium text-secondary transition-colors hover:text-accent"
                 >
-                  <Mail className="size-5" aria-hidden="true" />
-                </IconButton>
+                  Or say hello
+                  <ArrowRight
+                    className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                </a>
               </div>
             </StaggerItem>
           </Stagger>
