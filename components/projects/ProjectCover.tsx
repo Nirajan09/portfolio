@@ -11,7 +11,7 @@ const toneClasses: Record<Tone, string> = {
   violet: "from-violet/25",
 };
 
-// Generated cover art, used until a real screenshot is set on the project.
+// Generated cover art, used until a real screenshot is set on `project.cover`.
 const covers: Record<string, { icon: LucideIcon; tone: Tone }> = {
   "book-recommendation-system": { icon: BookOpen, tone: "cyan" },
   "image-sharing-platform": { icon: ImageIcon, tone: "blue" },
@@ -29,7 +29,7 @@ export function ProjectCover({ project, zoom = false, className }: ProjectCoverP
   const art = covers[project.slug] ?? { icon: Folder, tone: "cyan" as Tone };
   const Icon = art.icon;
   const motion = zoom
-    ? "transition-transform duration-500 ease-(--ease-standard) group-hover:scale-105"
+    ? "transition-transform duration-500 ease-standard group-hover:scale-105"
     : "";
 
   return (
@@ -51,14 +51,31 @@ export function ProjectCover({ project, zoom = false, className }: ProjectCoverP
         <div
           aria-hidden="true"
           className={cn(
-            "absolute inset-0 flex items-center justify-center bg-linear-to-br via-surface to-background-secondary",
+            "absolute inset-0 bg-linear-to-br via-surface to-background-secondary",
             toneClasses[art.tone],
             motion,
           )}
         >
+          {/* Faint grid */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgb(148_163_184/0.07)_1px,transparent_1px),linear-gradient(to_bottom,rgb(148_163_184/0.07)_1px,transparent_1px)] bg-size-[28px_28px]" />
-          <div className="relative flex size-16 items-center justify-center rounded-xl border border-border bg-background/60 text-primary backdrop-blur-sm">
-            <Icon className="size-8" />
+
+          {/* Mini browser window */}
+          <div className="absolute inset-x-[12%] inset-y-[15%] flex flex-col overflow-hidden rounded-lg border border-border bg-background/70 shadow-2xl backdrop-blur-sm">
+            <div className="flex items-center gap-1.5 border-b border-border px-3 py-2">
+              <span className="size-2 rounded-full bg-border" />
+              <span className="size-2 rounded-full bg-border" />
+              <span className="size-2 rounded-full bg-border" />
+            </div>
+            <div className="flex flex-1 items-center gap-4 px-6">
+              <div className="flex size-12 shrink-0 items-center justify-center rounded-lg border border-border bg-surface text-accent">
+                <Icon className="size-6" />
+              </div>
+              <div className="flex-1 space-y-2.5">
+                <div className="h-2 w-3/4 rounded-full bg-border" />
+                <div className="h-2 w-1/2 rounded-full bg-border/70" />
+                <div className="h-2 w-2/3 rounded-full bg-border/50" />
+              </div>
+            </div>
           </div>
         </div>
       )}
