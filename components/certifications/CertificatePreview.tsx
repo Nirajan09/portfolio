@@ -41,9 +41,16 @@ export function CertificatePreview({ src, alt, title }: CertificatePreviewProps)
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           className="object-cover object-top transition-transform duration-500 ease-standard group-hover/preview:scale-105"
         />
-        <span className="absolute inset-0 flex items-center justify-center bg-background/50 opacity-0 transition-opacity duration-200 group-hover/preview:opacity-100 group-focus-visible/preview:opacity-100">
-          <span className="inline-flex items-center gap-2 rounded-md border border-border bg-surface px-3 py-1.5 text-sm font-medium text-primary">
-            <Expand className="size-4" aria-hidden="true" />
+
+        {/* Subtle bottom fade so the thumbnail blends into the card */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-surface/70 to-transparent"
+        />
+
+        <span className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 ease-standard group-hover/preview:opacity-100 group-focus-visible/preview:opacity-100">
+          <span className="inline-flex translate-y-1 items-center gap-2 rounded-lg border border-accent/40 bg-surface/90 px-3.5 py-2 text-sm font-medium text-primary shadow-glow transition-transform duration-300 ease-standard group-hover/preview:translate-y-0 group-focus-visible/preview:translate-y-0">
+            <Expand className="size-4 text-accent" aria-hidden="true" />
             Preview
           </span>
         </span>
@@ -59,27 +66,33 @@ export function CertificatePreview({ src, alt, title }: CertificatePreviewProps)
           // A click on the backdrop lands on the dialog element itself.
           if (event.target === event.currentTarget) event.currentTarget.close();
         }}
-        className="m-auto w-[calc(100%-2rem)] max-w-4xl overflow-hidden rounded-lg border border-border bg-surface p-0 text-primary backdrop:bg-background/80 backdrop:backdrop-blur-sm"
+        className="m-auto w-[calc(100%-2rem)] max-w-4xl overflow-hidden rounded-xl border border-border bg-surface p-0 text-primary shadow-glow transition-[opacity,scale] duration-300 ease-standard backdrop:bg-background/80 backdrop:backdrop-blur-sm open:starting:scale-95 open:starting:opacity-0"
       >
+        {/* Gradient hairline across the top of the dialog */}
+        <span
+          aria-hidden="true"
+          className="block h-px bg-linear-to-r from-accent via-blue to-violet"
+        />
+
         <div className="flex items-center justify-between gap-4 border-b border-border px-5 py-3">
           <h3 className="font-display text-base font-semibold">{title}</h3>
           <button
             type="button"
             onClick={() => dialogRef.current?.close()}
             aria-label="Close preview"
-            className="inline-flex size-9 items-center justify-center rounded-md text-muted transition-colors hover:text-primary"
+            className="inline-flex size-9 items-center justify-center rounded-full border border-border text-muted transition-[border-color,background-color,color] duration-200 hover:border-accent/50 hover:bg-accent/10 hover:text-accent"
           >
             <X className="size-5" aria-hidden="true" />
           </button>
         </div>
-        <div className="p-4">
+        <div className="bg-background-secondary/60 p-4">
           <Image
             src={src}
             alt={alt}
             width={1600}
             height={1200}
             sizes="(min-width: 896px) 896px, 100vw"
-            className="h-auto max-h-[75vh] w-full rounded-md object-contain"
+            className="h-auto max-h-[75vh] w-full rounded-lg border border-border object-contain"
           />
         </div>
       </dialog>
