@@ -11,9 +11,9 @@ export const personal = {
     "Full Stack Developer based in Kathmandu, Nepal, building modern web applications with React, Next.js, Django and Node.js.",
   // Fill these in. Links left empty are simply not rendered.
   socials: {
-    github: "",
-    linkedin: "",
+    github: "https://github.com/Nirajan09",
+    linkedin: "https://www.linkedin.com/in/nirajan-tiwari",
   },
-  resumeUrl: "",
+  resumeUrl: "resume",
   photo: null as { src: string; alt: string } | null,
 } as const;

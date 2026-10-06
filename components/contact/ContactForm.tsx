@@ -32,9 +32,12 @@ const emptyValues: ContactInput = {
 
 const controlClass = (invalid: boolean) =>
   cn(
-    "w-full rounded-md border bg-background-secondary px-3.5 text-base text-primary placeholder:text-muted/70",
-    "transition-colors duration-200 focus:border-accent",
-    invalid ? "border-error" : "border-border",
+    "w-full rounded-lg border bg-background-secondary/70 px-3.5 text-base text-primary placeholder:text-muted/70",
+    "transition-[border-color,background-color] duration-200 ease-standard",
+    "hover:bg-background-secondary focus:bg-background-secondary focus-visible:outline-none",
+    invalid
+      ? "border-error focus:border-error"
+      : "border-border hover:border-muted/40 focus:border-accent",
   );
 
 type FieldProps = {
@@ -77,15 +80,33 @@ function Field({
     "aria-describedby": error ? errorId : undefined,
   };
 
+  // Counter warns as the visitor approaches the limit.
+  const ratio = value.length / maxLength;
+  const counterClass =
+    ratio >= 1
+      ? "text-error"
+      : ratio >= 0.9
+        ? "text-warning"
+        : "text-muted";
+
   return (
-    <div>
+    <div className="group">
       <div className="flex items-baseline justify-between gap-4">
-        <label htmlFor={id} className="text-sm font-medium text-primary">
+        <label
+          htmlFor={id}
+          className="text-sm font-medium text-primary transition-colors duration-200 group-focus-within:text-accent"
+        >
           {label}
         </label>
 
         {multiline && (
-          <span aria-hidden="true" className="text-xs text-muted">
+          <span
+            aria-hidden="true"
+            className={cn(
+              "text-xs tabular-nums transition-colors duration-200",
+              counterClass,
+            )}
+          >
             {value.length}/{maxLength}
           </span>
         )}
@@ -108,7 +129,11 @@ function Field({
       )}
 
       {error && (
-        <p id={errorId} className="mt-1.5 text-sm text-error">
+        <p
+          id={errorId}
+          className="mt-1.5 flex items-center gap-1.5 text-sm text-error"
+        >
+          <TriangleAlert className="size-3.5 shrink-0" aria-hidden="true" />
           {error}
         </p>
       )}
@@ -263,8 +288,12 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
         role="status"
         className="flex flex-col items-start gap-4 py-4 outline-none"
       >
-        <div className="flex size-12 items-center justify-center rounded-full border border-success/30 bg-success/10 text-success">
-          <CircleCheck className="size-6" aria-hidden="true" />
+        <div className="relative flex size-14 items-center justify-center rounded-full border border-success/40 bg-success/10 text-success shadow-[0_0_30px_-4px_rgb(34_197_94/0.4)]">
+          <span
+            aria-hidden="true"
+            className="absolute inset-0 animate-ping rounded-full bg-success/20 [animation-iteration-count:2]"
+          />
+          <CircleCheck className="relative size-7" aria-hidden="true" />
         </div>
 
         <h3 className="font-display text-2xl font-semibold text-primary">
@@ -292,7 +321,13 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
       noValidate
       className="space-y-5"
     >
-      <p className="text-sm text-muted">All fields are required.</p>
+      <div className="flex items-center gap-2 text-sm text-muted">
+        <span
+          aria-hidden="true"
+          className="size-1.5 rounded-full bg-accent shadow-[0_0_8px_rgb(34_211_238/0.8)]"
+        />
+        All fields are required.
+      </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field
@@ -359,8 +394,13 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
       {status === "error" && (
         <div
           role="alert"
-          className="flex items-start gap-3 rounded-md border border-error/30 bg-error/10 px-4 py-3 text-sm text-primary"
+          className="relative flex items-start gap-3 overflow-hidden rounded-lg border border-error/30 bg-error/10 px-4 py-3 text-sm text-primary"
         >
+          <span
+            aria-hidden="true"
+            className="absolute inset-y-0 left-0 w-0.5 bg-error"
+          />
+
           <TriangleAlert
             className="mt-0.5 size-4 shrink-0 text-error"
             aria-hidden="true"
@@ -370,7 +410,7 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
             {serverMessage} You can also email me directly at{" "}
             <a
               href={`mailto:${fallbackEmail}`}
-              className="font-medium text-accent underline underline-offset-2"
+              className="font-medium text-accent underline underline-offset-2 transition-colors duration-200 hover:text-accent-hover"
             >
               {fallbackEmail}
             </a>
@@ -383,7 +423,7 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
         type="submit"
         size="lg"
         disabled={status === "submitting"}
-        className="w-full sm:w-auto"
+        className="group w-full sm:w-auto"
       >
         {status === "submitting" ? (
           <>
@@ -396,7 +436,10 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
         ) : (
           <>
             Send message
-            <Send className="size-4" aria-hidden="true" />
+            <Send
+              className="size-4 transition-transform duration-300 ease-standard group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              aria-hidden="true"
+            />
           </>
         )}
       </Button>

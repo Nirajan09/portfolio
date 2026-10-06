@@ -1,4 +1,4 @@
-import { Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { Reveal } from "@/components/animation/Reveal";
@@ -18,32 +18,36 @@ type InfoRowProps = {
   network?: string;
 };
 
-function InfoRow({
-  icon,
-  label,
-  value,
-  href,
-  network,
-}: InfoRowProps) {
+function InfoRow({ icon, label, value, href, network }: InfoRowProps) {
   const content = (
     <>
-      <span className="flex size-11 shrink-0 items-center justify-center rounded-md border border-border bg-surface text-accent transition-colors duration-200 group-hover:border-accent/40">
+      <span className="flex size-11 shrink-0 items-center justify-center rounded-lg border border-border bg-background-secondary text-accent transition-[border-color,background-color,box-shadow,scale] duration-300 ease-standard group-hover:scale-105 group-hover:border-accent/50 group-hover:bg-accent/10 group-hover:shadow-glow">
         {icon}
       </span>
 
-      <span className="min-w-0">
+      <span className="min-w-0 flex-1">
         <span className="block text-xs font-medium uppercase tracking-widest text-muted">
           {label}
         </span>
 
-        <span className="mt-0.5 block truncate text-base text-primary">
+        <span className="mt-0.5 block truncate text-base text-primary transition-colors duration-200 group-hover:text-accent">
           {value}
         </span>
       </span>
+
+      {href && (
+        <span
+          aria-hidden="true"
+          className="flex size-7 shrink-0 items-center justify-center rounded-full border border-border text-muted transition-[border-color,background-color,color] duration-300 ease-standard group-hover:border-accent/50 group-hover:bg-accent group-hover:text-background"
+        >
+          <ArrowUpRight className="size-4 transition-transform duration-300 ease-standard group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+        </span>
+      )}
     </>
   );
 
-  const className = "group flex items-center gap-4";
+  const baseClassName =
+    "group relative flex items-center gap-4 overflow-hidden rounded-lg border border-border bg-surface/60 p-3 pr-4 backdrop-blur-sm";
 
   return (
     <li>
@@ -59,19 +63,23 @@ function InfoRow({
             "data-track-network": network,
             "data-track-location": "contact",
           })}
-          className={`${className} transition-colors duration-200 hover:text-accent`}
+          className={`${baseClassName} transition-[border-color,translate,box-shadow] duration-300 ease-standard hover:-translate-y-0.5 hover:border-accent/40 focus-visible:-translate-y-0.5 focus-visible:border-accent/40`}
         >
+          {/* Accent bar that grows down the left edge on hover */}
+          <span
+            aria-hidden="true"
+            className="absolute inset-y-0 left-0 w-0.5 origin-top scale-y-0 bg-linear-to-b from-accent via-blue to-violet transition-[scale] duration-500 ease-standard group-hover:scale-y-100 group-focus-visible:scale-y-100"
+          />
           {content}
         </a>
       ) : (
-        <div className={className}>{content}</div>
+        <div className={baseClassName}>{content}</div>
       )}
     </li>
   );
 }
 
-const stripProtocol = (url: string) =>
-  url.replace(/^https?:\/\/(www\.)?/, "");
+const stripProtocol = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "");
 
 export function Contact() {
   const { github, linkedin } = personal.socials;
@@ -89,7 +97,7 @@ export function Contact() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <ul className="mt-10 space-y-5">
+            <ul className="mt-10 space-y-3">
               <InfoRow
                 icon={<Mail className="size-5" aria-hidden="true" />}
                 label="Email"
@@ -134,8 +142,22 @@ export function Contact() {
         </div>
 
         <Reveal delay={0.15}>
-          <Card className="sm:p-8">
-            <ContactForm fallbackEmail={personal.email} />
+          <Card className="relative overflow-hidden sm:p-8">
+            {/* Gradient hairline across the top of the form card */}
+            <span
+              aria-hidden="true"
+              className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-accent via-blue to-violet"
+            />
+
+            {/* Soft corner glow */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-16 -top-16 size-52 rounded-full bg-accent/10 blur-3xl"
+            />
+
+            <div className="relative">
+              <ContactForm fallbackEmail={personal.email} />
+            </div>
           </Card>
         </Reveal>
       </div>
