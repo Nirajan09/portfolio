@@ -1,7 +1,8 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Clock } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
+import { formatReadTime, getReadTimeMinutes } from "@/lib/readTime";
 import type { Project } from "@/types";
 import { ProjectCover } from "./ProjectCover";
 
@@ -29,20 +30,29 @@ export function ProjectCard({ project }: { project: Project }) {
           <p className="mt-2 text-sm leading-relaxed text-muted">
             {project.summary}
           </p>
-          <ul aria-label="Technologies" className="mt-5 flex flex-1 flex-wrap content-start gap-2">
+          <ul
+            aria-label="Technologies"
+            className="mt-5 flex flex-1 flex-wrap content-start gap-2"
+          >
             {project.stack.map((tech) => (
               <li key={tech}>
                 <Badge>{tech}</Badge>
               </li>
             ))}
           </ul>
-          <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-secondary transition-colors duration-200 group-hover:text-accent">
-            View project
-            <ArrowRight
-              className="size-4 transition-transform duration-200 ease-standard group-hover:translate-x-1"
-              aria-hidden="true"
-            />
-          </span>
+          <div className="mt-6 flex items-center justify-between gap-4">
+            <span className="inline-flex items-center gap-1.5 text-sm font-medium text-secondary transition-colors duration-200 group-hover:text-accent">
+              View project
+              <ArrowRight
+                className="size-4 transition-transform duration-200 ease-standard group-hover:translate-x-1"
+                aria-hidden="true"
+              />
+            </span>
+            <span className="inline-flex items-center gap-1.5 text-xs text-muted">
+              <Clock className="size-3.5" aria-hidden="true" />
+              {formatReadTime(getReadTimeMinutes(project))}
+            </span>
+          </div>
         </div>
       </Card>
     </Link>

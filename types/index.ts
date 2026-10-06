@@ -1,3 +1,8 @@
+export type StackGroup = {
+  label: string;
+  items: readonly string[];
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -5,8 +10,15 @@ export type Project = {
   summary: string;
   /** Longer description. The detail page only shows an Overview if this exists. */
   overview?: string;
+  /** Short flat list used on cards. */
   stack: readonly string[];
+  /** Grouped stack for the detail page. Falls back to `stack` if omitted. */
+  stackGroups?: readonly StackGroup[];
   features: readonly string[];
+  /** Ordered, high-level flow of how the app works. */
+  howItWorks?: readonly string[];
+  /** Technical points worth calling out. */
+  highlights?: readonly string[];
   links?: { live?: string; repo?: string };
   /** Screenshot in /public. Without it, a generated cover is used. */
   cover?: { src: string; alt: string };
