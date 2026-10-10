@@ -15,11 +15,11 @@ export function Projects() {
         />
       </Reveal>
 
-      <ul className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-14 space-y-16 sm:space-y-20 lg:space-y-28">
         {projects.map((project, index) => (
           <li key={project.slug}>
-            <Reveal delay={index * 0.08} className="h-full">
-              <ProjectCard project={project} />
+            <Reveal>
+              <ProjectCard project={project} reversed={index % 2 === 1} />
             </Reveal>
           </li>
         ))}
