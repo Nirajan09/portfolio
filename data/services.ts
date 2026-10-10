@@ -3,27 +3,28 @@ export const services = [
     id: "full-stack",
     title: "Full-Stack Web Development",
     description:
-      "Modern web applications using React, Next.js, Django and Node.js.",
-    tags: ["React", "Next.js", "Django", "Node.js"],
+      "End-to-end web applications, from database and API design to a polished interface, ready to deploy.",
+    tags: ["Web Apps", "Admin Dashboards", "Deployment"],
   },
   {
     id: "backend",
     title: "Backend & API Development",
     description:
-      "REST APIs, authentication, authorization, database-backed systems and integrations.",
-    tags: ["REST APIs", "Auth", "Databases", "Integrations"],
+      "Secure, well-structured APIs and data layers that your product can grow on.",
+    tags: ["REST APIs", "Auth & Roles", "Payments", "Integrations"],
   },
   {
     id: "frontend",
     title: "Frontend Development",
     description:
-      "Responsive interfaces using React, Next.js, TypeScript and Tailwind CSS.",
-    tags: ["React", "TypeScript", "Tailwind CSS"],
+      "Fast, accessible and responsive interfaces that look sharp on every screen.",
+    tags: ["Responsive UI", "Accessibility", "Performance"],
   },
   {
     id: "business-websites",
-    title: "Business Website Development",
-    description: "Modern responsive websites for businesses and organizations.",
+    title: "Business Websites",
+    description:
+      "Professional websites for businesses and organizations that are easy to find and easy to trust.",
     tags: ["Responsive", "SEO-ready", "Fast"],
   },
 ] as const;
