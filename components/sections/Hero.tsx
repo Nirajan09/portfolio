@@ -136,19 +136,6 @@ export function Hero() {
                     <Mail className="size-5" aria-hidden="true" />
                   </IconButton>
                 </div>
-
-                <a
-                  href="/#contact"
-                  data-track="hero_cta_click"
-                  data-track-label="connect"
-                  className="group inline-flex items-center gap-1.5 text-sm font-medium text-secondary transition-colors hover:text-accent"
-                >
-                  Or say hello
-                  <ArrowRight
-                    className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
-                    aria-hidden="true"
-                  />
-                </a>
               </div>
             </StaggerItem>
           </Stagger>
