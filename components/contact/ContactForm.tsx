@@ -1,13 +1,19 @@
 "use client";
 
 import {
-  CircleCheck,
+  ArrowUpRight,
+  Check,
+  FileText,
   LoaderCircle,
-  RotateCcw,
+  Mail,
+  MessageSquare,
   Send,
   TriangleAlert,
+  User,
+  type LucideIcon,
 } from "lucide-react";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+
+import { useRef, useState, type FormEvent } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
@@ -21,7 +27,15 @@ import {
   type ContactInput,
 } from "@/lib/contact";
 
+import {
+  MessageErrorModal,
+  MessageSentModal,
+} from "@/components/contact/ContactStatusModal";
+
 type Status = "idle" | "submitting" | "success" | "error";
+
+const WEB3FORMS_ACCESS_KEY =
+  process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
 
 const emptyValues: ContactInput = {
   name: "",
@@ -32,23 +46,26 @@ const emptyValues: ContactInput = {
 
 const controlClass = (invalid: boolean) =>
   cn(
-    "w-full rounded-lg border bg-background-secondary/70 px-3.5 text-base text-primary placeholder:text-muted/70",
-    "transition-[border-color,background-color] duration-200 ease-standard",
+    "w-full rounded-xl border bg-background-secondary/70 text-base text-primary placeholder:text-muted/60",
+    "transition-[border-color,background-color,box-shadow] duration-200 ease-standard",
     "hover:bg-background-secondary focus:bg-background-secondary focus-visible:outline-none",
     invalid
-      ? "border-error focus:border-error"
-      : "border-border hover:border-muted/40 focus:border-accent",
+      ? "border-error focus:border-error focus:shadow-[0_0_0_3px_rgb(239_68_68/0.15)]"
+      : "border-border hover:border-muted/40 focus:border-accent focus:shadow-[0_0_0_3px_rgb(34_211_238/0.12)]",
   );
 
 type FieldProps = {
   name: ContactField;
   label: string;
+  icon: LucideIcon;
   value: string;
   error?: string;
+  valid: boolean;
   onChange: (value: string) => void;
   onBlur: () => void;
   type?: "text" | "email";
   autoComplete?: string;
+  placeholder?: string;
   maxLength: number;
   multiline?: boolean;
 };
@@ -56,12 +73,15 @@ type FieldProps = {
 function Field({
   name,
   label,
+  icon: Icon,
   value,
   error,
+  valid,
   onChange,
   onBlur,
   type = "text",
   autoComplete,
+  placeholder,
   maxLength,
   multiline = false,
 }: FieldProps) {
@@ -74,20 +94,28 @@ function Field({
     value,
     maxLength,
     autoComplete,
+    placeholder,
     onBlur,
     "aria-required": true as const,
     "aria-invalid": Boolean(error),
     "aria-describedby": error ? errorId : undefined,
   };
 
-  // Counter warns as the visitor approaches the limit.
-  const ratio = value.length / maxLength;
+  const ratio = Math.min(value.length / maxLength, 1);
+
   const counterClass =
     ratio >= 1
       ? "text-error"
       : ratio >= 0.9
         ? "text-warning"
         : "text-muted";
+
+  const barClass =
+    ratio >= 1
+      ? "bg-error"
+      : ratio >= 0.9
+        ? "bg-warning"
+        : "bg-linear-to-r from-accent via-blue to-violet";
 
   return (
     <div className="group">
@@ -112,28 +140,77 @@ function Field({
         )}
       </div>
 
-      {multiline ? (
-        <textarea
-          {...shared}
-          rows={6}
-          onChange={(event) => onChange(event.target.value)}
-          className={cn(controlClass(Boolean(error)), "mt-2 resize-y py-3")}
+      <div className="relative mt-2">
+        <Icon
+          aria-hidden="true"
+          className={cn(
+            "pointer-events-none absolute left-3.5 size-4.5 text-muted transition-colors duration-200",
+            "group-focus-within:text-accent",
+            multiline ? "top-3.5" : "top-1/2 -translate-y-1/2",
+            error && "text-error group-focus-within:text-error",
+          )}
         />
-      ) : (
-        <input
-          {...shared}
-          type={type}
-          onChange={(event) => onChange(event.target.value)}
-          className={cn(controlClass(Boolean(error)), "mt-2 h-11")}
-        />
+
+        {multiline ? (
+          <textarea
+            {...shared}
+            rows={6}
+            onChange={(event) => onChange(event.target.value)}
+            className={cn(
+              controlClass(Boolean(error)),
+              "resize-y py-3 pl-11 pr-4",
+            )}
+          />
+        ) : (
+          <input
+            {...shared}
+            type={type}
+            onChange={(event) => onChange(event.target.value)}
+            className={cn(
+              controlClass(Boolean(error)),
+              "h-12 pl-11 pr-10",
+            )}
+          />
+        )}
+
+        {!multiline && (
+          <span
+            aria-hidden="true"
+            className={cn(
+              "pointer-events-none absolute right-3.5 top-1/2 flex size-5 -translate-y-1/2 items-center justify-center rounded-full bg-success/15 text-success",
+              "transition-[opacity,scale] duration-300 ease-standard",
+              valid ? "scale-100 opacity-100" : "scale-50 opacity-0",
+            )}
+          >
+            <Check className="size-3" />
+          </span>
+        )}
+      </div>
+
+      {multiline && (
+        <div
+          aria-hidden="true"
+          className="mt-2 h-0.5 overflow-hidden rounded-full bg-border"
+        >
+          <div
+            className={cn(
+              "h-full origin-left rounded-full transition-[scale,background-color] duration-300 ease-standard",
+              barClass,
+            )}
+            style={{ transform: `scaleX(${ratio})` }}
+          />
+        </div>
       )}
 
       {error && (
         <p
           id={errorId}
-          className="mt-1.5 flex items-center gap-1.5 text-sm text-error"
+          className="mt-2 flex animate-[fade-up_0.3s_var(--ease-standard)_both] items-center gap-1.5 text-sm text-error"
         >
-          <TriangleAlert className="size-3.5 shrink-0" aria-hidden="true" />
+          <TriangleAlert
+            className="size-3.5 shrink-0"
+            aria-hidden="true"
+          />
           {error}
         </p>
       )}
@@ -141,24 +218,21 @@ function Field({
   );
 }
 
-export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
+export function ContactForm({
+  fallbackEmail,
+}: {
+  fallbackEmail: string;
+}) {
   const [values, setValues] = useState<ContactInput>(emptyValues);
   const [errors, setErrors] = useState<ContactErrors>({});
+  const [touched, setTouched] = useState<
+    Partial<Record<ContactField, boolean>>
+  >({});
   const [status, setStatus] = useState<Status>("idle");
   const [serverMessage, setServerMessage] = useState("");
 
   const formRef = useRef<HTMLFormElement>(null);
-  const successRef = useRef<HTMLDivElement>(null);
-
-  // Tracks the first interaction with the form only once.
   const startedRef = useRef(false);
-
-  // Move focus to the confirmation so screen reader users hear it.
-  useEffect(() => {
-    if (status === "success") {
-      successRef.current?.focus();
-    }
-  }, [status]);
 
   const handleFocus = () => {
     if (startedRef.current) return;
@@ -181,7 +255,6 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
       [field]: value,
     }));
 
-    // Clear a field's error as soon as the visitor starts correcting it.
     if (errors[field]) {
       setErrors((current) => ({
         ...current,
@@ -193,13 +266,48 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
   const validateOne = (field: ContactField) => {
     const result = validateContact(values);
 
+    setTouched((current) => ({
+      ...current,
+      [field]: true,
+    }));
+
     setErrors((current) => ({
       ...current,
       [field]: result.ok ? undefined : result.errors[field],
     }));
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const isValid = (field: ContactField) =>
+    Boolean(touched[field]) &&
+    !errors[field] &&
+    values[field].trim().length > 0;
+
+  const resetForm = () => {
+    setValues({ ...emptyValues });
+    setErrors({});
+    setTouched({});
+  };
+
+  const closeModal = () => {
+    setStatus("idle");
+    setServerMessage("");
+  };
+
+  const sendAnotherMessage = () => {
+    resetForm();
+    setServerMessage("");
+    setStatus("idle");
+  };
+
+  const retrySubmission = () => {
+    // Keep the user's values so they can submit the form again.
+    setServerMessage("");
+    setStatus("idle");
+  };
+
+  const handleSubmit = async (
+    event: FormEvent<HTMLFormElement>,
+  ) => {
     event.preventDefault();
 
     if (status === "submitting") return;
@@ -209,7 +317,9 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
     if (!result.ok) {
       setErrors(result.errors);
 
-      const first = CONTACT_FIELDS.find((field) => result.errors[field]);
+      const first = CONTACT_FIELDS.find(
+        (field) => result.errors[field],
+      );
 
       if (first) {
         focusField(first);
@@ -220,43 +330,63 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
 
     setErrors({});
     setServerMessage("");
+
+    const honeypot =
+      formRef.current?.elements.namedItem("website");
+
+    const website =
+      honeypot instanceof HTMLInputElement
+        ? honeypot.value
+        : "";
+
+    // Treat a filled honeypot as a successful submission without sending.
+    if (website) {
+      resetForm();
+      setStatus("success");
+      return;
+    }
+
+    if (!WEB3FORMS_ACCESS_KEY) {
+      setServerMessage(
+        "The contact form isn't configured yet.",
+      );
+      setStatus("error");
+      return;
+    }
+
     setStatus("submitting");
 
-    const honeypot = formRef.current?.elements.namedItem("website");
-    const website =
-      honeypot instanceof HTMLInputElement ? honeypot.value : "";
+    const formData = new FormData();
+
+    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+    formData.append("name", result.data.name);
+    formData.append("email", result.data.email);
+    formData.append("from_name", result.data.name);
+    formData.append("subject", result.data.subject);
+    formData.append("message", result.data.message);
+    formData.append("botcheck", "");
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://api.web3forms.com/submit",
+        {
+          method: "POST",
+          body: formData,
         },
-        body: JSON.stringify({
-          ...result.data,
-          website,
-        }),
-      });
+      );
 
       const payload: {
-        ok?: boolean;
+        success?: boolean;
         message?: string;
-        errors?: ContactErrors;
       } | null = await response.json().catch(() => null);
 
-      if (response.ok && payload?.ok) {
+      if (response.ok && payload?.success) {
         trackEvent("contact_form_submit", {
           result: "success",
         });
 
-        setValues(emptyValues);
+        resetForm();
         setStatus("success");
-        return;
-      }
-
-      if (response.status === 400 && payload?.errors) {
-        setErrors(payload.errors);
-        setStatus("idle");
         return;
       }
 
@@ -265,8 +395,10 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
       });
 
       setServerMessage(
-        payload?.message ?? "Something went wrong. Please try again.",
+        payload?.message ??
+          "Something went wrong. Please try again.",
       );
+
       setStatus("error");
     } catch {
       trackEvent("contact_form_submit", {
@@ -276,173 +408,159 @@ export function ContactForm({ fallbackEmail }: { fallbackEmail: string }) {
       setServerMessage(
         "Network error. Please check your connection and try again.",
       );
+
       setStatus("error");
     }
   };
 
-  if (status === "success") {
-    return (
-      <div
-        ref={successRef}
-        tabIndex={-1}
-        role="status"
-        className="flex flex-col items-start gap-4 py-4 outline-none"
-      >
-        <div className="relative flex size-14 items-center justify-center rounded-full border border-success/40 bg-success/10 text-success shadow-[0_0_30px_-4px_rgb(34_197_94/0.4)]">
-          <span
-            aria-hidden="true"
-            className="absolute inset-0 animate-ping rounded-full bg-success/20 [animation-iteration-count:2]"
-          />
-          <CircleCheck className="relative size-7" aria-hidden="true" />
-        </div>
-
-        <h3 className="font-display text-2xl font-semibold text-primary">
-          Message sent
-        </h3>
-
-        <p className="text-base leading-relaxed text-muted">
-          Thanks for reaching out. I&apos;ll reply to the email address you
-          provided.
-        </p>
-
-        <Button variant="secondary" onClick={() => setStatus("idle")}>
-          <RotateCcw className="size-4" aria-hidden="true" />
-          Send another message
-        </Button>
-      </div>
-    );
-  }
-
   return (
-    <form
-      ref={formRef}
-      onSubmit={handleSubmit}
-      onFocus={handleFocus}
-      noValidate
-      className="space-y-5"
-    >
-      <div className="flex items-center gap-2 text-sm text-muted">
-        <span
-          aria-hidden="true"
-          className="size-1.5 rounded-full bg-accent shadow-[0_0_8px_rgb(34_211_238/0.8)]"
-        />
-        All fields are required.
-      </div>
-
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field
-          name="name"
-          label="Name"
-          value={values.name}
-          error={errors.name}
-          onChange={(value) => setValue("name", value)}
-          onBlur={() => validateOne("name")}
-          autoComplete="name"
-          maxLength={CONTACT_LIMITS.name}
-        />
-
-        <Field
-          name="email"
-          label="Email"
-          type="email"
-          value={values.email}
-          error={errors.email}
-          onChange={(value) => setValue("email", value)}
-          onBlur={() => validateOne("email")}
-          autoComplete="email"
-          maxLength={CONTACT_LIMITS.email}
-        />
-      </div>
-
-      <Field
-        name="subject"
-        label="Subject"
-        value={values.subject}
-        error={errors.subject}
-        onChange={(value) => setValue("subject", value)}
-        onBlur={() => validateOne("subject")}
-        maxLength={CONTACT_LIMITS.subject}
-      />
-
-      <Field
-        name="message"
-        label="Message"
-        multiline
-        value={values.message}
-        error={errors.message}
-        onChange={(value) => setValue("message", value)}
-        onBlur={() => validateOne("message")}
-        maxLength={CONTACT_LIMITS.message}
-      />
-
-      {/* Honeypot: hidden from people and assistive tech; bots tend to fill it. */}
-      <div
-        aria-hidden="true"
-        className="absolute left-[-9999px] h-0 w-0 overflow-hidden"
+    <>
+      <form
+        ref={formRef}
+        onSubmit={handleSubmit}
+        onFocus={handleFocus}
+        noValidate
+        className="space-y-6"
       >
-        <label htmlFor="contact-website">Leave this field empty</label>
-
-        <input
-          id="contact-website"
-          name="website"
-          type="text"
-          tabIndex={-1}
-          autoComplete="off"
-        />
-      </div>
-
-      {status === "error" && (
-        <div
-          role="alert"
-          className="relative flex items-start gap-3 overflow-hidden rounded-lg border border-error/30 bg-error/10 px-4 py-3 text-sm text-primary"
-        >
+        <div className="flex items-center gap-2 text-sm text-muted">
           <span
             aria-hidden="true"
-            className="absolute inset-y-0 left-0 w-0.5 bg-error"
+            className="size-1.5 rounded-full bg-accent shadow-[0_0_8px_rgb(34_211_238/0.8)]"
           />
-
-          <TriangleAlert
-            className="mt-0.5 size-4 shrink-0 text-error"
-            aria-hidden="true"
-          />
-
-          <p>
-            {serverMessage} You can also email me directly at{" "}
-            <a
-              href={`mailto:${fallbackEmail}`}
-              className="font-medium text-accent underline underline-offset-2 transition-colors duration-200 hover:text-accent-hover"
-            >
-              {fallbackEmail}
-            </a>
-            .
-          </p>
+          All fields are required.
         </div>
+
+        <div className="grid gap-6 sm:grid-cols-2">
+          <Field
+            name="name"
+            label="Name"
+            icon={User}
+            placeholder="Your full name"
+            value={values.name}
+            error={errors.name}
+            valid={isValid("name")}
+            onChange={(value) => setValue("name", value)}
+            onBlur={() => validateOne("name")}
+            autoComplete="name"
+            maxLength={CONTACT_LIMITS.name}
+          />
+
+          <Field
+            name="email"
+            label="Email"
+            type="email"
+            icon={Mail}
+            placeholder="you@example.com"
+            value={values.email}
+            error={errors.email}
+            valid={isValid("email")}
+            onChange={(value) => setValue("email", value)}
+            onBlur={() => validateOne("email")}
+            autoComplete="email"
+            maxLength={CONTACT_LIMITS.email}
+          />
+        </div>
+
+        <Field
+          name="subject"
+          label="Subject"
+          icon={FileText}
+          placeholder="What's this about?"
+          value={values.subject}
+          error={errors.subject}
+          valid={isValid("subject")}
+          onChange={(value) => setValue("subject", value)}
+          onBlur={() => validateOne("subject")}
+          maxLength={CONTACT_LIMITS.subject}
+        />
+
+        <Field
+          name="message"
+          label="Message"
+          icon={MessageSquare}
+          placeholder="Tell me a bit about your project or idea..."
+          multiline
+          value={values.message}
+          error={errors.message}
+          valid={isValid("message")}
+          onChange={(value) => setValue("message", value)}
+          onBlur={() => validateOne("message")}
+          maxLength={CONTACT_LIMITS.message}
+        />
+
+        {/* Honeypot field for basic bot protection. */}
+        <div
+          aria-hidden="true"
+          className="absolute left-[-9999px] h-0 w-0 overflow-hidden"
+        >
+          <label htmlFor="contact-website">
+            Leave this field empty
+          </label>
+
+          <input
+            id="contact-website"
+            name="website"
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+          />
+        </div>
+
+        <div className="flex flex-col gap-4 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <Button
+            type="submit"
+            size="lg"
+            disabled={status === "submitting"}
+            className="group w-full sm:w-auto"
+          >
+            {status === "submitting" ? (
+              <>
+                <LoaderCircle
+                  className="size-4 animate-spin"
+                  aria-hidden="true"
+                />
+                Sending…
+              </>
+            ) : (
+              <>
+                Send message
+                <Send
+                  className="size-4 transition-transform duration-300 ease-standard group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  aria-hidden="true"
+                />
+              </>
+            )}
+          </Button>
+
+          <a
+            href={`mailto:${fallbackEmail}`}
+            className="group/mail inline-flex items-center gap-1.5 text-sm text-muted transition-colors duration-200 hover:text-accent"
+          >
+            Prefer email? {fallbackEmail}
+            <ArrowUpRight
+              className="size-3.5 transition-transform duration-300 ease-standard group-hover/mail:-translate-y-0.5 group-hover/mail:translate-x-0.5"
+              aria-hidden="true"
+            />
+          </a>
+        </div>
+      </form>
+
+      {/* The form remains mounted underneath either modal. */}
+      {status === "success" && (
+        <MessageSentModal
+          onClose={closeModal}
+          onSendAnother={sendAnotherMessage}
+        />
       )}
 
-      <Button
-        type="submit"
-        size="lg"
-        disabled={status === "submitting"}
-        className="group w-full sm:w-auto"
-      >
-        {status === "submitting" ? (
-          <>
-            <LoaderCircle
-              className="size-4 animate-spin"
-              aria-hidden="true"
-            />
-            Sending…
-          </>
-        ) : (
-          <>
-            Send message
-            <Send
-              className="size-4 transition-transform duration-300 ease-standard group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              aria-hidden="true"
-            />
-          </>
-        )}
-      </Button>
-    </form>
+      {status === "error" && (
+        <MessageErrorModal
+          message={serverMessage}
+          fallbackEmail={fallbackEmail}
+          onClose={closeModal}
+          onRetry={retrySubmission}
+        />
+      )}
+    </>
   );
 }
