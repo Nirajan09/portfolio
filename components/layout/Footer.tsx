@@ -1,11 +1,42 @@
 import Link from "next/link";
 import { ArrowUp, ArrowUpRight, FileText, Mail } from "lucide-react";
+import type { ReactNode } from "react";
 
+import { about } from "@/data/about";
 import { navHref, navItems } from "@/data/navigation";
 import { personal } from "@/data/personal";
 import { IconButton } from "@/components/ui/IconButton";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
 import { PageContainer } from "./PageContainer";
+
+function ColumnHeading({ children }: { children: ReactNode }) {
+  return (
+    <h2 className="text-xs font-medium uppercase tracking-widest text-muted">
+      {children}
+    </h2>
+  );
+}
+
+/**
+ * Text-roll hover: the label slides up and an accent copy slides in from
+ * below. The parent link must have the `group/roll` class. The duplicate is
+ * aria-hidden, so screen readers only read the label once.
+ */
+function Roll({ children }: { children: string }) {
+  return (
+    <span className="relative inline-block overflow-hidden align-bottom leading-normal">
+      <span className="block transition-transform duration-300 ease-standard group-hover/roll:-translate-y-full group-focus-visible/roll:-translate-y-full">
+        {children}
+      </span>
+      <span
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 block translate-y-full text-accent transition-transform duration-300 ease-standard group-hover/roll:translate-y-0 group-focus-visible/roll:translate-y-0"
+      >
+        {children}
+      </span>
+    </span>
+  );
+}
 
 export function Footer() {
   const { github, linkedin } = personal.socials;
@@ -28,68 +59,82 @@ export function Footer() {
         className="pointer-events-none absolute -bottom-32 -right-24 size-72 rounded-full bg-violet/10 blur-3xl"
       />
 
-      <PageContainer className="relative py-14 md:py-16">
-        <div className="grid gap-12 lg:grid-cols-[1.6fr_1fr_1.2fr] lg:gap-16">
-          {/* Brand */}
+      <PageContainer className="relative pt-16 md:pt-20">
+        <div className="grid gap-14 lg:grid-cols-[1.5fr_0.7fr_0.9fr] lg:gap-16">
+          {/* ---------- Brand ---------- */}
           <div>
             <Link
               href={navHref("home")}
-              className="inline-flex items-center font-display text-xl font-bold tracking-tight text-primary transition-colors duration-200 hover:text-accent"
-              aria-label={`${personal.name} — Home`}
+              aria-label={`${personal.name}, back to top`}
+              className="group relative inline-block rounded-md py-1"
             >
-              {personal.initials}
-              <span className="text-accent">.</span>
+              <span className="font-display text-2xl font-bold tracking-tight text-primary transition-[color,text-shadow] duration-300 ease-standard group-hover:text-accent group-hover:[text-shadow:0_0_18px_rgb(34_211_238/0.45)]">
+                {personal.firstName}
+              </span>
+              <span
+                aria-hidden="true"
+                className="absolute inset-x-0 -bottom-0.5 h-0.5 origin-right scale-x-0 rounded-full bg-linear-to-r from-accent via-blue to-violet transition-[scale] duration-500 ease-standard group-hover:origin-left group-hover:scale-x-100"
+              />
             </Link>
 
-            <p className="mt-4 max-w-md text-sm leading-7 text-muted">
+            <p className="mt-5 max-w-md text-sm leading-7 text-muted sm:text-base">
               Full-stack developer focused on building scalable, reliable, and
               user-focused web applications with modern technologies.
             </p>
 
-            <Link
-              href={navHref("contact")}
-              className="group mt-6 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-2 text-sm font-medium text-accent transition-[border-color,background-color,color,box-shadow] duration-300 ease-standard hover:border-accent hover:bg-accent hover:text-background hover:shadow-glow"
+            {/* Availability */}
+            <div className="mt-6 inline-flex items-center gap-2.5 rounded-full border border-success/30 bg-success/10 px-3.5 py-1.5">
+              <span className="relative flex size-2">
+                <span
+                  aria-hidden="true"
+                  className="absolute inline-flex size-full animate-ping rounded-full bg-success opacity-60"
+                />
+                <span className="relative inline-flex size-2 rounded-full bg-success" />
+              </span>
+              <span className="text-xs font-medium text-success sm:text-sm">
+                {about.status}
+              </span>
+            </div>
+
+            {/* Email */}
+            <a
+              href={`mailto:${personal.email}`}
+              className="group/roll mt-6 flex w-fit items-center gap-2 font-display text-lg font-semibold text-primary transition-colors duration-200 hover:text-accent sm:text-xl"
+              data-track="social_click"
+              data-track-network="email"
+              data-track-location="footer"
             >
-              Let&apos;s work together
+              <Roll>{personal.email}</Roll>
               <ArrowUpRight
-                className="size-4 transition-transform duration-300 ease-standard group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                className="size-5 text-muted transition-[translate,color] duration-300 ease-standard group-hover/roll:-translate-y-0.5 group-hover/roll:translate-x-0.5 group-hover/roll:text-accent"
                 aria-hidden="true"
               />
-            </Link>
+            </a>
           </div>
 
-          {/* Navigation */}
+          {/* ---------- Navigation ---------- */}
           <nav aria-label="Footer navigation">
-            <h2 className="font-display text-sm font-semibold text-primary">
-              Navigation
-            </h2>
+            <ColumnHeading>Navigation</ColumnHeading>
 
-            <ul className="mt-5 grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-1">
+            <ul className="mt-6 grid grid-cols-2 gap-x-8 gap-y-3.5 sm:grid-cols-1">
               {navItems.map((item) => (
                 <li key={item.id}>
                   <Link
                     href={navHref(item.id)}
-                    className="group inline-flex items-center text-sm text-muted transition-colors duration-200 hover:text-primary focus-visible:text-primary"
+                    className="group/roll inline-block text-sm text-muted sm:text-base"
                   >
-                    {/* Accent dash that slides in on hover */}
-                    <span
-                      aria-hidden="true"
-                      className="mr-0 h-px w-0 bg-linear-to-r from-accent to-blue transition-[width,margin] duration-300 ease-standard group-hover:mr-2 group-hover:w-3 group-focus-visible:mr-2 group-focus-visible:w-3"
-                    />
-                    {item.label}
+                    <Roll>{item.label}</Roll>
                   </Link>
                 </li>
               ))}
             </ul>
           </nav>
 
-          {/* Connect */}
+          {/* ---------- Connect ---------- */}
           <div>
-            <h2 className="font-display text-sm font-semibold text-primary">
-              Let&apos;s connect
-            </h2>
+            <ColumnHeading>Connect</ColumnHeading>
 
-            <p className="mt-4 max-w-sm text-sm leading-6 text-muted">
+            <p className="mt-6 max-w-xs text-sm leading-6 text-muted sm:text-base">
               Have a project, opportunity, or idea in mind? Feel free to reach
               out.
             </p>
@@ -143,8 +188,8 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="mt-12 flex flex-col gap-4 border-t border-border pt-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+        {/* ---------- Bottom bar ---------- */}
+        <div className="relative mt-14 flex flex-col gap-4 border-t border-border py-6 text-sm text-muted sm:flex-row sm:items-center sm:justify-between md:mt-16">
           <p>
             &copy; {new Date().getFullYear()} {personal.name}. All rights
             reserved.
@@ -152,14 +197,16 @@ export function Footer() {
 
           <Link
             href={navHref("home")}
-            className="group inline-flex items-center gap-2 self-start font-medium text-secondary transition-colors duration-200 hover:text-accent sm:self-auto"
+            className="group/roll inline-flex items-center gap-3 self-start font-medium text-secondary sm:self-auto"
           >
-            Back to top
+            <Roll>Back to top</Roll>
             <span
               aria-hidden="true"
-              className="flex size-7 items-center justify-center rounded-full border border-border text-muted transition-[border-color,background-color,color] duration-300 ease-standard group-hover:border-accent/50 group-hover:bg-accent group-hover:text-background"
+              className="relative flex size-9 items-center justify-center overflow-hidden rounded-full border border-border text-muted transition-[border-color,background-color,color,box-shadow] duration-300 ease-standard group-hover/roll:border-accent group-hover/roll:bg-accent group-hover/roll:text-background group-hover/roll:shadow-glow"
             >
-              <ArrowUp className="size-4 transition-transform duration-300 ease-standard group-hover:-translate-y-0.5" />
+              {/* Arrow rolls up and out; a new one rolls in from below */}
+              <ArrowUp className="size-4 transition-transform duration-300 ease-standard group-hover/roll:-translate-y-6" />
+              <ArrowUp className="absolute size-4 translate-y-6 transition-transform duration-300 ease-standard group-hover/roll:translate-y-0" />
             </span>
           </Link>
         </div>
