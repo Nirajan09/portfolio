@@ -45,7 +45,7 @@ export function CertificationCard({ certification }: { certification: Certificat
         </p>
 
         {description && (
-          <p className="relative mt-4 flex-1 text-sm leading-relaxed text-muted">
+          <p className="relative mt-4 flex-1 text-sm leading-relaxed text-secondary">
             {description}
           </p>
         )}

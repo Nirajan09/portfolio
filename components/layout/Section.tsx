@@ -11,7 +11,7 @@ type SectionProps = {
 /** Standard homepage section: anchor id, vertical rhythm, shared container. */
 export function Section({ id, className, children }: SectionProps) {
   return (
-    <section id={id} className={cn("py-6 sm:py-12", className)}>
+    <section id={id} className={cn("py-20 sm:py-28 lg:py-32", className)}>
       <PageContainer>{children}</PageContainer>
     </section>
   );

@@ -115,7 +115,7 @@ export function SkillCard({ group, index }: SkillCardProps) {
             </div>
           </div>
 
-          <p className="mt-4 text-sm leading-relaxed text-muted">
+          <p className="mt-4 text-sm leading-relaxed text-secondary">
             {group.description}
           </p>
 

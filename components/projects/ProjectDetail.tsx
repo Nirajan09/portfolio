@@ -53,7 +53,7 @@ function RelatedCard({ project }: { project: Project }) {
           <h3 className="font-display text-xl font-semibold text-primary transition-colors duration-300 group-hover:text-accent">
             {project.title}
           </h3>
-          <p className="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-muted">
+          <p className="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-secondary">
             {project.summary}
           </p>
           <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-secondary transition-colors duration-200 group-hover:text-accent">

@@ -19,7 +19,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-lg border border-border bg-surface/60",
+        "rounded-xl border border-border/80 bg-surface/70 backdrop-blur-xs",
         padding === "md" && "p-6",
         interactive &&
           "transition-[transform,border-color,box-shadow] duration-200 ease-standard hover:-translate-y-1 hover:border-accent/40 hover:shadow-glow",

@@ -142,7 +142,7 @@ function TimelineItem({
           </div>
 
           {(entry.current || entry.location || entry.mode) && (
-            <ul className="mt-4 flex flex-wrap items-center gap-2 text-xs text-muted">
+            <ul className="mt-4 flex flex-wrap items-center gap-2 text-xs text-secondary/90">
               {entry.current && (
                 <li className="inline-flex items-center gap-1.5 rounded-full border border-success/30 bg-success/10 px-2.5 py-1 font-medium text-success">
                   <span className="relative flex size-1.5">

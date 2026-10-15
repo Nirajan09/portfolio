@@ -77,7 +77,7 @@ export function Footer() {
               />
             </Link>
 
-            <p className="mt-5 max-w-md text-sm leading-7 text-muted sm:text-base">
+            <p className="mt-5 max-w-md text-sm leading-7 text-secondary sm:text-base">
               Full-stack developer focused on building scalable, reliable, and
               user-focused web applications with modern technologies.
             </p>

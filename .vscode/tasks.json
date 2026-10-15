@@ -1,0 +1,19 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Delete generated markdown files",
+			"type": "shell",
+			"command": "cmd /c \"cd /d C:\\Users\\Samsung\\Desktop\\portfolio-nextjs && del /q AUDIT_REPORT.md SECURITY_REVIEW.md IMPROVEMENT_PLAN.md PROJECT_AUDIT.md && dir /b *.md\"",
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Remove generated audit files",
+			"type": "shell",
+			"command": "cmd /c \"cd /d C:\\Users\\Samsung\\Desktop\\portfolio-nextjs & del /f /q SECURITY_REVIEW.md PROJECT_AUDIT.md IMPROVEMENT_PLAN.md AUDIT_REPORT.md & dir /b *.md\"",
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
+}

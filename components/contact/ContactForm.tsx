@@ -34,9 +34,6 @@ import {
 
 type Status = "idle" | "submitting" | "success" | "error";
 
-const WEB3FORMS_ACCESS_KEY =
-  process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
-
 const emptyValues: ContactInput = {
   name: "",
   email: "",
@@ -346,41 +343,28 @@ export function ContactForm({
       return;
     }
 
-    if (!WEB3FORMS_ACCESS_KEY) {
-      setServerMessage(
-        "The contact form isn't configured yet.",
-      );
-      setStatus("error");
-      return;
-    }
-
     setStatus("submitting");
 
-    const formData = new FormData();
-
-    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
-    formData.append("name", result.data.name);
-    formData.append("email", result.data.email);
-    formData.append("from_name", result.data.name);
-    formData.append("subject", result.data.subject);
-    formData.append("message", result.data.message);
-    formData.append("botcheck", "");
-
     try {
-      const response = await fetch(
-        "https://api.web3forms.com/submit",
-        {
-          method: "POST",
-          body: formData,
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          name: result.data.name,
+          email: result.data.email,
+          subject: result.data.subject,
+          message: result.data.message,
+        }),
+      });
 
       const payload: {
-        success?: boolean;
+        ok?: boolean;
         message?: string;
       } | null = await response.json().catch(() => null);
 
-      if (response.ok && payload?.success) {
+      if (response.ok && payload?.ok) {
         trackEvent("contact_form_submit", {
           result: "success",
         });
@@ -396,7 +380,11 @@ export function ContactForm({
 
       setServerMessage(
         payload?.message ??
-          "Something went wrong. Please try again.",
+          (response.status === 429
+            ? "Too many messages. Please try again later."
+            : response.status === 503
+              ? "The contact form isn't available right now."
+              : "Something went wrong. Please try again."),
       );
 
       setStatus("error");

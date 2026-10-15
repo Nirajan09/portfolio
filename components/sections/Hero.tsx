@@ -10,9 +10,6 @@ import { personal } from "@/data/personal";
 import { HeroPortrait } from "./HeroPortrait";
 import { TypingRole } from "@/components/animation/TypingRole";
 
-// Put your PDF in /public and keep this path in sync (e.g. public/resume.pdf)
-const RESUME_HREF = "/resume.pdf";
-
 const ROLES = [
   personal.role, // keep your real title first (read by screen readers / reduced motion)
   "React & Next.js Engineer",
@@ -22,6 +19,7 @@ const ROLES = [
 
 export function Hero() {
   const { github, linkedin } = personal.socials;
+  const resumeHref = personal.resumeUrl ?? "";
 
   return (
     <section
@@ -65,7 +63,7 @@ export function Hero() {
             </StaggerItem>
 
             <StaggerItem>
-              <p className="mt-6 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-secondary sm:text-lg">
                 I build modern web applications across frontend and backend
                 systems using React, Next.js, Django and Node.js.
               </p>
@@ -86,18 +84,20 @@ export function Hero() {
                     aria-hidden="true"
                   />
                 </Button>
-                <Button
-                  href={RESUME_HREF}
-                  variant="secondary"
-                  size="lg"
-                  className="w-full sm:w-auto"
-                  download
-                  data-track="resume_download"
-                  data-track-location="hero"
-                >
-                  <Download className="size-4" aria-hidden="true" />
-                  Download resume
-                </Button>
+                {resumeHref && (
+                  <Button
+                    href={resumeHref}
+                    variant="secondary"
+                    size="lg"
+                    className="w-full sm:w-auto"
+                    download
+                    data-track="resume_download"
+                    data-track-location="hero"
+                  >
+                    <Download className="size-4" aria-hidden="true" />
+                    Download resume
+                  </Button>
+                )}
               </div>
             </StaggerItem>
 
