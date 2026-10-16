@@ -14,6 +14,6 @@ export const personal = {
     github: "https://github.com/Nirajan09",
     linkedin: "https://www.linkedin.com/in/nirajan-tiwari",
   },
-  resumeUrl: null as string | null,
+  resumeUrl: "/Nirajan_Tiwari_Resume.pdf",
   photo: null as { src: string; alt: string } | null,
 } as const;

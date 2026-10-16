@@ -294,7 +294,13 @@ All core visual, typography, and architectural improvements identified in this a
    - Standardized [components/ui/Card.tsx](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/components/ui/Card.tsx) to `rounded-xl`, `border-border/80`, and `bg-surface/70 backdrop-blur-xs`, creating clean elevation without excessive glowing noise.
 4. **Metadata legibility (Fixed):**
    - Improved timeline metadata readability in [components/experience/CareerTimeline.tsx](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/components/experience/CareerTimeline.tsx).
-5. **Next steps for user content:**
-   - Update `data/certifications.ts`: Replace sample entries with real certificates, or keep as `[]` (the site automatically hides the section and nav link when empty).
-   - Add resume asset if available to `data/personal.ts` (currently `null`, so CTA hides safely without dead links).
+5. **Real credentials and certifications added (Fixed):**
+   - Replaced placeholder entries in [data/certifications.ts](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/data/certifications.ts) with real credentials:
+     - "Python and Django" by Broadway Infosys & Orchid International College (ISO 9001:2015, Certificate No: B16431)
+     - "Django Masterclass: Get Started With Django Web Development" by Udemy (Knowledge Nest)
+6. **Resume CTA linked (Fixed):**
+   - Linked `/Nirajan_Tiwari_Resume.pdf` from the `public/` directory in [data/personal.ts](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/data/personal.ts), enabling the "Download resume" button with download functionality.
+7. **Contact email delivery with Web3Forms (Fixed):**
+   - Updated [lib/send-contact-email.ts](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/lib/send-contact-email.ts) to forward submissions to Web3Forms API server-side using `WEB3FORMS_ACCESS_KEY`.
+   - Preserved all security controls in [app/api/contact/route.ts](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/app/api/contact/route.ts) (same-origin check, IP rate-limiting, honeypot spam prevention, server-side payload validation).
 

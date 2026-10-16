@@ -7,10 +7,51 @@ export type SendResult =
   | { status: "failed" };
 
 /**
- * Sends the message through Resend's HTTP API. Credentials come from
- * server-only environment variables and never reach the client bundle.
+ * Sends the message through Web3Forms API (or Resend if configured).
+ * Credentials are kept on the server route and verified before sending.
  */
 export async function sendContactEmail(data: ContactInput): Promise<SendResult> {
+  const web3FormsKey =
+    process.env.WEB3FORMS_ACCESS_KEY ||
+    process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+
+  if (web3FormsKey) {
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: web3FormsKey,
+          name: data.name,
+          email: data.email,
+          subject: `[Portfolio Contact] ${data.subject.replace(/[\r\n]+/g, " ")}`,
+          message: data.message,
+          from_name: data.name,
+        }),
+        signal: AbortSignal.timeout(10_000),
+      });
+
+      const resData = (await response.json().catch(() => null)) as {
+        success?: boolean;
+        message?: string;
+      } | null;
+
+      if (response.ok && resData?.success) {
+        return { status: "sent" };
+      }
+
+      console.error("Web3Forms error response:", resData);
+      return { status: "failed" };
+    } catch (error) {
+      console.error("Web3Forms request failed:", error);
+      return { status: "failed" };
+    }
+  }
+
+  // Fallback to Resend if configured
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.CONTACT_TO_EMAIL;
   const from = process.env.CONTACT_FROM_EMAIL;
