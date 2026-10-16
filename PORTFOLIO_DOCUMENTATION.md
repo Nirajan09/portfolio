@@ -298,6 +298,10 @@ All core visual, typography, and architectural improvements identified in this a
    - Replaced placeholder entries in [data/certifications.ts](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/data/certifications.ts) with real credentials:
      - "Python and Django" by Broadway Infosys & Orchid International College (ISO 9001:2015, Certificate No: B16431)
      - "Django Masterclass: Get Started With Django Web Development" by Udemy (Knowledge Nest)
+   - Organized certificate image assets into [public/certificates/](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/public/certificates/):
+     - `/certificates/broadway-python-django.jpg`
+     - `/certificates/udemy-django-masterclass.jpg`
+   - Connected both images to [CertificatePreview.tsx](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/components/certifications/CertificatePreview.tsx), enabling high-resolution modal previews on click.
 6. **Resume CTA linked (Fixed):**
    - Linked `/Nirajan_Tiwari_Resume.pdf` from the `public/` directory in [data/personal.ts](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/data/personal.ts), enabling the "Download resume" button with download functionality.
 7. **Contact email delivery with Web3Forms (Fixed):**
