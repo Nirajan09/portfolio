@@ -22,11 +22,13 @@ export function CertificationCard({ certification }: { certification: Certificat
       )}
 
       <div className="relative flex flex-1 flex-col p-6">
-        {/* Soft corner glow */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-12 -top-12 size-40 rounded-full bg-accent/10 opacity-0 blur-2xl transition-opacity duration-500 ease-standard group-hover:opacity-100"
-        />
+        {/* Soft corner glow for text-only cards */}
+        {!image && (
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-12 -top-12 size-40 rounded-full bg-accent/10 opacity-0 blur-2xl transition-opacity duration-500 ease-standard group-hover:opacity-100"
+          />
+        )}
 
         {!image && (
           <div className="relative mb-5 flex size-11 items-center justify-center rounded-lg border border-border bg-background-secondary text-accent transition-[border-color,background-color,box-shadow,scale] duration-300 ease-standard group-hover:scale-105 group-hover:border-accent/50 group-hover:bg-accent/10 group-hover:shadow-glow">

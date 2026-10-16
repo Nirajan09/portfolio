@@ -28,33 +28,28 @@ export function CertificatePreview({ src, alt, title }: CertificatePreviewProps)
 
   return (
     <>
-      <button
-        type="button"
-        onClick={open}
-        aria-label={`Preview certificate: ${title}`}
-        className="group/preview relative block aspect-4/3 w-full overflow-hidden border-b border-border"
-      >
+      <div className="relative aspect-4/3 w-full overflow-hidden border-b border-border bg-background-secondary">
         <Image
           src={src}
           alt={alt}
           fill
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          className="object-cover object-top transition-transform duration-500 ease-standard group-hover/preview:scale-105"
+          className="object-cover object-top"
         />
 
-        {/* Subtle bottom fade so the thumbnail blends into the card */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-surface/70 to-transparent"
-        />
-
-        <span className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 backdrop-blur-[2px] transition-opacity duration-300 ease-standard group-hover/preview:opacity-100 group-focus-visible/preview:opacity-100">
-          <span className="inline-flex translate-y-1 items-center gap-2 rounded-lg border border-accent/40 bg-surface/90 px-3.5 py-2 text-sm font-medium text-primary shadow-glow transition-transform duration-300 ease-standard group-hover/preview:translate-y-0 group-focus-visible/preview:translate-y-0">
+        {/* Hover veil & clickable button to open preview modal */}
+        <button
+          type="button"
+          onClick={open}
+          aria-label={`Preview certificate: ${title}`}
+          className="group/preview absolute inset-0 flex cursor-pointer items-center justify-center bg-background/70 opacity-0 transition-opacity duration-200 ease-standard hover:opacity-100 focus-visible:opacity-100"
+        >
+          <span className="inline-flex translate-y-1 items-center gap-2 rounded-lg border border-accent/40 bg-surface/90 px-3.5 py-2 text-sm font-medium text-primary shadow-glow transition-transform duration-200 ease-standard group-hover/preview:translate-y-0 group-focus-visible/preview:translate-y-0">
             <Expand className="size-4 text-accent" aria-hidden="true" />
             Preview
           </span>
-        </span>
-      </button>
+        </button>
+      </div>
 
       <dialog
         ref={dialogRef}
