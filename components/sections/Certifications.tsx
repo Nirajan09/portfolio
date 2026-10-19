@@ -14,9 +14,9 @@ export function Certifications() {
     <Section id="certifications">
       <Reveal>
         <SectionHeading
-          eyebrow="Certifications"
-          title="Learning and credentials"
-          description="Courses and credentials I've completed."
+          eyebrow="Verified Credentials"
+          title="Accreditations & continuous learning"
+          description="Industry-recognized certifications and professional credentials validating technical competence, best practices, and continuous engineering growth."
         />
       </Reveal>
 

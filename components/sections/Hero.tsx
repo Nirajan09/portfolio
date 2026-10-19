@@ -64,8 +64,8 @@ export function Hero() {
 
             <StaggerItem>
               <p className="mt-6 max-w-xl text-base leading-relaxed text-secondary sm:text-lg">
-                I build modern web applications across frontend and backend
-                systems using React, Next.js, Django and Node.js.
+                I craft high-performance web applications and resilient full-stack
+                systems using React, Next.js, Django, and Node.js.
               </p>
             </StaggerItem>
 

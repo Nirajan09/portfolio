@@ -84,9 +84,9 @@ export function Services() {
     <Section id="services">
       <Reveal>
         <SectionHeading
-          eyebrow="Services"
-          title="How I can help"
-          description="Open to freelance and collaboration work. These are the areas where I can be most useful."
+          eyebrow="Services & Solutions"
+          title="How I bring value to your team"
+          description="From end-to-end web applications and high-throughput APIs to frontend performance engineering, here is how I help turn complex ideas into production-ready software."
         />
       </Reveal>
 

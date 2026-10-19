@@ -90,9 +90,9 @@ export function Contact() {
         <div>
           <Reveal>
             <SectionHeading
-              eyebrow="Contact"
-              title="Let's work together"
-              description="Have a project in mind or want to collaborate? Send a message, or reach me directly through any of these."
+              eyebrow="Get In Touch"
+              title="Let's build something exceptional"
+              description="Have a project in mind, a role to discuss, or an engineering challenge to solve? Drop a message or connect directly through any of the channels below."
             />
           </Reveal>
 

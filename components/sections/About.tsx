@@ -21,7 +21,11 @@ export function About() {
   return (
     <Section id="about">
       <Reveal>
-        <SectionHeading eyebrow="About" title="Building across the whole stack" />
+        <SectionHeading
+          eyebrow="About Me"
+          title="Engineering across the entire stack"
+          description="Passionate about writing clean, maintainable code and solving complex technical challenges from database schemas to polished interfaces."
+        />
       </Reveal>
 
       <div className="mt-12 grid gap-12 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-16">

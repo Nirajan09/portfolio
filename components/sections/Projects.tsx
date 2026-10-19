@@ -9,9 +9,9 @@ export function Projects() {
     <Section id="projects">
       <Reveal>
         <SectionHeading
-          eyebrow="Projects"
-          title="Selected work"
-          description="A few things I've built, from recommendation systems to payment workflows."
+          eyebrow="Featured Projects"
+          title="Engineered for real-world impact"
+          description="A curated selection of full-stack platforms, scalable microservices, and interactive web applications engineered from concept to production."
         />
       </Reveal>
 

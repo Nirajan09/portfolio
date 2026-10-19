@@ -9,9 +9,9 @@ export function Skills() {
     <Section id="skills">
       <Reveal>
         <SectionHeading
-          eyebrow="Skills"
-          title="My toolkit"
-          description="Technologies I use to design, build and ship web applications."
+          eyebrow="Technical Stack"
+          title="Tools & technologies"
+          description="A battle-tested stack of modern frontend frameworks, backend runtimes, databases, and DevOps tools I use to architect performant web applications."
         />
       </Reveal>
 

@@ -12,9 +12,9 @@ export function Experience() {
         <div className="lg:sticky lg:top-28 lg:self-start">
           <Reveal>
             <SectionHeading
-              eyebrow="Experience & Education"
-              title="My journey"
-              description="Professional roles in web development, from a frontend internship to full-stack engineering, and the education behind them."
+              eyebrow="Career Timeline"
+              title="Experience & milestones"
+              description="A chronicle of hands-on engineering roles, impactful product delivery, and the computer science foundation that underpins my work."
             />
           </Reveal>
         </div>
