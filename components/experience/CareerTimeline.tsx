@@ -118,7 +118,7 @@ function TimelineItem({
 
       {/* Card */}
       <motion.div variants={cardVariants}>
-        <Card className="relative h-full overflow-hidden transition-[border-color,translate,box-shadow] duration-300 ease-standard group-hover:-translate-y-0.5 group-hover:border-accent/40 group-hover:shadow-glow">
+        <Card className="relative h-full overflow-hidden transform-gpu will-change-transform transition-[transform,translate,border-color,box-shadow] duration-300 ease-standard group-hover:-translate-y-0.5 group-hover:border-accent/40 group-hover:shadow-glow">
           {/* Accent bar that grows down the left edge on hover */}
           <span
             aria-hidden="true"

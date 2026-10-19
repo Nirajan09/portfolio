@@ -60,21 +60,52 @@ type SkillCardProps = {
 
 export function SkillCard({ group, index }: SkillCardProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const rectRef = useRef<DOMRect | null>(null);
+  const rafRef = useRef<number | null>(null);
   const GroupIcon = groupIcons[group.id];
 
-  // Cursor-follow spotlight: only writes two CSS variables, so React never
-  // re-renders while the pointer moves.
+  // Cache rect on enter to avoid calling getBoundingClientRect on every mousemove,
+  // preventing layout thrashing and frame drops during hover transitions.
+  function handleMouseEnter(event: MouseEvent<HTMLDivElement>) {
+    rectRef.current = event.currentTarget.getBoundingClientRect();
+  }
+
+  // Throttle spotlight coordinate updates with requestAnimationFrame so style
+  // mutations sync perfectly with display refresh rate.
   function handleMouseMove(event: MouseEvent<HTMLDivElement>) {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    el.style.setProperty("--mx", `${event.clientX - rect.left}px`);
-    el.style.setProperty("--my", `${event.clientY - rect.top}px`);
+    const clientX = event.clientX;
+    const clientY = event.clientY;
+    const currentTarget = event.currentTarget;
+
+    if (rafRef.current !== null) return;
+
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null;
+      if (!rectRef.current) {
+        rectRef.current = currentTarget.getBoundingClientRect();
+      }
+      currentTarget.style.setProperty("--mx", `${clientX - rectRef.current.left}px`);
+      currentTarget.style.setProperty("--my", `${clientY - rectRef.current.top}px`);
+    });
+  }
+
+  function handleMouseLeave() {
+    rectRef.current = null;
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
   }
 
   return (
-    <div ref={ref} onMouseMove={handleMouseMove} className="group h-full">
-      <Card className="relative h-full overflow-hidden transition-[border-color,translate,box-shadow] duration-300 ease-standard hover:-translate-y-1 hover:border-accent/40 hover:shadow-glow">
+    <div
+      ref={ref}
+      onMouseEnter={handleMouseEnter}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="group h-full"
+    >
+      <Card className="relative h-full overflow-hidden transform-gpu will-change-transform transition-[transform,translate,border-color,box-shadow] duration-300 ease-standard group-hover:-translate-y-1 group-hover:border-accent/40 group-hover:shadow-glow">
         {/* Spotlight that follows the cursor (hidden until hover) */}
         <span
           aria-hidden="true"
@@ -101,7 +132,7 @@ export function SkillCard({ group, index }: SkillCardProps) {
 
         <div className="relative">
           <div className="flex items-center gap-4">
-            <div className="flex size-12 shrink-0 items-center justify-center rounded-lg border border-border bg-background-secondary text-accent transition-[scale,rotate,border-color,background-color] duration-300 ease-standard group-hover:-rotate-3 group-hover:scale-110 group-hover:border-accent/40 group-hover:bg-accent/10">
+            <div className="flex size-12 shrink-0 items-center justify-center rounded-lg border border-border bg-background-secondary text-accent transform-gpu will-change-transform transition-[scale,rotate,border-color,background-color] duration-300 ease-standard group-hover:-rotate-3 group-hover:scale-110 group-hover:border-accent/40 group-hover:bg-accent/10">
               <GroupIcon className="size-5" aria-hidden="true" />
             </div>
             <div className="min-w-0">
@@ -135,9 +166,9 @@ export function SkillCard({ group, index }: SkillCardProps) {
                   className="group/chip"
                   style={{ "--brand": color } as CSSProperties}
                 >
-                  <span className="inline-flex items-center gap-2 rounded-md border border-border bg-background-secondary/70 px-3 py-2 text-sm font-medium text-secondary transition-[translate,border-color,background-color,color,box-shadow] duration-200 ease-standard group-hover/chip:-translate-y-0.5 group-hover/chip:border-(--brand)/50 group-hover/chip:bg-(--brand)/10 group-hover/chip:text-primary group-hover/chip:shadow-[0_6px_20px_-8px_var(--brand)]">
+                  <span className="inline-flex transform-gpu will-change-transform items-center gap-2 rounded-md border border-border bg-background-secondary/70 px-3 py-2 text-sm font-medium text-secondary transition-[transform,translate,border-color,background-color,color,box-shadow] duration-200 ease-standard group-hover/chip:-translate-y-0.5 group-hover/chip:border-(--brand)/50 group-hover/chip:bg-(--brand)/10 group-hover/chip:text-primary group-hover/chip:shadow-[0_6px_20px_-8px_var(--brand)]">
                     <SkillIcon
-                      className="size-4 text-muted transition-[color,scale] duration-200 ease-standard group-hover/chip:scale-125 group-hover/chip:text-(--brand)"
+                      className="size-4 transform-gpu text-muted transition-[color,transform,scale] duration-200 ease-standard group-hover/chip:scale-125 group-hover/chip:text-(--brand)"
                       aria-hidden="true"
                     />
                     {skill}

@@ -63,7 +63,7 @@ function InfoRow({ icon, label, value, href, network }: InfoRowProps) {
             "data-track-network": network,
             "data-track-location": "contact",
           })}
-          className={`${baseClassName} transition-[border-color,translate,box-shadow] duration-300 ease-standard hover:-translate-y-0.5 hover:border-accent/40 focus-visible:-translate-y-0.5 focus-visible:border-accent/40`}
+          className={`${baseClassName} transform-gpu will-change-transform transition-[transform,translate,border-color,box-shadow] duration-300 ease-standard hover:-translate-y-0.5 hover:border-accent/40 focus-visible:-translate-y-0.5 focus-visible:border-accent/40`}
         >
           {/* Accent bar that grows down the left edge on hover */}
           <span

@@ -43,7 +43,7 @@ function RelatedCard({ project }: { project: Project }) {
       aria-label={`View project: ${project.title}`}
       className="group block h-full rounded-xl"
     >
-      <div className="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-surface/60 transition-[translate,border-color,box-shadow] duration-300 ease-standard group-hover:-translate-y-1 group-hover:border-accent/40 group-hover:shadow-glow">
+      <div className="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-surface/60 transform-gpu will-change-transform transition-[transform,translate,border-color,box-shadow] duration-300 ease-standard group-hover:-translate-y-1 group-hover:border-accent/40 group-hover:shadow-glow">
         <ProjectCover
           project={project}
           zoom
@@ -159,7 +159,7 @@ export function ProjectDetail({ project, related }: ProjectDetailProps) {
                 aria-hidden="true"
                 className="pointer-events-none absolute -inset-3 rounded-3xl bg-linear-to-br from-accent/15 via-blue/10 to-violet/15 blur-2xl"
               />
-              <div className="relative overflow-hidden rounded-xl border border-border bg-surface shadow-[0_25px_50px_-20px_rgb(0_0_0/0.8)] transition-[border-color,translate] duration-500 ease-standard group-hover:-translate-y-1 group-hover:border-accent/40">
+              <div className="relative overflow-hidden rounded-xl border border-border bg-surface shadow-[0_25px_50px_-20px_rgb(0_0_0/0.8)] transform-gpu will-change-transform transition-[transform,translate,border-color] duration-500 ease-standard group-hover:-translate-y-1 group-hover:border-accent/40">
                 <ProjectCover project={project} zoom />
                 <span
                   aria-hidden="true"

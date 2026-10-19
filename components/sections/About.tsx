@@ -82,8 +82,8 @@ export function About() {
                     <div
                       key={fact.id}
                       className={[
-                        "group relative rounded-xl border border-border bg-background/50 p-4",
-                        "transition-[translate,border-color,background-color] duration-300 ease-standard",
+                        "group relative rounded-xl border border-border bg-background/50 p-4 transform-gpu will-change-transform",
+                        "transition-[transform,translate,border-color,background-color] duration-300 ease-standard",
                         "hover:-translate-y-0.5 hover:border-accent/40 hover:bg-surface-elevated/70",
                         fact.wide ? "sm:col-span-2" : "",
                       ].join(" ")}

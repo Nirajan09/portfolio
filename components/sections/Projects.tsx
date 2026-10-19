@@ -19,7 +19,7 @@ export function Projects() {
         {projects.map((project, index) => (
           <li key={project.slug}>
             <Reveal>
-              <ProjectCard project={project} reversed={index % 2 === 1} />
+              <ProjectCard project={project} index={index} reversed={index % 2 === 1} />
             </Reveal>
           </li>
         ))}

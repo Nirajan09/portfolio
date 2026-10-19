@@ -9,7 +9,7 @@ export function CertificationCard({ certification }: { certification: Certificat
   return (
     <Card
       padding="none"
-      className="group relative flex h-full flex-col overflow-hidden transition-[border-color,translate,box-shadow] duration-300 ease-standard hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-glow"
+      className="group relative flex h-full flex-col overflow-hidden transform-gpu will-change-transform transition-[transform,translate,border-color,box-shadow] duration-300 ease-standard hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-glow"
     >
       {/* Gradient hairline that draws across the top on hover */}
       <span

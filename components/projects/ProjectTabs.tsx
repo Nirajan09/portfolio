@@ -123,7 +123,7 @@ function Overview({
                 <button
                   type="button"
                   onClick={() => onJump(stat.id)}
-                  className="group/stat relative block w-full overflow-hidden rounded-xl border border-border bg-surface/40 p-4 text-left transition-[translate,border-color,background-color,box-shadow] duration-300 ease-standard hover:-translate-y-1 hover:border-accent/40 hover:bg-surface-elevated/60 hover:shadow-glow"
+                  className="group/stat relative block w-full overflow-hidden rounded-xl border border-border bg-surface/40 p-4 text-left transform-gpu will-change-transform transition-[transform,translate,border-color,background-color,box-shadow] duration-300 ease-standard hover:-translate-y-1 hover:border-accent/40 hover:bg-surface-elevated/60 hover:shadow-glow"
                 >
                   <LuArrowUpRight
                     className="absolute right-3 top-3 size-4 text-muted opacity-0 transition-[opacity,translate,color] duration-300 ease-standard group-hover/stat:-translate-y-0.5 group-hover/stat:translate-x-0.5 group-hover/stat:text-accent group-hover/stat:opacity-100"
@@ -195,7 +195,7 @@ function Features({ features }: { features: readonly string[] }) {
           key={feature}
           data-spot
           style={delay(index)}
-          className={`${enter} group/card relative overflow-hidden rounded-xl border border-border bg-surface/40 transition-[translate,border-color] duration-300 ease-standard hover:-translate-y-1 hover:border-accent/40`}
+          className={`${enter} group/card relative overflow-hidden rounded-xl border border-border bg-surface/40 transform-gpu will-change-transform transition-[transform,translate,border-color] duration-300 ease-standard hover:-translate-y-1 hover:border-accent/40`}
         >
           <Spotlight />
           <div className="relative flex h-full flex-col gap-4 p-5">
