@@ -40,13 +40,24 @@ export function ProjectCover({ project, zoom = false, className }: ProjectCoverP
       )}
     >
       {project.cover ? (
-        <Image
-          src={project.cover.src}
-          alt={project.cover.alt}
-          fill
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          className={cn("object-cover", motion)}
-        />
+        <>
+          {/* Subtle ambient matching backdrop fill */}
+          <Image
+            src={project.cover.src}
+            alt=""
+            fill
+            aria-hidden="true"
+            className="scale-110 object-cover blur-2xl opacity-40 brightness-50"
+          />
+          {/* Full uncropped application screenshot */}
+          <Image
+            src={project.cover.src}
+            alt={project.cover.alt}
+            fill
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            className={cn("object-contain object-center", motion)}
+          />
+        </>
       ) : (
         <div
           aria-hidden="true"

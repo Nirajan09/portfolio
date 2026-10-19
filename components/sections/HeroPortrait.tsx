@@ -60,14 +60,25 @@ export function HeroPortrait() {
 
       <div className="relative aspect-4/5 overflow-hidden rounded-xl border border-border bg-surface">
         {photo ? (
-          <Image
-            src={photo.src}
-            alt={photo.alt}
-            fill
-            priority
-            sizes="(min-width: 1024px) 400px, (min-width: 640px) 320px, 280px"
-            className="object-cover object-top"
-          />
+          <>
+            {/* Ambient matching backdrop fill */}
+            <Image
+              src={photo.src}
+              alt=""
+              fill
+              aria-hidden="true"
+              className="scale-110 object-cover blur-2xl opacity-40 brightness-75"
+            />
+            {/* Full uncropped photo */}
+            <Image
+              src={photo.src}
+              alt={photo.alt}
+              fill
+              priority
+              sizes="(min-width: 1024px) 400px, (min-width: 640px) 320px, 280px"
+              className="object-contain object-center"
+            />
+          </>
         ) : (
           <div
             aria-hidden="true"
@@ -80,11 +91,6 @@ export function HeroPortrait() {
             </span>
           </div>
         )}
-        {/* Gentle fade so the bottom chip stays legible over any photo */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 h-1/4 bg-linear-to-t from-background/60 to-transparent"
-        />
       </div>
 
       {/* Outer div positions + plays the pop-in; inner chip floats and reacts to hover */}

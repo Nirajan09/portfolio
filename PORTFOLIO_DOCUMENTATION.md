@@ -225,20 +225,20 @@ The project has a good production baseline for a personal site: it uses security
 
 ### Required before launch
 
-- Confirm contact form works with real email credentials in deployment
-- Validate that the app is healthy in production build mode
-- Ensure all CTA links are real and functional
-- Confirm hero and section content is accurate and current
-- Test keyboard navigation and visible focus states
-- Run a final responsive design pass on mobile, tablet, and desktop
+- [x] **Confirm contact form works with real email credentials**: Web3Forms integrated server-side with access key in `.env`.
+- [x] **Validate that the app is healthy in production build mode**: Verified build passes (18/18 static and dynamic routes compiled with 0 errors).
+- [x] **Ensure all CTA links are real and functional**: Verified active resume download, project repositories, live demo, and credential verification links.
+- [x] **Confirm hero and section content is accurate and current**: Real credentials, education, skills, and experience loaded.
+- [x] **Test keyboard navigation and visible focus states**: Active `:focus-visible` styling and accessible modal dialogs in place.
+- [x] **Run a final responsive design pass on mobile, tablet, and desktop**: Breakpoints and containers tested across screen sizes.
 
 ### Recommended improvements before final polish
 
-- Tighten typography scale and reduce visual fragmentation
-- Improve contrast in secondary text blocks
-- Refine spacing consistency across sections and cards
-- Reduce unnecessary visual noise from glow and motion
-- Make the portfolio feel more premium and deliberate, not just technically capable
+- [x] **Tighten typography scale and reduce visual fragmentation**: Consistent `font-display` and refined hierarchy applied across hero, section headings, and cards.
+- [x] **Improve contrast in secondary text blocks**: Upgraded descriptive copy to `text-secondary` and tuned `--text-muted` to `#9fb0c7`.
+- [x] **Refine spacing consistency across sections and cards**: Standardized section vertical rhythm to `py-20 sm:py-28 lg:py-32`.
+- [x] **Reduce unnecessary visual noise from glow and motion**: Cleaned up conflicting glows, removed layout shifts, and eliminated certificate hover flickering.
+- [x] **Make the portfolio feel more premium and deliberate**: High-end glassmorphic details, crisp borders, and calm micro-animations.
 
 ## 7. Improvement plan
 
@@ -307,4 +307,16 @@ All core visual, typography, and architectural improvements identified in this a
 7. **Contact email delivery with Web3Forms (Fixed):**
    - Updated [lib/send-contact-email.ts](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/lib/send-contact-email.ts) to forward submissions to Web3Forms API server-side using `WEB3FORMS_ACCESS_KEY`.
    - Preserved all security controls in [app/api/contact/route.ts](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/app/api/contact/route.ts) (same-origin check, IP rate-limiting, honeypot spam prevention, server-side payload validation).
-
+8. **Profile headshot photo connected (Fixed):**
+   - Placed high-resolution portrait asset at [public/profile.png](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/public/profile.png).
+   - Connected `personal.photo` in [data/personal.ts](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/data/personal.ts) to activate Next.js priority photo rendering in [HeroPortrait.tsx](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/components/sections/HeroPortrait.tsx).
+9. **Real project screenshot covers added (Fixed):**
+   - Organized project screenshots into [public/projects/](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/public/projects/):
+     - `/projects/book-recommendation-system.png`
+     - `/projects/image-sharing-platform.png`
+     - `/projects/job-portal.png`
+   - Connected `cover` objects across all projects in [data/projects.ts](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/data/projects.ts), enabling real screenshots on all homepage cards and project detail hero covers.
+10. **Full uncropped image display (Fixed):**
+    - Configured [HeroPortrait.tsx](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/components/sections/HeroPortrait.tsx) with `object-contain object-center` and an ambient blurred backdrop fill, allowing the entire headshot portrait to show without cropping the lower body, while preserving the exact hero grid layout and floating badges.
+    - Updated [ProjectCover.tsx](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/components/projects/ProjectCover.tsx) with `object-contain object-center` and subtle ambient matching backdrops, so all web application screenshots display 100% of their UI (navigation bars, sidebars, content, and footers) without cut-off edges.
+    - Adjusted [ProjectCard.tsx](file:///c:/Users/Samsung/Desktop/portfolio-nextjs/components/projects/ProjectCard.tsx) bottom depth shade to fade in on hover only, keeping project screenshots 100% clear and vivid by default.

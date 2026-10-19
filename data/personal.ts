@@ -15,5 +15,8 @@ export const personal = {
     linkedin: "https://www.linkedin.com/in/nirajan-tiwari",
   },
   resumeUrl: "/Nirajan_Tiwari_Resume.pdf",
-  photo: null as { src: string; alt: string } | null,
+  photo: {
+    src: "/profile.png",
+    alt: "Nirajan Tiwari - Full Stack Developer",
+  },
 } as const;

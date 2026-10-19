@@ -82,6 +82,10 @@ export const projects: readonly Project[] = [
     links: {
       repo: "https://github.com/Nirajan09/BookRecommendationSystem",
     },
+    cover: {
+      src: "/projects/book-recommendation-system.png",
+      alt: "Book Recommendation System - Full-stack bookstore web application",
+    },
   },
 
   {
@@ -143,6 +147,10 @@ export const projects: readonly Project[] = [
     ],
     links: {
       repo: "https://github.com/Nirajan09/image-sharing-platform",
+    },
+    cover: {
+      src: "/projects/image-sharing-platform.png",
+      alt: "Image Sharing Platform - Cloudinary-backed media gallery and sharing app",
     },
   },
 
@@ -213,6 +221,10 @@ export const projects: readonly Project[] = [
     links: {
       live: "https://job-portal-liard-one.vercel.app",
       repo: "https://github.com/Nirajan09/job-portal",
+    },
+    cover: {
+      src: "/projects/job-portal.png",
+      alt: "Job Portal - Role-based recruitment and job search web platform",
     },
   },
 ];

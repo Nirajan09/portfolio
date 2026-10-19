@@ -50,10 +50,10 @@ export function ProjectCard({
           >
             <ProjectCover project={project} zoom />
 
-            {/* Soft bottom shade for depth */}
+            {/* Soft bottom shade for depth on hover */}
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/50 via-transparent to-transparent"
+              className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 ease-standard group-hover:opacity-100 group-focus-visible:opacity-100"
             />
 
             {/* Hairline along the top edge */}

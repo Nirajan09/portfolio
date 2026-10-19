@@ -201,7 +201,7 @@ export function ProjectDetail({ project, related }: ProjectDetailProps) {
                 <h2 className="font-display text-2xl font-semibold text-primary sm:text-3xl">
                   Have a project like this in mind?
                 </h2>
-                <p className="mt-3 text-base leading-relaxed text-muted">
+                <p className="mt-3 text-base leading-relaxed text-secondary">
                   I&apos;m open to freelance and collaboration work. Tell me
                   what you&apos;re building.
                 </p>
