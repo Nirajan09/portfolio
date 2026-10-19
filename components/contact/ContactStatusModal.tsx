@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
-import { CheckCircle2, X, AlertCircle, RotateCcw, Send } from "lucide-react";
+import { LuCircleAlert, LuCircleCheck, LuRotateCcw, LuX } from "react-icons/lu";
 
 import { Button } from "@/components/ui/Button";
 
@@ -69,7 +69,7 @@ function ModalShell({
           aria-label="Close dialog"
           className="absolute right-4 top-4 flex size-9 items-center justify-center rounded-full text-muted transition-colors hover:bg-background-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
         >
-          <X className="size-5" aria-hidden="true" />
+          <LuX className="size-5" aria-hidden="true" />
         </button>
 
         {children}
@@ -96,7 +96,7 @@ export function MessageSentModal({
     >
       <div className="flex flex-col items-center gap-5 pt-3 text-center">
         <div className="relative mx-auto flex size-16 items-center justify-center rounded-full border border-success/30 bg-success/10 text-success">
-          <CheckCircle2 className="size-8" aria-hidden="true" />
+          <LuCircleCheck className="size-8" aria-hidden="true" />
         </div>
 
         <div>
@@ -118,7 +118,7 @@ export function MessageSentModal({
 
         <div className="flex w-full flex-col gap-3 pt-1">
           <Button type="button" onClick={onSendAnother} className="w-full">
-            <RotateCcw className="size-4" aria-hidden="true" />
+            <LuRotateCcw className="size-4" aria-hidden="true" />
             Send another message
           </Button>
 
@@ -158,7 +158,7 @@ export function MessageErrorModal({
     >
       <div className="flex flex-col gap-5 pt-3">
         <div className="mx-auto flex size-16 items-center justify-center rounded-full border border-error/30 bg-error/10 text-error">
-          <AlertCircle className="size-8" aria-hidden="true" />
+          <LuCircleAlert className="size-8" aria-hidden="true" />
         </div>
 
         <div>
@@ -192,7 +192,7 @@ export function MessageErrorModal({
 
         <div className="flex w-full flex-col gap-3 pt-1">
           <Button type="button" onClick={onRetry} className="w-full">
-            <RotateCcw className="size-4" aria-hidden="true" />
+            <LuRotateCcw className="size-4" aria-hidden="true" />
             Try again
           </Button>
 

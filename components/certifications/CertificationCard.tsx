@@ -1,4 +1,4 @@
-import { Award, CalendarDays, ExternalLink } from "lucide-react";
+import { LuAward, LuCalendarDays, LuExternalLink } from "react-icons/lu";
 import { Card } from "@/components/ui/Card";
 import type { Certification } from "@/types";
 import { CertificatePreview } from "./CertificatePreview";
@@ -32,7 +32,7 @@ export function CertificationCard({ certification }: { certification: Certificat
 
         {!image && (
           <div className="relative mb-5 flex size-11 items-center justify-center rounded-lg border border-border bg-background-secondary text-accent transition-[border-color,background-color,box-shadow,scale] duration-300 ease-standard group-hover:scale-105 group-hover:border-accent/50 group-hover:bg-accent/10 group-hover:shadow-glow">
-            <Award className="size-5" aria-hidden="true" />
+            <LuAward className="size-5" aria-hidden="true" />
           </div>
         )}
 
@@ -42,7 +42,7 @@ export function CertificationCard({ certification }: { certification: Certificat
         <p className="relative mt-1 text-sm font-medium text-accent">{issuer}</p>
 
         <p className="relative mt-3 inline-flex items-center gap-1.5 self-start rounded-md border border-border bg-background-secondary/70 px-2.5 py-1 text-xs font-medium text-secondary transition-colors duration-300 group-hover:border-accent/30">
-          <CalendarDays className="size-3.5 text-muted" aria-hidden="true" />
+          <LuCalendarDays className="size-3.5 text-muted" aria-hidden="true" />
           {date}
         </p>
 
@@ -64,7 +64,7 @@ export function CertificationCard({ certification }: { certification: Certificat
               aria-hidden="true"
               className="flex size-7 items-center justify-center rounded-full border border-border text-muted transition-[border-color,background-color,color] duration-300 ease-standard group-hover/cta:border-accent/50 group-hover/cta:bg-accent group-hover/cta:text-background"
             >
-              <ExternalLink className="size-3.5" />
+              <LuExternalLink className="size-3.5" />
             </span>
             <span className="sr-only"> (opens in a new tab)</span>
           </a>

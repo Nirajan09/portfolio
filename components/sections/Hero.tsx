@@ -1,4 +1,4 @@
-import { ArrowRight, Download, Mail } from "lucide-react";
+import { LuArrowRight, LuDownload, LuMail } from "react-icons/lu";
 import { Reveal } from "@/components/animation/Reveal";
 import { Stagger, StaggerItem } from "@/components/animation/Stagger";
 import { PageContainer } from "@/components/layout/PageContainer";
@@ -79,7 +79,7 @@ export function Hero() {
                   data-track-label="view_work"
                 >
                   View my work
-                  <ArrowRight
+                  <LuArrowRight
                     className="size-4 transition-transform duration-200 group-hover:translate-x-0.5"
                     aria-hidden="true"
                   />
@@ -94,7 +94,7 @@ export function Hero() {
                     data-track="resume_download"
                     data-track-location="hero"
                   >
-                    <Download className="size-4" aria-hidden="true" />
+                    <LuDownload className="size-4" aria-hidden="true" />
                     Download resume
                   </Button>
                 )}
@@ -133,7 +133,7 @@ export function Hero() {
                     data-track-network="email"
                     data-track-location="hero"
                   >
-                    <Mail className="size-5" aria-hidden="true" />
+                    <LuMail className="size-5" aria-hidden="true" />
                   </IconButton>
                 </div>
               </div>

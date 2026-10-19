@@ -1,4 +1,4 @@
-import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
+import { LuArrowUpRight, LuMail, LuMapPin, LuPhone } from "react-icons/lu";
 import type { ReactNode } from "react";
 
 import { Reveal } from "@/components/animation/Reveal";
@@ -40,7 +40,7 @@ function InfoRow({ icon, label, value, href, network }: InfoRowProps) {
           aria-hidden="true"
           className="flex size-7 shrink-0 items-center justify-center rounded-full border border-border text-muted transition-[border-color,background-color,color] duration-300 ease-standard group-hover:border-accent/50 group-hover:bg-accent group-hover:text-background"
         >
-          <ArrowUpRight className="size-4 transition-transform duration-300 ease-standard group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          <LuArrowUpRight className="size-4 transition-transform duration-300 ease-standard group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </span>
       )}
     </>
@@ -99,21 +99,21 @@ export function Contact() {
           <Reveal delay={0.1}>
             <ul className="mt-10 space-y-3">
               <InfoRow
-                icon={<Mail className="size-5" aria-hidden="true" />}
+                icon={<LuMail className="size-5" aria-hidden="true" />}
                 label="Email"
                 value={personal.email}
                 href={`mailto:${personal.email}`}
               />
 
               <InfoRow
-                icon={<Phone className="size-5" aria-hidden="true" />}
+                icon={<LuPhone className="size-5" aria-hidden="true" />}
                 label="Phone"
                 value={personal.phone}
                 href={`tel:${personal.phone.replace(/-/g, "")}`}
               />
 
               <InfoRow
-                icon={<MapPin className="size-5" aria-hidden="true" />}
+                icon={<LuMapPin className="size-5" aria-hidden="true" />}
                 label="Location"
                 value={personal.location}
               />

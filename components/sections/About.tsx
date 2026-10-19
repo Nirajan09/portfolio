@@ -1,20 +1,20 @@
+import type { IconType } from "react-icons";
 import {
-  Briefcase,
-  Dumbbell,
-  GraduationCap,
-  MapPin,
-  type LucideIcon,
-} from "lucide-react";
+  LuBriefcase,
+  LuDumbbell,
+  LuGraduationCap,
+  LuMapPin,
+} from "react-icons/lu";
 import { Reveal } from "@/components/animation/Reveal";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { about, type AboutFactId } from "@/data/about";
 
-const factIcons: Record<AboutFactId, LucideIcon> = {
-  current: Briefcase,
-  education: GraduationCap,
-  location: MapPin,
-  outside: Dumbbell,
+const factIcons: Record<AboutFactId, IconType> = {
+  current: LuBriefcase,
+  education: LuGraduationCap,
+  location: LuMapPin,
+  outside: LuDumbbell,
 };
 
 export function About() {

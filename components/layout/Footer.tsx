@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUp, ArrowUpRight, FileText, Mail } from "lucide-react";
+import { LuArrowUp, LuArrowUpRight, LuFileText, LuMail } from "react-icons/lu";
 import type { ReactNode } from "react";
 
 import { about } from "@/data/about";
@@ -105,7 +105,7 @@ export function Footer() {
               data-track-location="footer"
             >
               <Roll>{personal.email}</Roll>
-              <ArrowUpRight
+              <LuArrowUpRight
                 className="size-5 text-muted transition-[translate,color] duration-300 ease-standard group-hover/roll:-translate-y-0.5 group-hover/roll:translate-x-0.5 group-hover/roll:text-accent"
                 aria-hidden="true"
               />
@@ -171,7 +171,7 @@ export function Footer() {
                 data-track-network="email"
                 data-track-location="footer"
               >
-                <Mail className="size-5" aria-hidden="true" />
+                <LuMail className="size-5" aria-hidden="true" />
               </IconButton>
 
               {personal.resumeUrl && (
@@ -181,7 +181,7 @@ export function Footer() {
                   data-track="resume_click"
                   data-track-location="footer"
                 >
-                  <FileText className="size-5" aria-hidden="true" />
+                  <LuFileText className="size-5" aria-hidden="true" />
                 </IconButton>
               )}
             </div>
@@ -205,8 +205,8 @@ export function Footer() {
               className="relative flex size-9 items-center justify-center overflow-hidden rounded-full border border-border text-muted transition-[border-color,background-color,color,box-shadow] duration-300 ease-standard group-hover/roll:border-accent group-hover/roll:bg-accent group-hover/roll:text-background group-hover/roll:shadow-glow"
             >
               {/* Arrow rolls up and out; a new one rolls in from below */}
-              <ArrowUp className="size-4 transition-transform duration-300 ease-standard group-hover/roll:-translate-y-6" />
-              <ArrowUp className="absolute size-4 translate-y-6 transition-transform duration-300 ease-standard group-hover/roll:translate-y-0" />
+              <LuArrowUp className="size-4 transition-transform duration-300 ease-standard group-hover/roll:-translate-y-6" />
+              <LuArrowUp className="absolute size-4 translate-y-6 transition-transform duration-300 ease-standard group-hover/roll:translate-y-0" />
             </span>
           </Link>
         </div>

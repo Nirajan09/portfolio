@@ -1,4 +1,5 @@
-import { BookOpen, Briefcase, Folder, ImageIcon, type LucideIcon } from "lucide-react";
+import type { IconType } from "react-icons";
+import { LuBookOpen, LuBriefcase, LuFolder, LuImage } from "react-icons/lu";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/types";
@@ -12,10 +13,10 @@ const toneClasses: Record<Tone, string> = {
 };
 
 // Generated cover art, used until a real screenshot is set on `project.cover`.
-const covers: Record<string, { icon: LucideIcon; tone: Tone }> = {
-  "book-recommendation-system": { icon: BookOpen, tone: "cyan" },
-  "image-sharing-platform": { icon: ImageIcon, tone: "blue" },
-  "job-portal": { icon: Briefcase, tone: "violet" },
+const covers: Record<string, { icon: IconType; tone: Tone }> = {
+  "book-recommendation-system": { icon: LuBookOpen, tone: "cyan" },
+  "image-sharing-platform": { icon: LuImage, tone: "blue" },
+  "job-portal": { icon: LuBriefcase, tone: "violet" },
 };
 
 type ProjectCoverProps = {
@@ -26,7 +27,7 @@ type ProjectCoverProps = {
 };
 
 export function ProjectCover({ project, zoom = false, className }: ProjectCoverProps) {
-  const art = covers[project.slug] ?? { icon: Folder, tone: "cyan" as Tone };
+  const art = covers[project.slug] ?? { icon: LuFolder, tone: "cyan" as Tone };
   const Icon = art.icon;
   const motion = zoom
     ? "transition-transform duration-500 ease-standard group-hover:scale-105"

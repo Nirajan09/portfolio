@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
 
-// lucide-react v1 removed brand icons, so these two are inline (Simple Icons paths).
+// GitHub and LinkedIn brand icons (inline Simple Icons paths).
 type IconProps = SVGProps<SVGSVGElement>;
 
 export function GithubIcon(props: IconProps) {

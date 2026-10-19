@@ -1,6 +1,6 @@
 "use client";
 
-import { Expand, X } from "lucide-react";
+import { LuExpand, LuX } from "react-icons/lu";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 
@@ -45,7 +45,7 @@ export function CertificatePreview({ src, alt, title }: CertificatePreviewProps)
           className="group/preview absolute inset-0 flex cursor-pointer items-center justify-center bg-background/70 opacity-0 transition-opacity duration-200 ease-standard hover:opacity-100 focus-visible:opacity-100"
         >
           <span className="inline-flex translate-y-1 items-center gap-2 rounded-lg border border-accent/40 bg-surface/90 px-3.5 py-2 text-sm font-medium text-primary shadow-glow transition-transform duration-200 ease-standard group-hover/preview:translate-y-0 group-focus-visible/preview:translate-y-0">
-            <Expand className="size-4 text-accent" aria-hidden="true" />
+            <LuExpand className="size-4 text-accent" aria-hidden="true" />
             Preview
           </span>
         </button>
@@ -77,7 +77,7 @@ export function CertificatePreview({ src, alt, title }: CertificatePreviewProps)
             aria-label="Close preview"
             className="inline-flex size-9 items-center justify-center rounded-full border border-border text-muted transition-[border-color,background-color,color] duration-200 hover:border-accent/50 hover:bg-accent/10 hover:text-accent"
           >
-            <X className="size-5" aria-hidden="true" />
+            <LuX className="size-5" aria-hidden="true" />
           </button>
         </div>
         <div className="bg-background-secondary/60 p-4">

@@ -1,13 +1,13 @@
 "use client";
 
 import {
-  ArrowLeft,
-  ArrowRight,
-  ArrowUpRight,
-  Check,
-  RotateCcw,
-  Zap,
-} from "lucide-react";
+  LuArrowLeft,
+  LuArrowRight,
+  LuArrowUpRight,
+  LuCheck,
+  LuRotateCcw,
+  LuZap,
+} from "react-icons/lu";
 import {
   AnimatePresence,
   animate,
@@ -125,7 +125,7 @@ function Overview({
                   onClick={() => onJump(stat.id)}
                   className="group/stat relative block w-full overflow-hidden rounded-xl border border-border bg-surface/40 p-4 text-left transition-[translate,border-color,background-color,box-shadow] duration-300 ease-standard hover:-translate-y-1 hover:border-accent/40 hover:bg-surface-elevated/60 hover:shadow-glow"
                 >
-                  <ArrowUpRight
+                  <LuArrowUpRight
                     className="absolute right-3 top-3 size-4 text-muted opacity-0 transition-[opacity,translate,color] duration-300 ease-standard group-hover/stat:-translate-y-0.5 group-hover/stat:translate-x-0.5 group-hover/stat:text-accent group-hover/stat:opacity-100"
                     aria-hidden="true"
                   />
@@ -165,7 +165,7 @@ function Overview({
                 <Spotlight />
                 <div className="relative flex items-start gap-4 p-4">
                   <span className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-border bg-background-secondary text-accent transition-[scale,border-color,background-color] duration-300 ease-standard group-hover/card:scale-110 group-hover/card:border-accent/40 group-hover/card:bg-accent/10">
-                    <Zap className="size-4" aria-hidden="true" />
+                    <LuZap className="size-4" aria-hidden="true" />
                   </span>
                   <p className="pt-0.5 text-sm leading-relaxed text-secondary transition-colors duration-200 group-hover/card:text-primary sm:text-base">
                     {item}
@@ -200,7 +200,7 @@ function Features({ features }: { features: readonly string[] }) {
           <Spotlight />
           <div className="relative flex h-full flex-col gap-4 p-5">
             <span className="flex size-9 items-center justify-center rounded-full border border-accent/30 bg-accent/10 text-accent transition-[color,background-color,border-color,box-shadow] duration-300 group-hover/card:border-accent group-hover/card:bg-accent group-hover/card:text-background group-hover/card:shadow-glow">
-              <Check className="size-4" aria-hidden="true" />
+              <LuCheck className="size-4" aria-hidden="true" />
             </span>
             <p className="text-sm leading-relaxed text-secondary transition-colors duration-200 group-hover/card:text-primary sm:text-base">
               {feature}
@@ -270,7 +270,7 @@ function Stepper({ steps }: { steps: readonly string[] }) {
                   ].join(" ")}
                 >
                   {isDone ? (
-                    <Check className="size-4" aria-hidden="true" />
+                    <LuCheck className="size-4" aria-hidden="true" />
                   ) : (
                     i + 1
                   )}
@@ -305,7 +305,7 @@ function Stepper({ steps }: { steps: readonly string[] }) {
               aria-label="Previous step"
               className="grid size-9 place-items-center rounded-full border border-border text-secondary transition-[color,border-color,background-color,opacity] duration-200 hover:border-accent/50 hover:text-accent disabled:pointer-events-none disabled:opacity-30"
             >
-              <ArrowLeft className="size-4" aria-hidden="true" />
+              <LuArrowLeft className="size-4" aria-hidden="true" />
             </button>
             <button
               type="button"
@@ -314,9 +314,9 @@ function Stepper({ steps }: { steps: readonly string[] }) {
               className="grid size-9 place-items-center rounded-full border border-accent/40 bg-accent/10 text-accent transition-[color,background-color] duration-200 hover:bg-accent hover:text-background"
             >
               {atEnd ? (
-                <RotateCcw className="size-4" aria-hidden="true" />
+                <LuRotateCcw className="size-4" aria-hidden="true" />
               ) : (
-                <ArrowRight className="size-4" aria-hidden="true" />
+                <LuArrowRight className="size-4" aria-hidden="true" />
               )}
             </button>
           </div>
@@ -551,7 +551,7 @@ export function ProjectTabs({ project }: { project: Project }) {
               className="group/nav inline-flex items-center gap-3 text-sm font-medium text-muted transition-colors duration-200 hover:text-primary"
             >
               <span className="grid size-9 place-items-center rounded-full border border-border transition-[border-color,background-color,color] duration-300 group-hover/nav:border-accent group-hover/nav:bg-accent group-hover/nav:text-background">
-                <ArrowLeft
+                <LuArrowLeft
                   className="size-4 transition-transform duration-300 ease-standard group-hover/nav:-translate-x-0.5"
                   aria-hidden="true"
                 />
@@ -579,7 +579,7 @@ export function ProjectTabs({ project }: { project: Project }) {
                 {next.label}
               </span>
               <span className="grid size-9 place-items-center rounded-full border border-border transition-[border-color,background-color,color] duration-300 group-hover/nav:border-accent group-hover/nav:bg-accent group-hover/nav:text-background">
-                <ArrowRight
+                <LuArrowRight
                   className="size-4 transition-transform duration-300 ease-standard group-hover/nav:translate-x-0.5"
                   aria-hidden="true"
                 />

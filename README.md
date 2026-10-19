@@ -19,7 +19,7 @@ A personal portfolio site built with Next.js (App Router), React, TypeScript, an
 
 - [Next.js](https://nextjs.org) 16 (App Router) + React 19 + TypeScript 5
 - [Tailwind CSS](https://tailwindcss.com) 4 with CSS-variable design tokens (`app/globals.css`)
-- [motion](https://motion.dev) for animation, [lucide-react](https://lucide.dev) and [react-icons](https://react-icons.github.io) for icons
+- [motion](https://motion.dev) for animation, [react-icons](https://react-icons.github.io) for icons
 - [Resend](https://resend.com) for contact email delivery
 - [@vercel/analytics](https://vercel.com/docs/analytics) (optional)
 

@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { LuArrowUpRight } from "react-icons/lu";
 import Link from "next/link";
 import { TechChip } from "@/components/ui/TechChip";
 import { cn } from "@/lib/utils";
@@ -68,7 +68,7 @@ export function ProjectCard({
               className="absolute bottom-4 right-4 inline-flex translate-y-2 items-center gap-1.5 rounded-full border border-accent/40 bg-background/80 px-3.5 py-1.5 text-xs font-semibold text-accent opacity-0 backdrop-blur-md transition-[translate,opacity] duration-300 ease-standard group-hover:translate-y-0 group-hover:opacity-100"
             >
               View project
-              <ArrowUpRight className="size-3.5" />
+              <LuArrowUpRight className="size-3.5" />
             </span>
           </div>
         </div>
@@ -100,7 +100,7 @@ export function ProjectCard({
               />
             </span>
             <span className="flex size-9 items-center justify-center rounded-full border border-border text-muted transition-[border-color,background-color,color] duration-300 ease-standard group-hover:border-accent group-hover:bg-accent group-hover:text-background">
-              <ArrowUpRight
+              <LuArrowUpRight
                 className="size-4 transition-transform duration-300 ease-standard group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 aria-hidden="true"
               />

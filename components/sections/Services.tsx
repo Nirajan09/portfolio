@@ -1,14 +1,14 @@
 "use client";
 
+import type { IconType } from "react-icons";
 import {
-  ArrowUpRight,
-  Check,
-  CodeXml,
-  Database,
-  Globe,
-  PanelsTopLeft,
-  type LucideIcon,
-} from "lucide-react";
+  LuArrowUpRight,
+  LuCheck,
+  LuCodeXml,
+  LuDatabase,
+  LuGlobe,
+  LuPanelsTopLeft,
+} from "react-icons/lu";
 import Link from "next/link";
 import {
   useEffect,
@@ -22,11 +22,11 @@ import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { services, type ServiceId } from "@/data/services";
 
-const serviceIcons: Record<ServiceId, LucideIcon> = {
-  "full-stack": CodeXml,
-  backend: Database,
-  frontend: PanelsTopLeft,
-  "business-websites": Globe,
+const serviceIcons: Record<ServiceId, IconType> = {
+  "full-stack": LuCodeXml,
+  backend: LuDatabase,
+  frontend: LuPanelsTopLeft,
+  "business-websites": LuGlobe,
 };
 
 const arrowSteps: Record<string, number> = {
@@ -240,7 +240,7 @@ export function Services() {
                       className="flex animate-[fade-up_0.45s_var(--ease-standard)_both] items-center gap-3 text-sm text-primary sm:text-base"
                     >
                       <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
-                        <Check className="size-3" aria-hidden="true" />
+                        <LuCheck className="size-3" aria-hidden="true" />
                       </span>
                       {tag}
                     </li>
@@ -253,7 +253,7 @@ export function Services() {
                 className="group/cta mt-10 inline-flex items-center gap-2 rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-background transition-[background-color,box-shadow,translate] duration-300 ease-standard hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-glow"
               >
                 Discuss this project
-                <ArrowUpRight
+                <LuArrowUpRight
                   className="size-4 transition-transform duration-300 ease-standard group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5"
                   aria-hidden="true"
                 />

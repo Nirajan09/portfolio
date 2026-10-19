@@ -1,4 +1,4 @@
-import { MapPin } from "lucide-react";
+import { LuMapPin } from "react-icons/lu";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { personal } from "@/data/personal";
@@ -122,7 +122,7 @@ export function HeroPortrait() {
           style={{ animationDelay: `${0.75 + chips.length * 0.12}s` }}
         >
           <Chip floatDelay="[animation-delay:-3s]" className="whitespace-nowrap">
-            <MapPin className="size-4 text-accent" />
+            <LuMapPin className="size-4 text-accent" />
             {personal.location}
           </Chip>
         </div>

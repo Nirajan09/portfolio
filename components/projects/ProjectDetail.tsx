@@ -1,9 +1,9 @@
 import {
-  ArrowLeft,
-  ArrowUpRight,
-  Clock,
-  ExternalLink,
-} from "lucide-react";
+  LuArrowLeft,
+  LuArrowUpRight,
+  LuClock,
+  LuExternalLink,
+} from "react-icons/lu";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Reveal } from "@/components/animation/Reveal";
@@ -58,7 +58,7 @@ function RelatedCard({ project }: { project: Project }) {
           </p>
           <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-secondary transition-colors duration-200 group-hover:text-accent">
             View project
-            <ArrowUpRight
+            <LuArrowUpRight
               className="size-4 transition-transform duration-300 ease-standard group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               aria-hidden="true"
             />
@@ -93,7 +93,7 @@ export function ProjectDetail({ project, related }: ProjectDetailProps) {
             href="/#projects"
             className="group inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-4 py-1.5 text-sm font-medium text-muted transition-[color,border-color] duration-200 hover:border-accent/40 hover:text-primary"
           >
-            <ArrowLeft
+            <LuArrowLeft
               className="size-4 transition-transform duration-200 ease-standard group-hover:-translate-x-1"
               aria-hidden="true"
             />
@@ -130,7 +130,7 @@ export function ProjectDetail({ project, related }: ProjectDetailProps) {
                   data-track-kind="live"
                 >
                   Live demo
-                  <ExternalLink className="size-4" aria-hidden="true" />
+                  <LuExternalLink className="size-4" aria-hidden="true" />
                 </Button>
               )}
               {links?.repo && (
@@ -147,7 +147,7 @@ export function ProjectDetail({ project, related }: ProjectDetailProps) {
                 </Button>
               )}
               <span className="inline-flex items-center gap-2 px-2 text-sm text-muted">
-                <Clock className="size-4 text-accent" aria-hidden="true" />
+                <LuClock className="size-4 text-accent" aria-hidden="true" />
                 {readTime}
               </span>
             </div>
@@ -208,7 +208,7 @@ export function ProjectDetail({ project, related }: ProjectDetailProps) {
               </div>
               <Button href="/#contact" size="lg">
                 Get in touch
-                <ArrowUpRight className="size-4" aria-hidden="true" />
+                <LuArrowUpRight className="size-4" aria-hidden="true" />
               </Button>
             </div>
           </div>

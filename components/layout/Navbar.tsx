@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { LuArrowUpRight, LuMenu, LuX } from "react-icons/lu";
 import { useEffect, useState } from "react";
 import { navHref, navItems } from "@/data/navigation";
 import { personal } from "@/data/personal";
@@ -195,7 +195,7 @@ export function Navbar() {
             data-track-location="navbar_cta"
           >
             Let&apos;s talk
-            <ArrowUpRight
+            <LuArrowUpRight
               className="size-4 transition-transform duration-300 ease-standard group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5"
               aria-hidden="true"
             />
@@ -217,9 +217,9 @@ export function Navbar() {
             onClick={() => setOpen((value) => !value)}
           >
             {open ? (
-              <X className="size-5" aria-hidden="true" />
+              <LuX className="size-5" aria-hidden="true" />
             ) : (
-              <Menu className="size-5" aria-hidden="true" />
+              <LuMenu className="size-5" aria-hidden="true" />
             )}
           </button>
         </div>
@@ -292,7 +292,7 @@ export function Navbar() {
                 data-track-location="mobile_menu_cta"
               >
                 Let&apos;s talk
-                <ArrowUpRight className="size-4" aria-hidden="true" />
+                <LuArrowUpRight className="size-4" aria-hidden="true" />
               </Link>
             </nav>
           </motion.div>

@@ -1,17 +1,17 @@
 "use client";
 
+import type { IconType } from "react-icons";
 import {
-  ArrowUpRight,
-  Check,
-  FileText,
-  LoaderCircle,
-  Mail,
-  MessageSquare,
-  Send,
-  TriangleAlert,
-  User,
-  type LucideIcon,
-} from "lucide-react";
+  LuArrowUpRight,
+  LuCheck,
+  LuFileText,
+  LuLoaderCircle,
+  LuMail,
+  LuMessageSquare,
+  LuSend,
+  LuTriangleAlert,
+  LuUser,
+} from "react-icons/lu";
 
 import { useRef, useState, type FormEvent } from "react";
 
@@ -54,7 +54,7 @@ const controlClass = (invalid: boolean) =>
 type FieldProps = {
   name: ContactField;
   label: string;
-  icon: LucideIcon;
+  icon: IconType;
   value: string;
   error?: string;
   valid: boolean;
@@ -179,7 +179,7 @@ function Field({
               valid ? "scale-100 opacity-100" : "scale-50 opacity-0",
             )}
           >
-            <Check className="size-3" />
+            <LuCheck className="size-3" />
           </span>
         )}
       </div>
@@ -204,7 +204,7 @@ function Field({
           id={errorId}
           className="mt-2 flex animate-[fade-up_0.3s_var(--ease-standard)_both] items-center gap-1.5 text-sm text-error"
         >
-          <TriangleAlert
+          <LuTriangleAlert
             className="size-3.5 shrink-0"
             aria-hidden="true"
           />
@@ -422,7 +422,7 @@ export function ContactForm({
           <Field
             name="name"
             label="Name"
-            icon={User}
+            icon={LuUser}
             placeholder="Your full name"
             value={values.name}
             error={errors.name}
@@ -437,7 +437,7 @@ export function ContactForm({
             name="email"
             label="Email"
             type="email"
-            icon={Mail}
+            icon={LuMail}
             placeholder="you@example.com"
             value={values.email}
             error={errors.email}
@@ -452,7 +452,7 @@ export function ContactForm({
         <Field
           name="subject"
           label="Subject"
-          icon={FileText}
+          icon={LuFileText}
           placeholder="What's this about?"
           value={values.subject}
           error={errors.subject}
@@ -465,7 +465,7 @@ export function ContactForm({
         <Field
           name="message"
           label="Message"
-          icon={MessageSquare}
+          icon={LuMessageSquare}
           placeholder="Tell me a bit about your project or idea..."
           multiline
           value={values.message}
@@ -503,7 +503,7 @@ export function ContactForm({
           >
             {status === "submitting" ? (
               <>
-                <LoaderCircle
+                <LuLoaderCircle
                   className="size-4 animate-spin"
                   aria-hidden="true"
                 />
@@ -512,7 +512,7 @@ export function ContactForm({
             ) : (
               <>
                 Send message
-                <Send
+                <LuSend
                   className="size-4 transition-transform duration-300 ease-standard group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                   aria-hidden="true"
                 />
@@ -525,7 +525,7 @@ export function ContactForm({
             className="group/mail inline-flex items-center gap-1.5 text-sm text-muted transition-colors duration-200 hover:text-accent"
           >
             Prefer email? {fallbackEmail}
-            <ArrowUpRight
+            <LuArrowUpRight
               className="size-3.5 transition-transform duration-300 ease-standard group-hover/mail:-translate-y-0.5 group-hover/mail:translate-x-0.5"
               aria-hidden="true"
             />
