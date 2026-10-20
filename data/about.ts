@@ -2,31 +2,47 @@ import { personal } from "./personal";
 
 export const about = {
   paragraphs: [
-    "I'm a Full Stack Developer based in Kathmandu, Nepal. I started as a Frontend Developer Intern at Vyomite IT Services, moved into an Associate Full-Stack Developer role there, and now build web applications across the whole stack at Cherdung Info Tech.",
-    "My day-to-day stack is React, Next.js and TypeScript on the frontend, with Django REST Framework and Node.js/Express on the backend, backed by PostgreSQL and MongoDB.",
-    "I like keeping data, logic and interface clearly separated so features stay easy to change, and I care about the details people actually notice: responsive layouts, accessible interactions and pages that load quickly.",
+    "I'm a Full Stack Developer based in Kathmandu, Nepal, currently engineering scalable web applications and resilient backend services at Cherdung Info Tech. My journey evolved from frontend engineering into end-to-end full-stack development, delivering turnkey software from database modeling to fluid user interfaces.",
+    "My architectural focus centers on building modular systems with clean separation of concerns — pairing high-performance React and Next.js frontends with robust Django and Node.js APIs backed by PostgreSQL and MongoDB.",
+    "Beyond system architecture, I care deeply about the craftsman details that define exceptional user experiences: fluid GPU-accelerated micro-interactions, responsive typography, strict accessibility (WCAG), and sub-second page performance.",
   ],
-  status: "Open to freelance and collaboration",
+  status: "Open to select freelance & technical collaborations",
   facts: [
     {
       id: "current",
-      label: "Currently",
-      value: "Full Stack Developer at Cherdung Info Tech Pvt. Ltd.",
+      label: "Current Role",
+      value: "Full Stack Developer",
+      detail: "Cherdung Info Tech Pvt. Ltd.",
+      badge: "Active",
       wide: true,
     },
     {
       id: "education",
       label: "Education",
-      value: "BSc in Computer Science, Orchid International College",
+      value: "B.Sc. Computer Science & IT",
+      detail: "Orchid International College (Tribhuvan University)",
       wide: true,
     },
-    { id: "location", label: "Based in", value: personal.location, wide: false },
     {
-      id: "outside",
-      label: "Outside of code",
-      value: "Strength training and gaming",
+      id: "location",
+      label: "Based In",
+      value: personal.location,
+      detail: "UTC+5:45 • Remote & Hybrid Ready",
       wide: false,
     },
+    {
+      id: "outside",
+      label: "Beyond Code",
+      value: "Strength Training & Gaming",
+      detail: "Discipline, strategy & wellness",
+      wide: false,
+    },
+  ],
+  pillars: [
+    "Clean Architecture",
+    "Type-Safe Systems",
+    "High-Throughput APIs",
+    "Pixel-Perfect UI",
   ],
 } as const;
 

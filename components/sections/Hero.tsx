@@ -41,7 +41,7 @@ export function Hero() {
                   <span className="absolute inline-flex size-full animate-ping rounded-full bg-success opacity-60" />
                   <span className="relative inline-flex size-2 rounded-full bg-success" />
                 </span>
-                Available for opportunities
+                Open to select projects & collaborations
               </Badge>
             </StaggerItem>
 
