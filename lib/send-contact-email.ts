@@ -11,9 +11,7 @@ export type SendResult =
  * Credentials are kept on the server route and verified before sending.
  */
 export async function sendContactEmail(data: ContactInput): Promise<SendResult> {
-  const web3FormsKey =
-    process.env.WEB3FORMS_ACCESS_KEY ||
-    process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+  const web3FormsKey = process.env.WEB3FORMS_ACCESS_KEY;
 
   if (web3FormsKey) {
     try {

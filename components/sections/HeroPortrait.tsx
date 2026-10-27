@@ -61,13 +61,10 @@ export function HeroPortrait() {
       <div className="relative aspect-4/5 overflow-hidden rounded-xl border border-border bg-surface">
         {photo ? (
           <>
-            {/* Ambient matching backdrop fill */}
-            <Image
-              src={photo.src}
-              alt=""
-              fill
+            {/* Ambient matching backdrop glow */}
+            <div
               aria-hidden="true"
-              className="scale-110 object-cover blur-2xl opacity-40 brightness-75"
+              className="absolute inset-0 bg-radial-[at_50%_35%] from-accent/25 via-surface to-background-secondary"
             />
             {/* Full uncropped photo */}
             <Image

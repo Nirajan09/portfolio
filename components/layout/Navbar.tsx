@@ -60,9 +60,12 @@ export function Navbar() {
     return () => observer.disconnect();
   }, [isHome]);
 
-  // Escape closes the mobile menu.
+  // Escape closes the mobile menu, and body scroll is locked while open.
   useEffect(() => {
     if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
@@ -70,7 +73,10 @@ export function Navbar() {
 
     window.addEventListener("keydown", onKeyDown);
 
-    return () => window.removeEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
   }, [open]);
 
   const currentId = isHome

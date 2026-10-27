@@ -169,3 +169,15 @@ body::before {
     scale: 1 1;
   }
 }
+
+/* Caret blink for the typing role animation */
+@keyframes typing-role-caret {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  55%,
+  100% {
+    opacity: 0;
+  }
+}

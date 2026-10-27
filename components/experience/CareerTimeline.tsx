@@ -32,6 +32,7 @@ type Entry = {
   current?: boolean;
   location?: string;
   mode?: string;
+  highlights?: readonly string[];
 };
 
 const itemVariants: Variants = {
@@ -82,7 +83,7 @@ function TimelineItem({
   const glow = useTransform(reached, [0, 1], [0, 1]);
   const glowScale = useTransform(reached, [0, 1], [0.8, 1]);
   // Hex values mirror --text-muted and --accent (motion can't interpolate var()).
-  const iconColor = useTransform(reached, [0, 1], ["#94a3b8", "#22d3ee"]);
+  const iconColor = useTransform(reached, [0, 1], ["#9fb0c7", "#22d3ee"]);
 
   return (
     <motion.li
@@ -169,6 +170,20 @@ function TimelineItem({
               )}
             </ul>
           )}
+
+          {entry.highlights && entry.highlights.length > 0 && (
+            <ul className="mt-4 space-y-2 border-t border-border/60 pt-4 text-xs sm:text-sm text-secondary/90">
+              {entry.highlights.map((point) => (
+                <li key={point} className="flex items-start gap-2.5">
+                  <span
+                    aria-hidden="true"
+                    className="mt-1.5 size-1.5 shrink-0 rounded-full bg-accent"
+                  />
+                  <span className="leading-relaxed">{point}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </Card>
       </motion.div>
     </motion.li>
@@ -249,6 +264,7 @@ export function CareerTimeline({ experience, education }: CareerTimelineProps) {
     current: item.current,
     location: item.location,
     mode: item.mode,
+    highlights: item.highlights,
   }));
 
   const educationEntries: Entry[] = education.map((item) => ({

@@ -270,13 +270,31 @@ export function InteractiveMesh() {
       canvas.style.opacity = String(1 - 0.55 * t);
     };
     const onVisibility = () => (document.hidden ? stop() : start());
+    const attachInteractiveListeners = () => {
+      window.addEventListener("pointermove", onPointerMove, { passive: true });
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("blur", onPointerLeave);
+      document.documentElement.addEventListener("pointerleave", onPointerLeave);
+      document.addEventListener("visibilitychange", onVisibility);
+    };
+
+    const detachInteractiveListeners = () => {
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("blur", onPointerLeave);
+      document.documentElement.removeEventListener("pointerleave", onPointerLeave);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+
     const onMotionChange = () => {
       reduced = motionQuery.matches;
       stop();
       if (reduced) {
         mouse.active = false;
+        detachInteractiveListeners();
         draw();
       } else {
+        attachInteractiveListeners();
         start();
       }
     };
@@ -286,22 +304,19 @@ export function InteractiveMesh() {
     resize();
     onScroll();
     resizeObserver.observe(canvas);
-    window.addEventListener("pointermove", onPointerMove, { passive: true });
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("blur", onPointerLeave);
-    document.documentElement.addEventListener("pointerleave", onPointerLeave);
-    document.addEventListener("visibilitychange", onVisibility);
     motionQuery.addEventListener("change", onMotionChange);
-    start();
+
+    if (!reduced) {
+      attachInteractiveListeners();
+      start();
+    } else {
+      draw();
+    }
 
     return () => {
       stop();
       resizeObserver.disconnect();
-      window.removeEventListener("pointermove", onPointerMove);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("blur", onPointerLeave);
-      document.documentElement.removeEventListener("pointerleave", onPointerLeave);
-      document.removeEventListener("visibilitychange", onVisibility);
+      detachInteractiveListeners();
       motionQuery.removeEventListener("change", onMotionChange);
     };
   }, []);

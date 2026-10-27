@@ -12,11 +12,11 @@ const csp = [
   // unless every page is rendered dynamically with per-request nonces.
   // There is no user-generated content on this site; the other directives
   // below do the heavy lifting (no plugins, no framing, no foreign forms).
-  `script-src 'self' 'unsafe-inline'${gaEnabled ? " https://www.googletagmanager.com" : ""}`,
+  `script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com${gaEnabled ? " https://www.googletagmanager.com" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   `img-src 'self' data: blob:${gaEnabled ? " https://www.google-analytics.com https://www.googletagmanager.com" : ""}`,
   "font-src 'self'",
-  `connect-src 'self'${
+  `connect-src 'self' https://va.vercel-scripts.com${
     gaEnabled
       ? " https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com"
       : ""
@@ -50,6 +50,10 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   // Don't advertise the framework.
   poweredByHeader: false,
+
+  images: {
+    formats: ["image/avif", "image/webp"],
+  },
 
   async headers() {
     return [

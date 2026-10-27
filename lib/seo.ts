@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { personal } from "@/data/personal";
+import type { Project } from "@/types";
 
 export const siteConfig = {
   name: personal.name,
@@ -15,9 +16,12 @@ export const absoluteUrl = (path = "/") =>
 
 /**
  * Only the production deployment should be indexed. Vercel preview
- * deployments set VERCEL_ENV=preview; anywhere else we assume production.
+ * deployments set VERCEL_ENV=preview; development environments are unindexed.
  */
-export const allowIndexing = (process.env.VERCEL_ENV ?? "production") === "production";
+export const allowIndexing =
+  process.env.NODE_ENV === "production" &&
+  ((process.env.VERCEL_ENV ?? "production") === "production" ||
+    process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true");
 
 /** Canonical + Open Graph + Twitter metadata for one page. */
 export function pageMetadata({
@@ -78,5 +82,24 @@ export function websiteJsonLd() {
     description: siteConfig.description,
     inLanguage: "en",
     publisher: { "@id": absoluteUrl("/#person") },
+  };
+}
+
+export function projectJsonLd(project: Project) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: project.title,
+    description: project.overview ?? project.summary,
+    applicationCategory: "WebApplication",
+    operatingSystem: "Any",
+    author: {
+      "@type": "Person",
+      name: personal.name,
+      url: absoluteUrl("/"),
+    },
+    ...(project.links?.repo && { codeRepository: project.links.repo }),
+    ...(project.links?.live && { url: project.links.live }),
+    keywords: project.stack.join(", "),
   };
 }

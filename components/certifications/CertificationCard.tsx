@@ -8,9 +8,10 @@ import {
 } from "react-icons/lu";
 import { Card } from "@/components/ui/Card";
 import type { Certification } from "@/types";
+import { CertificatePreview } from "./CertificatePreview";
 
 export function CertificationCard({ certification }: { certification: Certification }) {
-  const { title, issuer, date, description, credentialUrl } = certification;
+  const { title, issuer, date, description, credentialUrl, image } = certification;
 
   return (
     <Card
@@ -28,6 +29,15 @@ export function CertificationCard({ certification }: { certification: Certificat
         aria-hidden="true"
         className="pointer-events-none absolute -right-12 -top-12 size-44 rounded-full bg-accent/10 opacity-30 blur-3xl transition-opacity duration-500 ease-standard group-hover:opacity-75"
       />
+
+      {/* Interactive Certificate Preview Thumbnail & Modal */}
+      {image && (
+        <CertificatePreview
+          src={image.src}
+          alt={image.alt}
+          title={title}
+        />
+      )}
 
       {/* Decorative certificate seal watermark */}
       <LuAward

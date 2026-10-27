@@ -109,7 +109,6 @@ export function TypingRole({
 
   return (
     <p className={`flex h-[1.4em] items-center ${className}`}>
-      <style>{`@keyframes typing-role-caret{0%,45%{opacity:1}55%,100%{opacity:0}}`}</style>
       <span className="sr-only">{roles[0]}</span>
       <span aria-hidden="true" className="flex items-center">
         <span className="whitespace-pre">{shown}</span>

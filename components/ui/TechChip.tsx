@@ -93,13 +93,18 @@ function normalize(name: string) {
  * Put it inside any element; the <li> is the stable hover target and only the
  * inner pill moves, so there is no flicker at the edges.
  */
-export function TechChip({ name }: { name: string }) {
+type TechChipProps = {
+  name: string;
+  as?: "li" | "span";
+};
+
+export function TechChip({ name, as: Component = "li" }: TechChipProps) {
   const meta = techMeta[normalize(name)];
   const Icon = meta?.icon;
   const color = meta?.color ?? FALLBACK_COLOR;
 
   return (
-    <li
+    <Component
       className="group/chip"
       style={{ "--brand": color } as CSSProperties}
     >
@@ -112,6 +117,6 @@ export function TechChip({ name }: { name: string }) {
         )}
         {name}
       </span>
-    </li>
+    </Component>
   );
 }

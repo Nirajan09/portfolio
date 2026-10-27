@@ -40,14 +40,25 @@ const spotlightStyle: CSSProperties = {
     "radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgb(34 211 238 / 0.12), transparent 70%)",
 };
 
-/** Writes the cursor position into every [data-spot] child, so the glow
-    trails across neighbouring cards. No React re-renders while moving. */
+let spotRafId: number | null = null;
+
+/** Writes the cursor position into every [data-spot] child, throttled via
+    requestAnimationFrame to prevent layout thrashing. */
 function trackSpotlight(event: MouseEvent<HTMLElement>) {
-  const items = event.currentTarget.querySelectorAll<HTMLElement>("[data-spot]");
-  items.forEach((item) => {
-    const rect = item.getBoundingClientRect();
-    item.style.setProperty("--mx", `${event.clientX - rect.left}px`);
-    item.style.setProperty("--my", `${event.clientY - rect.top}px`);
+  const target = event.currentTarget;
+  const clientX = event.clientX;
+  const clientY = event.clientY;
+
+  if (spotRafId !== null) return;
+
+  spotRafId = requestAnimationFrame(() => {
+    spotRafId = null;
+    const items = target.querySelectorAll<HTMLElement>("[data-spot]");
+    items.forEach((item) => {
+      const rect = item.getBoundingClientRect();
+      item.style.setProperty("--mx", `${clientX - rect.left}px`);
+      item.style.setProperty("--my", `${clientY - rect.top}px`);
+    });
   });
 }
 

@@ -19,7 +19,7 @@ export function Skills() {
         {skillGroups.map((group, index) => (
           <li key={group.id}>
             <Reveal delay={index * 0.1} className="h-full">
-              <SkillCard group={group} index={index} />
+              <SkillCard group={group} />
             </Reveal>
           </li>
         ))}

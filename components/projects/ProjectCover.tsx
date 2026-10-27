@@ -42,20 +42,17 @@ export function ProjectCover({ project, zoom = false, className }: ProjectCoverP
     >
       {project.cover ? (
         <>
-          {/* Subtle ambient matching backdrop fill that blooms on hover */}
-          <Image
-            src={project.cover.src}
-            alt=""
-            fill
+          {/* Subtle ambient backdrop glow that blooms on hover */}
+          <div
             aria-hidden="true"
-            className="scale-110 object-cover blur-2xl opacity-40 brightness-50 transform-gpu transition-all duration-700 ease-standard group-hover:scale-125 group-hover:opacity-70 group-hover:brightness-75"
+            className="absolute inset-0 bg-radial-[at_50%_50%] from-accent/20 via-surface/60 to-background-secondary transform-gpu transition-all duration-700 ease-standard group-hover:scale-105 group-hover:from-accent/35"
           />
           {/* Full uncropped application screenshot */}
           <Image
             src={project.cover.src}
             alt={project.cover.alt}
             fill
-            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            sizes="(min-width: 1024px) 650px, (min-width: 640px) 90vw, 100vw"
             className={cn("object-contain object-center", motion)}
           />
         </>

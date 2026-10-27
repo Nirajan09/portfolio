@@ -54,11 +54,9 @@ const skillMeta: Record<SkillName, { icon: IconType; color: string }> = {
 
 type SkillCardProps = {
   group: SkillGroup;
-  /** 0-based position, shown as "01", "02", ... */
-  index: number;
 };
 
-export function SkillCard({ group, index }: SkillCardProps) {
+export function SkillCard({ group }: SkillCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const rectRef = useRef<DOMRect | null>(null);
   const rafRef = useRef<number | null>(null);
@@ -121,14 +119,6 @@ export function SkillCard({ group, index }: SkillCardProps) {
           aria-hidden="true"
           className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-linear-to-r from-accent via-blue to-violet transition-[scale] duration-500 ease-standard group-hover:scale-x-100"
         />
-
-        {/* Oversized index number as a quiet decorative detail */}
-        {/* <span
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-1 -top-3 select-none font-display text-7xl font-bold leading-none text-primary/4 transition-colors duration-300 group-hover:text-accent/10"
-        >
-          {String(index + 1).padStart(2, "0")}
-        </span> */}
 
         <div className="relative">
           <div className="flex items-center gap-4">

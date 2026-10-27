@@ -26,12 +26,6 @@ export function Hero() {
       id="home"
       className="relative isolate flex min-h-svh items-center overflow-hidden"
     >
-      {/* Soft spotlight behind the headline: one quiet glow, no extra motion */}
-      {/* <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-40 top-1/4 -z-10 size-144 rounded-full bg-accent/10 blur-[120px]"
-      /> */}
-
       <PageContainer className="relative z-20 py-28">
         <div className="grid items-center gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-10">
           <Stagger className="max-w-3xl">
