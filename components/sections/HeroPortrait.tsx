@@ -76,7 +76,7 @@ export function HeroPortrait() {
       />
 
       {/* Main Portrait Card with High-Craft Frame */}
-      <div className="relative aspect-4/5 overflow-hidden rounded-2xl border border-accent/30 bg-surface/90 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),0_0_40px_-10px_rgba(34,211,238,0.25)] backdrop-blur-md group">
+      <div className="relative aspect-[3/4] overflow-hidden rounded-2xl border border-accent/30 bg-surface/90 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),0_0_40px_-10px_rgba(34,211,238,0.25)] backdrop-blur-md group">
         {/* Top hairline accent beam */}
         <div
           aria-hidden="true"
@@ -115,14 +115,20 @@ export function HeroPortrait() {
               className="absolute inset-0 bg-[linear-gradient(to_right,rgba(148,163,184,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[size:24px_24px] opacity-40"
             />
 
-            {/* Photo with subtle hover zoom */}
+            {/* Photo: covers full card edge-to-edge, perfectly framed */}
             <Image
               src={photo.src}
               alt={photo.alt}
               fill
               priority
               sizes="(min-width: 1024px) 380px, (min-width: 640px) 340px, 280px"
-              className="object-contain object-bottom transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              className="object-cover object-[center_65%] transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+            />
+
+            {/* Subtle bottom vignette to blend base seamlessly */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-surface via-surface/40 to-transparent z-10"
             />
           </>
         ) : (

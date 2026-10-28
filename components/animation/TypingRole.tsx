@@ -7,11 +7,11 @@ type TypingRoleProps = {
   roles: string[];
   /** ms per character while typing */
   typeMs?: number;
-  /** ms per character while deleting */
-  deleteMs?: number;
-  /** how long a finished statement stays on screen (cursor blinks) */
+  /** duration in ms for the accelerated deletion sweep */
+  deleteDurationMs?: number;
+  /** how long a finished statement stays on screen (cursor breathes) */
   holdMs?: number;
-  /** pause on an empty line before the next statement (cursor blinks) */
+  /** pause on an empty line before the next statement (cursor breathes) */
   gapMs?: number;
   className?: string;
 };
@@ -19,22 +19,15 @@ type TypingRoleProps = {
 type Phase = "typing" | "hold" | "deleting" | "gap";
 
 /**
- * Time-driven typewriter (requestAnimationFrame), so the speed is even and
- * doesn't stutter like chained setTimeouts can.
- *
- * - Cursor is solid while typing/deleting.
- * - Cursor blinks once a statement is finished, and during the gap before the next.
- * - The blink keyframes live inside this component, so nothing needs to be
- *   added to globals.css.
- * - Screen readers get the first role as static text; reduced motion shows it
- *   with no typing and no blink.
+ * Butter-smooth, RAF-driven typewriter with accelerated deletion sweep
+ * and breathing glowing caret.
  */
 export function TypingRole({
   roles,
-  typeMs = 75,
-  deleteMs = 40,
-  holdMs = 2600,
-  gapMs = 500,
+  typeMs = 38,
+  deleteDurationMs = 340,
+  holdMs = 2200,
+  gapMs = 240,
   className = "",
 }: TypingRoleProps) {
   const reduce = useReducedMotion();
@@ -84,13 +77,17 @@ export function TypingRole({
           len = full.length;
           if (elapsed >= holdMs) go("deleting", now);
           break;
-        case "deleting":
-          len = Math.max(0, full.length - Math.floor(elapsed / deleteMs));
-          if (len <= 0) {
+        case "deleting": {
+          // Butter-smooth accelerated deletion
+          const progress = Math.min(1, elapsed / deleteDurationMs);
+          const eased = progress * progress; // ease-in quadratic curve
+          len = Math.max(0, Math.round(full.length * (1 - eased)));
+          if (progress >= 1 || len <= 0) {
             index = (index + 1) % roles.length;
             go("gap", now);
           }
           break;
+        }
       }
 
       if (len !== shownLen) {
@@ -102,25 +99,26 @@ export function TypingRole({
 
     raf.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reduce, rolesKey, typeMs, deleteMs, holdMs, gapMs]);
+  }, [reduce, rolesKey, typeMs, deleteDurationMs, holdMs, gapMs]);
 
   const shown = reduce ? roles[0] : text;
 
   return (
-    <p className={`flex h-[1.4em] items-center ${className}`}>
+    <div className={`flex items-center min-h-[1.3em] ${className}`}>
       <span className="sr-only">{roles[0]}</span>
-      <span aria-hidden="true" className="flex items-center">
-        <span className="whitespace-pre">{shown}</span>
+      <span aria-hidden="true" className="inline-flex items-center">
+        <span className="whitespace-pre bg-linear-to-r from-accent via-cyan-200 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(34,211,238,0.25)]">
+          {shown}
+        </span>
         <span
-          className="ml-1 inline-block h-[1em] w-[3px] rounded-full bg-accent"
+          className="ml-1.5 inline-block h-[0.9em] w-[3px] rounded-full bg-accent shadow-[0_0_8px_rgba(34,211,238,0.9)]"
           style={
             !reduce && blink
-              ? { animation: "typing-role-caret 1s linear infinite" }
+              ? { animation: "typing-role-caret 0.8s ease-in-out infinite" }
               : undefined
           }
         />
       </span>
-    </p>
+    </div>
   );
 }

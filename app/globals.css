@@ -172,14 +172,15 @@ body::before {
   }
 }
 
-/* Caret blink for the typing role animation */
+/* Smooth breathing pulse for typing role caret */
 @keyframes typing-role-caret {
   0%,
-  45% {
-    opacity: 1;
-  }
-  55%,
   100% {
-    opacity: 0;
+    opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.9));
+  }
+  50% {
+    opacity: 0.2;
+    filter: drop-shadow(0 0 1px rgba(34, 211, 238, 0.2));
   }
 }
