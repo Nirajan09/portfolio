@@ -1,16 +1,38 @@
-import { LuMapPin } from "react-icons/lu";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { personal } from "@/data/personal";
 import { cn } from "@/lib/utils";
 
-// Floating chips around the portrait. Decorative: the same facts are in the
-// hero copy, so screen readers skip them. Negative delays desync the drift.
+// Floating chips around the portrait with desynced drift and glowing pips
 const chips = [
-  { label: "React", dot: "bg-accent", place: "-left-2 top-10 sm:-left-8", delay: "[animation-delay:0s]", hideOnMobile: false },
-  { label: "Next.js", dot: "bg-blue", place: "-right-2 top-24 sm:-right-8", delay: "[animation-delay:-2s]", hideOnMobile: false },
-  { label: "Django", dot: "bg-violet", place: "-left-2 bottom-32 sm:-left-10", delay: "[animation-delay:-4s]", hideOnMobile: true },
-  { label: "Node.js", dot: "bg-accent", place: "-right-2 bottom-20 sm:-right-6", delay: "[animation-delay:-5.5s]", hideOnMobile: true },
+  {
+    label: "React 19 & Next.js",
+    dot: "bg-accent shadow-[0_0_8px_rgba(34,211,238,0.8)]",
+    place: "-left-2 top-8 sm:-left-6",
+    delay: "[animation-delay:0s]",
+    hideOnMobile: false,
+  },
+  {
+    label: "TypeScript",
+    dot: "bg-blue shadow-[0_0_8px_rgba(59,130,246,0.8)]",
+    place: "-right-2 top-20 sm:-right-6",
+    delay: "[animation-delay:-2s]",
+    hideOnMobile: false,
+  },
+  {
+    label: "Django REST",
+    dot: "bg-violet shadow-[0_0_8px_rgba(139,92,246,0.8)]",
+    place: "-left-2 bottom-28 sm:-left-8",
+    delay: "[animation-delay:-3.5s]",
+    hideOnMobile: true,
+  },
+  {
+    label: "PostgreSQL & Redis",
+    dot: "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]",
+    place: "-right-2 bottom-16 sm:-right-6",
+    delay: "[animation-delay:-5s]",
+    hideOnMobile: true,
+  },
 ] as const;
 
 /** Glass chip: drifts, lifts and glows on hover, with a light sheen sweep. */
@@ -26,8 +48,8 @@ function Chip({
   return (
     <span
       className={cn(
-        "group relative inline-flex items-center gap-2 overflow-hidden rounded-lg border border-border bg-surface/80 px-3 py-2 text-sm font-medium text-primary shadow-lg backdrop-blur-md",
-        "animate-float transition-[scale,border-color,box-shadow] duration-300 ease-standard",
+        "group relative inline-flex items-center gap-2 overflow-hidden rounded-xl border border-border/90 bg-surface/85 px-3 py-2 text-xs sm:text-sm font-medium text-primary shadow-xl backdrop-blur-md",
+        "animate-float transition-[transform,border-color,box-shadow] duration-300 ease-standard",
         "hover:scale-105 hover:border-accent/50 hover:shadow-glow",
         floatDelay,
         className,
@@ -46,34 +68,61 @@ export function HeroPortrait() {
   const { photo } = personal;
 
   return (
-    <div className="relative isolate">
-      {/* Soft colour glow behind the frame */}
+    <div className="relative isolate mx-auto w-full max-w-[260px] sm:max-w-[300px] lg:max-w-[340px]">
+      {/* Ambient multi-layered luminous backlight */}
       <div
         aria-hidden="true"
-        className="absolute -inset-6 -z-10 rounded-4xl bg-linear-to-br from-accent/25 via-blue/10 to-violet/25 blur-3xl"
-      />
-      {/* Offset outline for depth */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 translate-x-3 translate-y-3 rounded-xl border border-accent/30"
+        className="absolute -inset-4 sm:-inset-6 -z-10 rounded-4xl bg-linear-to-br from-accent/25 via-blue/15 to-violet/25 blur-3xl opacity-80"
       />
 
-      <div className="relative aspect-4/5 overflow-hidden rounded-xl border border-border bg-surface">
+      {/* Main Portrait Card with High-Craft Frame */}
+      <div className="relative aspect-4/5 overflow-hidden rounded-2xl border border-accent/30 bg-surface/90 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),0_0_40px_-10px_rgba(34,211,238,0.25)] backdrop-blur-md group">
+        {/* Top hairline accent beam */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-accent to-transparent z-20"
+        />
+
+        {/* Technical Corner Brackets */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute left-2.5 top-2.5 size-3 border-l-2 border-t-2 border-accent/80 z-20"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute right-2.5 top-2.5 size-3 border-r-2 border-t-2 border-accent/80 z-20"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-2.5 left-2.5 size-3 border-b-2 border-l-2 border-accent/80 z-20"
+        />
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-2.5 right-2.5 size-3 border-b-2 border-r-2 border-accent/80 z-20"
+        />
+
         {photo ? (
           <>
-            {/* Ambient matching backdrop glow */}
+            {/* Ambient radial lighting backdrop */}
             <div
               aria-hidden="true"
               className="absolute inset-0 bg-radial-[at_50%_35%] from-accent/25 via-surface to-background-secondary"
             />
-            {/* Full uncropped photo */}
+
+            {/* Subtle technical background grid */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-[linear-gradient(to_right,rgba(148,163,184,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[size:24px_24px] opacity-40"
+            />
+
+            {/* Photo with subtle hover zoom */}
             <Image
               src={photo.src}
               alt={photo.alt}
               fill
               priority
-              sizes="(min-width: 1024px) 400px, (min-width: 640px) 320px, 280px"
-              className="object-contain object-center"
+              sizes="(min-width: 1024px) 380px, (min-width: 640px) 340px, 280px"
+              className="object-contain object-bottom transition-transform duration-700 ease-out group-hover:scale-[1.03]"
             />
           </>
         ) : (
@@ -90,38 +139,44 @@ export function HeroPortrait() {
         )}
       </div>
 
-      {/* Outer div positions + plays the pop-in; inner chip floats and reacts to hover */}
+      {/* Floating Interactive Chips */}
       <div aria-hidden="true">
         {chips.map((chip, index) => (
           <div
             key={chip.label}
             className={cn(
-              "absolute animate-chip-in",
+              "absolute animate-chip-in z-20",
               chip.place,
               chip.hideOnMobile && "hidden sm:block",
             )}
-            style={{ animationDelay: `${0.75 + index * 0.12}s` }}
+            style={{ animationDelay: `${0.6 + index * 0.12}s` }}
           >
             <Chip floatDelay={chip.delay}>
               <span
                 className={cn(
-                  "size-2 rounded-full transition-[scale] duration-300 group-hover:scale-150",
+                  "size-2 rounded-full transition-transform duration-300 group-hover:scale-150",
                   chip.dot,
                 )}
               />
-              {chip.label}
+              <span>{chip.label}</span>
             </Chip>
           </div>
         ))}
 
+        {/* Live Status Pill at Bottom Center */}
         <div
-          className="absolute -bottom-4 left-1/2 -translate-x-1/2 animate-chip-in"
-          style={{ animationDelay: `${0.75 + chips.length * 0.12}s` }}
+          className="absolute -bottom-5 left-1/2 -translate-x-1/2 animate-chip-in z-20 whitespace-nowrap"
+          style={{ animationDelay: `${0.6 + chips.length * 0.12}s` }}
         >
-          <Chip floatDelay="[animation-delay:-3s]" className="whitespace-nowrap">
-            <LuMapPin className="size-4 text-accent" />
-            {personal.location}
-          </Chip>
+          <div className="group relative inline-flex items-center gap-2 rounded-full border border-border/90 bg-surface/95 px-3.5 py-1.5 text-[11px] sm:text-xs font-medium text-primary shadow-2xl backdrop-blur-md transition-all duration-300 hover:border-accent/50 hover:shadow-glow">
+            <span className="relative flex size-2">
+              <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+            </span>
+            <span className="font-semibold text-secondary">Full Stack Dev</span>
+            <span className="text-muted/50" aria-hidden="true">•</span>
+            <span className="text-accent font-medium">Cherdung Info Tech</span>
+          </div>
         </div>
       </div>
     </div>
