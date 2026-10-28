@@ -1,156 +1,211 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import type { IconType } from "react-icons";
 import {
+  LuArrowUpRight,
   LuBriefcase,
   LuDumbbell,
   LuGraduationCap,
   LuMapPin,
-  LuSparkles,
 } from "react-icons/lu";
 import { Reveal } from "@/components/animation/Reveal";
 import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { about, type AboutFactId } from "@/data/about";
+import { TechChip } from "@/components/ui/TechChip";
+import { about, type AboutHighlightId } from "@/data/about";
 
-const factIcons: Record<AboutFactId, IconType> = {
-  current: LuBriefcase,
+const highlightIcons: Record<AboutHighlightId, IconType> = {
+  role: LuBriefcase,
   education: LuGraduationCap,
   location: LuMapPin,
-  outside: LuDumbbell,
+  interests: LuDumbbell,
 };
 
 export function About() {
+  const [kathmanduTime, setKathmanduTime] = useState<string>("");
+
+  const rectRef = useRef<DOMRect | null>(null);
+  const rafRef = useRef<number | null>(null);
+
+  // Live Kathmandu time update
+  useEffect(() => {
+    const updateTime = () => {
+      try {
+        const time = new Intl.DateTimeFormat("en-US", {
+          timeZone: "Asia/Kathmandu",
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true,
+        }).format(new Date());
+        setKathmanduTime(time);
+      } catch {
+        setKathmanduTime("UTC+5:45");
+      }
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Spotlight mouse tracking on the overview card
+  function handleMouseEnter(event: MouseEvent<HTMLDivElement>) {
+    rectRef.current = event.currentTarget.getBoundingClientRect();
+  }
+
+  function handleMouseMove(event: MouseEvent<HTMLDivElement>) {
+    const clientX = event.clientX;
+    const clientY = event.clientY;
+    const currentTarget = event.currentTarget;
+
+    if (rafRef.current !== null) return;
+
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null;
+      if (!rectRef.current) {
+        rectRef.current = currentTarget.getBoundingClientRect();
+      }
+      currentTarget.style.setProperty(
+        "--mx",
+        `${clientX - rectRef.current.left}px`,
+      );
+      currentTarget.style.setProperty(
+        "--my",
+        `${clientY - rectRef.current.top}px`,
+      );
+    });
+  }
+
+  function handleMouseLeave() {
+    rectRef.current = null;
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
+  }
+
   return (
     <Section id="about">
       <Reveal>
         <SectionHeading
           eyebrow="About Me"
-          title="Engineering across the entire stack"
-          description="Passionate about writing clean, maintainable code and solving complex technical challenges from database schemas to polished interfaces."
+          title="Background & Overview"
         />
       </Reveal>
 
-      <div className="mt-12 grid gap-12 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-16">
-        {/* ---------- Narrative Story ---------- */}
-        <Reveal className="max-w-prose space-y-6">
-          {about.paragraphs.map((paragraph, index) => (
-            <p
-              key={paragraph}
-              className={
-                index === 0
-                  ? "text-lg leading-8 text-primary sm:text-xl sm:leading-9 font-medium"
-                  : "text-base leading-8 text-secondary/90 sm:text-lg"
-              }
-            >
-              {paragraph}
+      <div className="mt-12 grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14 items-start">
+        {/* Left Column: Narrative Story */}
+        <Reveal className="space-y-6">
+          <div className="space-y-4 max-w-prose">
+            <p className="text-base sm:text-lg leading-relaxed text-primary/95">
+              {about.paragraphs[0]}
             </p>
-          ))}
 
-          {/* Philosophy Highlight Box */}
-          <div className="mt-6 rounded-xl border border-border/80 bg-surface/50 p-4 sm:p-5 backdrop-blur-xs transform-gpu will-change-transform transition-[border-color,box-shadow] duration-200 hover:border-accent/30 hover:shadow-xs">
-            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent">
-              <LuSparkles className="size-3.5" aria-hidden="true" />
-              <span>Core Philosophy</span>
+            <div className="space-y-3">
+              <p className="text-base leading-relaxed text-secondary/90">
+                {about.paragraphs[1]}
+              </p>
+
+              {/* Interactive Core Tech Stack Explorer */}
+              <div className="flex flex-wrap gap-2 pt-1">
+                {about.coreTechnologies.map((tech) => (
+                  <TechChip key={tech} name={tech} as="span" />
+                ))}
+              </div>
             </div>
-            <p className="mt-2 text-sm italic leading-relaxed text-secondary/90">
-              &ldquo;Building software that balances engineering rigor under the hood with intuitive elegance on the surface.&rdquo;
+
+            <p className="text-base leading-relaxed text-secondary/80 pt-1">
+              {about.paragraphs[2]}
             </p>
           </div>
         </Reveal>
 
-        {/* ---------- Profile Credentials Panel ---------- */}
+        {/* Right Column: Interactive Overview Spotlight Card */}
         <Reveal delay={0.1}>
-          <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-linear-to-br from-surface to-background-secondary p-5 sm:p-7 shadow-sm transition-[border-color,box-shadow] duration-300 hover:border-accent/40 hover:shadow-glow">
-            {/* Ambient glows */}
+          <div
+            onMouseEnter={handleMouseEnter}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className="group relative overflow-hidden rounded-2xl border border-border/70 bg-surface/40 p-5 sm:p-7 backdrop-blur-xs transition-[border-color,box-shadow] duration-300 hover:border-accent/40 hover:shadow-glow"
+          >
+            {/* Dynamic cursor-following spotlight beam */}
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute -right-16 -top-16 size-56 rounded-full bg-accent/10 opacity-40 blur-3xl"
+              className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              style={{
+                background:
+                  "radial-gradient(350px circle at var(--mx, 50%) var(--my, 0%), rgb(34 211 238 / 0.12), transparent 70%)",
+              }}
             />
+
+            {/* Hairline accent line that sweeps across the top on hover */}
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute -bottom-20 -left-12 size-48 rounded-full bg-violet/10 opacity-30 blur-3xl"
-            />
-            {/* Hairline along the top edge */}
-            <span
-              aria-hidden="true"
-              className="absolute inset-x-0 top-0 h-[2px] bg-linear-to-r from-transparent via-accent/60 to-transparent"
+              className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-linear-to-r from-accent via-blue to-violet transition-[scale] duration-500 ease-standard group-hover:scale-x-100"
             />
 
             <div className="relative">
-              {/* Professional Status Pill */}
-              <div className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 transition-colors duration-200 hover:border-emerald-500/50 hover:bg-emerald-500/15">
-                <span className="relative flex size-2">
-                  <span
-                    aria-hidden="true"
-                    className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-60"
-                  />
-                  <span className="relative inline-flex size-2 rounded-full bg-emerald-400" />
-                </span>
-                <span className="text-xs font-semibold text-emerald-400 sm:text-sm">
-                  {about.status}
-                </span>
+              <div className="flex items-center justify-between border-b border-border/50 pb-3.5">
+                <h3 className="text-xs font-mono uppercase tracking-wider text-muted">
+                  Overview
+                </h3>
+                {kathmanduTime && (
+                  <span className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-2.5 py-0.5">
+                    <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>{kathmanduTime} (NPT)</span>
+                  </span>
+                )}
               </div>
 
-              {/* Fact Tiles */}
-              <dl className="mt-5 grid gap-3 sm:grid-cols-2">
-                {about.facts.map((fact) => {
-                  const Icon = factIcons[fact.id];
-                  const hasBadge = "badge" in fact && fact.badge;
+              <dl className="divide-y divide-border/50">
+                {about.highlights.map((highlight) => {
+                  const Icon = highlightIcons[highlight.id];
+                  const isRole = highlight.id === "role";
+
                   return (
                     <div
-                      key={fact.id}
-                      className={[
-                        "group relative rounded-xl border border-border/70 bg-background/60 p-4 transform-gpu will-change-transform",
-                        "transition-[transform,translate,border-color,background-color,box-shadow] duration-200 ease-standard",
-                        "hover:-translate-y-0.5 hover:border-accent/40 hover:bg-surface-elevated/80 hover:shadow-xs",
-                        fact.wide ? "sm:col-span-2" : "",
-                      ].join(" ")}
+                      key={highlight.id}
+                      className="group/row py-3.5 first:pt-3.5 last:pb-0 transition-colors duration-150 rounded-xl px-2 -mx-2 hover:bg-surface-elevated/50"
                     >
                       <div className="flex items-start gap-3.5">
-                        <div className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border/80 bg-background-secondary text-accent transition-[scale,border-color,background-color] duration-200 ease-standard group-hover:scale-110 group-hover:border-accent/40 group-hover:bg-accent/15">
-                          <Icon className="size-4.5" aria-hidden="true" />
+                        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-border/70 bg-surface-elevated text-accent transition-all duration-200 group-hover/row:scale-110 group-hover/row:border-accent/40 group-hover/row:bg-accent/15">
+                          <Icon className="size-4" aria-hidden="true" />
                         </div>
+
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between gap-2">
-                            <dt className="text-xs font-medium uppercase tracking-wider text-muted transition-colors duration-200 group-hover:text-accent">
-                              {fact.label}
+                            <dt className="text-[11px] font-mono uppercase tracking-wider text-muted group-hover/row:text-accent transition-colors">
+                              {highlight.label}
                             </dt>
-                            {hasBadge && (
-                              <span className="inline-flex items-center rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-semibold text-emerald-400">
-                                {fact.badge}
-                              </span>
+                            {isRole && "href" in highlight && (
+                              <Link
+                                href={highlight.href}
+                                className="inline-flex items-center gap-1 text-[11px] font-mono text-accent hover:underline"
+                              >
+                                <span>Experience</span>
+                                <LuArrowUpRight
+                                  className="size-3 transition-transform duration-200 group-hover/row:translate-x-0.5 group-hover/row:-translate-y-0.5"
+                                  aria-hidden="true"
+                                />
+                              </Link>
                             )}
                           </div>
-                          <dd className="mt-1 font-display text-sm font-semibold text-primary sm:text-base">
-                            {fact.value}
+
+                          <dd className="mt-0.5 text-sm sm:text-base font-semibold text-primary">
+                            {highlight.title}
                           </dd>
-                          {"detail" in fact && fact.detail && (
-                            <p className="mt-0.5 text-xs text-muted/90 font-mono">
-                              {fact.detail}
-                            </p>
-                          )}
+
+                          <p className="mt-0.5 text-xs text-secondary/80">
+                            {highlight.detail}
+                          </p>
                         </div>
                       </div>
                     </div>
                   );
                 })}
               </dl>
-
-              {/* Engineering Pillars Micro-Row */}
-              <div className="mt-5 border-t border-border/70 pt-4">
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-muted">
-                  Engineering Tenets
-                </p>
-                <div className="mt-2.5 flex flex-wrap gap-2">
-                  {about.pillars.map((pillar) => (
-                    <span
-                      key={pillar}
-                      className="inline-flex items-center rounded-md border border-border/70 bg-background-secondary/70 px-2.5 py-1 text-xs font-medium text-secondary/90 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40 hover:bg-accent/10 hover:text-accent"
-                    >
-                      {pillar}
-                    </span>
-                  ))}
-                </div>
-              </div>
             </div>
           </div>
         </Reveal>
