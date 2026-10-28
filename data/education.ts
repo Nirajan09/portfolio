@@ -34,6 +34,6 @@ export const education: readonly Education[] = [
     degree: "Secondary Education Examination (SEE)",
     period: "2006 - 2019",
     location: "Kathmandu, Nepal",
-    focus: "Board of Secondary Education • Science & Mathematics",
+    focus: "National Examination Board • Science & Mathematics",
   },
 ];
