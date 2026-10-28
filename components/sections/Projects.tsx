@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { LuCircleCheck, LuFilter, LuSparkles } from "react-icons/lu";
+import { LuFilter } from "react-icons/lu";
 import { Reveal } from "@/components/animation/Reveal";
 import { Section } from "@/components/layout/Section";
 import { ProjectCard } from "@/components/projects/ProjectCard";
@@ -42,26 +42,11 @@ export function Projects() {
 
       {/* Section Header */}
       <Reveal>
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <SectionHeading
-            eyebrow="Featured Projects"
-            title="Engineered for real-world impact"
-            description="Deep-dive case studies into full-stack web platforms, machine learning recommender engines, and cloud media pipelines built with modern architectures."
-          />
-
-          {/* Quick credibility stats pill */}
-          <div className="flex flex-wrap items-center gap-3 rounded-xl border border-border/70 bg-surface/40 p-3 text-xs text-secondary sm:self-start md:self-auto">
-            <span className="inline-flex items-center gap-1.5 font-medium text-primary">
-              <LuSparkles className="size-3.5 text-accent" />
-              <span>3 Full-Stack Architectures</span>
-            </span>
-            <span className="text-border" aria-hidden="true">•</span>
-            <span className="inline-flex items-center gap-1.5 text-muted">
-              <LuCircleCheck className="size-3.5 text-emerald-400" />
-              <span>Documented Case Studies</span>
-            </span>
-          </div>
-        </div>
+        <SectionHeading
+          eyebrow="Featured Projects"
+          title="Engineered for real-world impact"
+          description="Deep-dive case studies into full-stack web platforms, machine learning recommender engines, and cloud media pipelines built with modern architectures."
+        />
       </Reveal>
 
       {/* Category Filter Pills with animated glide indicator */}
