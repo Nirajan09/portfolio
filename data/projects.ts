@@ -6,7 +6,7 @@ export const projects: readonly Project[] = [
     title: "Book Recommendation System",
     category: "E-Commerce & Machine Learning",
     role: "Full-Stack Developer",
-    status: "Full-Stack System",
+    status: "Live Production",
     summary:
       "A full-stack bookstore application combining personalized hybrid collaborative filtering, multi-gateway payments (Stripe, eSewa, COD), and an admin analytics dashboard.",
     overview:
@@ -273,6 +273,7 @@ export const projects: readonly Project[] = [
       "Admin dashboard tracking revenue, order volume, best-selling books, and low-stock alerts",
     ],
     links: {
+      live: "https://book-recommendation-system-umber.vercel.app/",
       repo: "https://github.com/Nirajan09/BookRecommendationSystem",
     },
     cover: {
@@ -532,7 +533,7 @@ export const projects: readonly Project[] = [
       "Live production deployment on Vercel with active user authentication",
     ],
     links: {
-      live: "https://job-portal-liard-one.vercel.app",
+      live: "https://job-portal-liard-one.vercel.app/",
       repo: "https://github.com/Nirajan09/job-portal",
     },
     cover: {
@@ -546,7 +547,7 @@ export const projects: readonly Project[] = [
     title: "Pixify",
     category: "Media Sharing & Cloud Pipeline",
     role: "Full-Stack Developer",
-    status: "Full-Stack System",
+    status: "Live Production",
     summary:
       "A modern full-stack media platform featuring stateless JWT authentication, zero-disk memory-buffered Cloudinary stream uploads, granular author-ownership enforcement, and an interactive Radix UI media gallery.",
     overview:
@@ -806,6 +807,7 @@ export const projects: readonly Project[] = [
       "Decoupled architecture: Express 5 REST API paired with Next.js 16 App Router frontend",
     ],
     links: {
+      live: "https://image-sharing-platform-two.vercel.app/",
       repo: "https://github.com/Nirajan09/image-sharing-platform",
     },
     cover: {
