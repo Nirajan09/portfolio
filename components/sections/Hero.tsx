@@ -11,9 +11,9 @@ import { TypingRole } from "@/components/animation/TypingRole";
 
 const ROLES = [
   "Full Stack Developer",
-  "React 19 & Next.js 16 Specialist",
-  "Django REST & Python Architect",
-  "Building High-Impact Web Systems",
+  "React & Next.js Developer",
+  "Django & Python Developer",
+  "Software Engineer",
 ];
 
 export function Hero() {
@@ -23,7 +23,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative isolate flex min-h-dvh flex-col justify-center overflow-hidden pt-20 pb-8 lg:py-0"
+      className="relative isolate flex min-h-dvh flex-col justify-center overflow-x-clip pt-24 pb-12 sm:pt-28 sm:pb-16 lg:py-0"
     >
       {/* Background Cyber-Mesh Grid Pattern with Radial Falloff */}
       <div
@@ -34,28 +34,28 @@ export function Hero() {
       {/* Atmospheric Ambient Glowing Orbs */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/4 top-1/4 -z-10 size-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/10 blur-[130px]"
+        className="pointer-events-none absolute left-1/4 top-1/4 -z-10 size-[320px] sm:size-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/10 blur-[110px] sm:blur-[130px]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-1/4 top-1/3 -z-10 size-[500px] -translate-y-1/2 rounded-full bg-blue/10 blur-[140px]"
+        className="pointer-events-none absolute right-1/4 top-1/3 -z-10 size-[320px] sm:size-[500px] -translate-y-1/2 rounded-full bg-blue/10 blur-[110px] sm:blur-[140px]"
       />
 
       <PageContainer className="relative z-20 w-full py-4 sm:py-6 lg:py-0">
         <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-12">
           <Stagger className="max-w-3xl">
-            {/* Live Status Eyebrow Badge */}
+            {/* Live Status Eyebrow Badge (Fully Responsive) */}
             <StaggerItem>
-              <div className="inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-medium text-emerald-400 backdrop-blur-md shadow-[0_0_20px_-5px_rgba(16,185,129,0.25)]">
-                <span className="relative flex size-2">
+              <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400 backdrop-blur-md shadow-[0_0_20px_-5px_rgba(16,185,129,0.25)]">
+                <span className="relative flex size-2 shrink-0">
                   <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
                 </span>
-                <span>Open to Engineering Roles & Projects</span>
-                <span className="text-emerald-500/40" aria-hidden="true">
+                <span className="truncate">Open to Roles & Projects</span>
+                <span className="text-emerald-500/40 hidden sm:inline" aria-hidden="true">
                   •
                 </span>
-                <span className="font-mono text-[11px] text-emerald-300/80">
+                <span className="font-mono text-[11px] text-emerald-300/80 hidden sm:inline">
                   Kathmandu, Nepal
                 </span>
               </div>
@@ -63,10 +63,7 @@ export function Hero() {
 
             {/* Main Headline */}
             <StaggerItem>
-              <h1 className="mt-4 sm:mt-5 text-balance font-display text-4xl font-bold tracking-tight text-primary sm:text-5xl lg:text-6xl">
-                <span className="mb-1.5 block font-mono text-xs sm:text-sm font-medium uppercase tracking-widest text-accent">
-                  // Full-Stack Software Engineer
-                </span>
+              <h1 className="mt-4 sm:mt-5 text-balance font-display text-3xl font-bold tracking-tight text-primary sm:text-5xl lg:text-6xl">
                 Hi, I&apos;m{" "}
                 <span className="bg-linear-to-r from-white via-cyan-100 to-cyan-300 bg-clip-text text-transparent drop-shadow-[0_2px_24px_rgba(34,211,238,0.2)]">
                   {personal.name}
@@ -76,10 +73,10 @@ export function Hero() {
 
             {/* Dynamic Typewriter Role */}
             <StaggerItem>
-              <div className="mt-2 sm:mt-2.5 flex items-center min-h-[38px] sm:min-h-[44px]">
+              <div className="mt-2 sm:mt-2.5 flex items-center min-h-[34px] sm:min-h-[44px]">
                 <TypingRole
                   roles={ROLES}
-                  className="font-display text-2xl font-semibold text-accent sm:text-3xl lg:text-4xl"
+                  className="font-display text-lg font-semibold text-accent sm:text-2xl md:text-3xl lg:text-4xl"
                 />
               </div>
             </StaggerItem>
@@ -95,11 +92,11 @@ export function Hero() {
 
             {/* Action CTA Buttons */}
             <StaggerItem>
-              <div className="mt-6 sm:mt-7 flex flex-col gap-3.5 sm:flex-row sm:items-center">
+              <div className="mt-6 sm:mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Button
                   href="/#projects"
                   size="lg"
-                  className="w-full sm:w-auto shadow-[0_0_25px_-5px_rgba(34,211,238,0.35)] hover:shadow-[0_0_35px_rgba(34,211,238,0.5)] cursor-pointer"
+                  className="w-full sm:w-auto shadow-[0_0_25px_-5px_rgba(34,211,238,0.35)] hover:shadow-[0_0_35px_rgba(34,211,238,0.5)] cursor-pointer justify-center"
                   data-track="hero_cta_click"
                   data-track-label="view_work"
                 >
@@ -115,7 +112,7 @@ export function Hero() {
                     href={resumeHref}
                     variant="secondary"
                     size="lg"
-                    className="w-full sm:w-auto cursor-pointer"
+                    className="w-full sm:w-auto cursor-pointer justify-center"
                     download
                     data-track="resume_download"
                     data-track-location="hero"
@@ -129,8 +126,8 @@ export function Hero() {
 
             {/* Social Links & Stack Ribbon */}
             <StaggerItem>
-              <div className="mt-6 sm:mt-7 flex flex-wrap items-center gap-4">
-                <div className="flex items-center gap-2.5">
+              <div className="mt-6 sm:mt-7 flex flex-wrap items-center gap-3 sm:gap-4">
+                <div className="flex items-center gap-2">
                   {github && (
                     <IconButton
                       href={github}
@@ -164,10 +161,10 @@ export function Hero() {
                   </IconButton>
                 </div>
 
-                <span className="h-4 w-px bg-border/80" aria-hidden="true" />
+                <span className="hidden sm:inline-block h-4 w-px bg-border/80" aria-hidden="true" />
 
                 <div className="flex items-center gap-1.5 text-xs font-mono text-muted">
-                  <LuSparkles className="size-3.5 text-accent" aria-hidden="true" />
+                  <LuSparkles className="size-3.5 text-accent shrink-0" aria-hidden="true" />
                   <span>TypeScript • Python • Next.js • Django</span>
                 </div>
               </div>
@@ -178,7 +175,7 @@ export function Hero() {
           <Reveal
             delay={0.3}
             y={24}
-            className="mx-auto w-full max-w-[260px] sm:max-w-[300px] lg:max-w-[340px] lg:justify-self-end"
+            className="mx-auto w-full max-w-[240px] sm:max-w-[300px] lg:max-w-[340px] lg:justify-self-end mt-4 lg:mt-0"
           >
             <HeroPortrait />
           </Reveal>

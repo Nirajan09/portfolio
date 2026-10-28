@@ -104,14 +104,14 @@ export function TypingRole({
   const shown = reduce ? roles[0] : text;
 
   return (
-    <div className={`flex items-center min-h-[1.3em] ${className}`}>
+    <div className={`flex items-center min-h-[1.3em] max-w-full overflow-hidden ${className}`}>
       <span className="sr-only">{roles[0]}</span>
-      <span aria-hidden="true" className="inline-flex items-center">
-        <span className="whitespace-pre bg-linear-to-r from-accent via-cyan-200 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(34,211,238,0.25)]">
+      <span aria-hidden="true" className="inline-flex items-center max-w-full">
+        <span className="truncate sm:whitespace-pre bg-linear-to-r from-accent via-cyan-200 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(34,211,238,0.25)]">
           {shown}
         </span>
         <span
-          className="ml-1.5 inline-block h-[0.9em] w-[3px] rounded-full bg-accent shadow-[0_0_8px_rgba(34,211,238,0.9)]"
+          className="ml-1.5 inline-block shrink-0 h-[0.9em] w-[3px] rounded-full bg-accent shadow-[0_0_8px_rgba(34,211,238,0.9)]"
           style={
             !reduce && blink
               ? { animation: "typing-role-caret 0.8s ease-in-out infinite" }

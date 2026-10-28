@@ -68,11 +68,11 @@ export function HeroPortrait() {
   const { photo } = personal;
 
   return (
-    <div className="relative isolate mx-auto w-full max-w-[260px] sm:max-w-[300px] lg:max-w-[340px]">
+    <div className="relative isolate mx-auto w-full max-w-[240px] sm:max-w-[300px] lg:max-w-[340px]">
       {/* Ambient multi-layered luminous backlight */}
       <div
         aria-hidden="true"
-        className="absolute -inset-4 sm:-inset-6 -z-10 rounded-4xl bg-linear-to-br from-accent/25 via-blue/15 to-violet/25 blur-3xl opacity-80"
+        className="absolute -inset-2 sm:-inset-6 -z-10 rounded-4xl bg-linear-to-br from-accent/25 via-blue/15 to-violet/25 blur-3xl opacity-80"
       />
 
       {/* Main Portrait Card with High-Craft Frame */}
@@ -151,9 +151,8 @@ export function HeroPortrait() {
           <div
             key={chip.label}
             className={cn(
-              "absolute animate-chip-in z-20",
+              "absolute animate-chip-in z-20 hidden md:block",
               chip.place,
-              chip.hideOnMobile && "hidden sm:block",
             )}
             style={{ animationDelay: `${0.6 + index * 0.12}s` }}
           >
@@ -171,11 +170,11 @@ export function HeroPortrait() {
 
         {/* Live Status Pill at Bottom Center */}
         <div
-          className="absolute -bottom-5 left-1/2 -translate-x-1/2 animate-chip-in z-20 whitespace-nowrap"
+          className="absolute -bottom-4 left-1/2 -translate-x-1/2 animate-chip-in z-20 whitespace-nowrap max-w-[95%]"
           style={{ animationDelay: `${0.6 + chips.length * 0.12}s` }}
         >
-          <div className="group relative inline-flex items-center gap-2 rounded-full border border-border/90 bg-surface/95 px-3.5 py-1.5 text-[11px] sm:text-xs font-medium text-primary shadow-2xl backdrop-blur-md transition-all duration-300 hover:border-accent/50 hover:shadow-glow">
-            <span className="relative flex size-2">
+          <div className="group relative inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-border/90 bg-surface/95 px-3 py-1 sm:px-3.5 sm:py-1.5 text-[10px] sm:text-xs font-medium text-primary shadow-2xl backdrop-blur-md transition-all duration-300 hover:border-accent/50 hover:shadow-glow">
+            <span className="relative flex size-2 shrink-0">
               <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
             </span>
