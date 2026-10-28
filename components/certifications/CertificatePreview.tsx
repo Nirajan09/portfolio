@@ -1,96 +1,130 @@
 "use client";
 
-import { LuExpand, LuX } from "react-icons/lu";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { LuExternalLink, LuX } from "react-icons/lu";
 
 type CertificatePreviewProps = {
+  isOpen: boolean;
+  onClose: () => void;
   src: string;
   alt: string;
   title: string;
+  issuer?: string;
+  date?: string;
+  credentialUrl?: string;
 };
 
-/** Thumbnail button that opens the full certificate in a native modal dialog. */
-export function CertificatePreview({ src, alt, title }: CertificatePreviewProps) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
+/** Full certificate image modal dialog rendered via React Portal. */
+export function CertificatePreview({
+  isOpen,
+  onClose,
+  src,
+  alt,
+  title,
+  issuer,
+  date,
+  credentialUrl,
+}: CertificatePreviewProps) {
+  const [mounted, setMounted] = useState(false);
 
-  // Never leave page scrolling locked if we unmount while open.
   useEffect(() => {
-    return () => {
-      document.documentElement.style.overflow = "";
-    };
+    setMounted(true);
   }, []);
 
-  const open = () => {
-    document.documentElement.style.overflow = "hidden";
-    dialogRef.current?.showModal();
-  };
+  // Handle ESC key press and scroll locking when open
+  useEffect(() => {
+    if (!isOpen) return;
 
-  return (
-    <>
-      <div className="relative aspect-4/3 w-full overflow-hidden border-b border-border bg-background-secondary">
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-          className="object-cover object-top"
-        />
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
-        {/* Hover veil & clickable button to open preview modal */}
-        <button
-          type="button"
-          onClick={open}
-          aria-label={`Preview certificate: ${title}`}
-          className="group/preview absolute inset-0 flex cursor-pointer items-center justify-center bg-background/70 opacity-0 transition-opacity duration-200 ease-standard hover:opacity-100 focus-visible:opacity-100"
-        >
-          <span className="inline-flex translate-y-1 items-center gap-2 rounded-lg border border-accent/40 bg-surface/90 px-3.5 py-2 text-sm font-medium text-primary shadow-glow transition-transform duration-200 ease-standard group-hover/preview:translate-y-0 group-focus-visible/preview:translate-y-0">
-            <LuExpand className="size-4 text-accent" aria-hidden="true" />
-            Preview
-          </span>
-        </button>
-      </div>
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
 
-      <dialog
-        ref={dialogRef}
-        aria-label={title}
-        onClose={() => {
-          document.documentElement.style.overflow = "";
-        }}
-        onClick={(event) => {
-          // A click on the backdrop lands on the dialog element itself.
-          if (event.target === event.currentTarget) event.currentTarget.close();
-        }}
-        className="m-auto w-[calc(100%-2rem)] max-w-4xl overflow-hidden rounded-xl border border-border bg-surface p-0 text-primary shadow-glow transition-[opacity,scale] duration-300 ease-standard backdrop:bg-background/80 backdrop:backdrop-blur-sm open:starting:scale-95 open:starting:opacity-0"
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
+  if (!mounted || !isOpen) return null;
+
+  return createPortal(
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Certificate preview for ${title}`}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-md transition-all duration-300"
+      onClick={onClose}
+    >
+      <div
+        className="relative max-h-[92vh] max-w-4xl w-full overflow-hidden rounded-2xl border border-border/80 bg-surface shadow-2xl transition-all duration-300"
+        onClick={(e) => e.stopPropagation()}
       >
-        {/* Gradient hairline across the top of the dialog */}
+        {/* Gradient top highlight hairline */}
         <span
           aria-hidden="true"
-          className="block h-px bg-linear-to-r from-accent via-blue to-violet"
+          className="block h-[2px] bg-linear-to-r from-accent via-blue to-violet"
         />
 
-        <div className="flex items-center justify-between gap-4 border-b border-border px-5 py-3">
-          <h3 className="font-display text-base font-semibold">{title}</h3>
+        {/* Modal Header */}
+        <div className="flex items-center justify-between gap-4 border-b border-border/70 bg-surface px-5 sm:px-6 py-4">
+          <div className="min-w-0">
+            <h3 className="font-display text-base sm:text-lg font-bold text-primary truncate">
+              {title}
+            </h3>
+            {(issuer || date) && (
+              <p className="text-xs text-muted mt-0.5">
+                {issuer} {issuer && date && "•"} {date && `Issued ${date}`}
+              </p>
+            )}
+          </div>
+
           <button
             type="button"
-            onClick={() => dialogRef.current?.close()}
-            aria-label="Close preview"
-            className="inline-flex size-9 items-center justify-center rounded-full border border-border text-muted transition-[border-color,background-color,color] duration-200 hover:border-accent/50 hover:bg-accent/10 hover:text-accent"
+            onClick={onClose}
+            aria-label="Close certificate preview"
+            className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-accent/50 hover:bg-accent/10 hover:text-accent cursor-pointer"
           >
             <LuX className="size-5" aria-hidden="true" />
           </button>
         </div>
-        <div className="bg-background-secondary/60 p-4">
+
+        {/* Modal Image Body */}
+        <div className="relative bg-background-secondary/80 p-4 sm:p-6 flex items-center justify-center max-h-[72vh] overflow-auto">
           <Image
             src={src}
             alt={alt}
             width={1600}
             height={1200}
-            sizes="(min-width: 896px) 896px, 100vw"
-            className="h-auto max-h-[75vh] w-full rounded-lg border border-border object-contain"
+            sizes="(min-width: 1024px) 896px, 100vw"
+            className="h-auto max-h-[68vh] w-auto max-w-full rounded-xl border border-border/80 object-contain shadow-lg"
           />
         </div>
-      </dialog>
-    </>
+
+        {/* Modal Footer with Verification Link */}
+        {credentialUrl && (
+          <div className="flex items-center justify-between border-t border-border/70 bg-surface/90 px-6 py-3 text-xs text-muted">
+            <span className="font-medium text-emerald-400">Verified Credential</span>
+            <a
+              href={credentialUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-medium text-accent hover:underline"
+            >
+              <span>Verify on official portal</span>
+              <LuExternalLink className="size-3.5" aria-hidden="true" />
+            </a>
+          </div>
+        )}
+      </div>
+    </div>,
+    document.body,
   );
 }
