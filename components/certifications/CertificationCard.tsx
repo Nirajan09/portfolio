@@ -77,17 +77,6 @@ export function CertificationCard({ certification }: { certification: Certificat
               <LuShieldCheck className="size-3.5" aria-hidden="true" />
               <span>Verified Credential</span>
             </div>
-
-            {/* Click to Preview Indicator Badge */}
-            {image && (
-              <div
-                aria-hidden="true"
-                className="flex items-center gap-1.5 rounded-lg border border-accent/30 bg-accent/10 px-2.5 py-1 text-xs font-medium text-accent transition-all duration-200 group-hover:border-accent/60 group-hover:bg-accent group-hover:text-background group-hover:shadow-[0_0_14px_rgba(34,211,238,0.3)]"
-              >
-                <LuExpand className="size-3.5" />
-                <span>Preview</span>
-              </div>
-            )}
           </div>
 
           {/* Issuer row */}
