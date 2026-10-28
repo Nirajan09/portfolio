@@ -1,193 +1,265 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type ReactNode } from "react";
-import { LuArrowUp, LuArrowUpRight, LuFileText, LuMail, LuShieldCheck } from "react-icons/lu";
+import { useEffect, useState, type ReactNode } from "react";
+import {
+  LuArrowUp,
+  LuCheck,
+  LuClock,
+  LuCopy,
+  LuFileText,
+  LuMail,
+  LuShieldCheck,
+} from "react-icons/lu";
 
-import { navHref, navItems } from "@/data/navigation";
+import { navHref } from "@/data/navigation";
 import { personal } from "@/data/personal";
-import { IconButton } from "@/components/ui/IconButton";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
 import { PrivacyModal } from "@/components/ui/PrivacyModal";
 import { PageContainer } from "./PageContainer";
 
 function ColumnHeading({ children }: { children: ReactNode }) {
   return (
-    <h2 className="font-mono text-xs font-semibold uppercase tracking-widest text-muted">
+    <h2 className="font-mono text-xs font-bold uppercase tracking-wider text-muted">
       {children}
     </h2>
   );
 }
 
-/**
- * Text-roll hover: the label slides up and an accent copy slides in from
- * below. The parent link must have the `group/roll` class.
- */
-function Roll({ children }: { children: string }) {
-  return (
-    <span className="relative inline-block overflow-hidden align-bottom leading-normal">
-      <span className="block transition-transform duration-300 ease-standard group-hover/roll:-translate-y-full group-focus-visible/roll:-translate-y-full">
-        {children}
-      </span>
-      <span
-        aria-hidden="true"
-        className="absolute inset-x-0 top-0 block translate-y-full text-accent transition-transform duration-300 ease-standard group-hover/roll:translate-y-0 group-focus-visible/roll:translate-y-0"
-      >
-        {children}
-      </span>
-    </span>
-  );
-}
-
 export function Footer() {
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [timeString, setTimeString] = useState<string>("");
+  const [showTimeDetails, setShowTimeDetails] = useState(false);
+  const [userOffsetMsg, setUserOffsetMsg] = useState<string>("");
+
   const { github, linkedin } = personal.socials;
 
+  useEffect(() => {
+    const updateTime = () => {
+      const formatter = new Intl.DateTimeFormat("en-US", {
+        timeZone: "Asia/Kathmandu",
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      });
+      setTimeString(formatter.format(new Date()));
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+
+    // Calculate relative timezone difference compared to visitor's device
+    try {
+      const visitorOffsetMinutes = -new Date().getTimezoneOffset();
+      const nepalOffsetMinutes = 345; // UTC+5:45
+      const diffMinutes = nepalOffsetMinutes - visitorOffsetMinutes;
+      if (diffMinutes === 0) {
+        setUserOffsetMsg("Same timezone as you");
+      } else if (diffMinutes > 0) {
+        const hours = Math.floor(diffMinutes / 60);
+        const mins = diffMinutes % 60;
+        setUserOffsetMsg(`+${hours}h ${mins ? `${mins}m ` : ""}ahead of you`);
+      } else {
+        const hours = Math.floor(Math.abs(diffMinutes) / 60);
+        const mins = Math.abs(diffMinutes) % 60;
+        setUserOffsetMsg(`-${hours}h ${mins ? `${mins}m ` : ""}behind you`);
+      }
+    } catch {
+      setUserOffsetMsg("Nepal Standard Time (UTC+5:45)");
+    }
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(personal.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <footer className="relative overflow-hidden border-t border-border/80 bg-linear-to-b from-surface/80 via-background-secondary to-background">
-      {/* Gradient hairline along the top edge */}
+    <footer className="relative overflow-hidden border-t border-border/80 bg-linear-to-b from-surface/90 via-background-secondary to-background pt-12 pb-8 md:pt-14 md:pb-9">
+      {/* Top Hairline Accent Gradient Beam */}
       <span
         aria-hidden="true"
         className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-accent/50 to-transparent"
       />
 
-      {/* Atmospheric corner glows */}
+      {/* Atmospheric Ambient Glows */}
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -left-28 -top-28 size-80 rounded-full bg-accent/8 blur-3xl"
+        className="pointer-events-none absolute -left-24 -top-24 size-80 rounded-full bg-accent/6 blur-3xl"
       />
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-36 -right-24 size-80 rounded-full bg-violet/8 blur-3xl"
+        className="pointer-events-none absolute -bottom-28 -right-24 size-80 rounded-full bg-violet/6 blur-3xl"
       />
 
-      <PageContainer className="relative pt-16 pb-6 md:pt-20">
-        <div className="grid gap-12 lg:grid-cols-[1.5fr_0.8fr_0.9fr] lg:gap-16">
-          {/* ---------- Brand Column ---------- */}
-          <div>
+      <PageContainer className="relative">
+        <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between md:gap-14">
+          {/* ================= Brand & Overview Column ================= */}
+          <div className="max-w-xl">
             <Link
               href={navHref("home")}
               aria-label={`${personal.name}, back to top`}
-              className="group relative inline-block rounded-md py-1"
+              className="group inline-flex items-baseline gap-1"
             >
-              <span className="font-display text-2xl font-bold tracking-tight text-primary transition-[color,text-shadow] duration-300 ease-standard group-hover:text-accent group-hover:[text-shadow:0_0_18px_rgb(34_211_238/0.45)]">
+              <span className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-primary transition-all duration-300 group-hover:text-accent">
                 {personal.name}
               </span>
-              <span
-                aria-hidden="true"
-                className="absolute inset-x-0 -bottom-0.5 h-0.5 origin-right scale-x-0 rounded-full bg-linear-to-r from-accent via-blue to-violet transition-[scale] duration-500 ease-standard group-hover:origin-left group-hover:scale-x-100"
-              />
+              <span className="font-display text-2xl sm:text-3xl font-bold text-accent">.</span>
             </Link>
 
-            <p className="mt-4 max-w-md text-sm leading-relaxed text-secondary/90 sm:text-[14.5px]">
-              Full Stack Developer specializing in React, Next.js, Django, and
-              Node.js. Building reliable web architectures, type-safe APIs, and
-              responsive interfaces.
+            <p className="mt-3 text-sm sm:text-[14.5px] leading-relaxed text-secondary/90">
+              Building scalable web applications, secure backend APIs, and modern user interfaces with React, Next.js, Django, and Node.js.
             </p>
 
-            {/* Location & Timezone Indicator (Replaces freelance badge) */}
-            <div className="mt-5 inline-flex items-center gap-2.5 rounded-full border border-border/80 bg-background/50 px-3.5 py-1.5 text-xs font-mono text-secondary">
-              <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
-              <span>Kathmandu, Nepal · UTC+5:45</span>
-            </div>
-
-            {/* Direct Email Link with Roll hover */}
-            <div className="mt-6">
-              <a
-                href={`mailto:${personal.email}`}
-                className="group/roll inline-flex items-center gap-2 font-display text-base font-semibold text-primary transition-colors duration-200 hover:text-accent sm:text-lg"
-                data-track="social_click"
-                data-track-network="email"
-                data-track-location="footer"
+            {/* Interactive Location & Live Kathmandu Time Badge */}
+            <div className="mt-4">
+              <button
+                type="button"
+                onClick={() => setShowTimeDetails((prev) => !prev)}
+                title="Click to toggle timezone & relative offset"
+                className="group/time inline-flex items-center gap-2 rounded-xl border border-border/80 bg-surface/60 px-3.5 py-1.5 text-xs font-mono text-secondary backdrop-blur-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/40 hover:bg-emerald-500/5 hover:text-primary hover:shadow-[0_0_16px_-3px_rgba(52,211,153,0.25)] cursor-pointer active:scale-95"
               >
-                <Roll>{personal.email}</Roll>
-                <LuArrowUpRight
-                  className="size-4 text-muted transition-[translate,color] duration-300 ease-standard group-hover/roll:-translate-y-0.5 group-hover/roll:translate-x-0.5 group-hover/roll:text-accent"
+                {/* Radar Pulse Beacon */}
+                <span className="relative flex size-2">
+                  <span
+                    aria-hidden="true"
+                    className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-60"
+                  />
+                  <span className="relative inline-flex size-2 rounded-full bg-emerald-400" />
+                </span>
+
+                <LuClock
+                  className="size-3.5 text-muted transition-transform duration-300 group-hover/time:rotate-45 group-hover/time:text-emerald-400"
                   aria-hidden="true"
                 />
+
+                {!showTimeDetails ? (
+                  <span>
+                    Kathmandu, Nepal ·{" "}
+                    <span className="text-primary font-medium tabular-nums">
+                      {timeString ? `${timeString} NPT` : "UTC+5:45"}
+                    </span>
+                  </span>
+                ) : (
+                  <span className="text-emerald-400 font-medium">
+                    UTC+5:45 (NPT) · {userOffsetMsg || "Nepal Standard Time"}
+                  </span>
+                )}
+              </button>
+            </div>
+
+            {/* Direct Email with Quick-Copy */}
+            <div className="mt-4 flex max-w-md items-center justify-between gap-2.5 rounded-xl border border-border/80 bg-surface/60 p-1.5 pl-3 text-xs font-mono text-secondary transition-all hover:border-accent/40">
+              <a
+                href={`mailto:${personal.email}`}
+                className="truncate font-medium text-primary hover:text-accent transition-colors"
+                title="Send email directly"
+              >
+                {personal.email}
               </a>
+              <button
+                type="button"
+                onClick={handleCopyEmail}
+                className="flex shrink-0 items-center gap-1 rounded-lg border border-border/80 bg-background/80 px-2.5 py-1 text-[11px] font-sans font-medium text-muted hover:border-accent/40 hover:bg-accent/10 hover:text-accent transition-all cursor-pointer active:scale-95"
+                aria-label="Copy email address"
+              >
+                {copied ? (
+                  <>
+                    <LuCheck className="size-3 text-emerald-400 stroke-3 animate-in zoom-in-75 duration-200" />
+                    <span className="text-emerald-400 font-semibold">Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <LuCopy className="size-3 transition-transform duration-200" />
+                    <span>Copy</span>
+                  </>
+                )}
+              </button>
             </div>
           </div>
 
-          {/* ---------- Navigation Column ---------- */}
-          <nav aria-label="Footer navigation">
-            <ColumnHeading>Navigation</ColumnHeading>
-
-            <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-1">
-              {navItems.map((item) => (
-                <li key={item.id}>
-                  <Link
-                    href={navHref(item.id)}
-                    className="group/roll inline-block text-sm text-secondary/80 transition-colors hover:text-primary sm:text-[14.5px]"
-                  >
-                    <Roll>{item.label}</Roll>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          {/* ---------- Connect Column ---------- */}
-          <div>
+          {/* ================= Connect Column (Icon-Only Buttons) ================= */}
+          <div className="md:max-w-xs">
             <ColumnHeading>Connect</ColumnHeading>
 
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-secondary/80 sm:text-[14.5px]">
-              Have a project, opportunity, or technical discussion in mind? Feel free to reach out.
+            <p className="mt-3.5 text-sm sm:text-[14.5px] leading-relaxed text-secondary/80">
+              Have a project, engineering opportunity, or technical discussion in mind? Connect directly:
             </p>
 
-            <div className="mt-5 flex flex-wrap gap-2.5">
+            {/* Horizontal Row of Interactive Icon Buttons */}
+            <div className="mt-4 flex items-center gap-2.5">
               {github && (
-                <IconButton
+                <a
                   href={github}
-                  label="GitHub"
-                  data-track="social_click"
-                  data-track-network="github"
-                  data-track-location="footer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub profile"
+                  title="GitHub"
+                  className="group flex size-10 items-center justify-center rounded-xl border border-border/80 bg-surface/60 text-secondary transition-all duration-200 hover:-translate-y-1 hover:border-white/30 hover:bg-white/10 hover:text-primary hover:shadow-[0_4px_16px_rgba(255,255,255,0.1)]"
                 >
-                  <GithubIcon className="size-5" />
-                </IconButton>
+                  <GithubIcon className="size-4.5 transition-transform duration-200 group-hover:scale-110" />
+                </a>
               )}
 
               {linkedin && (
-                <IconButton
+                <a
                   href={linkedin}
-                  label="LinkedIn"
-                  data-track="social_click"
-                  data-track-network="linkedin"
-                  data-track-location="footer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn profile"
+                  title="LinkedIn"
+                  className="group flex size-10 items-center justify-center rounded-xl border border-border/80 bg-surface/60 text-secondary transition-all duration-200 hover:-translate-y-1 hover:border-blue-500/40 hover:bg-blue-500/10 hover:text-blue-400 hover:shadow-[0_4px_16px_rgba(59,130,246,0.2)]"
                 >
-                  <LinkedinIcon className="size-5" />
-                </IconButton>
+                  <LinkedinIcon className="size-4.5 transition-transform duration-200 group-hover:scale-110" />
+                </a>
               )}
-
-              <IconButton
-                href={`mailto:${personal.email}`}
-                label="Email"
-                data-track="social_click"
-                data-track-network="email"
-                data-track-location="footer"
-              >
-                <LuMail className="size-5" aria-hidden="true" />
-              </IconButton>
 
               {personal.resumeUrl && (
-                <IconButton
+                <a
                   href={personal.resumeUrl}
-                  label="Resume"
-                  data-track="resume_click"
-                  data-track-location="footer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Download or view Resume"
+                  title="Resume (PDF)"
+                  className="group flex size-10 items-center justify-center rounded-xl border border-border/80 bg-surface/60 text-secondary transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-emerald-500/10 hover:text-emerald-400 hover:shadow-[0_4px_16px_rgba(52,211,153,0.2)]"
                 >
-                  <LuFileText className="size-5" aria-hidden="true" />
-                </IconButton>
+                  <LuFileText className="size-4.5 transition-transform duration-200 group-hover:scale-110" />
+                </a>
               )}
+
+              <a
+                href={`mailto:${personal.email}`}
+                aria-label="Send direct email"
+                title="Send Email"
+                className="group flex size-10 items-center justify-center rounded-xl border border-border/80 bg-surface/60 text-secondary transition-all duration-200 hover:-translate-y-1 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-[0_4px_16px_rgba(34,211,238,0.2)]"
+              >
+                <LuMail className="size-4.5 transition-transform duration-200 group-hover:scale-110" />
+              </a>
             </div>
+
+            <p className="mt-3.5 font-mono text-[11px] text-muted">
+              Response time: &lt; 24 hours
+            </p>
           </div>
         </div>
 
-        {/* ---------- Sub-Footer Bar ---------- */}
-        <div className="relative mt-14 flex flex-col gap-4 border-t border-border/70 pt-6 pb-2 text-xs text-muted sm:flex-row sm:items-center sm:justify-between md:mt-16">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <p>
+        {/* ================= Sub-Footer Bar ================= */}
+        <div className="relative mt-10 md:mt-12 flex flex-col gap-3.5 border-t border-border/70 pt-5 text-xs sm:text-sm text-secondary sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5">
+            <p className="font-medium text-secondary/90">
               &copy; {new Date().getFullYear()} {personal.name}. All rights reserved.
             </p>
             <span className="hidden text-border sm:inline" aria-hidden="true">
@@ -196,31 +268,22 @@ export function Footer() {
             <button
               type="button"
               onClick={() => setIsPrivacyOpen(true)}
-              className="group inline-flex items-center gap-1.5 font-medium text-muted transition-colors hover:text-accent underline underline-offset-4 decoration-border hover:decoration-accent cursor-pointer"
+              className="group inline-flex items-center gap-1.5 font-medium text-secondary/80 hover:text-accent transition-colors underline underline-offset-4 decoration-border/80 hover:decoration-accent cursor-pointer"
             >
-              <LuShieldCheck className="size-3.5 text-accent/70 transition-transform group-hover:scale-110" aria-hidden="true" />
+              <LuShieldCheck className="size-3.5 text-accent transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
               <span>Privacy Policy</span>
             </button>
           </div>
 
-          <div className="flex items-center gap-5 self-start sm:self-auto">
-            <span className="hidden font-mono text-[11px] text-muted/60 lg:inline-block">
-              Built with Next.js 16 & TailwindCSS
-            </span>
-
-            <Link
-              href={navHref("home")}
-              className="group/roll inline-flex items-center gap-2.5 font-medium text-secondary transition-colors hover:text-primary"
+          <div className="flex items-center gap-4 self-start sm:self-auto">
+            <button
+              type="button"
+              onClick={scrollToTop}
+              className="group inline-flex items-center gap-2 rounded-xl border border-border/80 bg-surface/60 px-3.5 py-1.5 text-xs sm:text-sm font-medium text-secondary transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40 hover:bg-surface hover:text-primary hover:shadow-xs cursor-pointer active:scale-95"
             >
-              <Roll>Back to top</Roll>
-              <span
-                aria-hidden="true"
-                className="relative flex size-8 items-center justify-center overflow-hidden rounded-full border border-border bg-surface text-muted transition-[border-color,background-color,color,box-shadow] duration-300 ease-standard group-hover/roll:border-accent group-hover/roll:bg-accent group-hover/roll:text-background group-hover/roll:shadow-glow"
-              >
-                <LuArrowUp className="size-3.5 transition-transform duration-300 ease-standard group-hover/roll:-translate-y-6" />
-                <LuArrowUp className="absolute size-3.5 translate-y-6 transition-transform duration-300 ease-standard group-hover/roll:translate-y-0" />
-              </span>
-            </Link>
+              <span>Back to top</span>
+              <LuArrowUp className="size-3.5 text-muted transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:text-accent" />
+            </button>
           </div>
         </div>
       </PageContainer>
