@@ -13,8 +13,8 @@ export function Experience() {
           <Reveal>
             <SectionHeading
               eyebrow="Career Timeline"
-              title="Experience & milestones"
-              description="A chronicle of hands-on engineering roles, impactful product delivery, and the computer science foundation that underpins my work."
+              title="Experience & Milestones"
+              description="A factual record of software engineering roles, technical responsibilities, and formal computer science education."
             />
           </Reveal>
         </div>

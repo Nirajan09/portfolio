@@ -80,7 +80,10 @@ export type Experience = {
   current?: boolean;
   location: string;
   mode?: string;
-  /** Real, factual bullet points. Omitted until provided. */
+  employmentType?: string;
+  department?: string;
+  technologies?: readonly string[];
+  /** Real, factual bullet points. Omitted when not needed. */
   highlights?: readonly string[];
 };
 

@@ -12,18 +12,17 @@ import {
 import type { IconType } from "react-icons";
 import {
   LuBriefcase,
+  LuBuilding2,
   LuCalendar,
   LuGraduationCap,
   LuLaptop,
   LuMapPin,
 } from "react-icons/lu";
-import { Card } from "@/components/ui/Card";
 import type { Education } from "@/data/education";
 import type { Experience } from "@/types";
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-/* One shape for both tabs, so a single Timeline renders either list. */
 type Entry = {
   id: string;
   title: string;
@@ -32,20 +31,26 @@ type Entry = {
   current?: boolean;
   location?: string;
   mode?: string;
-  highlights?: readonly string[];
+  employmentType?: string;
+  department?: string;
+  technologies?: readonly string[];
+  focus?: string;
+  status?: string;
+  initials?: string;
+  type: "experience" | "education";
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 24 },
   visible: (index: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: EASE, delay: Math.min(index, 3) * 0.08 },
+    transition: { duration: 0.5, ease: EASE, delay: Math.min(index, 3) * 0.08 },
   }),
 };
 
 const nodeVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.5 },
+  hidden: { opacity: 0, scale: 0.6 },
   visible: {
     opacity: 1,
     scale: 1,
@@ -54,11 +59,11 @@ const nodeVariants: Variants = {
 };
 
 const cardVariants: Variants = {
-  hidden: { opacity: 0, x: 24 },
+  hidden: { opacity: 0, x: 20 },
   visible: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.6, ease: EASE, delay: 0.15 },
+    transition: { duration: 0.5, ease: EASE, delay: 0.15 },
   },
 };
 
@@ -71,153 +76,260 @@ function TimelineItem({
   index: number;
   icon: IconType;
 }) {
-  const ref = useRef<HTMLLIElement>(null);
+  const itemRef = useRef<HTMLLIElement>(null);
+  const [spotlightPos, setSpotlightPos] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+  const rafRef = useRef<number | null>(null);
 
-  // 0 -> 1 as this entry's top crosses the "reading line" of the viewport.
-  // That moment is what lights the node up, in sync with the progress line.
+  // Synchronized rail lighting as entry crosses viewport reading line
   const { scrollYProgress: reached } = useScroll({
-    target: ref,
-    offset: ["start 62%", "start 50%"],
+    target: itemRef,
+    offset: ["start 68%", "start 52%"],
   });
 
   const glow = useTransform(reached, [0, 1], [0, 1]);
-  const glowScale = useTransform(reached, [0, 1], [0.8, 1]);
-  // Hex values mirror --text-muted and --accent (motion can't interpolate var()).
+  const glowScale = useTransform(reached, [0, 1], [0.85, 1]);
   const iconColor = useTransform(reached, [0, 1], ["#9fb0c7", "#22d3ee"]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      setSpotlightPos({ x, y });
+    });
+  };
 
   return (
     <motion.li
-      ref={ref}
+      ref={itemRef}
       custom={index}
       variants={itemVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-60px" }}
-      className="group relative pl-16"
+      viewport={{ once: true, margin: "-40px" }}
+      className="group relative pl-12 sm:pl-16"
     >
-      {/* Node */}
+      {/* Timeline Node */}
       <motion.span
         variants={nodeVariants}
-        className="absolute left-0 top-3 z-10 flex size-10 items-center justify-center rounded-full border border-border bg-background-secondary transition-[scale] duration-300 ease-standard group-hover:scale-110"
+        className="absolute left-0 top-3.5 z-10 flex size-9 sm:size-10 items-center justify-center rounded-full border border-border bg-background-secondary shadow-md transition-transform duration-300 ease-out group-hover:scale-110"
       >
-        {/* Lit state: fades and scales in when the progress line arrives */}
+        {/* Glow when reached by scroll */}
         <motion.span
           aria-hidden="true"
           style={{ opacity: glow, scale: glowScale }}
-          className="absolute inset-0 rounded-full border border-accent/60 bg-accent/15 shadow-glow"
+          className="absolute inset-0 rounded-full border border-accent/60 bg-accent/15 shadow-[0_0_14px_rgba(34,211,238,0.4)]"
         />
+
+        {/* Pulsing halo for active current role */}
         {entry.current && (
           <span
             aria-hidden="true"
-            className="absolute inset-0 animate-ping rounded-full bg-accent/25"
+            className="absolute -inset-1 animate-ping rounded-full bg-emerald-400/20"
           />
         )}
+
         <motion.span style={{ color: iconColor }} className="relative flex">
           <Icon className="size-4" aria-hidden="true" />
         </motion.span>
       </motion.span>
 
-      {/* Card */}
+      {/* Modern Executive Card */}
       <motion.div variants={cardVariants}>
-        <Card className="relative h-full overflow-hidden transform-gpu will-change-transform transition-[transform,translate,border-color,box-shadow] duration-300 ease-standard group-hover:-translate-y-0.5 group-hover:border-accent/40 group-hover:shadow-glow">
-          {/* Accent bar that grows down the left edge on hover */}
-          <span
+        <div
+          onMouseMove={handleMouseMove}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => {
+            setIsHovered(false);
+            if (rafRef.current) cancelAnimationFrame(rafRef.current);
+          }}
+          className="relative overflow-hidden rounded-xl border border-border/80 bg-surface/70 p-5 sm:p-6 backdrop-blur-md transition-all duration-300 ease-out hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_16px_36px_-12px_rgba(34,211,238,0.12)]"
+        >
+          {/* Mouse Spotlight */}
+          {isHovered && (
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -inset-px rounded-xl transition-opacity duration-300"
+              style={{
+                background: `radial-gradient(450px circle at ${spotlightPos.x}px ${spotlightPos.y}px, rgba(34, 211, 238, 0.08), transparent 75%)`,
+              }}
+            />
+          )}
+
+          {/* Top Hairline Gradient Highlight */}
+          <div
             aria-hidden="true"
-            className="absolute inset-y-0 left-0 w-0.5 origin-top scale-y-0 bg-linear-to-b from-accent via-blue to-violet transition-[scale] duration-500 ease-standard group-hover:scale-y-100"
+            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
           />
 
-          <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2">
-            <div className="min-w-0">
-              <h3 className="font-display text-lg font-semibold text-primary">
-                {entry.title}
-              </h3>
-              <p className="mt-1 text-sm font-medium text-accent">
-                {entry.organization}
-              </p>
+          {/* Left Vertical Accent Indicator */}
+          <span
+            aria-hidden="true"
+            className="absolute inset-y-0 left-0 w-1 origin-top scale-y-0 rounded-l-xl bg-linear-to-b from-accent via-blue to-violet transition-transform duration-500 ease-out group-hover:scale-y-100"
+          />
+
+          <div className="relative">
+            {/* Header: Organization Monogram + Role Title + Period Badge */}
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+              <div className="flex items-start gap-3.5 min-w-0">
+                {/* Organization Monogram / Emblem */}
+                <div
+                  className={`flex size-11 shrink-0 items-center justify-center rounded-xl border text-xs sm:text-sm font-display font-bold tracking-wider transition-all duration-200 ${
+                    entry.current
+                      ? "border-accent/40 bg-accent/10 text-accent shadow-[0_0_18px_-4px_rgba(34,211,238,0.3)]"
+                      : "border-border/80 bg-background-secondary/80 text-primary group-hover:border-accent/30 group-hover:text-accent"
+                  }`}
+                  aria-hidden="true"
+                >
+                  {entry.type === "education" ? (
+                    <LuGraduationCap className="size-5 text-accent" />
+                  ) : entry.initials ? (
+                    <span>{entry.initials}</span>
+                  ) : (
+                    <Icon className="size-4" />
+                  )}
+                </div>
+
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h3 className="font-display text-base sm:text-lg font-semibold tracking-tight text-primary transition-colors duration-200 group-hover:text-accent">
+                      {entry.title}
+                    </h3>
+
+                    {entry.current && (
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-400">
+                        <span className="relative flex size-1.5">
+                          <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                          <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
+                        </span>
+                        Current Role
+                      </span>
+                    )}
+
+                    {entry.status && (
+                      <span className="inline-flex items-center rounded-full border border-border/80 bg-background-secondary/80 px-2.5 py-0.5 text-[11px] font-medium text-secondary">
+                        {entry.status}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm">
+                    <span className="font-medium text-secondary/90">
+                      {entry.organization}
+                    </span>
+                    {entry.department && (
+                      <>
+                        <span className="text-muted/50" aria-hidden="true">
+                          •
+                        </span>
+                        <span className="text-xs text-muted">
+                          {entry.department}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Date Period Badge */}
+              <div className="flex items-center sm:items-start shrink-0">
+                <span className="inline-flex items-center gap-1.5 rounded-lg border border-border/80 bg-background/60 px-3 py-1 text-xs font-mono text-secondary transition-colors duration-200 group-hover:border-accent/30 group-hover:text-primary">
+                  <LuCalendar className="size-3.5 text-muted" aria-hidden="true" />
+                  {entry.period}
+                </span>
+              </div>
             </div>
 
-            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-md border border-border bg-background-secondary/70 px-2.5 py-1 text-xs font-medium text-secondary transition-colors duration-300 group-hover:border-accent/30 group-hover:text-primary">
-              <LuCalendar className="size-3.5 text-muted" aria-hidden="true" />
-              {entry.period}
-            </span>
-          </div>
+            {/* Metadata Bar: Employment Type, Mode, Location */}
+            <div className="mt-3.5 flex flex-wrap items-center gap-2 text-xs">
+              {entry.employmentType && (
+                <span className="inline-flex items-center gap-1.5 rounded-md border border-border/70 bg-background/40 px-2.5 py-0.5 font-medium text-secondary">
+                  <span className="size-1.5 rounded-full bg-accent/80" />
+                  {entry.employmentType}
+                </span>
+              )}
 
-          {(entry.current || entry.location || entry.mode) && (
-            <ul className="mt-4 flex flex-wrap items-center gap-2 text-xs text-secondary/90">
-              {entry.current && (
-                <li className="inline-flex items-center gap-1.5 rounded-full border border-success/30 bg-success/10 px-2.5 py-1 font-medium text-success">
-                  <span className="relative flex size-1.5">
-                    <span
-                      aria-hidden="true"
-                      className="absolute inline-flex size-full animate-ping rounded-full bg-success/60"
-                    />
-                    <span className="relative inline-flex size-1.5 rounded-full bg-success" />
-                  </span>
-                  Current
-                </li>
-              )}
-              {entry.location && (
-                <li className="inline-flex items-center gap-1.5">
-                  <LuMapPin className="size-3.5" aria-hidden="true" />
-                  {entry.location}
-                </li>
-              )}
               {entry.mode && (
-                <li className="inline-flex items-center gap-1.5">
-                  <LuLaptop className="size-3.5" aria-hidden="true" />
+                <span className="inline-flex items-center gap-1.5 rounded-md border border-border/70 bg-background/40 px-2.5 py-0.5 text-secondary/80">
+                  <LuLaptop className="size-3 text-muted" aria-hidden="true" />
                   {entry.mode}
-                </li>
+                </span>
               )}
-            </ul>
-          )}
 
-          {entry.highlights && entry.highlights.length > 0 && (
-            <ul className="mt-4 space-y-2 border-t border-border/60 pt-4 text-xs sm:text-sm text-secondary/90">
-              {entry.highlights.map((point) => (
-                <li key={point} className="flex items-start gap-2.5">
-                  <span
-                    aria-hidden="true"
-                    className="mt-1.5 size-1.5 shrink-0 rounded-full bg-accent"
-                  />
-                  <span className="leading-relaxed">{point}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </Card>
+              {entry.location && (
+                <span className="inline-flex items-center gap-1.5 rounded-md border border-border/70 bg-background/40 px-2.5 py-0.5 text-secondary/80">
+                  <LuMapPin className="size-3 text-muted" aria-hidden="true" />
+                  {entry.location}
+                </span>
+              )}
+            </div>
+
+            {/* Core Technologies (Clean Micro-Chips) */}
+            {entry.technologies && entry.technologies.length > 0 && (
+              <div className="mt-4 border-t border-border/50 pt-3.5">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="mr-1 text-[11px] font-mono uppercase tracking-wider text-muted">
+                    Stack:
+                  </span>
+                  {entry.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="inline-flex items-center rounded-md border border-border/70 bg-background-secondary/70 px-2.5 py-0.5 text-xs font-medium text-secondary transition-colors duration-200 group-hover:border-accent/25 group-hover:text-primary"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Academic Focus / Affiliation */}
+            {entry.focus && (
+              <div className="mt-4 flex items-center gap-2 border-t border-border/50 pt-3.5 text-xs text-secondary/80">
+                <LuGraduationCap
+                  className="size-3.5 text-accent shrink-0"
+                  aria-hidden="true"
+                />
+                <span>{entry.focus}</span>
+              </div>
+            )}
+          </div>
+        </div>
       </motion.div>
     </motion.li>
   );
 }
 
 function Timeline({ entries, icon }: { entries: Entry[]; icon: IconType }) {
-  const ref = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // The rail fills as the list scrolls through the viewport.
+  // The rail fills smoothly as list scrolls through viewport
   const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 62%", "end 50%"],
+    target: containerRef,
+    offset: ["start 65%", "end 50%"],
   });
+
   const progress = useSpring(scrollYProgress, {
     stiffness: 140,
     damping: 30,
     restDelta: 0.001,
   });
 
-  // Comet head position along the rail, and its fade at both ends.
   const headTop = useTransform(progress, (v) => `${v * 100}%`);
   const headOpacity = useTransform(progress, [0, 0.03, 0.97, 1], [0, 1, 1, 0]);
 
   return (
-    <div ref={ref} className="relative">
-      {/* Rail: track + glow + gradient fill + comet head, centred on x = 20px */}
+    <div ref={containerRef} className="relative">
+      {/* Rail: track + glow + gradient fill + comet head */}
       <div
         aria-hidden="true"
-        className="absolute bottom-5 left-5 top-5 w-0.5 -translate-x-1/2"
+        className="absolute bottom-5 left-4.5 sm:left-5 top-5 w-0.5 -translate-x-1/2"
       >
-        <span className="absolute inset-0 rounded-full bg-border" />
+        <span className="absolute inset-0 rounded-full bg-border/80" />
 
-        {/* Soft glow behind the fill */}
+        {/* Soft glow behind the rail fill */}
         <motion.span
           style={{ scaleY: progress, transformOrigin: "top" }}
           className="absolute -inset-x-1 inset-y-0 rounded-full bg-accent/40 blur-sm"
@@ -247,6 +359,15 @@ function Timeline({ entries, icon }: { entries: Entry[]; icon: IconType }) {
 
 type TabId = "experience" | "education";
 
+function getOrganizationInitials(name: string): string {
+  if (name.includes("Cherdung")) return "CIT";
+  if (name.includes("Vyomite")) return "VIT";
+  if (name.includes("Orchid")) return "OIC";
+  if (name.includes("St. Lawrence")) return "SLC";
+  if (name.includes("Centennial")) return "CSS";
+  return name.slice(0, 3).toUpperCase();
+}
+
 type CareerTimelineProps = {
   experience: readonly Experience[];
   education: readonly Education[];
@@ -264,7 +385,11 @@ export function CareerTimeline({ experience, education }: CareerTimelineProps) {
     current: item.current,
     location: item.location,
     mode: item.mode,
-    highlights: item.highlights,
+    employmentType: item.employmentType,
+    department: item.department,
+    technologies: item.technologies,
+    initials: getOrganizationInitials(item.company),
+    type: "experience",
   }));
 
   const educationEntries: Entry[] = education.map((item) => ({
@@ -272,14 +397,29 @@ export function CareerTimeline({ experience, education }: CareerTimelineProps) {
     title: item.degree,
     organization: item.institution,
     period: item.period,
+    location: item.location,
+    focus: item.focus,
+    status: item.status,
+    current: item.current,
+    initials: getOrganizationInitials(item.institution),
+    type: "education",
   }));
 
   const tabs: { id: TabId; label: string; icon: IconType; count: number }[] = [
-    { id: "experience", label: "Experience", icon: LuBriefcase, count: experienceEntries.length },
-    { id: "education", label: "Education", icon: LuGraduationCap, count: educationEntries.length },
+    {
+      id: "experience",
+      label: "Professional Experience",
+      icon: LuBriefcase,
+      count: experienceEntries.length,
+    },
+    {
+      id: "education",
+      label: "Education & Foundation",
+      icon: LuGraduationCap,
+      count: educationEntries.length,
+    },
   ];
 
-  // Left/Right arrows move between tabs, as in the WAI-ARIA tabs pattern.
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
     event.preventDefault();
@@ -290,11 +430,12 @@ export function CareerTimeline({ experience, education }: CareerTimelineProps) {
 
   return (
     <div>
+      {/* Tab Switcher */}
       <div
         role="tablist"
         aria-label="Experience and education"
         onKeyDown={handleKeyDown}
-        className="relative mb-8 inline-flex rounded-lg border border-border bg-surface/70 p-1 backdrop-blur-sm"
+        className="relative mb-8 inline-flex rounded-xl border border-border/80 bg-surface/75 p-1 backdrop-blur-md"
       >
         {tabs.map((tab) => {
           const selected = tab.id === active;
@@ -309,7 +450,7 @@ export function CareerTimeline({ experience, education }: CareerTimelineProps) {
               aria-controls={`${uid}-panel`}
               tabIndex={selected ? 0 : -1}
               onClick={() => setActive(tab.id)}
-              className={`relative flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 ${
+              className={`relative flex items-center gap-2 rounded-lg px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-medium transition-colors duration-200 cursor-pointer ${
                 selected ? "text-primary" : "text-muted hover:text-secondary"
               }`}
             >
@@ -317,15 +458,17 @@ export function CareerTimeline({ experience, education }: CareerTimelineProps) {
                 <motion.span
                   layoutId={`${uid}-pill`}
                   aria-hidden="true"
-                  className="absolute inset-0 rounded-md border border-accent/40 bg-accent/15"
+                  className="absolute inset-0 rounded-lg border border-accent/40 bg-accent/15 shadow-[0_0_12px_rgba(34,211,238,0.2)]"
                   transition={{ type: "spring", stiffness: 380, damping: 32 }}
                 />
               )}
               <TabIcon className="relative size-4" aria-hidden="true" />
               <span className="relative">{tab.label}</span>
               <span
-                className={`relative rounded-full px-1.5 text-xs tabular-nums transition-colors duration-200 ${
-                  selected ? "bg-accent/20 text-accent" : "bg-border/60 text-muted"
+                className={`relative rounded-full px-1.5 py-0.2 text-[11px] font-mono tabular-nums transition-colors duration-200 ${
+                  selected
+                    ? "bg-accent/20 text-accent font-semibold"
+                    : "bg-border/60 text-muted"
                 }`}
               >
                 {tab.count}
@@ -335,6 +478,7 @@ export function CareerTimeline({ experience, education }: CareerTimelineProps) {
         })}
       </div>
 
+      {/* Tab Panels */}
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={active}
@@ -344,7 +488,7 @@ export function CareerTimeline({ experience, education }: CareerTimelineProps) {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.3, ease: EASE }}
+          transition={{ duration: 0.25, ease: EASE }}
         >
           {active === "experience" ? (
             <Timeline entries={experienceEntries} icon={LuBriefcase} />
