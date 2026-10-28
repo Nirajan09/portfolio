@@ -10,14 +10,14 @@ export function Skills() {
       <Reveal>
         <SectionHeading
           eyebrow="Technical Stack"
-          title="Tools & technologies"
+          title="Tools & Technologies"
           description="A battle-tested stack of modern frontend frameworks, backend runtimes, databases, and DevOps tools I use to architect performant web applications."
         />
       </Reveal>
 
-      <ul className="mt-12 grid gap-5 lg:grid-cols-3">
+      <ul className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {skillGroups.map((group, index) => (
-          <li key={group.id}>
+          <li key={group.id} className="h-full">
             <Reveal delay={index * 0.1} className="h-full">
               <SkillCard group={group} />
             </Reveal>

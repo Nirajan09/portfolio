@@ -20,7 +20,6 @@ import {
   SiTailwindcss,
   SiTypescript,
 } from "react-icons/si";
-import { Card } from "@/components/ui/Card";
 import type { SkillGroup, SkillGroupId, SkillName } from "@/data/skills";
 
 /* Group icons */
@@ -30,10 +29,7 @@ const groupIcons: Record<SkillGroupId, IconType> = {
   tools: LuWrench,
 };
 
-/* Skill icons + brand colour shown on hover.
-   Brands whose official colour is black/dark use a light tone so they stay
-   visible on the dark surface. Record<SkillName, ...> makes TypeScript fail
-   if a skill is added to data/skills.ts without an icon. */
+/* Skill icons + brand colors */
 const skillMeta: Record<SkillName, { icon: IconType; color: string }> = {
   React: { icon: SiReact, color: "#61dafb" },
   "Next.js": { icon: SiNextdotjs, color: "#e2e8f0" },
@@ -62,14 +58,10 @@ export function SkillCard({ group }: SkillCardProps) {
   const rafRef = useRef<number | null>(null);
   const GroupIcon = groupIcons[group.id];
 
-  // Cache rect on enter to avoid calling getBoundingClientRect on every mousemove,
-  // preventing layout thrashing and frame drops during hover transitions.
   function handleMouseEnter(event: MouseEvent<HTMLDivElement>) {
     rectRef.current = event.currentTarget.getBoundingClientRect();
   }
 
-  // Throttle spotlight coordinate updates with requestAnimationFrame so style
-  // mutations sync perfectly with display refresh rate.
   function handleMouseMove(event: MouseEvent<HTMLDivElement>) {
     const clientX = event.clientX;
     const clientY = event.clientY;
@@ -82,8 +74,14 @@ export function SkillCard({ group }: SkillCardProps) {
       if (!rectRef.current) {
         rectRef.current = currentTarget.getBoundingClientRect();
       }
-      currentTarget.style.setProperty("--mx", `${clientX - rectRef.current.left}px`);
-      currentTarget.style.setProperty("--my", `${clientY - rectRef.current.top}px`);
+      currentTarget.style.setProperty(
+        "--mx",
+        `${clientX - rectRef.current.left}px`,
+      );
+      currentTarget.style.setProperty(
+        "--my",
+        `${clientY - rectRef.current.top}px`,
+      );
     });
   }
 
@@ -101,74 +99,74 @@ export function SkillCard({ group }: SkillCardProps) {
       onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="group h-full"
+      className="group relative h-full"
     >
-      <Card className="relative h-full overflow-hidden transform-gpu will-change-transform transition-[transform,translate,border-color,box-shadow] duration-300 ease-standard group-hover:-translate-y-1 group-hover:border-accent/40 group-hover:shadow-glow">
-        {/* Spotlight that follows the cursor (hidden until hover) */}
+      <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-border/80 bg-linear-to-b from-surface/90 via-surface/60 to-background-secondary/90 p-5 sm:p-6 backdrop-blur-md transition-[transform,border-color,box-shadow] duration-300 ease-standard group-hover:-translate-y-1 group-hover:border-accent/40 group-hover:shadow-[0_16px_40px_-15px_rgba(0,0,0,0.85),0_0_25px_-5px_rgba(34,211,238,0.18)]">
+        {/* Dynamic Spotlight that follows the cursor on hover */}
         <span
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
           style={{
             background:
-              "radial-gradient(320px circle at var(--mx, 50%) var(--my, 0%), rgb(34 211 238 / 0.10), transparent 70%)",
+              "radial-gradient(350px circle at var(--mx, 50%) var(--my, 0%), rgb(34 211 238 / 0.12), transparent 70%)",
           }}
         />
 
-        {/* Accent line draws across the top edge on hover */}
+        {/* Top hairline accent line that sweeps across on hover */}
         <span
           aria-hidden="true"
           className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-linear-to-r from-accent via-blue to-violet transition-[scale] duration-500 ease-standard group-hover:scale-x-100"
         />
 
         <div className="relative">
-          <div className="flex items-center gap-4">
-            <div className="flex size-12 shrink-0 items-center justify-center rounded-lg border border-border bg-background-secondary text-accent transform-gpu will-change-transform transition-[scale,rotate,border-color,background-color] duration-300 ease-standard group-hover:-rotate-3 group-hover:scale-110 group-hover:border-accent/40 group-hover:bg-accent/10">
+          {/* Header */}
+          <div className="flex items-center gap-3">
+            <div className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-border/80 bg-background-secondary text-accent transition-all duration-300 group-hover:scale-105 group-hover:border-accent/40 group-hover:bg-accent/15 group-hover:shadow-[0_0_15px_-3px_rgba(34,211,238,0.3)]">
               <GroupIcon className="size-5" aria-hidden="true" />
             </div>
-            <div className="min-w-0">
-              <h3 className="font-display text-lg font-semibold text-primary">
+            <div>
+              <h3 className="font-display text-base sm:text-lg font-semibold text-primary">
                 {group.title}
               </h3>
-              <p className="mt-0.5 inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-muted">
-                <span className="size-1.5 rounded-full bg-success" aria-hidden="true" />
-                {group.skills.length} technologies
+              <p className="mt-0.5 inline-flex items-center gap-1.5 text-[11px] font-mono text-muted">
+                <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
+                <span>{group.skills.length} Technologies</span>
               </p>
             </div>
           </div>
 
-          <p className="mt-4 text-sm leading-relaxed text-secondary">
+          <p className="mt-3 text-xs sm:text-sm leading-relaxed text-secondary/85">
             {group.description}
           </p>
 
           <div
             aria-hidden="true"
-            className="my-5 h-px bg-linear-to-r from-border via-border/60 to-transparent"
+            className="my-4 h-px bg-linear-to-r from-border/90 via-border/50 to-transparent"
           />
 
-          <ul className="flex flex-wrap gap-2">
+          {/* Interactive Technology Pills (Preserved UI layout with elevated visual polish) */}
+          <ul className="flex flex-wrap gap-2 sm:gap-2.5">
             {group.skills.map((skill) => {
               const { icon: SkillIcon, color } = skillMeta[skill];
               return (
-                // The li is the stable hover target; only the inner pill moves,
-                // so there is no flicker at its edges.
                 <li
                   key={skill}
                   className="group/chip"
                   style={{ "--brand": color } as CSSProperties}
                 >
-                  <span className="inline-flex transform-gpu will-change-transform items-center gap-2 rounded-md border border-border bg-background-secondary/70 px-3 py-2 text-sm font-medium text-secondary transition-[transform,translate,border-color,background-color,color,box-shadow] duration-200 ease-standard group-hover/chip:-translate-y-0.5 group-hover/chip:border-(--brand)/50 group-hover/chip:bg-(--brand)/10 group-hover/chip:text-primary group-hover/chip:shadow-[0_6px_20px_-8px_var(--brand)]">
+                  <span className="inline-flex transform-gpu will-change-transform items-center gap-2 rounded-xl border border-border/70 bg-background/60 px-3 py-1.5 text-xs sm:text-sm font-medium text-secondary transition-all duration-200 ease-standard group-hover/chip:-translate-y-0.5 group-hover/chip:border-(--brand)/50 group-hover/chip:bg-(--brand)/10 group-hover/chip:text-primary group-hover/chip:shadow-[0_4px_16px_-4px_var(--brand)]">
                     <SkillIcon
-                      className="size-4 transform-gpu text-muted transition-[color,transform,scale] duration-200 ease-standard group-hover/chip:scale-125 group-hover/chip:text-(--brand)"
+                      className="size-4 shrink-0 text-muted transition-all duration-200 ease-standard group-hover/chip:scale-115 group-hover/chip:text-(--brand)"
                       aria-hidden="true"
                     />
-                    {skill}
+                    <span>{skill}</span>
                   </span>
                 </li>
               );
             })}
           </ul>
         </div>
-      </Card>
+      </div>
     </div>
   );
 }

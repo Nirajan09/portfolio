@@ -1,60 +1,50 @@
 export const services = [
   {
     id: "full-stack",
+    index: "01",
     title: "Full-Stack Web Development",
-    shortTitle: "Full-Stack",
-    badge: "End-to-End",
-    summary:
-      "Turnkey web applications built from database architecture to a polished, high-performance interface.",
-    features: [
-      "Custom SaaS & web applications",
-      "Interactive dashboards & data portals",
-      "Database schema & migration modeling",
-      "Dockerized deployment & automated CI/CD",
+    tagline: "End-to-End Architecture",
+    description:
+      "I develop complete web applications, from database design and backend logic to responsive frontend interfaces.",
+    deliverables: [
+      "Custom web applications",
+      "Admin dashboards and management systems",
+      "Database design and integration",
+      "Deployment and application maintenance",
     ],
+    outcome: "Turnkey web systems built to scale seamlessly from day one.",
   },
   {
     id: "backend",
-    title: "Backend & API Systems",
-    shortTitle: "Backend & APIs",
-    badge: "High Concurrency",
-    summary:
-      "Secure, scalable backend services with high-throughput REST APIs, database integrity, and payment workflows.",
-    features: [
-      "RESTful API design & OpenAPI specs",
-      "PostgreSQL, MySQL & MongoDB data layers",
-      "Payment integrations (Stripe, eSewa, Khalti)",
-      "JWT auth, role-based access & webhooks",
+    index: "02",
+    title: "Backend Development & APIs",
+    tagline: "APIs & Data Layers",
+    description:
+      "I build secure, maintainable backend systems that handle application logic, data processing, authentication, and integrations.",
+    deliverables: [
+      "REST API development",
+      "Authentication and authorization",
+      "Database modeling and optimization",
+      "Third-party API integrations",
     ],
+    outcome: "High-performance APIs with strict data integrity and security.",
   },
   {
     id: "frontend",
-    title: "Modern Frontend Engineering",
-    shortTitle: "Frontend UI/UX",
-    badge: "Fluid & Fast",
-    summary:
-      "Sub-second page loads, clean design systems, and responsive layouts engineered for peak user engagement.",
-    features: [
-      "Next.js & React component architectures",
-      "Core Web Vitals & 95+ Lighthouse scores",
-      "Accessible (WCAG 2.1) & mobile-first UI",
-      "Smooth micro-interactions & GPU animations",
+    index: "03",
+    title: "Frontend Development",
+    tagline: "Modern UI / UX",
+    description:
+      "I create responsive, accessible, and user-friendly interfaces using modern frontend technologies.",
+    deliverables: [
+      "React and Next.js applications",
+      "Responsive layouts and reusable components",
+      "UI performance and accessibility improvements",
+      "Frontend and backend integration",
     ],
-  },
-  {
-    id: "business-websites",
-    title: "High-Impact Business Websites",
-    shortTitle: "Business Sites",
-    badge: "SEO & Growth",
-    summary:
-      "Conversion-focused websites built for modern brands, optimized to rank high on search engines and turn visitors into leads.",
-    features: [
-      "Technical SEO & schema metadata",
-      "Global CDN caching & sub-second first paint",
-      "Lead capture forms with spam protection",
-      "Analytics tracking & conversion tuning",
-    ],
+    outcome: "Fluid micro-interactions, responsive design, and WCAG accessibility.",
   },
 ] as const;
 
 export type ServiceId = (typeof services)[number]["id"];
+export type ServiceItem = (typeof services)[number];
