@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, type ReactNode } from "react";
+import dynamic from "next/dynamic";
+import { memo, useCallback, useEffect, useState, type ReactNode } from "react";
 import {
   LuArrowUp,
   LuCheck,
@@ -15,8 +16,22 @@ import {
 import { navHref } from "@/data/navigation";
 import { personal } from "@/data/personal";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
-import { PrivacyModal } from "@/components/ui/PrivacyModal";
 import { PageContainer } from "./PageContainer";
+
+// Lazy-load the heavy Privacy Modal only when requested by the user
+const PrivacyModal = dynamic(
+  () => import("@/components/ui/PrivacyModal").then((mod) => mod.PrivacyModal),
+  { ssr: false }
+);
+
+// Cache formatter to avoid instantiating Intl.DateTimeFormat every second
+const kathmanduTimeFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "Asia/Kathmandu",
+  hour: "numeric",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: true,
+});
 
 function ColumnHeading({ children }: { children: ReactNode }) {
   return (
@@ -26,7 +41,7 @@ function ColumnHeading({ children }: { children: ReactNode }) {
   );
 }
 
-export function Footer() {
+export const Footer = memo(function Footer() {
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [timeString, setTimeString] = useState<string>("");
@@ -37,14 +52,7 @@ export function Footer() {
 
   useEffect(() => {
     const updateTime = () => {
-      const formatter = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Asia/Kathmandu",
-        hour: "numeric",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true,
-      });
-      setTimeString(formatter.format(new Date()));
+      setTimeString(kathmanduTimeFormatter.format(new Date()));
     };
 
     updateTime();
@@ -73,7 +81,7 @@ export function Footer() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleCopyEmail = async () => {
+  const handleCopyEmail = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(personal.email);
       setCopied(true);
@@ -81,14 +89,24 @@ export function Footer() {
     } catch {
       setCopied(false);
     }
-  };
+  }, []);
 
-  const scrollToTop = () => {
+  const scrollToTop = useCallback(() => {
     if (window.location.hash) {
       window.history.replaceState(null, "", window.location.pathname);
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  }, []);
+
+  const handleHomeClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      if (window.location.pathname === "/") {
+        e.preventDefault();
+        scrollToTop();
+      }
+    },
+    [scrollToTop]
+  );
 
   return (
     <footer className="relative overflow-hidden border-t border-border/80 bg-linear-to-b from-surface/90 via-background-secondary to-background pt-12 pb-8 md:pt-14 md:pb-9">
@@ -115,12 +133,7 @@ export function Footer() {
             <Link
               href={navHref("home")}
               aria-label={`${personal.name}, back to top`}
-              onClick={(e) => {
-                if (window.location.pathname === "/") {
-                  e.preventDefault();
-                  scrollToTop();
-                }
-              }}
+              onClick={handleHomeClick}
               className="group inline-flex items-baseline gap-1"
             >
               <span className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-primary transition-all duration-300 group-hover:text-accent">
@@ -304,4 +317,4 @@ export function Footer() {
       />
     </footer>
   );
-}
+});

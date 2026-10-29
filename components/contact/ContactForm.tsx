@@ -13,7 +13,8 @@ import {
   LuUser,
 } from "react-icons/lu";
 
-import { useRef, useState, type FormEvent } from "react";
+import { memo, useCallback, useMemo, useRef, useState, type FormEvent } from "react";
+import dynamic from "next/dynamic";
 
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
@@ -27,10 +28,22 @@ import {
   type ContactInput,
 } from "@/lib/contact";
 
-import {
-  MessageErrorModal,
-  MessageSentModal,
-} from "@/components/contact/ContactStatusModal";
+// Lazy-load status modals to avoid bundling them on initial page load
+const MessageSentModal = dynamic(
+  () =>
+    import("@/components/contact/ContactStatusModal").then(
+      (m) => m.MessageSentModal,
+    ),
+  { ssr: false },
+);
+
+const MessageErrorModal = dynamic(
+  () =>
+    import("@/components/contact/ContactStatusModal").then(
+      (m) => m.MessageErrorModal,
+    ),
+  { ssr: false },
+);
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -67,7 +80,7 @@ type FieldProps = {
   multiline?: boolean;
 };
 
-function Field({
+const Field = memo(function Field({
   name,
   label,
   icon: Icon,
@@ -98,21 +111,18 @@ function Field({
     "aria-describedby": error ? errorId : undefined,
   };
 
-  const ratio = Math.min(value.length / maxLength, 1);
-
-  const counterClass =
-    ratio >= 1
-      ? "text-error"
-      : ratio >= 0.9
-        ? "text-warning"
-        : "text-muted";
-
-  const barClass =
-    ratio >= 1
-      ? "bg-error"
-      : ratio >= 0.9
-        ? "bg-warning"
-        : "bg-linear-to-r from-accent via-blue to-violet";
+  const { ratio, counterClass, barClass } = useMemo(() => {
+    const r = Math.min(value.length / maxLength, 1);
+    const c =
+      r >= 1 ? "text-error" : r >= 0.9 ? "text-warning" : "text-muted";
+    const b =
+      r >= 1
+        ? "bg-error"
+        : r >= 0.9
+          ? "bg-warning"
+          : "bg-linear-to-r from-accent via-blue to-violet";
+    return { ratio: r, counterClass: c, barClass: b };
+  }, [value.length, maxLength]);
 
   return (
     <div className="group">
@@ -213,9 +223,9 @@ function Field({
       )}
     </div>
   );
-}
+});
 
-export function ContactForm({
+export const ContactForm = memo(function ContactForm({
   fallbackEmail,
 }: {
   fallbackEmail: string;
@@ -232,76 +242,91 @@ export function ContactForm({
   const startedRef = useRef(false);
   const formLoadTime = useRef<number>(Date.now());
 
-  const handleFocus = () => {
+  const handleFocus = useCallback(() => {
     if (startedRef.current) return;
 
     startedRef.current = true;
     trackEvent("contact_form_start");
-  };
+  }, []);
 
-  const focusField = (field: ContactField) => {
+  const focusField = useCallback((field: ContactField) => {
     const element = formRef.current?.elements.namedItem(field);
 
     if (element instanceof HTMLElement) {
       element.focus();
     }
-  };
+  }, []);
 
-  const setValue = (field: ContactField, value: string) => {
+  const setValue = useCallback((field: ContactField, value: string) => {
     setValues((current) => ({
       ...current,
       [field]: value,
     }));
 
-    if (errors[field]) {
-      setErrors((current) => ({
-        ...current,
-        [field]: undefined,
-      }));
-    }
-  };
+    setErrors((current) => {
+      if (!current[field]) return current;
+      const next = { ...current };
+      delete next[field];
+      return next;
+    });
+  }, []);
 
-  const validateOne = (field: ContactField) => {
-    const result = validateContact(values);
-
+  const validateOne = useCallback((field: ContactField) => {
     setTouched((current) => ({
       ...current,
       [field]: true,
     }));
 
-    setErrors((current) => ({
-      ...current,
-      [field]: result.ok ? undefined : result.errors[field],
-    }));
-  };
+    setValues((latestValues) => {
+      const result = validateContact(latestValues);
+      setErrors((currentErrors) => ({
+        ...currentErrors,
+        [field]: result.ok ? undefined : result.errors[field],
+      }));
+      return latestValues;
+    });
+  }, []);
 
-  const isValid = (field: ContactField) =>
-    Boolean(touched[field]) &&
-    !errors[field] &&
-    values[field].trim().length > 0;
+  const isValid = useCallback(
+    (field: ContactField) =>
+      Boolean(touched[field]) &&
+      !errors[field] &&
+      values[field].trim().length > 0,
+    [touched, errors, values],
+  );
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setValues({ ...emptyValues });
     setErrors({});
     setTouched({});
-  };
+  }, []);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setStatus("idle");
     setServerMessage("");
-  };
+  }, []);
 
-  const sendAnotherMessage = () => {
+  const sendAnotherMessage = useCallback(() => {
     resetForm();
     setServerMessage("");
     setStatus("idle");
-  };
+  }, [resetForm]);
 
-  const retrySubmission = () => {
-    // Keep the user's values so they can submit the form again.
+  const retrySubmission = useCallback(() => {
     setServerMessage("");
     setStatus("idle");
-  };
+  }, []);
+
+  // Stable callbacks for individual fields to maximize memoization of Field components
+  const onNameChange = useCallback((val: string) => setValue("name", val), [setValue]);
+  const onEmailChange = useCallback((val: string) => setValue("email", val), [setValue]);
+  const onSubjectChange = useCallback((val: string) => setValue("subject", val), [setValue]);
+  const onMessageChange = useCallback((val: string) => setValue("message", val), [setValue]);
+
+  const onNameBlur = useCallback(() => validateOne("name"), [validateOne]);
+  const onEmailBlur = useCallback(() => validateOne("email"), [validateOne]);
+  const onSubjectBlur = useCallback(() => validateOne("subject"), [validateOne]);
+  const onMessageBlur = useCallback(() => validateOne("message"), [validateOne]);
 
   const handleSubmit = async (
     event: FormEvent<HTMLFormElement>,
@@ -432,8 +457,8 @@ export function ContactForm({
             value={values.name}
             error={errors.name}
             valid={isValid("name")}
-            onChange={(value) => setValue("name", value)}
-            onBlur={() => validateOne("name")}
+            onChange={onNameChange}
+            onBlur={onNameBlur}
             autoComplete="name"
             maxLength={CONTACT_LIMITS.name}
           />
@@ -447,8 +472,8 @@ export function ContactForm({
             value={values.email}
             error={errors.email}
             valid={isValid("email")}
-            onChange={(value) => setValue("email", value)}
-            onBlur={() => validateOne("email")}
+            onChange={onEmailChange}
+            onBlur={onEmailBlur}
             autoComplete="email"
             maxLength={CONTACT_LIMITS.email}
           />
@@ -462,8 +487,8 @@ export function ContactForm({
           value={values.subject}
           error={errors.subject}
           valid={isValid("subject")}
-          onChange={(value) => setValue("subject", value)}
-          onBlur={() => validateOne("subject")}
+          onChange={onSubjectChange}
+          onBlur={onSubjectBlur}
           maxLength={CONTACT_LIMITS.subject}
         />
 
@@ -476,8 +501,8 @@ export function ContactForm({
           value={values.message}
           error={errors.message}
           valid={isValid("message")}
-          onChange={(value) => setValue("message", value)}
-          onBlur={() => validateOne("message")}
+          onChange={onMessageChange}
+          onBlur={onMessageBlur}
           maxLength={CONTACT_LIMITS.message}
         />
 
@@ -556,4 +581,4 @@ export function ContactForm({
       )}
     </>
   );
-}
+});

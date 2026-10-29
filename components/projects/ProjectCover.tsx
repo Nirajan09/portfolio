@@ -1,3 +1,4 @@
+import { memo, useMemo } from "react";
 import type { IconType } from "react-icons";
 import { LuBookOpen, LuBriefcase, LuFolder, LuImage, LuLock } from "react-icons/lu";
 import Image from "next/image";
@@ -52,7 +53,7 @@ type ProjectCoverProps = {
   priority?: boolean;
 };
 
-export function ProjectCover({
+export const ProjectCover = memo(function ProjectCover({
   project,
   zoom = false,
   showWindowBar = true,
@@ -66,6 +67,15 @@ export function ProjectCover({
   };
   const Icon = meta.icon;
   const tone = toneClasses[meta.tone];
+
+  const hostname = useMemo(() => {
+    if (!project.links?.live) return meta.domain;
+    try {
+      return new URL(project.links.live).hostname;
+    } catch {
+      return meta.domain;
+    }
+  }, [project.links?.live, meta.domain]);
 
   const motion = zoom
     ? "transform-gpu will-change-transform transition-transform duration-700 ease-standard group-hover:scale-[1.04]"
@@ -92,7 +102,7 @@ export function ProjectCover({
           {/* Browser Address Bar with hover highlights */}
           <div className="mx-2 flex max-w-[280px] flex-1 items-center justify-center gap-1.5 overflow-hidden rounded-md border border-border/50 bg-background/70 px-2.5 py-0.5 text-[11px] font-mono text-muted/80 transition-all duration-300 group-hover:border-accent/40 group-hover:bg-background/90 group-hover:text-primary sm:max-w-[320px]">
             <LuLock className="size-2.5 shrink-0 text-accent/70 transition-colors duration-300 group-hover:text-accent" aria-hidden="true" />
-            <span className="truncate">{project.links?.live ? new URL(project.links.live).hostname : meta.domain}</span>
+            <span className="truncate">{hostname}</span>
           </div>
 
           {/* Spacer / live beacon dot */}
@@ -154,4 +164,4 @@ export function ProjectCover({
       </div>
     </div>
   );
-}
+});

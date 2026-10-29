@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState, type MouseEvent } from "react";
+import { memo, useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
 import type { IconType } from "react-icons";
 import {
   LuArrowUpRight,
@@ -23,7 +23,15 @@ const highlightIcons: Record<AboutHighlightId, IconType> = {
   interests: LuDumbbell,
 };
 
-export function About() {
+// Cached time formatter instance
+const aboutTimeFormatter = new Intl.DateTimeFormat("en-US", {
+  timeZone: "Asia/Kathmandu",
+  hour: "numeric",
+  minute: "2-digit",
+  hour12: true,
+});
+
+export const About = memo(function About() {
   const [kathmanduTime, setKathmanduTime] = useState<string>("");
 
   const rectRef = useRef<DOMRect | null>(null);
@@ -33,13 +41,7 @@ export function About() {
   useEffect(() => {
     const updateTime = () => {
       try {
-        const time = new Intl.DateTimeFormat("en-US", {
-          timeZone: "Asia/Kathmandu",
-          hour: "numeric",
-          minute: "2-digit",
-          hour12: true,
-        }).format(new Date());
-        setKathmanduTime(time);
+        setKathmanduTime(aboutTimeFormatter.format(new Date()));
       } catch {
         setKathmanduTime("UTC+5:45");
       }
@@ -51,11 +53,11 @@ export function About() {
   }, []);
 
   // Spotlight mouse tracking on the overview card
-  function handleMouseEnter(event: MouseEvent<HTMLDivElement>) {
+  const handleMouseEnter = useCallback((event: MouseEvent<HTMLDivElement>) => {
     rectRef.current = event.currentTarget.getBoundingClientRect();
-  }
+  }, []);
 
-  function handleMouseMove(event: MouseEvent<HTMLDivElement>) {
+  const handleMouseMove = useCallback((event: MouseEvent<HTMLDivElement>) => {
     const clientX = event.clientX;
     const clientY = event.clientY;
     const currentTarget = event.currentTarget;
@@ -76,15 +78,15 @@ export function About() {
         `${clientY - rectRef.current.top}px`,
       );
     });
-  }
+  }, []);
 
-  function handleMouseLeave() {
+  const handleMouseLeave = useCallback(() => {
     rectRef.current = null;
     if (rafRef.current !== null) {
       cancelAnimationFrame(rafRef.current);
       rafRef.current = null;
     }
-  }
+  }, []);
 
   return (
     <Section id="about">
@@ -212,4 +214,4 @@ export function About() {
       </div>
     </Section>
   );
-}
+});

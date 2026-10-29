@@ -4,13 +4,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
 import { LuArrowUpRight, LuMenu, LuX } from "react-icons/lu";
-import { useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { navHref, navItems } from "@/data/navigation";
 import { personal } from "@/data/personal";
 import { cn } from "@/lib/utils";
 import { PageContainer } from "./PageContainer";
 
-export function Navbar() {
+export const Navbar = memo(function Navbar() {
   const pathname = usePathname();
   const isHome = pathname === "/";
 
@@ -74,32 +74,32 @@ export function Navbar() {
     return () => observer.disconnect();
   }, [isHome]);
 
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    id: string,
-  ) => {
-    setOpen(false);
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+      setOpen(false);
 
-    if (!isHome) return;
+      if (!isHome) return;
 
-    e.preventDefault();
+      e.preventDefault();
 
-    if (window.location.hash) {
-      window.history.replaceState(null, "", window.location.pathname);
-    }
+      if (window.location.hash) {
+        window.history.replaceState(null, "", window.location.pathname);
+      }
 
-    if (id === "home") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      setActiveId("home");
-      return;
-    }
+      if (id === "home") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setActiveId("home");
+        return;
+      }
 
-    const target = document.getElementById(id);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth" });
-      setActiveId(id);
-    }
-  };
+      const target = document.getElementById(id);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+        setActiveId(id);
+      }
+    },
+    [isHome],
+  );
 
   // Escape closes the mobile menu, and body scroll is locked while open.
   useEffect(() => {
@@ -349,4 +349,4 @@ export function Navbar() {
       </AnimatePresence>
     </header>
   );
-}
+});

@@ -55,6 +55,14 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
 
+  compiler: {
+    removeConsole: isProduction ? { exclude: ["error", "warn"] } : false,
+  },
+
+  experimental: {
+    optimizePackageImports: ["react-icons", "motion", "motion/react"],
+  },
+
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },

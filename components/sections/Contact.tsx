@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 import {
   LuArrowUpRight,
   LuCheck,
@@ -17,11 +17,11 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
 import { personal } from "@/data/personal";
 
-export function Contact() {
+export const Contact = memo(function Contact() {
   const [copied, setCopied] = useState(false);
   const { github, linkedin } = personal.socials;
 
-  const handleCopyEmail = async () => {
+  const handleCopyEmail = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(personal.email);
       setCopied(true);
@@ -29,7 +29,7 @@ export function Contact() {
     } catch {
       setCopied(false);
     }
-  };
+  }, []);
 
   return (
     <Section id="contact" className="relative">
@@ -218,4 +218,4 @@ export function Contact() {
       </div>
     </Section>
   );
-}
+});

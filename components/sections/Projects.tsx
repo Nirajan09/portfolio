@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { LuFilter } from "react-icons/lu";
 import { Reveal } from "@/components/animation/Reveal";
@@ -18,7 +18,7 @@ const filterOptions: { id: CategoryFilter; label: string; count: number }[] = [
   { id: "media", label: "Media Pipeline", count: 1 },
 ];
 
-export function Projects() {
+export const Projects = memo(function Projects() {
   const [selectedFilter, setSelectedFilter] = useState<CategoryFilter>("all");
 
   const filteredProjects = useMemo(() => {
@@ -124,4 +124,4 @@ export function Projects() {
       </motion.ul>
     </Section>
   );
-}
+});

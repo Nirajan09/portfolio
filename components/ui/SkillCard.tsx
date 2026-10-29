@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type CSSProperties, type MouseEvent } from "react";
+import { memo, useCallback, useRef, type CSSProperties, type MouseEvent } from "react";
 import type { IconType } from "react-icons";
 import { LuLayoutTemplate, LuServerCog, LuWrench } from "react-icons/lu";
 import {
@@ -52,17 +52,17 @@ type SkillCardProps = {
   group: SkillGroup;
 };
 
-export function SkillCard({ group }: SkillCardProps) {
+export const SkillCard = memo(function SkillCard({ group }: SkillCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const rectRef = useRef<DOMRect | null>(null);
   const rafRef = useRef<number | null>(null);
   const GroupIcon = groupIcons[group.id];
 
-  function handleMouseEnter(event: MouseEvent<HTMLDivElement>) {
+  const handleMouseEnter = useCallback((event: MouseEvent<HTMLDivElement>) => {
     rectRef.current = event.currentTarget.getBoundingClientRect();
-  }
+  }, []);
 
-  function handleMouseMove(event: MouseEvent<HTMLDivElement>) {
+  const handleMouseMove = useCallback((event: MouseEvent<HTMLDivElement>) => {
     const clientX = event.clientX;
     const clientY = event.clientY;
     const currentTarget = event.currentTarget;
@@ -83,15 +83,15 @@ export function SkillCard({ group }: SkillCardProps) {
         `${clientY - rectRef.current.top}px`,
       );
     });
-  }
+  }, []);
 
-  function handleMouseLeave() {
+  const handleMouseLeave = useCallback(() => {
     rectRef.current = null;
     if (rafRef.current !== null) {
       cancelAnimationFrame(rafRef.current);
       rafRef.current = null;
     }
-  }
+  }, []);
 
   return (
     <div
@@ -169,4 +169,4 @@ export function SkillCard({ group }: SkillCardProps) {
       </div>
     </div>
   );
-}
+});

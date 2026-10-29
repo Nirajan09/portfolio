@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type MouseEvent } from "react";
+import { memo, useCallback, useMemo, useRef, type MouseEvent } from "react";
 import { LuArrowUpRight, LuCheck, LuExternalLink, LuLayers } from "react-icons/lu";
 import Link from "next/link";
 import { GithubIcon } from "@/components/ui/icons";
@@ -17,7 +17,7 @@ type ProjectCardProps = {
   index: number;
 };
 
-export function ProjectCard({
+export const ProjectCard = memo(function ProjectCard({
   project,
   reversed = false,
   index,
@@ -25,16 +25,19 @@ export function ProjectCard({
   const rectRef = useRef<DOMRect | null>(null);
   const rafRef = useRef<number | null>(null);
 
-  const visible = project.stack.slice(0, MAX_TECH);
-  const hidden = project.stack.length - visible.length;
-  const projectIndexStr = String(index + 1).padStart(2, "0");
-  const highlights = (project.highlights ?? []).slice(0, 3);
+  const { visible, hidden, highlights, projectIndexStr } = useMemo(() => {
+    const v = project.stack.slice(0, MAX_TECH);
+    const h = project.stack.length - v.length;
+    const hl = (project.highlights ?? []).slice(0, 3);
+    const idx = String(index + 1).padStart(2, "0");
+    return { visible: v, hidden: h, highlights: hl, projectIndexStr: idx };
+  }, [project.stack, project.highlights, index]);
 
-  function handleMouseEnter(event: MouseEvent<HTMLElement>) {
+  const handleMouseEnter = useCallback((event: MouseEvent<HTMLElement>) => {
     rectRef.current = event.currentTarget.getBoundingClientRect();
-  }
+  }, []);
 
-  function handleMouseMove(event: MouseEvent<HTMLElement>) {
+  const handleMouseMove = useCallback((event: MouseEvent<HTMLElement>) => {
     const clientX = event.clientX;
     const clientY = event.clientY;
     const currentTarget = event.currentTarget;
@@ -49,15 +52,15 @@ export function ProjectCard({
       currentTarget.style.setProperty("--mx", `${clientX - rectRef.current.left}px`);
       currentTarget.style.setProperty("--my", `${clientY - rectRef.current.top}px`);
     });
-  }
+  }, []);
 
-  function handleMouseLeave() {
+  const handleMouseLeave = useCallback(() => {
     rectRef.current = null;
     if (rafRef.current !== null) {
       cancelAnimationFrame(rafRef.current);
       rafRef.current = null;
     }
-  }
+  }, []);
 
   return (
     <article
@@ -254,4 +257,4 @@ export function ProjectCard({
       </div>
     </article>
   );
-}
+});

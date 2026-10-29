@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef, useState, type KeyboardEvent } from "react";
+import { memo, useCallback, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import {
   AnimatePresence,
   motion,
@@ -67,7 +67,7 @@ const cardVariants: Variants = {
   },
 };
 
-function TimelineItem({
+const TimelineItem = memo(function TimelineItem({
   entry,
   index,
   icon: Icon,
@@ -300,9 +300,9 @@ function TimelineItem({
       </motion.div>
     </motion.li>
   );
-}
+});
 
-function Timeline({ entries, icon }: { entries: Entry[]; icon: IconType }) {
+const Timeline = memo(function Timeline({ entries, icon }: { entries: Entry[]; icon: IconType }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   // The rail fills smoothly as list scrolls through viewport
@@ -355,7 +355,7 @@ function Timeline({ entries, icon }: { entries: Entry[]; icon: IconType }) {
       </ol>
     </div>
   );
-}
+});
 
 type TabId = "experience" | "education";
 
@@ -373,60 +373,74 @@ type CareerTimelineProps = {
   education: readonly Education[];
 };
 
-export function CareerTimeline({ experience, education }: CareerTimelineProps) {
+export const CareerTimeline = memo(function CareerTimeline({ experience, education }: CareerTimelineProps) {
   const [active, setActive] = useState<TabId>("experience");
   const uid = useId();
 
-  const experienceEntries: Entry[] = experience.map((item) => ({
-    id: item.id,
-    title: item.role,
-    organization: item.company,
-    period: item.period,
-    current: item.current,
-    location: item.location,
-    mode: item.mode,
-    employmentType: item.employmentType,
-    department: item.department,
-    technologies: item.technologies,
-    initials: getOrganizationInitials(item.company),
-    type: "experience",
-  }));
+  const experienceEntries = useMemo<Entry[]>(
+    () =>
+      experience.map((item) => ({
+        id: item.id,
+        title: item.role,
+        organization: item.company,
+        period: item.period,
+        current: item.current,
+        location: item.location,
+        mode: item.mode,
+        employmentType: item.employmentType,
+        department: item.department,
+        technologies: item.technologies,
+        initials: getOrganizationInitials(item.company),
+        type: "experience",
+      })),
+    [experience],
+  );
 
-  const educationEntries: Entry[] = education.map((item) => ({
-    id: item.id,
-    title: item.degree,
-    organization: item.institution,
-    period: item.period,
-    location: item.location,
-    focus: item.focus,
-    status: item.status,
-    current: item.current,
-    initials: getOrganizationInitials(item.institution),
-    type: "education",
-  }));
+  const educationEntries = useMemo<Entry[]>(
+    () =>
+      education.map((item) => ({
+        id: item.id,
+        title: item.degree,
+        organization: item.institution,
+        period: item.period,
+        location: item.location,
+        focus: item.focus,
+        status: item.status,
+        current: item.current,
+        initials: getOrganizationInitials(item.institution),
+        type: "education",
+      })),
+    [education],
+  );
 
-  const tabs: { id: TabId; label: string; icon: IconType; count: number }[] = [
-    {
-      id: "experience",
-      label: "Professional Experience",
-      icon: LuBriefcase,
-      count: experienceEntries.length,
+  const tabs: { id: TabId; label: string; icon: IconType; count: number }[] = useMemo(
+    () => [
+      {
+        id: "experience",
+        label: "Professional Experience",
+        icon: LuBriefcase,
+        count: experienceEntries.length,
+      },
+      {
+        id: "education",
+        label: "Education & Foundation",
+        icon: LuGraduationCap,
+        count: educationEntries.length,
+      },
+    ],
+    [experienceEntries.length, educationEntries.length],
+  );
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+      event.preventDefault();
+      const next: TabId = active === "experience" ? "education" : "experience";
+      setActive(next);
+      document.getElementById(`${uid}-tab-${next}`)?.focus();
     },
-    {
-      id: "education",
-      label: "Education & Foundation",
-      icon: LuGraduationCap,
-      count: educationEntries.length,
-    },
-  ];
-
-  function handleKeyDown(event: KeyboardEvent<HTMLDivElement>) {
-    if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
-    event.preventDefault();
-    const next: TabId = active === "experience" ? "education" : "experience";
-    setActive(next);
-    document.getElementById(`${uid}-tab-${next}`)?.focus();
-  }
+    [active, uid],
+  );
 
   return (
     <div>
@@ -499,4 +513,4 @@ export function CareerTimeline({ experience, education }: CareerTimelineProps) {
       </AnimatePresence>
     </div>
   );
-}
+});

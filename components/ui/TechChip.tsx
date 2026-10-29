@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { memo, type CSSProperties } from "react";
 import type { IconType } from "react-icons";
 import {
   SiCelery,
@@ -98,7 +98,10 @@ type TechChipProps = {
   as?: "li" | "span";
 };
 
-export function TechChip({ name, as: Component = "li" }: TechChipProps) {
+export const TechChip = memo(function TechChip({
+  name,
+  as: Component = "li",
+}: TechChipProps) {
   const meta = techMeta[normalize(name)];
   const Icon = meta?.icon;
   const color = meta?.color ?? FALLBACK_COLOR;
@@ -119,4 +122,4 @@ export function TechChip({ name, as: Component = "li" }: TechChipProps) {
       </span>
     </Component>
   );
-}
+});
