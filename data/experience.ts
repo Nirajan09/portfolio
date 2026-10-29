@@ -12,14 +12,6 @@ export const experience: readonly Experience[] = [
     mode: "On-site",
     employmentType: "Full-time",
     department: "Core Engineering",
-    technologies: [
-      "Next.js",
-      "React 19",
-      "TypeScript",
-      "Django REST",
-      "PostgreSQL",
-      "Redis",
-    ],
   },
   {
     id: "vyomite-associate",
@@ -30,14 +22,6 @@ export const experience: readonly Experience[] = [
     mode: "Hybrid",
     employmentType: "Full-time",
     department: "Client Solutions",
-    technologies: [
-      "Next.js",
-      "React",
-      "TypeScript",
-      "Tailwind CSS",
-      "REST APIs",
-      "PostgreSQL",
-    ],
   },
   {
     id: "vyomite-intern",
@@ -48,12 +32,5 @@ export const experience: readonly Experience[] = [
     mode: "Hybrid",
     employmentType: "Internship",
     department: "Frontend Engineering",
-    technologies: [
-      "React",
-      "JavaScript",
-      "Tailwind CSS",
-      "Figma",
-      "Responsive UI",
-    ],
   },
 ];
