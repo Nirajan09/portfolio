@@ -132,24 +132,24 @@ export function ServiceCard({ service }: ServiceCardProps) {
 
         <div className="relative">
           {/* Top Header: Icon + Tagline Badge + Watermark Index */}
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
+          <div className="flex items-center justify-between gap-3 min-w-0">
+            <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
               <div
-                className={`flex size-11 sm:size-12 shrink-0 items-center justify-center rounded-xl border border-border/80 bg-background-secondary transition-all duration-300 group-hover:scale-105 ${brand.iconStyle}`}
+                className={`flex size-10 sm:size-12 shrink-0 items-center justify-center rounded-xl border border-border/80 bg-background-secondary transition-all duration-300 group-hover:scale-105 ${brand.iconStyle}`}
               >
                 <Icon className="size-5 sm:size-6" aria-hidden="true" />
               </div>
               <span
-                className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[10.5px] font-semibold uppercase tracking-wider ${brand.badgeStyle}`}
+                className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-wider min-w-0 ${brand.badgeStyle}`}
               >
-                <span className="size-1 rounded-full bg-current" aria-hidden="true" />
-                <span>{service.tagline}</span>
+                <span className="size-1 shrink-0 rounded-full bg-current" aria-hidden="true" />
+                <span className="truncate max-w-[130px] min-[380px]:max-w-none">{service.tagline}</span>
               </span>
             </div>
 
             {/* Service Index */}
             <span
-              className="font-mono text-2xl sm:text-3xl font-extrabold tracking-tighter text-muted/30 transition-colors duration-300 group-hover:text-primary/70"
+              className="font-mono text-2xl sm:text-3xl font-extrabold tracking-tighter text-muted/30 transition-colors duration-300 group-hover:text-primary/70 shrink-0"
               aria-label={`Service 0${service.index}`}
             >
               {service.index}

@@ -68,7 +68,7 @@ export const ProjectCard = memo(function ProjectCard({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "group relative overflow-hidden rounded-2xl border border-border/80 bg-surface/40 p-6 sm:p-8 lg:p-10",
+        "group relative overflow-hidden rounded-2xl border border-border/80 bg-surface/40 p-4 sm:p-7 lg:p-10",
         "backdrop-blur-xs transform-gpu will-change-transform transition-[transform,translate,border-color,background-color,box-shadow] duration-500 ease-standard",
         "hover:-translate-y-2 hover:border-accent/40 hover:bg-surface/70 hover:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),0_0_30px_rgba(34,211,238,0.12)]",
       )}
@@ -97,7 +97,7 @@ export const ProjectCard = memo(function ProjectCard({
 
       <div
         className={cn(
-          "relative z-10 grid items-center gap-8 lg:gap-12",
+          "relative z-10 grid items-center gap-6 sm:gap-8 lg:gap-12",
           reversed
             ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]"
             : "lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]",
@@ -130,7 +130,7 @@ export const ProjectCard = memo(function ProjectCard({
         {/* ---------- Information Column ---------- */}
         <div className={cn("flex flex-col justify-center", reversed && "lg:order-1")}>
           {/* Top metadata badges row */}
-          <div className="flex flex-wrap items-center gap-2.5 text-xs">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 text-xs">
             <span className="inline-flex items-center gap-1.5 font-mono font-semibold text-accent">
               <span className="size-1.5 rounded-full bg-accent animate-pulse" />
               PROJECT {projectIndexStr}
@@ -168,7 +168,7 @@ export const ProjectCard = memo(function ProjectCard({
           </div>
 
           {/* Project Title */}
-          <h3 className="mt-4 font-display text-2xl font-bold tracking-tight text-primary transition-colors duration-200 group-hover:text-accent sm:text-3xl lg:text-4xl">
+          <h3 className="mt-3 sm:mt-4 font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight text-primary transition-colors duration-200 group-hover:text-accent">
             <Link
               href={`/projects/${project.slug}`}
               className="hover:underline decoration-accent/40 underline-offset-4 focus-visible:outline-hidden"
@@ -178,13 +178,13 @@ export const ProjectCard = memo(function ProjectCard({
           </h3>
 
           {/* Project Summary */}
-          <p className="mt-3 text-base leading-relaxed text-secondary sm:text-lg">
+          <p className="mt-2.5 sm:mt-3 text-sm sm:text-base leading-relaxed text-secondary sm:text-lg">
             {project.summary}
           </p>
 
           {/* Key Architectural Highlights Bullets */}
           {highlights.length > 0 && (
-            <ul className="mt-5 space-y-2 text-xs sm:text-sm text-secondary/90">
+            <ul className="mt-4 sm:mt-5 space-y-2 text-xs sm:text-sm text-secondary/90">
               {highlights.map((item) => (
                 <li key={item} className="flex items-start gap-2.5 transition-transform duration-200 group-hover:translate-x-0.5">
                   <span className="mt-1 flex size-4 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
@@ -197,9 +197,9 @@ export const ProjectCard = memo(function ProjectCard({
           )}
 
           {/* Tech Stack Chips */}
-          <div className="mt-6">
+          <div className="mt-5 sm:mt-6">
             <p className="sr-only">Technologies used</p>
-            <ul aria-label="Technologies" className="flex flex-wrap gap-2">
+            <ul aria-label="Technologies" className="flex flex-wrap gap-1.5 sm:gap-2">
               {visible.map((tech) => (
                 <TechChip key={tech} name={tech} />
               ))}
@@ -208,14 +208,14 @@ export const ProjectCard = memo(function ProjectCard({
           </div>
 
           {/* Direct Action Links Row */}
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-2.5 sm:gap-3">
             {/* Primary Case Study Link */}
             <Link
               href={`/projects/${project.slug}`}
-              className="group/cta inline-flex items-center gap-2 rounded-lg border border-accent/40 bg-accent/10 px-4 py-2 text-sm font-semibold text-accent transition-all duration-300 ease-standard hover:border-accent hover:bg-accent hover:text-background hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-hidden"
+              className="group/cta inline-flex w-full min-[480px]:w-auto items-center justify-center gap-2 rounded-lg border border-accent/40 bg-accent/10 px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-accent transition-all duration-300 ease-standard hover:border-accent hover:bg-accent hover:text-background hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-hidden"
             >
               <span>Explore case study</span>
-              <LuArrowUpRight className="size-4 transition-transform duration-300 ease-standard group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5" />
+              <LuArrowUpRight className="size-3.5 sm:size-4 transition-transform duration-300 ease-standard group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5" />
             </Link>
 
             {/* Live Demo Link (when available) */}
@@ -227,7 +227,7 @@ export const ProjectCard = memo(function ProjectCard({
                 data-track="project_external_link"
                 data-track-project={project.slug}
                 data-track-kind="live"
-                className="group/demo inline-flex items-center gap-2 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3.5 py-2 text-sm font-medium text-emerald-300 transition-all duration-200 hover:border-emerald-500 hover:bg-emerald-500 hover:text-background hover:scale-[1.02] active:scale-[0.98]"
+                className="group/demo inline-flex flex-1 min-[480px]:flex-none items-center justify-center gap-2 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 sm:px-3.5 py-2 text-xs sm:text-sm font-medium text-emerald-300 transition-all duration-200 hover:border-emerald-500 hover:bg-emerald-500 hover:text-background hover:scale-[1.02] active:scale-[0.98]"
                 aria-label={`Open live demo for ${project.title} (opens in new tab)`}
               >
                 <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
@@ -245,10 +245,10 @@ export const ProjectCard = memo(function ProjectCard({
                 data-track="project_external_link"
                 data-track-project={project.slug}
                 data-track-kind="repo"
-                className="group/gh inline-flex items-center gap-2 rounded-lg border border-border/80 bg-surface-elevated/80 px-3.5 py-2 text-sm font-medium text-secondary transition-all duration-200 hover:border-accent/40 hover:bg-surface hover:text-primary hover:scale-[1.02] active:scale-[0.98]"
+                className="group/gh inline-flex flex-1 min-[480px]:flex-none items-center justify-center gap-2 rounded-lg border border-border/80 bg-surface-elevated/80 px-3 sm:px-3.5 py-2 text-xs sm:text-sm font-medium text-secondary transition-all duration-200 hover:border-accent/40 hover:bg-surface hover:text-primary hover:scale-[1.02] active:scale-[0.98]"
                 aria-label={`View GitHub repository for ${project.title} (opens in new tab)`}
               >
-                <GithubIcon className="size-4 transition-transform duration-200 group-hover/gh:scale-110" />
+                <GithubIcon className="size-3.5 sm:size-4 transition-transform duration-200 group-hover/gh:scale-110" />
                 <span>Source code</span>
               </a>
             )}

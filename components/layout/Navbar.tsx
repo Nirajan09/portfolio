@@ -120,6 +120,17 @@ export const Navbar = memo(function Navbar() {
     };
   }, [open]);
 
+  // Auto-close mobile menu on desktop viewport resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const currentId = isHome
     ? activeId
     : pathname.startsWith("/projects")
@@ -150,7 +161,7 @@ export const Navbar = memo(function Navbar() {
 
       <PageContainer
         className={cn(
-          "flex items-center justify-between md:grid md:grid-cols-[1fr_auto_1fr]",
+          "flex items-center justify-between lg:grid lg:grid-cols-[1fr_auto_1fr]",
           "transition-[height] duration-300 ease-standard",
           scrolled ? "h-16" : "h-20",
         )}
@@ -179,7 +190,7 @@ export const Navbar = memo(function Navbar() {
         </Link>
 
         {/* ---------- Desktop: centered floating pill ---------- */}
-        <nav aria-label="Primary" className="hidden md:block">
+        <nav aria-label="Primary" className="hidden lg:block">
           <ul
             className={cn(
               "flex items-center gap-0.5 rounded-full border border-border p-1",
@@ -234,7 +245,7 @@ export const Navbar = memo(function Navbar() {
             href="/#contact"
             onClick={(e) => handleNavClick(e, "contact")}
             className={cn(
-              "group/cta hidden h-10 items-center gap-1.5 rounded-full px-5 md:inline-flex",
+              "group/cta hidden h-10 items-center gap-1.5 rounded-full px-5 lg:inline-flex",
               "bg-accent text-sm font-semibold text-background",
               "transition-[background-color,box-shadow,translate] duration-300 ease-standard",
               "hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-glow",
@@ -254,11 +265,12 @@ export const Navbar = memo(function Navbar() {
             type="button"
             className={cn(
               "inline-flex size-10 items-center justify-center rounded-full border border-border bg-surface/60",
-              "text-secondary backdrop-blur-md",
-              "transition-[background-color,border-color,color,scale] duration-200",
+              "text-secondary backdrop-blur-md cursor-pointer",
+              "transition-[background-color,border-color,color,scale,box-shadow] duration-200",
               "hover:border-accent/40 hover:text-primary",
               "active:scale-95",
-              "md:hidden",
+              "lg:hidden",
+              open && "border-accent/50 bg-accent/15 text-accent shadow-[0_0_15px_-3px_rgba(34,211,238,0.35)]",
             )}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
@@ -266,85 +278,101 @@ export const Navbar = memo(function Navbar() {
             onClick={() => setOpen((value) => !value)}
           >
             {open ? (
-              <LuX className="size-5" aria-hidden="true" />
+              <LuX className="size-5 transition-transform duration-200 rotate-90" aria-hidden="true" />
             ) : (
-              <LuMenu className="size-5" aria-hidden="true" />
+              <LuMenu className="size-5 transition-transform duration-200" aria-hidden="true" />
             )}
           </button>
         </div>
       </PageContainer>
 
-      {/* ---------- Mobile: floating card ---------- */}
+      {/* ---------- Mobile & Tablet: backdrop overlay + floating menu card ---------- */}
       <AnimatePresence>
         {open && (
-          <motion.div
-            id="mobile-menu"
-            className="absolute inset-x-0 top-full px-4 pt-2 md:hidden"
-            initial={{ opacity: 0, y: -8, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.98 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-          >
-            <nav
-              aria-label="Mobile"
-              className="relative overflow-hidden rounded-2xl border border-border bg-background/90 p-2 shadow-[0_20px_50px_-12px_rgb(0_0_0/0.7)] backdrop-blur-xl"
+          <>
+            {/* Click-outside dismiss backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setOpen(false)}
+              aria-hidden="true"
+              className="fixed inset-0 top-16 z-40 bg-black/60 backdrop-blur-xs lg:hidden"
+            />
+
+            {/* Floating menu card */}
+            <motion.div
+              id="mobile-menu"
+              className="absolute inset-x-0 top-full z-50 px-4 pt-2 lg:hidden"
+              initial={{ opacity: 0, y: -8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.98 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
             >
-              <span
-                aria-hidden="true"
-                className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-accent/50 to-transparent"
-              />
-
-              <ul className="flex flex-col gap-0.5">
-                {navItems.map((item) => {
-                  const isActive = currentId === item.id;
-
-                  return (
-                    <li key={item.id}>
-                      <Link
-                        href={navHref(item.id)}
-                        aria-current={isActive ? "true" : undefined}
-                        onClick={(e) => handleNavClick(e, item.id)}
-                        className={cn(
-                          "group flex h-12 items-center justify-between rounded-xl px-4",
-                          "text-base font-medium",
-                          "transition-[color,background-color] duration-200",
-                          isActive
-                            ? "bg-accent/10 text-accent"
-                            : "text-secondary hover:bg-primary/5 hover:text-primary focus-visible:text-primary",
-                        )}
-                        data-track="nav_click"
-                        data-track-target={item.id}
-                        data-track-location="mobile_menu"
-                      >
-                        {/* Only the label slides, so the tap target stays put */}
-                        <span className="transition-transform duration-200 ease-standard group-hover:translate-x-1">
-                          {item.label}
-                        </span>
-                        {isActive && (
-                          <span
-                            aria-hidden="true"
-                            className="size-1.5 rounded-full bg-accent shadow-[0_0_8px_var(--color-accent)]"
-                          />
-                        )}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-
-              <Link
-                href="/#contact"
-                onClick={(e) => handleNavClick(e, "contact")}
-                className="mt-2 flex h-12 items-center justify-center gap-1.5 rounded-xl bg-accent text-sm font-semibold text-background transition-colors duration-200 hover:bg-accent-hover"
-                data-track="nav_click"
-                data-track-target="contact"
-                data-track-location="mobile_menu_cta"
+              <nav
+                aria-label="Mobile Navigation"
+                aria-modal="true"
+                role="dialog"
+                className="relative mx-auto max-w-lg sm:max-w-md sm:ml-auto sm:mr-0 max-h-[calc(100dvh-5.5rem)] overflow-y-auto rounded-2xl border border-border bg-background/95 p-2.5 sm:p-3 shadow-[0_24px_60px_-12px_rgb(0_0_0/0.85),0_0_30px_rgba(34,211,238,0.1)] backdrop-blur-xl"
               >
-                Let&apos;s talk
-                <LuArrowUpRight className="size-4" aria-hidden="true" />
-              </Link>
-            </nav>
-          </motion.div>
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-accent/50 to-transparent"
+                />
+
+                <ul className="flex flex-col gap-1">
+                  {navItems.map((item) => {
+                    const isActive = currentId === item.id;
+
+                    return (
+                      <li key={item.id}>
+                        <Link
+                          href={navHref(item.id)}
+                          aria-current={isActive ? "true" : undefined}
+                          onClick={(e) => handleNavClick(e, item.id)}
+                          className={cn(
+                            "group flex h-11 sm:h-12 items-center justify-between rounded-xl px-4",
+                            "text-sm sm:text-base font-medium",
+                            "transition-[color,background-color] duration-200",
+                            isActive
+                              ? "bg-accent/10 text-accent font-semibold"
+                              : "text-secondary hover:bg-primary/5 hover:text-primary focus-visible:text-primary",
+                          )}
+                          data-track="nav_click"
+                          data-track-target={item.id}
+                          data-track-location="mobile_menu"
+                        >
+                          {/* Only the label slides, so the tap target stays put */}
+                          <span className="transition-transform duration-200 ease-standard group-hover:translate-x-1">
+                            {item.label}
+                          </span>
+                          {isActive && (
+                            <span
+                              aria-hidden="true"
+                              className="size-1.5 rounded-full bg-accent shadow-[0_0_8px_var(--color-accent)]"
+                            />
+                          )}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+
+                <Link
+                  href="/#contact"
+                  onClick={(e) => handleNavClick(e, "contact")}
+                  className="mt-2.5 flex h-11 sm:h-12 items-center justify-center gap-1.5 rounded-xl bg-accent text-sm font-semibold text-background transition-all duration-200 hover:bg-accent-hover hover:shadow-glow active:scale-[0.98]"
+                  data-track="nav_click"
+                  data-track-target="contact"
+                  data-track-location="mobile_menu_cta"
+                >
+                  Let&apos;s talk
+                  <LuArrowUpRight className="size-4" aria-hidden="true" />
+                </Link>
+              </nav>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>

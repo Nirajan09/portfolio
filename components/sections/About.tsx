@@ -149,14 +149,14 @@ export const About = memo(function About() {
             />
 
             <div className="relative">
-              <div className="flex items-center justify-between border-b border-border/50 pb-3.5">
-                <h3 className="text-xs font-mono uppercase tracking-wider text-muted">
+              <div className="flex items-center justify-between gap-2 border-b border-border/50 pb-3.5">
+                <h3 className="text-xs font-mono uppercase tracking-wider text-muted shrink-0">
                   Overview
                 </h3>
                 {kathmanduTime && (
-                  <span className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-2.5 py-0.5">
-                    <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>{kathmanduTime} (NPT)</span>
+                  <span className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-2.5 py-0.5 shrink-0">
+                    <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                    <span className="truncate">{kathmanduTime} (NPT)</span>
                   </span>
                 )}
               </div>

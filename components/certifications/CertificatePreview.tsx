@@ -60,11 +60,11 @@ export function CertificatePreview({
       role="dialog"
       aria-modal="true"
       aria-label={`Certificate preview for ${title}`}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-md transition-all duration-300"
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/85 p-3 sm:p-4 backdrop-blur-md transition-all duration-300"
       onClick={onClose}
     >
       <div
-        className="relative max-h-[92vh] max-w-4xl w-full overflow-hidden rounded-2xl border border-border/80 bg-surface shadow-2xl transition-all duration-300"
+        className="relative my-auto flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-border/80 bg-surface shadow-2xl transition-all duration-300"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Gradient top highlight hairline */}
@@ -74,13 +74,13 @@ export function CertificatePreview({
         />
 
         {/* Modal Header */}
-        <div className="flex items-center justify-between gap-4 border-b border-border/70 bg-surface px-5 sm:px-6 py-4">
+        <div className="flex shrink-0 items-center justify-between gap-3 border-b border-border/70 bg-surface px-4 sm:px-6 py-3.5 sm:py-4">
           <div className="min-w-0">
-            <h3 className="font-display text-base sm:text-lg font-bold text-primary truncate">
+            <h3 className="font-display text-base sm:text-lg font-bold text-primary truncate max-w-[calc(100vw-8rem)] sm:max-w-none">
               {title}
             </h3>
             {(issuer || date) && (
-              <p className="text-xs text-muted mt-0.5">
+              <p className="text-xs text-muted mt-0.5 truncate">
                 {issuer} {issuer && date && "•"} {date && `Issued ${date}`}
               </p>
             )}
@@ -90,27 +90,27 @@ export function CertificatePreview({
             type="button"
             onClick={onClose}
             aria-label="Close certificate preview"
-            className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-accent/50 hover:bg-accent/10 hover:text-accent cursor-pointer"
+            className="inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-border text-muted transition-colors hover:border-accent/50 hover:bg-accent/10 hover:text-accent cursor-pointer active:scale-95"
           >
             <LuX className="size-5" aria-hidden="true" />
           </button>
         </div>
 
         {/* Modal Image Body */}
-        <div className="relative bg-background-secondary/80 p-4 sm:p-6 flex items-center justify-center max-h-[72vh] overflow-auto">
+        <div className="relative bg-background-secondary/80 p-3 sm:p-6 flex min-h-0 items-center justify-center max-h-[68vh] overflow-auto">
           <Image
             src={src}
             alt={alt}
             width={1600}
             height={1200}
             sizes="(min-width: 1024px) 896px, 100vw"
-            className="h-auto max-h-[68vh] w-auto max-w-full rounded-xl border border-border/80 object-contain shadow-lg"
+            className="h-auto max-h-[64vh] w-auto max-w-full rounded-xl border border-border/80 object-contain shadow-lg"
           />
         </div>
 
         {/* Modal Footer with Verification Link */}
         {credentialUrl && (
-          <div className="flex items-center justify-between border-t border-border/70 bg-surface/90 px-6 py-3 text-xs text-muted">
+          <div className="flex shrink-0 flex-col sm:flex-row items-start sm:items-center justify-between gap-2 border-t border-border/70 bg-surface/90 px-4 sm:px-6 py-3 text-xs text-muted">
             <span className="font-medium text-emerald-400">Verified Credential</span>
             <a
               href={credentialUrl}

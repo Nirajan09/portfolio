@@ -17,7 +17,7 @@ export function ProjectStackSection({ project }: ProjectStackSectionProps) {
           <span className="flex size-7 items-center justify-center rounded-lg border border-accent/40 bg-accent/10 text-accent">
             <span className="font-mono text-xs font-bold">04</span>
           </span>
-          <h2 className="font-display text-2xl font-bold tracking-tight text-primary sm:text-3xl">
+          <h2 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-primary">
             Technology Stack & Tools
           </h2>
           <span aria-hidden="true" className="h-px flex-1 bg-linear-to-r from-border to-transparent" />
@@ -25,10 +25,10 @@ export function ProjectStackSection({ project }: ProjectStackSectionProps) {
       </Reveal>
 
       {groups.length > 0 ? (
-        <div className="mt-8 grid gap-5 md:grid-cols-2">
+        <div className="mt-8 grid gap-4 sm:gap-5 md:grid-cols-2">
           {groups.map((group, index) => (
             <Reveal key={group.label} delay={index * 0.05}>
-              <div className="group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-border/80 bg-surface/40 p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/75 hover:shadow-[0_20px_45px_-15px_rgba(0,0,0,0.8),0_0_20px_rgba(34,211,238,0.1)]">
+              <div className="group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-border/80 bg-surface/40 p-4 sm:p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/75 hover:shadow-[0_20px_45px_-15px_rgba(0,0,0,0.8),0_0_20px_rgba(34,211,238,0.1)]">
                 {/* Top hairline accent draw on hover */}
                 <span
                   aria-hidden="true"

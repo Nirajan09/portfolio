@@ -621,11 +621,12 @@ export const ContactForm = memo(function ContactForm({
 
           <a
             href={`mailto:${fallbackEmail}`}
-            className="group/mail inline-flex items-center gap-1.5 text-sm text-muted transition-colors duration-200 hover:text-accent"
+            className="group/mail inline-flex items-center gap-1.5 text-xs sm:text-sm text-muted transition-colors duration-200 hover:text-accent max-w-full"
           >
-            Prefer email? {fallbackEmail}
+            <span className="shrink-0">Prefer email?</span>
+            <span className="truncate max-w-[200px] sm:max-w-none">{fallbackEmail}</span>
             <LuArrowUpRight
-              className="size-3.5 transition-transform duration-300 ease-standard group-hover/mail:-translate-y-0.5 group-hover/mail:translate-x-0.5"
+              className="size-3.5 shrink-0 transition-transform duration-300 ease-standard group-hover/mail:-translate-y-0.5 group-hover/mail:translate-x-0.5"
               aria-hidden="true"
             />
           </a>

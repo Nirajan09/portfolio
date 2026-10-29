@@ -49,12 +49,10 @@ function ModalShell({
     };
   }, [mounted, onClose]);
 
-  if (!mounted) return null;
-
   return createPortal(
     <div
       role="presentation"
-      className="fixed inset-0 z-100 flex items-center justify-center overflow-y-auto bg-black/75 p-4 backdrop-blur-md animate-in fade-in duration-200"
+      className="fixed inset-0 z-100 flex items-center justify-center overflow-y-auto bg-black/75 p-3.5 sm:p-4 backdrop-blur-md animate-in fade-in duration-200"
       onClick={(event) => {
         // Close only when the backdrop itself is clicked.
         if (event.target === event.currentTarget) {
@@ -70,7 +68,7 @@ function ModalShell({
         aria-describedby={descriptionId}
         tabIndex={-1}
         onClick={(event) => event.stopPropagation()}
-        className={`relative w-full max-w-md overflow-hidden rounded-2xl border bg-background p-6 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.85)] outline-none sm:p-8 animate-in zoom-in-95 duration-200 ${
+        className={`relative my-auto flex max-h-[calc(100dvh-2rem)] w-full max-w-md flex-col overflow-y-auto rounded-2xl border bg-background p-5 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.85)] outline-none sm:p-7 animate-in zoom-in-95 duration-200 ${
           tone === "success"
             ? "border-success/30 shadow-[0_0_30px_-5px_rgba(34,197,94,0.18)]"
             : "border-error/30 shadow-[0_0_30px_-5px_rgba(239,68,68,0.18)]"
@@ -90,7 +88,7 @@ function ModalShell({
           type="button"
           onClick={onClose}
           aria-label="Close dialog"
-          className="absolute right-4 top-4 flex size-9 items-center justify-center rounded-full text-muted transition-colors hover:bg-background-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer active:scale-95"
+          className="absolute right-3.5 top-3.5 sm:right-4 sm:top-4 z-10 flex size-8 sm:size-9 items-center justify-center rounded-full text-muted transition-colors hover:bg-background-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer active:scale-95"
         >
           <LuX className="size-5" aria-hidden="true" />
         </button>
@@ -207,7 +205,7 @@ export function MessageErrorModal({
             at{" "}
             <a
               href={`mailto:${fallbackEmail}`}
-              className="font-medium text-accent underline underline-offset-2 hover:text-accent-hover"
+              className="break-all font-medium text-accent underline underline-offset-2 hover:text-accent-hover"
             >
               {fallbackEmail}
             </a>

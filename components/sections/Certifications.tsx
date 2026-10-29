@@ -32,11 +32,15 @@ export function Certifications() {
         </p>
       </Reveal>
 
-      {/* Same gap and breakpoints as the Services grid */}
-      <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Responsive, balanced grid that supports up to 3 columns if more are added */}
+      <ul
+        className={`mt-8 grid gap-6 sm:grid-cols-2 ${
+          count >= 3 ? "lg:grid-cols-3" : "lg:grid-cols-2 max-w-5xl"
+        }`}
+      >
         {certifications.map((certification, index) => (
-          <li key={certification.id}>
-            <Reveal delay={index * 0.08} className="h-full">
+          <li key={certification.id} className="h-full">
+            <Reveal delay={index * 0.08} className="h-full flex flex-col">
               <CertificationCard certification={certification} />
             </Reveal>
           </li>

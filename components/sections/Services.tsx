@@ -4,6 +4,7 @@ import { Section } from "@/components/layout/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ServiceCard } from "@/components/ui/ServiceCard";
 import { Button } from "@/components/ui/Button";
+import { personal } from "@/data/personal";
 import { services } from "@/data/services";
 
 export function Services() {
@@ -61,11 +62,11 @@ export function Services() {
             Let&apos;s discuss how I can help bring your idea to life — from technical architecture to production deployment.
           </p>
 
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-3.5">
+          <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-3.5 max-w-md mx-auto sm:max-w-none">
             <Button
               href="/#contact"
               size="lg"
-              className="shadow-[0_0_25px_-5px_rgba(34,211,238,0.35)] hover:shadow-[0_0_35px_rgba(34,211,238,0.5)] cursor-pointer"
+              className="w-full sm:w-auto shadow-[0_0_25px_-5px_rgba(34,211,238,0.35)] hover:shadow-[0_0_35px_rgba(34,211,238,0.5)] cursor-pointer justify-center"
               data-track="services_cta_click"
               data-track-label="discuss_project"
             >
@@ -76,15 +77,15 @@ export function Services() {
               />
             </Button>
             <Button
-              href="mailto:nirajan.dev.np@gmail.com"
+              href={`mailto:${personal.email}`}
               variant="secondary"
               size="lg"
-              className="cursor-pointer"
+              className="w-full sm:w-auto cursor-pointer justify-center min-w-0"
               data-track="services_email_click"
               data-track-label="email_direct"
             >
-              <LuMail className="size-4" aria-hidden="true" />
-              <span>nirajan.dev.np@gmail.com</span>
+              <LuMail className="size-4 shrink-0" aria-hidden="true" />
+              <span className="truncate">{personal.email}</span>
             </Button>
           </div>
         </div>

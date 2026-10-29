@@ -204,28 +204,28 @@ export function ProjectHero({ project }: ProjectHeroProps) {
 
         {/* Quick Specs Ribbon with interactive card lift */}
         <Reveal delay={0.2}>
-          <div className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 border-t border-border/80 pt-8">
-            <div className="group/spec rounded-xl border border-border/60 bg-surface/40 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs">
+          <div className="mt-12 grid grid-cols-1 gap-3 min-[440px]:grid-cols-2 lg:grid-cols-4 sm:gap-4 border-t border-border/80 pt-8">
+            <div className="group/spec min-w-0 rounded-xl border border-border/60 bg-surface/40 p-3.5 sm:p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs">
               <span className="block text-[11px] font-semibold uppercase tracking-wider text-muted transition-colors group-hover/spec:text-accent">Domain</span>
-              <span className="mt-1 block font-medium text-primary text-sm sm:text-base">{project.category ?? "Full-Stack Web"}</span>
+              <span className="mt-1 block font-medium text-primary text-sm sm:text-base truncate">{project.category ?? "Full-Stack Web"}</span>
             </div>
-            <div className="group/spec rounded-xl border border-border/60 bg-surface/40 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs">
+            <div className="group/spec min-w-0 rounded-xl border border-border/60 bg-surface/40 p-3.5 sm:p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs">
               <span className="block text-[11px] font-semibold uppercase tracking-wider text-muted transition-colors group-hover/spec:text-accent">Architecture</span>
               <span className="mt-1 block font-medium text-primary text-sm sm:text-base truncate">
                 {project.architecture?.style.split(" ")[0]} {project.architecture?.style.split(" ")[1]}
               </span>
             </div>
-            <div className="group/spec rounded-xl border border-border/60 bg-surface/40 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs">
+            <div className="group/spec min-w-0 rounded-xl border border-border/60 bg-surface/40 p-3.5 sm:p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs">
               <span className="block text-[11px] font-semibold uppercase tracking-wider text-muted transition-colors group-hover/spec:text-accent">Key Database</span>
-              <span className="mt-1 block font-medium text-primary text-sm sm:text-base">
+              <span className="mt-1 block font-medium text-primary text-sm sm:text-base truncate">
                 {project.slug === "book-recommendation-system"
                   ? "PostgreSQL / SQLite"
                   : "MongoDB Atlas"}
               </span>
             </div>
-            <div className="group/spec rounded-xl border border-border/60 bg-surface/40 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs">
+            <div className="group/spec min-w-0 rounded-xl border border-border/60 bg-surface/40 p-3.5 sm:p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs">
               <span className="block text-[11px] font-semibold uppercase tracking-wider text-muted transition-colors group-hover/spec:text-accent">Authentication</span>
-              <span className="mt-1 block font-medium text-primary text-sm sm:text-base">
+              <span className="mt-1 block font-medium text-primary text-sm sm:text-base truncate">
                 {project.slug === "job-portal"
                   ? "Clerk Auth"
                   : project.slug === "image-sharing-platform"
@@ -243,27 +243,27 @@ export function ProjectHero({ project }: ProjectHeroProps) {
           role="dialog"
           aria-modal="true"
           aria-label={`${project.title} screenshot preview`}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-md transition-opacity duration-300"
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/85 p-3.5 sm:p-4 backdrop-blur-md transition-opacity duration-300"
           onClick={() => setLightboxOpen(false)}
         >
           <div
-            className="relative max-h-[90vh] max-w-5xl w-full overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl"
+            className="relative my-auto flex max-h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal header bar */}
-            <div className="flex items-center justify-between border-b border-border bg-surface-elevated px-4 py-3">
-              <div className="flex items-center gap-2">
-                <span className="size-2.5 rounded-full bg-rose-500" />
-                <span className="size-2.5 rounded-full bg-amber-400" />
-                <span className="size-2.5 rounded-full bg-emerald-400" />
-                <span className="ml-3 font-mono text-xs text-muted truncate max-w-xs sm:max-w-md">
+            <div className="flex shrink-0 items-center justify-between border-b border-border bg-surface-elevated px-3.5 sm:px-4 py-2.5 sm:py-3">
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="size-2.5 shrink-0 rounded-full bg-rose-500" />
+                <span className="size-2.5 shrink-0 rounded-full bg-amber-400" />
+                <span className="size-2.5 shrink-0 rounded-full bg-emerald-400" />
+                <span className="ml-2 sm:ml-3 font-mono text-xs text-muted truncate max-w-[calc(100vw-8rem)] sm:max-w-md">
                   {project.title} — Full Preview
                 </span>
               </div>
               <button
                 type="button"
                 onClick={() => setLightboxOpen(false)}
-                className="flex size-7 items-center justify-center rounded-lg border border-border text-muted hover:bg-surface hover:text-primary transition-colors"
+                className="flex size-7 shrink-0 items-center justify-center rounded-lg border border-border text-muted hover:bg-surface hover:text-primary transition-colors cursor-pointer active:scale-95"
                 aria-label="Close image preview"
               >
                 <LuX className="size-4" />
@@ -271,8 +271,8 @@ export function ProjectHero({ project }: ProjectHeroProps) {
             </div>
 
             {/* Modal image container */}
-            <div className="relative aspect-video max-h-[75vh] w-full overflow-auto bg-background p-2 sm:p-4">
-              <div className="relative size-full min-h-[300px]">
+            <div className="relative aspect-video max-h-[75vh] w-full min-h-0 overflow-auto bg-background p-2 sm:p-4">
+              <div className="relative size-full min-h-[220px] sm:min-h-[300px]">
                 <Image
                   src={project.cover.src}
                   alt={project.cover.alt}

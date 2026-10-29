@@ -26,7 +26,7 @@ export function ProjectNavigation({
           {prevProject ? (
             <Link
               href={`/projects/${prevProject.slug}`}
-              className="group relative overflow-hidden flex flex-col justify-between rounded-xl border border-border/70 bg-surface/40 p-5 text-left transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/75 hover:shadow-glow"
+              className="group relative overflow-hidden flex flex-col justify-between rounded-xl border border-border/70 bg-surface/40 p-4 sm:p-5 text-left transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/75 hover:shadow-glow"
             >
               {/* Top hairline accent draw on hover */}
               <span
@@ -35,11 +35,11 @@ export function ProjectNavigation({
               />
 
               <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted group-hover:text-accent">
-                <LuArrowLeft className="size-3.5 transition-transform duration-300 group-hover:-translate-x-2" />
+                <LuArrowLeft className="size-3.5 shrink-0 transition-transform duration-300 group-hover:-translate-x-2" />
                 <span>Previous Case Study</span>
               </div>
               <div className="mt-3">
-                <p className="font-display text-lg font-semibold text-primary transition-colors duration-200 group-hover:text-accent sm:text-xl">
+                <p className="font-display text-base font-semibold text-primary transition-colors duration-200 group-hover:text-accent sm:text-xl">
                   {prevProject.title}
                 </p>
                 {prevProject.category && (
@@ -50,26 +50,26 @@ export function ProjectNavigation({
               </div>
             </Link>
           ) : (
-            <div />
+            <div className="hidden sm:block" />
           )}
 
           {nextProject ? (
             <Link
               href={`/projects/${nextProject.slug}`}
-              className="group relative overflow-hidden flex flex-col justify-between rounded-xl border border-border/70 bg-surface/40 p-5 text-right transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/75 hover:shadow-glow sm:text-right"
+              className="group relative overflow-hidden flex flex-col justify-between rounded-xl border border-border/70 bg-surface/40 p-4 sm:p-5 text-left sm:text-right transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/75 hover:shadow-glow"
             >
               {/* Top hairline accent draw on hover */}
               <span
                 aria-hidden="true"
-                className="absolute inset-x-0 top-0 h-0.5 origin-right scale-x-0 bg-linear-to-l from-accent via-blue to-violet transition-transform duration-500 ease-standard group-hover:scale-x-100"
+                className="absolute inset-x-0 top-0 h-0.5 origin-left sm:origin-right scale-x-0 bg-linear-to-r sm:bg-linear-to-l from-accent via-blue to-violet transition-transform duration-500 ease-standard group-hover:scale-x-100"
               />
 
-              <div className="flex items-center justify-end gap-2 text-xs font-semibold uppercase tracking-wider text-muted group-hover:text-accent">
+              <div className="flex items-center justify-start sm:justify-end gap-2 text-xs font-semibold uppercase tracking-wider text-muted group-hover:text-accent">
                 <span>Next Case Study</span>
-                <LuArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-2" />
+                <LuArrowRight className="size-3.5 shrink-0 transition-transform duration-300 group-hover:translate-x-2" />
               </div>
               <div className="mt-3">
-                <p className="font-display text-lg font-semibold text-primary transition-colors duration-200 group-hover:text-accent sm:text-xl">
+                <p className="font-display text-base font-semibold text-primary transition-colors duration-200 group-hover:text-accent sm:text-xl">
                   {nextProject.title}
                 </p>
                 {nextProject.category && (
@@ -80,14 +80,14 @@ export function ProjectNavigation({
               </div>
             </Link>
           ) : (
-            <div />
+            <div className="hidden sm:block" />
           )}
         </div>
       </Reveal>
 
       {/* ---------- Collaboration CTA Card ---------- */}
       <Reveal delay={0.1}>
-        <div className="relative mt-12 overflow-hidden rounded-2xl border border-border/80 bg-linear-to-br from-surface to-background-secondary p-8 sm:p-12 transition-all duration-300 hover:border-accent/40 hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.8),0_0_30px_rgba(34,211,238,0.1)]">
+        <div className="relative mt-12 overflow-hidden rounded-2xl border border-border/80 bg-linear-to-br from-surface to-background-secondary p-5 sm:p-10 md:p-12 transition-all duration-300 hover:border-accent/40 hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.8),0_0_30px_rgba(34,211,238,0.1)]">
           {/* Ambient light glow */}
           <span
             aria-hidden="true"
@@ -107,20 +107,20 @@ export function ProjectNavigation({
               <span className="font-mono text-xs font-semibold uppercase tracking-widest text-accent">
                 Let&apos;s Build Together
               </span>
-              <h2 className="mt-2 font-display text-2xl font-bold tracking-tight text-primary sm:text-3xl">
+              <h2 className="mt-2 font-display text-xl font-bold tracking-tight text-primary sm:text-2xl md:text-3xl">
                 Need a full-stack engineer for your next project?
               </h2>
-              <p className="mt-3 text-base leading-relaxed text-secondary">
+              <p className="mt-3 text-sm sm:text-base leading-relaxed text-secondary">
                 Whether you need scalable cloud architectures, complex APIs, or polished web applications, I&apos;m ready to collaborate.
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3">
-              <Button href="/#contact" size="lg" className="hover:scale-[1.02] active:scale-[0.98]">
+            <div className="flex flex-col min-[420px]:flex-row items-stretch min-[420px]:items-center gap-3 shrink-0">
+              <Button href="/#contact" size="lg" className="hover:scale-[1.02] active:scale-[0.98] justify-center">
                 <span>Start a conversation</span>
                 <LuArrowUpRight className="size-4" aria-hidden="true" />
               </Button>
-              <Button href="/#projects" variant="secondary" size="lg" className="hover:scale-[1.02] active:scale-[0.98]">
+              <Button href="/#projects" variant="secondary" size="lg" className="hover:scale-[1.02] active:scale-[0.98] justify-center">
                 <LuLayoutGrid className="size-4" />
                 <span>All projects</span>
               </Button>

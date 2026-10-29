@@ -109,7 +109,7 @@ const TimelineItem = memo(function TimelineItem({
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-40px" }}
-      className="group relative pl-12 sm:pl-16"
+      className="group relative pl-10 sm:pl-16"
     >
       {/* Timeline Node */}
       <motion.span
@@ -145,7 +145,7 @@ const TimelineItem = memo(function TimelineItem({
             setIsHovered(false);
             if (rafRef.current) cancelAnimationFrame(rafRef.current);
           }}
-          className="relative overflow-hidden rounded-xl border border-border/80 bg-surface/70 p-5 sm:p-6 backdrop-blur-md transition-all duration-300 ease-out hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_16px_36px_-12px_rgba(34,211,238,0.12)]"
+          className="relative overflow-hidden rounded-xl border border-border/80 bg-surface/70 p-4 sm:p-6 backdrop-blur-md transition-all duration-300 ease-out hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_16px_36px_-12px_rgba(34,211,238,0.12)]"
         >
           {/* Mouse Spotlight */}
           {isHovered && (
@@ -449,7 +449,7 @@ export const CareerTimeline = memo(function CareerTimeline({ experience, educati
         role="tablist"
         aria-label="Experience and education"
         onKeyDown={handleKeyDown}
-        className="relative mb-8 inline-flex rounded-xl border border-border/80 bg-surface/75 p-1 backdrop-blur-md"
+        className="relative mb-8 grid w-full grid-cols-2 rounded-xl border border-border/80 bg-surface/75 p-1 backdrop-blur-md sm:inline-flex sm:w-auto"
       >
         {tabs.map((tab) => {
           const selected = tab.id === active;
@@ -464,7 +464,7 @@ export const CareerTimeline = memo(function CareerTimeline({ experience, educati
               aria-controls={`${uid}-panel`}
               tabIndex={selected ? 0 : -1}
               onClick={() => setActive(tab.id)}
-              className={`relative flex items-center gap-2 rounded-lg px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-medium transition-colors duration-200 cursor-pointer ${
+              className={`relative flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 rounded-lg px-2.5 sm:px-4 py-2 text-xs sm:text-sm font-medium transition-colors duration-200 cursor-pointer ${
                 selected ? "text-primary" : "text-muted hover:text-secondary"
               }`}
             >
@@ -476,10 +476,13 @@ export const CareerTimeline = memo(function CareerTimeline({ experience, educati
                   transition={{ type: "spring", stiffness: 380, damping: 32 }}
                 />
               )}
-              <TabIcon className="relative size-4" aria-hidden="true" />
-              <span className="relative">{tab.label}</span>
+              <TabIcon className="relative size-3.5 sm:size-4 shrink-0" aria-hidden="true" />
+              <span className="relative truncate">
+                <span className="sm:hidden">{tab.id === "experience" ? "Experience" : "Education"}</span>
+                <span className="hidden sm:inline">{tab.label}</span>
+              </span>
               <span
-                className={`relative rounded-full px-1.5 py-0.2 text-[11px] font-mono tabular-nums transition-colors duration-200 ${
+                className={`relative rounded-full px-1.5 py-0.2 text-[10px] sm:text-[11px] font-mono tabular-nums transition-colors duration-200 ${
                   selected
                     ? "bg-accent/20 text-accent font-semibold"
                     : "bg-border/60 text-muted"

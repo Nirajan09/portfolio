@@ -93,7 +93,7 @@ export function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
           onClick={(e) => {
             if (e.target === e.currentTarget) onClose();
           }}
-          className="fixed inset-0 z-100 flex items-center justify-center bg-black/75 p-4 backdrop-blur-md"
+          className="fixed inset-0 z-100 flex items-center justify-center bg-black/75 p-3.5 sm:p-4 backdrop-blur-md overflow-y-auto"
         >
           {/* Animated Modal Dialog */}
           <motion.div
@@ -111,7 +111,7 @@ export function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
             exit={{ opacity: 0, scale: 0.94, y: 16 }}
             transition={{ type: "spring", stiffness: 360, damping: 28 }}
             onClick={(e) => e.stopPropagation()}
-            className="group relative w-full max-w-[32rem] overflow-hidden rounded-2xl border border-border/80 bg-linear-to-b from-surface via-surface/95 to-background-secondary p-6 sm:p-7 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.85),0_0_30px_-5px_rgba(34,211,238,0.14)] outline-none"
+            className="group relative my-auto flex max-h-[calc(100dvh-2rem)] w-full max-w-[32rem] flex-col overflow-hidden rounded-2xl border border-border/80 bg-linear-to-b from-surface via-surface/95 to-background-secondary p-5 sm:p-7 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.85),0_0_30px_-5px_rgba(34,211,238,0.14)] outline-none"
           >
             {/* Dynamic Cursor Spotlight */}
             <span
@@ -134,86 +134,86 @@ export function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
               type="button"
               onClick={onClose}
               aria-label="Close privacy policy"
-              className="group/close absolute right-4 top-4 flex size-8 items-center justify-center rounded-lg border border-border/70 bg-background/60 text-muted transition-all duration-200 hover:border-accent/40 hover:bg-surface hover:text-primary focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-accent cursor-pointer active:scale-95"
+              className="group/close absolute right-3.5 top-3.5 sm:right-4 sm:top-4 z-10 flex size-8 items-center justify-center rounded-lg border border-border/70 bg-background/60 text-muted transition-all duration-200 hover:border-accent/40 hover:bg-surface hover:text-primary focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-accent cursor-pointer active:scale-95"
             >
               <LuX className="size-4 transition-transform duration-200 group-hover/close:rotate-90" aria-hidden="true" />
             </button>
 
             {/* Header */}
-            <div className="flex items-center gap-3.5 pr-8">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-accent/30 bg-accent/10 text-accent transition-transform duration-300 group-hover:scale-105 group-hover:shadow-[0_0_15px_-3px_rgba(34,211,238,0.3)]">
-                <LuShieldCheck className="size-5" aria-hidden="true" />
+            <div className="flex shrink-0 items-center gap-3 pr-8">
+              <div className="flex size-9 sm:size-10 shrink-0 items-center justify-center rounded-xl border border-accent/30 bg-accent/10 text-accent transition-transform duration-300 group-hover:scale-105 group-hover:shadow-[0_0_15px_-3px_rgba(34,211,238,0.3)]">
+                <LuShieldCheck className="size-4.5 sm:size-5" aria-hidden="true" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <h2
                   id="privacy-modal-title"
-                  className="font-display text-xl font-bold tracking-tight text-primary"
+                  className="font-display text-lg sm:text-xl font-bold tracking-tight text-primary"
                 >
                   Privacy Policy
                 </h2>
-                <p className="font-mono text-xs text-accent">
+                <p className="font-mono text-[11px] sm:text-xs text-accent truncate">
                   Privacy-First & Confidential Inquiries
                 </p>
               </div>
             </div>
 
             {/* Interactive Content Rows */}
-            <div id="privacy-modal-description" className="mt-5 space-y-3">
+            <div id="privacy-modal-description" className="mt-4 sm:mt-5 space-y-2.5 sm:space-y-3 overflow-y-auto pr-1">
               {/* Row 1: Zero Tracking */}
-              <div className="group/item flex items-start gap-3 rounded-xl border border-border/70 bg-background/40 p-3.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/40 hover:bg-emerald-500/5 hover:shadow-xs">
-                <div className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg border border-emerald-500/25 bg-emerald-500/10 text-emerald-400 transition-transform duration-200 group-hover/item:scale-110">
-                  <LuCheck className="size-4 stroke-3" aria-hidden="true" />
+              <div className="group/item flex items-start gap-2.5 sm:gap-3 rounded-xl border border-border/70 bg-background/40 p-3 sm:p-3.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/40 hover:bg-emerald-500/5 hover:shadow-xs">
+                <div className="mt-0.5 flex size-6.5 sm:size-7 shrink-0 items-center justify-center rounded-lg border border-emerald-500/25 bg-emerald-500/10 text-emerald-400 transition-transform duration-200 group-hover/item:scale-110">
+                  <LuCheck className="size-3.5 sm:size-4 stroke-3" aria-hidden="true" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-sm font-semibold text-primary transition-colors group-hover/item:text-emerald-400">
+                    <h3 className="text-xs sm:text-sm font-semibold text-primary transition-colors group-hover/item:text-emerald-400">
                       Zero Tracking & No Ad Cookies
                     </h3>
-                    <span className="font-mono text-[10px] text-emerald-400/80 bg-emerald-500/10 px-1.5 py-0.2 rounded-md">
+                    <span className="font-mono text-[9px] sm:text-[10px] text-emerald-400/80 bg-emerald-500/10 px-1.5 py-0.2 rounded-md shrink-0">
                       Verified
                     </span>
                   </div>
-                  <p className="mt-1 text-[13px] leading-relaxed text-secondary/85">
+                  <p className="mt-1 text-xs sm:text-[13px] leading-relaxed text-secondary/85">
                     This website does not utilize advertising cookies, tracking pixels, or invasive telemetry. Your browsing session is completely private.
                   </p>
                 </div>
               </div>
 
               {/* Row 2: Contact Form Confidentiality */}
-              <div className="group/item flex items-start gap-3 rounded-xl border border-border/70 bg-background/40 p-3.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-cyan-500/40 hover:bg-cyan-500/5 hover:shadow-xs">
-                <div className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg border border-cyan-500/25 bg-cyan-500/10 text-cyan-400 transition-transform duration-200 group-hover/item:scale-110">
-                  <LuLock className="size-4" aria-hidden="true" />
+              <div className="group/item flex items-start gap-2.5 sm:gap-3 rounded-xl border border-border/70 bg-background/40 p-3 sm:p-3.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-cyan-500/40 hover:bg-cyan-500/5 hover:shadow-xs">
+                <div className="mt-0.5 flex size-6.5 sm:size-7 shrink-0 items-center justify-center rounded-lg border border-cyan-500/25 bg-cyan-500/10 text-cyan-400 transition-transform duration-200 group-hover/item:scale-110">
+                  <LuLock className="size-3.5 sm:size-4" aria-hidden="true" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-sm font-semibold text-primary transition-colors group-hover/item:text-cyan-400">
+                    <h3 className="text-xs sm:text-sm font-semibold text-primary transition-colors group-hover/item:text-cyan-400">
                       Contact Form Confidentiality
                     </h3>
-                    <span className="font-mono text-[10px] text-cyan-400/80 bg-cyan-500/10 px-1.5 py-0.2 rounded-md">
+                    <span className="font-mono text-[9px] sm:text-[10px] text-cyan-400/80 bg-cyan-500/10 px-1.5 py-0.2 rounded-md shrink-0">
                       Encrypted
                     </span>
                   </div>
-                  <p className="mt-1 text-[13px] leading-relaxed text-secondary/85">
+                  <p className="mt-1 text-xs sm:text-[13px] leading-relaxed text-secondary/85">
                     Details submitted through the contact form (name, email, and message) are used exclusively to reply to your inquiry. Your information is never sold or shared.
                   </p>
                 </div>
               </div>
 
               {/* Row 3: Hosting & Infrastructure */}
-              <div className="group/item flex items-start gap-3 rounded-xl border border-border/70 bg-background/40 p-3.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-violet-500/40 hover:bg-violet-500/5 hover:shadow-xs">
-                <div className="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg border border-violet-500/25 bg-violet-500/10 text-violet-400 transition-transform duration-200 group-hover/item:scale-110">
-                  <LuServer className="size-4" aria-hidden="true" />
+              <div className="group/item flex items-start gap-2.5 sm:gap-3 rounded-xl border border-border/70 bg-background/40 p-3 sm:p-3.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-violet-500/40 hover:bg-violet-500/5 hover:shadow-xs">
+                <div className="mt-0.5 flex size-6.5 sm:size-7 shrink-0 items-center justify-center rounded-lg border border-violet-500/25 bg-violet-500/10 text-violet-400 transition-transform duration-200 group-hover/item:scale-110">
+                  <LuServer className="size-3.5 sm:size-4" aria-hidden="true" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-sm font-semibold text-primary transition-colors group-hover/item:text-violet-400">
+                    <h3 className="text-xs sm:text-sm font-semibold text-primary transition-colors group-hover/item:text-violet-400">
                       Hosting & Edge Infrastructure
                     </h3>
-                    <span className="font-mono text-[10px] text-violet-400/80 bg-violet-500/10 px-1.5 py-0.2 rounded-md">
+                    <span className="font-mono text-[9px] sm:text-[10px] text-violet-400/80 bg-violet-500/10 px-1.5 py-0.2 rounded-md shrink-0">
                       Edge Network
                     </span>
                   </div>
-                  <p className="mt-1 text-[13px] leading-relaxed text-secondary/85">
+                  <p className="mt-1 text-xs sm:text-[13px] leading-relaxed text-secondary/85">
                     Served globally via Vercel&apos;s edge network. Standard server access logs are processed strictly for DDoS mitigation and operational security.
                   </p>
                 </div>
@@ -221,19 +221,19 @@ export function PrivacyModal({ isOpen, onClose }: PrivacyModalProps) {
             </div>
 
             {/* Footer Actions */}
-            <div className="mt-5 flex items-center justify-between border-t border-border/70 pt-4">
+            <div className="mt-4 sm:mt-5 flex shrink-0 items-center justify-between gap-3 border-t border-border/70 pt-3.5 sm:pt-4">
               <a
                 href={`mailto:${personal.email}?subject=Privacy%20Question`}
-                className="group/link inline-flex items-center gap-1 font-mono text-xs text-muted hover:text-accent transition-colors"
+                className="group/link inline-flex items-center gap-1 font-mono text-[11px] sm:text-xs text-muted hover:text-accent transition-colors truncate"
               >
                 <span>Questions? Contact Me</span>
-                <LuArrowUpRight className="size-3.5 transition-transform duration-200 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
+                <LuArrowUpRight className="size-3.5 shrink-0 transition-transform duration-200 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
               </a>
 
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-xl border border-accent/40 bg-accent/15 px-4 py-1.5 text-xs sm:text-sm font-semibold text-accent transition-all duration-200 hover:border-accent hover:bg-accent hover:text-background hover:shadow-[0_0_20px_-3px_rgba(34,211,238,0.4)] cursor-pointer active:scale-95"
+                className="rounded-xl border border-accent/40 bg-accent/15 px-3.5 sm:px-4 py-1.5 text-xs sm:text-sm font-semibold text-accent transition-all duration-200 hover:border-accent hover:bg-accent hover:text-background hover:shadow-[0_0_20px_-3px_rgba(34,211,238,0.4)] cursor-pointer active:scale-95 shrink-0"
               >
                 Understood
               </button>

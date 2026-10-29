@@ -197,7 +197,7 @@ export const Contact = memo(function Contact() {
 
         {/* ================= Right Column: Elevated Contact Form Card ================= */}
         <Reveal delay={0.2}>
-          <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-linear-to-b from-surface/90 via-surface/60 to-background-secondary/90 p-6 sm:p-8 backdrop-blur-md shadow-[0_20px_50px_-15px_rgba(0,0,0,0.85),0_0_25px_-5px_rgba(34,211,238,0.12)]">
+          <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-linear-to-b from-surface/90 via-surface/60 to-background-secondary/90 p-5 sm:p-8 backdrop-blur-md shadow-[0_20px_50px_-15px_rgba(0,0,0,0.85),0_0_25px_-5px_rgba(34,211,238,0.12)]">
             {/* Top hairline gradient */}
             <span
               aria-hidden="true"

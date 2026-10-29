@@ -19,7 +19,7 @@ export function ProjectArchitectureSection({ project }: ProjectArchitectureSecti
           <span className="flex size-7 items-center justify-center rounded-lg border border-accent/40 bg-accent/10 text-accent">
             <span className="font-mono text-xs font-bold">02</span>
           </span>
-          <h2 className="font-display text-2xl font-bold tracking-tight text-primary sm:text-3xl">
+          <h2 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-primary">
             System Architecture & Flow
           </h2>
           <span aria-hidden="true" className="h-px flex-1 bg-linear-to-r from-border to-transparent" />
@@ -28,7 +28,7 @@ export function ProjectArchitectureSection({ project }: ProjectArchitectureSecti
 
       {/* Architecture Style Badge & Summary */}
       <Reveal delay={0.05}>
-        <div className="mt-6 rounded-2xl border border-accent/30 bg-linear-to-br from-surface to-background-secondary p-6 sm:p-8 backdrop-blur-xs">
+        <div className="mt-6 rounded-2xl border border-accent/30 bg-linear-to-br from-surface to-background-secondary p-5 sm:p-7 md:p-8 backdrop-blur-xs">
           <div className="flex flex-wrap items-center gap-3">
             <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent shadow-xs">
               <LuNetwork className="size-3.5" aria-hidden="true" />
@@ -36,7 +36,7 @@ export function ProjectArchitectureSection({ project }: ProjectArchitectureSecti
             </span>
           </div>
 
-          <p className="mt-4 max-w-3xl text-base leading-relaxed text-secondary sm:text-lg">
+          <p className="mt-4 max-w-3xl text-sm sm:text-base leading-relaxed text-secondary sm:text-lg">
             {architecture.summary}
           </p>
         </div>
@@ -55,7 +55,7 @@ export function ProjectArchitectureSection({ project }: ProjectArchitectureSecti
               {architecture.layers.map((layer, index) => (
                 <div
                   key={layer.title}
-                  className="group/layer relative flex flex-col justify-between overflow-hidden rounded-xl border border-border/80 bg-surface/50 p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/80 hover:shadow-[0_20px_45px_-15px_rgba(0,0,0,0.8),0_0_20px_rgba(34,211,238,0.1)]"
+                  className="group/layer relative flex flex-col justify-between overflow-hidden rounded-xl border border-border/80 bg-surface/50 p-4 sm:p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/80 hover:shadow-[0_20px_45px_-15px_rgba(0,0,0,0.8),0_0_20px_rgba(34,211,238,0.1)]"
                 >
                   {/* Top hairline draw on hover */}
                   <span
@@ -73,7 +73,7 @@ export function ProjectArchitectureSection({ project }: ProjectArchitectureSecti
                       </span>
                     </div>
 
-                    <h3 className="mt-2 font-display text-lg font-semibold text-primary transition-colors duration-200 group-hover/layer:text-accent">
+                    <h3 className="mt-2 font-display text-base sm:text-lg font-semibold text-primary transition-colors duration-200 group-hover/layer:text-accent">
                       {layer.title}
                     </h3>
 
@@ -110,18 +110,18 @@ export function ProjectArchitectureSection({ project }: ProjectArchitectureSecti
               {workflow.map((item) => (
                 <div
                   key={item.step}
-                  className="group/step relative flex items-start gap-4 rounded-xl border border-border/70 bg-surface/40 p-4 pl-12 transition-all duration-300 hover:translate-x-1.5 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs sm:pl-14 sm:p-5"
+                  className="group/step relative flex items-start gap-3 sm:gap-4 rounded-xl border border-border/70 bg-surface/40 p-3.5 pl-11 sm:pl-14 sm:p-5 transition-all duration-300 hover:translate-x-1.5 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs min-w-0"
                 >
                   {/* Step bullet node that reacts on card hover */}
                   <div className="absolute left-2.5 top-5 flex size-5 -translate-x-1/2 items-center justify-center rounded-full border border-accent bg-background text-[11px] font-bold text-accent shadow-[0_0_8px_var(--color-accent)] transition-all duration-300 group-hover/step:scale-125 group-hover/step:bg-accent group-hover/step:text-background group-hover/step:shadow-[0_0_12px_var(--color-accent)] sm:left-5">
                     {item.step}
                   </div>
 
-                  <div className="flex-1">
-                    <h4 className="font-display text-base font-semibold text-primary transition-colors duration-200 group-hover/step:text-accent">
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-display text-sm sm:text-base font-semibold text-primary transition-colors duration-200 group-hover/step:text-accent">
                       {item.title}
                     </h4>
-                    <p className="mt-1.5 text-sm leading-relaxed text-secondary">
+                    <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-secondary">
                       {item.description}
                     </p>
                   </div>

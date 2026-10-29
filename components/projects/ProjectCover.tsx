@@ -91,22 +91,22 @@ export const ProjectCover = memo(function ProjectCover({
     >
       {/* ---------- Window Title Bar ---------- */}
       {showWindowBar && (
-        <div className="relative z-10 flex h-9 shrink-0 items-center justify-between border-b border-border/70 bg-surface/90 px-3.5 backdrop-blur-md transition-colors duration-300 group-hover:bg-surface">
+        <div className="relative z-10 flex h-9 shrink-0 items-center justify-between border-b border-border/70 bg-surface/90 px-2.5 sm:px-3.5 backdrop-blur-md transition-colors duration-300 group-hover:bg-surface">
           {/* Traffic light dots with glowing hover states */}
-          <div className="flex items-center gap-1.5" aria-hidden="true">
-            <span className="size-2.5 rounded-full bg-rose-500/80 transition-all duration-300 group-hover:bg-rose-500 group-hover:shadow-[0_0_8px_rgba(244,63,94,0.7)]" />
-            <span className="size-2.5 rounded-full bg-amber-400/80 transition-all duration-300 group-hover:bg-amber-400 group-hover:shadow-[0_0_8px_rgba(251,191,36,0.7)]" />
-            <span className="size-2.5 rounded-full bg-emerald-400/80 transition-all duration-300 group-hover:bg-emerald-400 group-hover:shadow-[0_0_8px_rgba(52,211,153,0.7)]" />
+          <div className="flex items-center gap-1.5 shrink-0" aria-hidden="true">
+            <span className="size-2 sm:size-2.5 rounded-full bg-rose-500/80 transition-all duration-300 group-hover:bg-rose-500 group-hover:shadow-[0_0_8px_rgba(244,63,94,0.7)]" />
+            <span className="size-2 sm:size-2.5 rounded-full bg-amber-400/80 transition-all duration-300 group-hover:bg-amber-400 group-hover:shadow-[0_0_8px_rgba(251,191,36,0.7)]" />
+            <span className="size-2 sm:size-2.5 rounded-full bg-emerald-400/80 transition-all duration-300 group-hover:bg-emerald-400 group-hover:shadow-[0_0_8px_rgba(52,211,153,0.7)]" />
           </div>
 
           {/* Browser Address Bar with hover highlights */}
-          <div className="mx-2 flex max-w-[280px] flex-1 items-center justify-center gap-1.5 overflow-hidden rounded-md border border-border/50 bg-background/70 px-2.5 py-0.5 text-[11px] font-mono text-muted/80 transition-all duration-300 group-hover:border-accent/40 group-hover:bg-background/90 group-hover:text-primary sm:max-w-[320px]">
+          <div className="mx-1.5 sm:mx-2 flex min-w-0 max-w-[150px] min-[380px]:max-w-[220px] sm:max-w-[320px] flex-1 items-center justify-center gap-1.5 overflow-hidden rounded-md border border-border/50 bg-background/70 px-2 sm:px-2.5 py-0.5 text-[10px] sm:text-[11px] font-mono text-muted/80 transition-all duration-300 group-hover:border-accent/40 group-hover:bg-background/90 group-hover:text-primary">
             <LuLock className="size-2.5 shrink-0 text-accent/70 transition-colors duration-300 group-hover:text-accent" aria-hidden="true" />
             <span className="truncate">{hostname}</span>
           </div>
 
           {/* Spacer / live beacon dot */}
-          <div className="flex items-center gap-1 text-[10px] text-muted/60" aria-hidden="true">
+          <div className="flex items-center gap-1 text-[10px] text-muted/60 shrink-0" aria-hidden="true">
             <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
           </div>
         </div>

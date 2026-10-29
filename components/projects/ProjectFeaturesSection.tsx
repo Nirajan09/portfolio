@@ -17,7 +17,7 @@ export function ProjectFeaturesSection({ project }: ProjectFeaturesSectionProps)
           <span className="flex size-7 items-center justify-center rounded-lg border border-accent/40 bg-accent/10 text-accent">
             <span className="font-mono text-xs font-bold">03</span>
           </span>
-          <h2 className="font-display text-2xl font-bold tracking-tight text-primary sm:text-3xl">
+          <h2 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-primary">
             Key Features & Capabilities
           </h2>
           <span aria-hidden="true" className="h-px flex-1 bg-linear-to-r from-border to-transparent" />
@@ -28,7 +28,7 @@ export function ProjectFeaturesSection({ project }: ProjectFeaturesSectionProps)
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {detailed.map((item, index) => (
             <Reveal key={item.title} delay={index * 0.04}>
-              <div className="group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-border/80 bg-surface/40 p-5 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/80 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.8),0_0_20px_rgba(34,211,238,0.1)]">
+              <div className="group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-border/80 bg-surface/40 p-4 sm:p-5 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/80 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.8),0_0_20px_rgba(34,211,238,0.1)]">
                 <div>
                   <div className="flex items-center justify-between gap-2">
                     <span className="flex size-8 items-center justify-center rounded-lg border border-accent/30 bg-accent/10 text-accent transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 group-hover:border-accent group-hover:bg-accent group-hover:text-background group-hover:shadow-glow">

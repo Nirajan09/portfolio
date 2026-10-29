@@ -152,10 +152,10 @@ export const Footer = memo(function Footer() {
                 type="button"
                 onClick={() => setShowTimeDetails((prev) => !prev)}
                 title="Click to toggle timezone & relative offset"
-                className="group/time inline-flex items-center gap-2 rounded-xl border border-border/80 bg-surface/60 px-3.5 py-1.5 text-xs font-mono text-secondary backdrop-blur-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/40 hover:bg-emerald-500/5 hover:text-primary hover:shadow-[0_0_16px_-3px_rgba(52,211,153,0.25)] cursor-pointer active:scale-95"
+                className="group/time inline-flex max-w-full min-w-0 items-center gap-2 rounded-xl border border-border/80 bg-surface/60 px-3.5 py-1.5 text-xs font-mono text-secondary backdrop-blur-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/40 hover:bg-emerald-500/5 hover:text-primary hover:shadow-[0_0_16px_-3px_rgba(52,211,153,0.25)] cursor-pointer active:scale-95"
               >
                 {/* Radar Pulse Beacon */}
-                <span className="relative flex size-2">
+                <span className="relative flex size-2 shrink-0">
                   <span
                     aria-hidden="true"
                     className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-60"
@@ -164,19 +164,19 @@ export const Footer = memo(function Footer() {
                 </span>
 
                 <LuClock
-                  className="size-3.5 text-muted transition-transform duration-300 group-hover/time:rotate-45 group-hover/time:text-emerald-400"
+                  className="size-3.5 shrink-0 text-muted transition-transform duration-300 group-hover/time:rotate-45 group-hover/time:text-emerald-400"
                   aria-hidden="true"
                 />
 
                 {!showTimeDetails ? (
-                  <span>
+                  <span className="truncate max-w-[calc(100vw-6.5rem)] sm:max-w-none text-left">
                     Kathmandu, Nepal ·{" "}
                     <span className="text-primary font-medium tabular-nums">
                       {timeString ? `${timeString} NPT` : "UTC+5:45"}
                     </span>
                   </span>
                 ) : (
-                  <span className="text-emerald-400 font-medium">
+                  <span className="truncate max-w-[calc(100vw-6.5rem)] sm:max-w-none text-left text-emerald-400 font-medium">
                     UTC+5:45 (NPT) · {userOffsetMsg || "Nepal Standard Time"}
                   </span>
                 )}
@@ -184,10 +184,10 @@ export const Footer = memo(function Footer() {
             </div>
 
             {/* Direct Email with Quick-Copy */}
-            <div className="mt-4 flex max-w-md items-center justify-between gap-2.5 rounded-xl border border-border/80 bg-surface/60 p-1.5 pl-3 text-xs font-mono text-secondary transition-all hover:border-accent/40">
+            <div className="mt-4 flex max-w-md min-w-0 items-center justify-between gap-2.5 rounded-xl border border-border/80 bg-surface/60 p-1.5 pl-3 text-xs font-mono text-secondary transition-all hover:border-accent/40">
               <a
                 href={`mailto:${personal.email}`}
-                className="truncate font-medium text-primary hover:text-accent transition-colors"
+                className="min-w-0 flex-1 truncate font-medium text-primary hover:text-accent transition-colors"
                 title="Send email directly"
               >
                 {personal.email}
@@ -279,9 +279,9 @@ export const Footer = memo(function Footer() {
         </div>
 
         {/* ================= Sub-Footer Bar ================= */}
-        <div className="relative mt-10 md:mt-12 flex flex-col gap-3.5 border-t border-border/70 pt-5 text-xs sm:text-sm text-secondary sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5">
-            <p className="font-medium text-secondary/90">
+        <div className="relative mt-10 md:mt-12 flex flex-col gap-3.5 border-t border-border/70 pt-5 text-xs sm:text-sm text-secondary sm:flex-row sm:items-center sm:justify-between min-w-0">
+          <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 min-w-0">
+            <p className="font-medium text-secondary/90 break-words">
               &copy; {new Date().getFullYear()} {personal.name}. All rights reserved.
             </p>
             <span className="hidden text-border sm:inline" aria-hidden="true">

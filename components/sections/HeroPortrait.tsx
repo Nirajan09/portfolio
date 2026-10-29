@@ -170,17 +170,17 @@ export function HeroPortrait() {
 
         {/* Live Status Pill at Bottom Center */}
         <div
-          className="absolute -bottom-4 left-1/2 -translate-x-1/2 animate-chip-in z-20 whitespace-nowrap max-w-[95%]"
+          className="absolute -bottom-4 left-1/2 -translate-x-1/2 animate-chip-in z-20 max-w-[calc(100vw-2rem)]"
           style={{ animationDelay: `${0.6 + chips.length * 0.12}s` }}
         >
-          <div className="group relative inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-border/90 bg-surface/95 px-3 py-1 sm:px-3.5 sm:py-1.5 text-[10px] sm:text-xs font-medium text-primary shadow-2xl backdrop-blur-md transition-all duration-300 hover:border-accent/50 hover:shadow-glow">
+          <div className="group relative inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-border/90 bg-surface/95 px-2.5 py-1 sm:px-3.5 sm:py-1.5 text-[9.5px] sm:text-xs font-medium text-primary shadow-2xl backdrop-blur-md transition-all duration-300 hover:border-accent/50 hover:shadow-glow whitespace-nowrap">
             <span className="relative flex size-2 shrink-0">
               <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
             </span>
             <span className="font-semibold text-secondary">Full Stack Dev</span>
             <span className="text-muted/50" aria-hidden="true">•</span>
-            <span className="text-accent font-medium">Cherdung Info Tech</span>
+            <span className="text-accent font-medium truncate max-w-[120px] sm:max-w-none">Cherdung Info Tech</span>
           </div>
         </div>
       </div>

@@ -14,7 +14,7 @@ export function ProjectOverviewSection({ project }: ProjectOverviewSectionProps)
           <span className="flex size-7 items-center justify-center rounded-lg border border-accent/40 bg-accent/10 text-accent">
             <span className="font-mono text-xs font-bold">01</span>
           </span>
-          <h2 className="font-display text-2xl font-bold tracking-tight text-primary sm:text-3xl">
+          <h2 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-primary">
             Project Overview & Purpose
           </h2>
           <span aria-hidden="true" className="h-px flex-1 bg-linear-to-r from-border to-transparent" />
@@ -24,7 +24,7 @@ export function ProjectOverviewSection({ project }: ProjectOverviewSectionProps)
       {/* Main Narrative / Overview */}
       {project.overview && (
         <Reveal delay={0.05}>
-          <p className="mt-6 max-w-3xl text-lg leading-relaxed text-secondary sm:text-xl sm:leading-8">
+          <p className="mt-6 max-w-3xl text-base sm:text-lg leading-relaxed text-secondary sm:leading-8">
             {project.overview}
           </p>
         </Reveal>
@@ -32,15 +32,15 @@ export function ProjectOverviewSection({ project }: ProjectOverviewSectionProps)
 
       {/* Problem & Solution Grid with interactive hover dynamics */}
       {(project.problem || project.solution) && (
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
+        <div className="mt-8 grid gap-4 sm:gap-6 md:grid-cols-2">
           {project.problem && (
             <Reveal delay={0.1}>
-              <div className="group/problem relative flex h-full flex-col overflow-hidden rounded-2xl border border-rose-500/25 bg-rose-500/5 p-6 sm:p-8 backdrop-blur-xs transition-all duration-300 hover:-translate-y-1 hover:border-rose-500/40 hover:bg-rose-500/10 hover:shadow-[0_20px_40px_-15px_rgba(244,63,94,0.18)]">
+              <div className="group/problem relative flex h-full flex-col overflow-hidden rounded-2xl border border-rose-500/25 bg-rose-500/5 p-4 sm:p-6 md:p-8 backdrop-blur-xs transition-all duration-300 hover:-translate-y-1 hover:border-rose-500/40 hover:bg-rose-500/10 hover:shadow-[0_20px_40px_-15px_rgba(244,63,94,0.18)]">
                 <div className="flex items-center gap-3 text-rose-400">
-                  <div className="flex size-9 items-center justify-center rounded-lg border border-rose-500/30 bg-rose-500/10 transition-transform duration-300 group-hover/problem:scale-110 group-hover/problem:-rotate-3">
-                    <LuCircleAlert className="size-5" aria-hidden="true" />
+                  <div className="flex size-8 sm:size-9 shrink-0 items-center justify-center rounded-lg border border-rose-500/30 bg-rose-500/10 transition-transform duration-300 group-hover/problem:scale-110 group-hover/problem:-rotate-3">
+                    <LuCircleAlert className="size-4.5 sm:size-5" aria-hidden="true" />
                   </div>
-                  <h3 className="font-display text-lg font-semibold text-primary">
+                  <h3 className="font-display text-base sm:text-lg font-semibold text-primary">
                     The Problem & Challenge
                   </h3>
                 </div>
@@ -53,12 +53,12 @@ export function ProjectOverviewSection({ project }: ProjectOverviewSectionProps)
 
           {project.solution && (
             <Reveal delay={0.15}>
-              <div className="group/sol relative flex h-full flex-col overflow-hidden rounded-2xl border border-emerald-500/25 bg-emerald-500/5 p-6 sm:p-8 backdrop-blur-xs transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-emerald-500/10 hover:shadow-[0_20px_40px_-15px_rgba(16,185,129,0.18)]">
+              <div className="group/sol relative flex h-full flex-col overflow-hidden rounded-2xl border border-emerald-500/25 bg-emerald-500/5 p-4 sm:p-6 md:p-8 backdrop-blur-xs transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-emerald-500/10 hover:shadow-[0_20px_40px_-15px_rgba(16,185,129,0.18)]">
                 <div className="flex items-center gap-3 text-emerald-400">
-                  <div className="flex size-9 items-center justify-center rounded-lg border border-emerald-500/30 bg-emerald-500/10 transition-transform duration-300 group-hover/sol:scale-110 group-hover/sol:rotate-3">
-                    <LuCircleCheck className="size-5" aria-hidden="true" />
+                  <div className="flex size-8 sm:size-9 shrink-0 items-center justify-center rounded-lg border border-emerald-500/30 bg-emerald-500/10 transition-transform duration-300 group-hover/sol:scale-110 group-hover/sol:rotate-3">
+                    <LuCircleCheck className="size-4.5 sm:size-5" aria-hidden="true" />
                   </div>
-                  <h3 className="font-display text-lg font-semibold text-primary">
+                  <h3 className="font-display text-base sm:text-lg font-semibold text-primary">
                     The Engineered Solution
                   </h3>
                 </div>

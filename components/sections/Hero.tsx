@@ -163,9 +163,11 @@ export function Hero() {
 
                 <span className="hidden sm:inline-block h-4 w-px bg-border/80" aria-hidden="true" />
 
-                <div className="flex items-center gap-1.5 text-xs font-mono text-muted">
+                <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-mono text-muted min-w-0">
                   <LuSparkles className="size-3.5 text-accent shrink-0" aria-hidden="true" />
-                  <span>TypeScript • Python • Next.js • Django</span>
+                  <span className="truncate max-w-[calc(100vw-5rem)] sm:max-w-none">
+                    TypeScript • Python • Next.js • Django
+                  </span>
                 </div>
               </div>
             </StaggerItem>
