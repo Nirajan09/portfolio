@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { LuCircleAlert, LuCircleCheck, LuRotateCcw, LuX } from "react-icons/lu";
 
 import { Button } from "@/components/ui/Button";
@@ -20,9 +21,16 @@ function ModalShell({
   descriptionId,
   tone,
 }: ModalShellProps) {
+  const [mounted, setMounted] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     const previousOverflow = document.body.style.overflow;
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -32,18 +40,21 @@ function ModalShell({
     };
 
     document.body.style.overflow = "hidden";
-    document.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
     dialogRef.current?.focus();
 
     return () => {
       document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [onClose]);
+  }, [mounted, onClose]);
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <div
-      className="fixed inset-0 z-100 flex items-center justify-center overflow-y-auto bg-black/60 p-4 backdrop-blur-sm"
+      role="presentation"
+      className="fixed inset-0 z-100 flex items-center justify-center overflow-y-auto bg-black/75 p-4 backdrop-blur-md animate-in fade-in duration-200"
       onClick={(event) => {
         // Close only when the backdrop itself is clicked.
         if (event.target === event.currentTarget) {
@@ -59,22 +70,35 @@ function ModalShell({
         aria-describedby={descriptionId}
         tabIndex={-1}
         onClick={(event) => event.stopPropagation()}
-        className={`relative w-full max-w-md overflow-hidden rounded-2xl border bg-background p-6 shadow-2xl outline-none sm:p-8 ${
-          tone === "success" ? "border-success/30" : "border-error/30"
+        className={`relative w-full max-w-md overflow-hidden rounded-2xl border bg-background p-6 shadow-[0_24px_60px_-12px_rgba(0,0,0,0.85)] outline-none sm:p-8 animate-in zoom-in-95 duration-200 ${
+          tone === "success"
+            ? "border-success/30 shadow-[0_0_30px_-5px_rgba(34,197,94,0.18)]"
+            : "border-error/30 shadow-[0_0_30px_-5px_rgba(239,68,68,0.18)]"
         }`}
       >
+        {/* Top hairline indicator */}
+        <span
+          aria-hidden="true"
+          className={`absolute inset-x-0 top-0 h-0.5 ${
+            tone === "success"
+              ? "bg-linear-to-r from-emerald-500 via-teal-400 to-emerald-500"
+              : "bg-linear-to-r from-red-500 via-rose-500 to-red-500"
+          }`}
+        />
+
         <button
           type="button"
           onClick={onClose}
           aria-label="Close dialog"
-          className="absolute right-4 top-4 flex size-9 items-center justify-center rounded-full text-muted transition-colors hover:bg-background-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+          className="absolute right-4 top-4 flex size-9 items-center justify-center rounded-full text-muted transition-colors hover:bg-background-secondary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent cursor-pointer active:scale-95"
         >
           <LuX className="size-5" aria-hidden="true" />
         </button>
 
         {children}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
@@ -169,15 +193,16 @@ export function MessageErrorModal({
             Message not sent
           </h2>
 
-          <p
+          <div
             id="message-error-description"
-            className="mt-3 text-sm leading-6 text-secondary sm:text-base"
+            className="mt-3 rounded-xl border border-error/25 bg-error/10 p-3.5 text-sm leading-relaxed text-secondary"
           >
+            <span className="font-semibold text-error">Notice: </span>
             {message ||
               "Something went wrong while sending your message. Please try again."}
-          </p>
+          </div>
 
-          <p className="mt-3 text-sm leading-6 text-secondary">
+          <p className="mt-4 text-sm leading-6 text-secondary">
             Your entered details are preserved. Try again or email me directly
             at{" "}
             <a

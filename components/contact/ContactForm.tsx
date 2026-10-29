@@ -389,12 +389,81 @@ export const ContactForm = memo(function ContactForm({
         }),
       });
 
-      const payload: {
+      type ContactApiResponse = {
         ok?: boolean;
         message?: string;
-      } | null = await response.json().catch(() => null);
+        provider?: "web3forms" | "resend";
+        accessKey?: string;
+        sanitizedData?: {
+          name: string;
+          email: string;
+          subject: string;
+          message: string;
+        };
+      };
+
+      const payload: ContactApiResponse | null = await response
+        .json()
+        .catch(() => null);
 
       if (response.ok && payload?.ok) {
+        // If provider is web3forms, dispatch directly from browser to satisfy Web3Forms client-side requirement
+        if (payload.provider === "web3forms" && payload.accessKey) {
+          const sendData = payload.sanitizedData ?? result.data;
+          try {
+            const web3Res = await fetch("https://api.web3forms.com/submit", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify({
+                access_key: payload.accessKey,
+                name: sendData.name,
+                email: sendData.email,
+                subject: `[Portfolio Contact] ${sendData.subject}`,
+                message: sendData.message,
+                from_name: sendData.name,
+              }),
+            });
+
+            const web3Data = (await web3Res.json().catch(() => null)) as {
+              success?: boolean;
+              message?: string;
+            } | null;
+
+            if (web3Res.ok && web3Data?.success) {
+              trackEvent("contact_form_submit", {
+                result: "success",
+              });
+              resetForm();
+              setStatus("success");
+              return;
+            }
+
+            trackEvent("contact_form_submit", {
+              result: "error",
+            });
+
+            setServerMessage(
+              web3Data?.message ||
+                `Web3Forms returned status ${web3Res.status}. Please check your access key.`,
+            );
+            setStatus("error");
+            return;
+          } catch {
+            trackEvent("contact_form_submit", {
+              result: "error",
+            });
+            setServerMessage(
+              "Network error connecting to email service. Please try again or email directly.",
+            );
+            setStatus("error");
+            return;
+          }
+        }
+
+        // Resend or honeypot silent absorption
         trackEvent("contact_form_submit", {
           result: "success",
         });

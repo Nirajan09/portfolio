@@ -100,15 +100,41 @@ export async function POST(request: Request) {
     );
   }
 
-  // 8. Secure Delivery via authenticated backend service
-  const sent = await sendContactEmail(result.data);
-  if (sent.status === "sent") {
-    return NextResponse.json({ ok: true }, { headers: { "Cache-Control": "no-store" } });
+  // 8. Secure Delivery Layer
+  // A. Server-side provider: Resend (if configured)
+  const resendApiKey = process.env.RESEND_API_KEY;
+  if (resendApiKey) {
+    const sent = await sendContactEmail(result.data);
+    if (sent.status === "sent") {
+      return NextResponse.json(
+        { ok: true, provider: "resend" },
+        { headers: { "Cache-Control": "no-store" } },
+      );
+    }
+    return fail(
+      sent.error || "Your message couldn't be sent. Please try again.",
+      502,
+    );
   }
 
-  if (sent.status === "not-configured") {
-    return fail("The contact form is temporarily unavailable.", 503);
+  // B. Client-side provider: Web3Forms free tier
+  // Web3Forms free tier rejects server-side Node.js IPs with 403 Forbidden.
+  // We return the validated access key and sanitized data so the client browser dispatches directly.
+  const web3FormsKey =
+    process.env.WEB3FORMS_ACCESS_KEY ||
+    process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+
+  if (web3FormsKey) {
+    return NextResponse.json(
+      {
+        ok: true,
+        provider: "web3forms",
+        accessKey: web3FormsKey,
+        sanitizedData: result.data,
+      },
+      { headers: { "Cache-Control": "no-store" } },
+    );
   }
 
-  return fail("Your message couldn't be sent. Please try again.", 502);
+  return fail("The contact form is temporarily unavailable.", 503);
 }
