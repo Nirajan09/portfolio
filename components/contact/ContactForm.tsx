@@ -43,7 +43,7 @@ const emptyValues: ContactInput = {
 
 const controlClass = (invalid: boolean) =>
   cn(
-    "w-full rounded-xl border bg-background-secondary/70 text-base text-primary placeholder:text-muted/60",
+    "w-full rounded-xl border bg-background-secondary/70 text-sm sm:text-base text-primary placeholder:text-sm placeholder:text-muted/60",
     "transition-[border-color,background-color,box-shadow] duration-200 ease-standard",
     "hover:bg-background-secondary focus:bg-background-secondary focus-visible:outline-none",
     invalid
@@ -141,7 +141,7 @@ function Field({
         <Icon
           aria-hidden="true"
           className={cn(
-            "pointer-events-none absolute left-3.5 size-4.5 text-muted transition-colors duration-200",
+            "pointer-events-none absolute left-3 size-4 text-muted transition-colors duration-200",
             "group-focus-within:text-accent",
             multiline ? "top-3.5" : "top-1/2 -translate-y-1/2",
             error && "text-error group-focus-within:text-error",
@@ -155,7 +155,7 @@ function Field({
             onChange={(event) => onChange(event.target.value)}
             className={cn(
               controlClass(Boolean(error)),
-              "resize-y py-3 pl-11 pr-4",
+              "resize-y py-3 pl-9.5 pr-4",
             )}
           />
         ) : (
@@ -165,7 +165,7 @@ function Field({
             onChange={(event) => onChange(event.target.value)}
             className={cn(
               controlClass(Boolean(error)),
-              "h-12 pl-11 pr-10",
+              "h-11 sm:h-12 pl-9.5 pr-8",
             )}
           />
         )}
@@ -174,7 +174,7 @@ function Field({
           <span
             aria-hidden="true"
             className={cn(
-              "pointer-events-none absolute right-3.5 top-1/2 flex size-5 -translate-y-1/2 items-center justify-center rounded-full bg-success/15 text-success",
+              "pointer-events-none absolute right-2.5 top-1/2 flex size-4.5 -translate-y-1/2 items-center justify-center rounded-full bg-success/15 text-success",
               "transition-[opacity,scale] duration-300 ease-standard",
               valid ? "scale-100 opacity-100" : "scale-50 opacity-0",
             )}
@@ -418,7 +418,7 @@ export function ContactForm({
           All fields are required.
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-4 sm:gap-5 sm:grid-cols-2">
           <Field
             name="name"
             label="Name"
