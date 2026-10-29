@@ -6,11 +6,18 @@ export type SendResult =
   | { status: "not-configured" }
   | { status: "failed" };
 
+const sanitizeHeader = (str: string) => str.replace(/[\r\n\t]+/g, " ").trim();
+const sanitizeEmail = (str: string) => str.replace(/[\r\n\t\s]+/g, "").trim();
+
 /**
  * Sends the message through Web3Forms API (or Resend if configured).
  * Credentials are kept on the server route and verified before sending.
  */
 export async function sendContactEmail(data: ContactInput): Promise<SendResult> {
+  const cleanName = sanitizeHeader(data.name);
+  const cleanEmail = sanitizeEmail(data.email);
+  const cleanSubject = sanitizeHeader(data.subject);
+
   const web3FormsKey = process.env.WEB3FORMS_ACCESS_KEY;
 
   if (web3FormsKey) {
@@ -23,11 +30,11 @@ export async function sendContactEmail(data: ContactInput): Promise<SendResult> 
         },
         body: JSON.stringify({
           access_key: web3FormsKey,
-          name: data.name,
-          email: data.email,
-          subject: `[Portfolio Contact] ${data.subject.replace(/[\r\n]+/g, " ")}`,
+          name: cleanName,
+          email: cleanEmail,
+          subject: `[Portfolio Contact] ${cleanSubject}`,
           message: data.message,
-          from_name: data.name,
+          from_name: cleanName,
         }),
         signal: AbortSignal.timeout(10_000),
       });
@@ -65,9 +72,9 @@ export async function sendContactEmail(data: ContactInput): Promise<SendResult> 
       body: JSON.stringify({
         from,
         to: [to],
-        reply_to: data.email,
-        subject: `[Portfolio] ${data.subject.replace(/[\r\n]+/g, " ")}`,
-        text: `Name: ${data.name}\nEmail: ${data.email}\n\n${data.message}`,
+        reply_to: cleanEmail,
+        subject: `[Portfolio] ${cleanSubject}`,
+        text: `Name: ${cleanName}\nEmail: ${cleanEmail}\n\n${data.message}`,
       }),
       signal: AbortSignal.timeout(10_000),
     });

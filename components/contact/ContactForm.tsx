@@ -230,6 +230,7 @@ export function ContactForm({
 
   const formRef = useRef<HTMLFormElement>(null);
   const startedRef = useRef(false);
+  const formLoadTime = useRef<number>(Date.now());
 
   const handleFocus = () => {
     if (startedRef.current) return;
@@ -343,6 +344,8 @@ export function ContactForm({
       return;
     }
 
+    const timeTakenMs = Date.now() - formLoadTime.current;
+
     setStatus("submitting");
 
     try {
@@ -356,6 +359,8 @@ export function ContactForm({
           email: result.data.email,
           subject: result.data.subject,
           message: result.data.message,
+          website: website,
+          timeTakenMs: timeTakenMs,
         }),
       });
 

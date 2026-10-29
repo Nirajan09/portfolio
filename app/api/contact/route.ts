@@ -4,13 +4,28 @@ import { rateLimit } from "@/lib/rate-limit";
 import { sendContactEmail } from "@/lib/send-contact-email";
 
 const MAX_BODY_CHARS = 10_000;
+const MIN_HUMAN_COMPLETION_TIME_MS = 1_500; // Bots submit in < 1.5 seconds
 
 const fail = (message: string, status: number, init?: ResponseInit) =>
-  NextResponse.json({ ok: false, message }, { status, ...init });
+  NextResponse.json(
+    { ok: false, message },
+    {
+      status,
+      headers: {
+        "Cache-Control": "no-store, max-age=0",
+        ...(init?.headers ?? {}),
+      },
+    },
+  );
 
 export async function POST(request: Request) {
-   // 1. Same-origin requests only. Browsers send Sec-Fetch-Site and cannot
-  //    forge it; fall back to comparing Origin with our host when it's absent.
+  // 1. Content-Type check (Blocks simple HTML form CSRF attacks)
+  const contentType = request.headers.get("content-type") || "";
+  if (!contentType.toLowerCase().includes("application/json")) {
+    return fail("Invalid content type.", 415);
+  }
+
+  // 2. Same-origin & CSRF validation
   const fetchSite = request.headers.get("sec-fetch-site");
   let sameOrigin = fetchSite === "same-origin";
   if (!fetchSite) {
@@ -25,9 +40,13 @@ export async function POST(request: Request) {
   }
   if (!sameOrigin) return fail("Request not allowed.", 403);
 
-  // 2. Rate limit per client IP.
+  // 3. Multi-proxy client IP resolution & Rate limiting
   const ip =
-    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    request.headers.get("cf-connecting-ip") ||
+    request.headers.get("x-real-ip") ||
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    "unknown";
+
   const limit = rateLimit(ip);
   if (!limit.allowed) {
     return fail("Too many messages. Please try again later.", 429, {
@@ -35,40 +54,61 @@ export async function POST(request: Request) {
     });
   }
 
-  // 3. Parse a size-limited JSON body.
+  // 4. Payload size limit (Prevents memory exhaustion / DoS)
   const text = await request.text();
-  if (text.length > MAX_BODY_CHARS) return fail("Message is too large.", 413);
+  if (text.length > MAX_BODY_CHARS) {
+    return fail("Message payload is too large.", 413);
+  }
+
   let body: unknown;
   try {
     body = JSON.parse(text);
   } catch {
-    return fail("Invalid request.", 400);
+    return fail("Invalid request JSON.", 400);
   }
 
-  // 4. Honeypot: real visitors never see or fill this field. Pretend success.
+  const rawObj =
+    typeof body === "object" && body !== null
+      ? (body as Record<string, unknown>)
+      : {};
+
+  // 5. Bot Trap A: Honeypot field (hidden from real users)
+  if (typeof rawObj.website === "string" && rawObj.website.trim() !== "") {
+    // Return silent success to trick the bot into not retrying
+    return NextResponse.json({ ok: true }, { headers: { "Cache-Control": "no-store" } });
+  }
+
+  // 6. Bot Trap B: Machine speed check (Humans take >= 1.5s to fill a form)
   if (
-    typeof body === "object" &&
-    body !== null &&
-    typeof (body as Record<string, unknown>).website === "string" &&
-    (body as Record<string, string>).website.trim() !== ""
+    typeof rawObj.timeTakenMs === "number" &&
+    rawObj.timeTakenMs < MIN_HUMAN_COMPLETION_TIME_MS
   ) {
-    return NextResponse.json({ ok: true });
+    // Silent success
+    return NextResponse.json({ ok: true }, { headers: { "Cache-Control": "no-store" } });
   }
 
-  // 5. Server-side validation (never trust the client check).
+  // 7. Server-side validation & CRLF sanitization (never trust client)
   const result = validateContact(body);
   if (!result.ok) {
     return NextResponse.json(
-      { ok: false, message: "Please check the highlighted fields.", errors: result.errors },
-      { status: 400 },
+      {
+        ok: false,
+        message: "Please check the highlighted fields.",
+        errors: result.errors,
+      },
+      { status: 400, headers: { "Cache-Control": "no-store" } },
     );
   }
 
-  // 6. Deliver.
+  // 8. Secure Delivery via authenticated backend service
   const sent = await sendContactEmail(result.data);
-  if (sent.status === "sent") return NextResponse.json({ ok: true });
-  if (sent.status === "not-configured") {
-    return fail("The contact form isn't available right now.", 503);
+  if (sent.status === "sent") {
+    return NextResponse.json({ ok: true }, { headers: { "Cache-Control": "no-store" } });
   }
+
+  if (sent.status === "not-configured") {
+    return fail("The contact form is temporarily unavailable.", 503);
+  }
+
   return fail("Your message couldn't be sent. Please try again.", 502);
 }
