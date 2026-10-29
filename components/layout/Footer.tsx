@@ -84,6 +84,9 @@ export function Footer() {
   };
 
   const scrollToTop = () => {
+    if (window.location.hash) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -112,6 +115,12 @@ export function Footer() {
             <Link
               href={navHref("home")}
               aria-label={`${personal.name}, back to top`}
+              onClick={(e) => {
+                if (window.location.pathname === "/") {
+                  e.preventDefault();
+                  scrollToTop();
+                }
+              }}
               className="group inline-flex items-baseline gap-1"
             >
               <span className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-primary transition-all duration-300 group-hover:text-accent">

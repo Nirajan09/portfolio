@@ -38,6 +38,20 @@ export function Navbar() {
   useEffect(() => {
     if (!isHome) return;
 
+    // If page is loaded with a hash, scroll smoothly to section and clean hash from URL bar
+    if (window.location.hash) {
+      const targetId = window.location.hash.replace("#", "");
+      const element = document.getElementById(targetId);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+          window.history.replaceState(null, "", window.location.pathname);
+        }, 100);
+      } else {
+        window.history.replaceState(null, "", window.location.pathname);
+      }
+    }
+
     const sections = navItems
       .map((item) => document.getElementById(item.id))
       .filter((el): el is HTMLElement => el !== null);
@@ -59,6 +73,33 @@ export function Navbar() {
 
     return () => observer.disconnect();
   }, [isHome]);
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id: string,
+  ) => {
+    setOpen(false);
+
+    if (!isHome) return;
+
+    e.preventDefault();
+
+    if (window.location.hash) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+
+    if (id === "home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setActiveId("home");
+      return;
+    }
+
+    const target = document.getElementById(id);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+      setActiveId(id);
+    }
+  };
 
   // Escape closes the mobile menu, and body scroll is locked while open.
   useEffect(() => {
@@ -119,7 +160,7 @@ export function Navbar() {
           href={navHref("home")}
           aria-label={`${personal.name}, back to top`}
           className="group font-display text-xl font-bold tracking-tight text-primary"
-          onClick={() => setOpen(false)}
+          onClick={(e) => handleNavClick(e, "home")}
           data-track="nav_click"
           data-track-target="home"
           data-track-location="logo"
@@ -154,6 +195,7 @@ export function Navbar() {
                   <Link
                     href={navHref(item.id)}
                     aria-current={isActive ? "true" : undefined}
+                    onClick={(e) => handleNavClick(e, item.id)}
                     className={cn(
                       "relative block rounded-full px-4 py-1.5 text-sm font-medium",
                       "transition-colors duration-200",
@@ -190,6 +232,7 @@ export function Navbar() {
         <div className="flex items-center gap-3 justify-self-end">
           <Link
             href="/#contact"
+            onClick={(e) => handleNavClick(e, "contact")}
             className={cn(
               "group/cta hidden h-10 items-center gap-1.5 rounded-full px-5 md:inline-flex",
               "bg-accent text-sm font-semibold text-background",
@@ -260,7 +303,7 @@ export function Navbar() {
                       <Link
                         href={navHref(item.id)}
                         aria-current={isActive ? "true" : undefined}
-                        onClick={() => setOpen(false)}
+                        onClick={(e) => handleNavClick(e, item.id)}
                         className={cn(
                           "group flex h-12 items-center justify-between rounded-xl px-4",
                           "text-base font-medium",
@@ -291,7 +334,7 @@ export function Navbar() {
 
               <Link
                 href="/#contact"
-                onClick={() => setOpen(false)}
+                onClick={(e) => handleNavClick(e, "contact")}
                 className="mt-2 flex h-12 items-center justify-center gap-1.5 rounded-xl bg-accent text-sm font-semibold text-background transition-colors duration-200 hover:bg-accent-hover"
                 data-track="nav_click"
                 data-track-target="contact"
