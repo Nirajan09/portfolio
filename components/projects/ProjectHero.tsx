@@ -19,10 +19,17 @@ type ProjectHeroProps = {
 
 export function ProjectHero({ project }: ProjectHeroProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [isLightboxLoaded, setIsLightboxLoaded] = useState(false);
   const { links } = project;
   const readTime = formatReadTime(getReadTimeMinutes(project));
   const heroStack = project.stack.slice(0, 6);
   const heroHidden = project.stack.length - heroStack.length;
+
+  useEffect(() => {
+    if (!lightboxOpen) {
+      setIsLightboxLoaded(false);
+    }
+  }, [lightboxOpen]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -243,7 +250,7 @@ export function ProjectHero({ project }: ProjectHeroProps) {
           role="dialog"
           aria-modal="true"
           aria-label={`${project.title} screenshot preview`}
-          className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/85 p-3.5 sm:p-4 backdrop-blur-md transition-opacity duration-300"
+          className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden bg-black/85 p-3.5 sm:p-4 backdrop-blur-md transition-opacity duration-300"
           onClick={() => setLightboxOpen(false)}
         >
           <div
@@ -270,18 +277,21 @@ export function ProjectHero({ project }: ProjectHeroProps) {
               </button>
             </div>
 
-            {/* Modal image container with background shimmer */}
-            <div className="relative aspect-video max-h-[75vh] w-full min-h-0 overflow-auto bg-background p-2 sm:p-4">
+            {/* Modal image container with background shimmer while loading */}
+            <div className="relative aspect-video max-h-[75vh] w-full min-h-0 overflow-hidden bg-background p-2 sm:p-4">
               <div className="relative size-full min-h-[220px] sm:min-h-[300px] overflow-hidden rounded-lg bg-surface/70">
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/[0.08] to-transparent animate-shimmer"
-                />
+                {!isLightboxLoaded && (
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/[0.08] to-transparent animate-shimmer"
+                  />
+                )}
 
                 <Image
                   src={project.cover.src}
                   alt={project.cover.alt}
                   fill
+                  onLoad={() => setIsLightboxLoaded(true)}
                   className="relative z-10 object-contain"
                   sizes="100vw"
                 />

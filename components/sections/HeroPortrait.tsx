@@ -1,5 +1,7 @@
+"use client";
+
 import Image from "next/image";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { personal } from "@/data/personal";
 import { cn } from "@/lib/utils";
 
@@ -66,6 +68,7 @@ function Chip({
 
 export function HeroPortrait() {
   const { photo } = personal;
+  const [isLoaded, setIsLoaded] = useState(false);
 
   return (
     <div className="relative isolate mx-auto w-full max-w-[240px] sm:max-w-[300px] lg:max-w-[340px]">
@@ -116,10 +119,12 @@ export function HeroPortrait() {
             />
 
             {/* Shimmer skeleton sweep behind the photo while loading */}
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/[0.09] to-transparent animate-shimmer"
-            />
+            {!isLoaded && (
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/[0.09] to-transparent animate-shimmer"
+              />
+            )}
 
             {/* Photo: covers full card edge-to-edge, perfectly framed */}
             <Image
@@ -127,6 +132,7 @@ export function HeroPortrait() {
               alt={photo.alt}
               fill
               priority
+              onLoad={() => setIsLoaded(true)}
               sizes="(min-width: 1024px) 380px, (min-width: 640px) 340px, 280px"
               className="relative z-10 object-cover object-[center_65%] transition-transform duration-700 ease-out group-hover:scale-[1.04]"
             />

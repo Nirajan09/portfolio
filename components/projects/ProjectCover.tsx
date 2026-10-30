@@ -1,4 +1,6 @@
-import { memo, useMemo } from "react";
+"use client";
+
+import { memo, useMemo, useState } from "react";
 import type { IconType } from "react-icons";
 import { LuBookOpen, LuBriefcase, LuFolder, LuImage, LuLock } from "react-icons/lu";
 import Image from "next/image";
@@ -60,6 +62,7 @@ export const ProjectCover = memo(function ProjectCover({
   className,
   priority = false,
 }: ProjectCoverProps) {
+  const [isLoaded, setIsLoaded] = useState(false);
   const meta = projectDisplayMeta[project.slug] ?? {
     icon: LuFolder,
     tone: "cyan" as Tone,
@@ -129,16 +132,19 @@ export const ProjectCover = memo(function ProjectCover({
             <div className="relative size-full p-1.5 sm:p-2.5">
               <div className="relative size-full overflow-hidden rounded-lg border border-border/40 bg-surface/80 shadow-inner">
                 {/* Background shimmer skeleton: visible while screenshot loads */}
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/[0.08] to-transparent animate-shimmer"
-                />
+                {!isLoaded && (
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/[0.08] to-transparent animate-shimmer"
+                  />
+                )}
 
                 <Image
                   src={project.cover.src}
                   alt={project.cover.alt}
                   fill
                   priority={priority}
+                  onLoad={() => setIsLoaded(true)}
                   sizes="(min-width: 1280px) 680px, (min-width: 1024px) 50vw, (min-width: 640px) 90vw, 100vw"
                   className={cn("relative z-10 object-cover object-top", motion)}
                 />

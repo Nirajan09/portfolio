@@ -28,10 +28,18 @@ export function CertificatePreview({
   credentialUrl,
 }: CertificatePreviewProps) {
   const [mounted, setMounted] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Reset loaded state when closed or src changes
+  useEffect(() => {
+    if (!isOpen) {
+      setIsLoaded(false);
+    }
+  }, [isOpen, src]);
 
   // Handle ESC key press and scroll locking when open
   useEffect(() => {
@@ -60,11 +68,11 @@ export function CertificatePreview({
       role="dialog"
       aria-modal="true"
       aria-label={`Certificate preview for ${title}`}
-      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/85 p-3 sm:p-4 backdrop-blur-md transition-all duration-300"
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden bg-black/85 p-3 sm:p-4 backdrop-blur-md transition-all duration-300"
       onClick={onClose}
     >
       <div
-        className="relative my-auto flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-border/80 bg-surface shadow-2xl transition-all duration-300"
+        className="relative my-auto flex max-h-[90vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-border/80 bg-surface shadow-2xl transition-all duration-300"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Gradient top highlight hairline */}
@@ -96,13 +104,15 @@ export function CertificatePreview({
           </button>
         </div>
 
-        {/* Modal Image Body with background shimmer */}
-        <div className="relative bg-background-secondary/80 p-3 sm:p-6 flex min-h-[260px] sm:min-h-[380px] items-center justify-center max-h-[68vh] overflow-auto">
-          {/* Shimmer skeleton sweep behind the certificate */}
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/[0.06] to-transparent animate-shimmer"
-          />
+        {/* Modal Image Body with background shimmer while loading */}
+        <div className="relative flex min-h-[220px] sm:min-h-[320px] items-center justify-center overflow-hidden bg-background-secondary/80 p-3 sm:p-6">
+          {/* Shimmer skeleton sweep behind the certificate: visible only until image finishes loading */}
+          {!isLoaded && (
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/[0.06] to-transparent animate-shimmer"
+            />
+          )}
 
           <Image
             src={src}
@@ -110,7 +120,8 @@ export function CertificatePreview({
             width={1600}
             height={1200}
             sizes="(min-width: 1024px) 896px, 100vw"
-            className="relative z-10 h-auto max-h-[64vh] w-auto max-w-full rounded-xl border border-border/80 object-contain shadow-lg"
+            onLoad={() => setIsLoaded(true)}
+            className="relative z-10 h-auto max-h-[58vh] sm:max-h-[62vh] w-auto max-w-full rounded-xl border border-border/80 object-contain shadow-lg"
           />
         </div>
 
