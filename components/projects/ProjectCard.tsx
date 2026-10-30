@@ -1,7 +1,7 @@
 "use client";
 
 import { memo, useCallback, useMemo, useRef, type MouseEvent } from "react";
-import { LuArrowUpRight, LuCheck, LuExternalLink, LuLayers } from "react-icons/lu";
+import { LuArrowUpRight, LuExternalLink, LuLayers } from "react-icons/lu";
 import Link from "next/link";
 import { GithubIcon } from "@/components/ui/icons";
 import { TechChip } from "@/components/ui/TechChip";
@@ -25,13 +25,12 @@ export const ProjectCard = memo(function ProjectCard({
   const rectRef = useRef<DOMRect | null>(null);
   const rafRef = useRef<number | null>(null);
 
-  const { visible, hidden, highlights, projectIndexStr } = useMemo(() => {
+  const { visible, hidden, projectIndexStr } = useMemo(() => {
     const v = project.stack.slice(0, MAX_TECH);
     const h = project.stack.length - v.length;
-    const hl = (project.highlights ?? []).slice(0, 3);
     const idx = String(index + 1).padStart(2, "0");
-    return { visible: v, hidden: h, highlights: hl, projectIndexStr: idx };
-  }, [project.stack, project.highlights, index]);
+    return { visible: v, hidden: h, projectIndexStr: idx };
+  }, [project.stack, index]);
 
   const handleMouseEnter = useCallback((event: MouseEvent<HTMLElement>) => {
     rectRef.current = event.currentTarget.getBoundingClientRect();
@@ -185,22 +184,8 @@ export const ProjectCard = memo(function ProjectCard({
             {project.summary}
           </p>
 
-          {/* Key Architectural Highlights Bullets */}
-          {highlights.length > 0 && (
-            <ul className="mt-4 sm:mt-5 space-y-2 text-xs sm:text-sm text-secondary/90">
-              {highlights.map((item) => (
-                <li key={item} className="flex items-start gap-2.5 transition-transform duration-200 group-hover:translate-x-0.5">
-                  <span className="mt-1 flex size-4 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent">
-                    <LuCheck className="size-2.5 stroke-[3]" aria-hidden="true" />
-                  </span>
-                  <span className="leading-snug">{item}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-
           {/* Tech Stack Chips */}
-          <div className="mt-5 sm:mt-6">
+          <div className="mt-4 sm:mt-5">
             <p className="sr-only">Technologies used</p>
             <ul aria-label="Technologies" className="flex flex-wrap gap-1.5 sm:gap-2">
               {visible.map((tech) => (

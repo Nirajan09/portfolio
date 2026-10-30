@@ -8,7 +8,7 @@ export const projects: readonly Project[] = [
     role: "Full-Stack Developer",
     status: "Live Production",
     summary:
-      "A bookstore web application featuring catalog search, personalized recommendations via collaborative filtering, multi-gateway payments (Stripe, eSewa, COD), and an admin inventory dashboard.",
+      "Full-stack bookstore with personalized recommendations, multi-gateway checkout (Stripe, eSewa, COD), and inventory controls.",
     overview:
       "A full-stack bookstore built with a Django REST Framework API and a React 19 frontend. The platform supports user registration, catalog search and filtering, persistent cart and wishlist storage, order management, and an admin view for sales metrics and stock alerts. It integrates a recommendation endpoint using SciPy and scikit-learn that suggests books based on user ratings.",
     problem:
@@ -267,10 +267,10 @@ export const projects: readonly Project[] = [
       },
     ],
     highlights: [
-      "Hybrid collaborative filtering recommendation logic combining user and item algorithms with popular fallback",
-      "Payment support for Stripe cards, eSewa digital wallet, and Cash on Delivery",
-      "Role-based token authentication separating customer shopping from staff admin operations",
-      "Admin dashboard tracking revenue, order volume, best-selling books, and low-stock alerts",
+      "Collaborative filtering engine with cold-start fallback",
+      "Multi-gateway checkout with Stripe, eSewa, and COD",
+      "Role-based access for shoppers and administrators",
+      "Admin dashboard with revenue metrics and stock alerts",
     ],
     links: {
       live: "https://book-recommendation-system-umber.vercel.app/",
@@ -289,7 +289,7 @@ export const projects: readonly Project[] = [
     role: "Full-Stack Developer",
     status: "Live Production",
     summary:
-      "A role-based job application platform built with Next.js App Router and Server Actions, featuring Clerk authentication, candidate resume uploads to Supabase Storage, recruiter candidate screening, and Stripe membership tiers.",
+      "Recruitment platform built with Next.js Server Actions, Clerk authentication, Supabase resume storage, and Stripe tiers.",
     overview:
       "JobVista is a full-stack job platform connecting candidates and recruiters. Built with the Next.js App Router and Server Actions, it provides role-specific onboarding: candidates create profiles, upload PDF resumes to Supabase Storage, and track application statuses, while recruiters post openings, review candidate profiles, and manage posting limits through Stripe memberships.",
     problem:
@@ -549,7 +549,7 @@ export const projects: readonly Project[] = [
     role: "Full-Stack Developer",
     status: "Live Production",
     summary:
-      "A full-stack media management platform built with Next.js and Express, featuring memory-buffered Cloudinary stream uploads, JWT authentication, author-based access control, and an interactive media gallery.",
+      "Media management platform featuring in-memory Cloudinary streaming uploads, JWT authentication, and owner-based controls.",
     overview:
       "Pixify is an image management and sharing application built with a Next.js 16 frontend and an Express 5 REST API backend. It handles image uploads using memory buffering piped directly to Cloudinary, avoiding disk writes on the server. The application implements user authentication with JWTs, author-based ownership checks for updating or deleting media, and a paginated gallery with image metadata inspection.",
     problem:
