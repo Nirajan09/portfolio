@@ -172,6 +172,9 @@ export const ProjectCard = memo(function ProjectCard({
             <Link
               href={`/projects/${project.slug}`}
               className="hover:underline decoration-accent/40 underline-offset-4 focus-visible:outline-hidden"
+              data-track="project_click"
+              data-track-project={project.slug}
+              data-track-target="title"
             >
               {project.title}
             </Link>
@@ -213,6 +216,9 @@ export const ProjectCard = memo(function ProjectCard({
             <Link
               href={`/projects/${project.slug}`}
               className="group/cta inline-flex w-full min-[480px]:w-auto items-center justify-center gap-2 rounded-lg border border-accent/40 bg-accent/10 px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-accent transition-all duration-300 ease-standard hover:border-accent hover:bg-accent hover:text-background hover:shadow-glow hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-hidden"
+              data-track="project_click"
+              data-track-project={project.slug}
+              data-track-target="case_study_btn"
             >
               <span>Explore case study</span>
               <LuArrowUpRight className="size-3.5 sm:size-4 transition-transform duration-300 ease-standard group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5" />

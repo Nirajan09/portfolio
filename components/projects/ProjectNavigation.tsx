@@ -26,6 +26,9 @@ export function ProjectNavigation({
           {prevProject ? (
             <Link
               href={`/projects/${prevProject.slug}`}
+              data-track="project_click"
+              data-track-project={prevProject.slug}
+              data-track-target="prev_case_study"
               className="group relative overflow-hidden flex flex-col justify-between rounded-xl border border-border/70 bg-surface/40 p-4 sm:p-5 text-left transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/75 hover:shadow-glow"
             >
               {/* Top hairline accent draw on hover */}
@@ -56,6 +59,9 @@ export function ProjectNavigation({
           {nextProject ? (
             <Link
               href={`/projects/${nextProject.slug}`}
+              data-track="project_click"
+              data-track-project={nextProject.slug}
+              data-track-target="next_case_study"
               className="group relative overflow-hidden flex flex-col justify-between rounded-xl border border-border/70 bg-surface/40 p-4 sm:p-5 text-left sm:text-right transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/75 hover:shadow-glow"
             >
               {/* Top hairline accent draw on hover */}

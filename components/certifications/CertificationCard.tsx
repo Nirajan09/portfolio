@@ -43,6 +43,8 @@ export function CertificationCard({ certification }: { certification: Certificat
         role={image ? "button" : undefined}
         aria-haspopup={image ? "dialog" : undefined}
         aria-label={image ? `Preview certificate: ${title}` : undefined}
+        data-track={image ? "certificate_view" : undefined}
+        data-track-certificate={image ? title : undefined}
         className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border/80 bg-surface/75 backdrop-blur-md transform-gpu will-change-transform transition-all duration-300 ease-standard hover:-translate-y-1.5 hover:border-accent/40 hover:shadow-glow ${
           image ? "cursor-pointer focus-visible:outline-accent" : ""
         }`}
@@ -126,6 +128,8 @@ export function CertificationCard({ certification }: { certification: Certificat
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
+                data-track="certificate_verify"
+                data-track-certificate={title}
                 className="group/cta inline-flex items-center gap-1.5 rounded-lg border border-border/90 bg-background-secondary/80 px-3 py-1.5 text-xs font-medium text-secondary transition-all duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-xs shrink-0"
                 aria-label={`Verify authenticity of ${title} (opens in new tab)`}
               >

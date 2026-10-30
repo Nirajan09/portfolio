@@ -2,12 +2,23 @@ import { track as trackVercel } from "@vercel/analytics";
 
 /** Every event the site sends. Keep this list short and free of personal data. */
 export type AnalyticsEvent =
+  | "page_view"
   | "nav_click"
   | "hero_cta_click"
   | "project_view"
+  | "project_click"
+  | "project_filter"
   | "project_external_link"
   | "resume_click"
+  | "resume_download"
   | "social_click"
+  | "copy_email"
+  | "services_cta_click"
+  | "services_email_click"
+  | "certificate_view"
+  | "certificate_verify"
+  | "privacy_modal_open"
+  | "back_to_top_click"
   | "contact_form_start"
   | "contact_form_submit";
 

@@ -64,6 +64,8 @@ export const Projects = memo(function Projects() {
                 type="button"
                 onClick={() => setSelectedFilter(filter.id)}
                 aria-pressed={isActive}
+                data-track="project_filter"
+                data-track-category={filter.id}
                 className="group relative inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium transition-colors duration-200 focus-visible:outline-hidden"
               >
                 {/* Gliding animated background pill */}

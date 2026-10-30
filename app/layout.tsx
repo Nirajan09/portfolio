@@ -8,6 +8,7 @@ import "./globals.css";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Analytics } from "@/components/analytics/Analytics";
 import { ClickTracker } from "@/components/analytics/ClickTracker";
+import { PageViewTracker } from "@/components/analytics/PageViewTracker";
 import {
   allowIndexing,
   personJsonLd,
@@ -93,6 +94,7 @@ export default function RootLayout({
           <Footer />
         </MotionProvider>
         <ClickTracker />
+        <PageViewTracker />
         <Analytics />
       </body>
     </html>

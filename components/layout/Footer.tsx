@@ -134,6 +134,9 @@ export const Footer = memo(function Footer() {
               href={navHref("home")}
               aria-label={`${personal.name}, back to top`}
               onClick={handleHomeClick}
+              data-track="nav_click"
+              data-track-target="home"
+              data-track-location="footer"
               className="group inline-flex items-baseline gap-1"
             >
               <span className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-primary transition-all duration-300 group-hover:text-accent">
@@ -187,6 +190,9 @@ export const Footer = memo(function Footer() {
             <div className="mt-4 flex max-w-md min-w-0 items-center justify-between gap-2.5 rounded-xl border border-border/80 bg-surface/60 p-1.5 pl-3 text-xs font-mono text-secondary transition-all hover:border-accent/40">
               <a
                 href={`mailto:${personal.email}`}
+                data-track="social_click"
+                data-track-network="email"
+                data-track-location="footer_badge"
                 className="min-w-0 flex-1 truncate font-medium text-primary hover:text-accent transition-colors"
                 title="Send email directly"
               >
@@ -195,6 +201,8 @@ export const Footer = memo(function Footer() {
               <button
                 type="button"
                 onClick={handleCopyEmail}
+                data-track="copy_email"
+                data-track-location="footer"
                 className="flex shrink-0 items-center gap-1 rounded-lg border border-border/80 bg-background/80 px-2.5 py-1 text-[11px] font-sans font-medium text-muted hover:border-accent/40 hover:bg-accent/10 hover:text-accent transition-all cursor-pointer active:scale-95"
                 aria-label="Copy email address"
               >
@@ -230,6 +238,9 @@ export const Footer = memo(function Footer() {
                   rel="noopener noreferrer"
                   aria-label="GitHub profile"
                   title="GitHub"
+                  data-track="social_click"
+                  data-track-network="github"
+                  data-track-location="footer"
                   className="group flex size-10 items-center justify-center rounded-xl border border-border/80 bg-surface/60 text-secondary transition-all duration-200 hover:-translate-y-1 hover:border-white/30 hover:bg-white/10 hover:text-primary hover:shadow-[0_4px_16px_rgba(255,255,255,0.1)]"
                 >
                   <GithubIcon className="size-4.5 transition-transform duration-200 group-hover:scale-110" />
@@ -243,6 +254,9 @@ export const Footer = memo(function Footer() {
                   rel="noopener noreferrer"
                   aria-label="LinkedIn profile"
                   title="LinkedIn"
+                  data-track="social_click"
+                  data-track-network="linkedin"
+                  data-track-location="footer"
                   className="group flex size-10 items-center justify-center rounded-xl border border-border/80 bg-surface/60 text-secondary transition-all duration-200 hover:-translate-y-1 hover:border-blue-500/40 hover:bg-blue-500/10 hover:text-blue-400 hover:shadow-[0_4px_16px_rgba(59,130,246,0.2)]"
                 >
                   <LinkedinIcon className="size-4.5 transition-transform duration-200 group-hover:scale-110" />
@@ -256,6 +270,8 @@ export const Footer = memo(function Footer() {
                   rel="noopener noreferrer"
                   aria-label="Download or view Resume"
                   title="Resume (PDF)"
+                  data-track="resume_download"
+                  data-track-location="footer"
                   className="group flex size-10 items-center justify-center rounded-xl border border-border/80 bg-surface/60 text-secondary transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-emerald-500/10 hover:text-emerald-400 hover:shadow-[0_4px_16px_rgba(52,211,153,0.2)]"
                 >
                   <LuFileText className="size-4.5 transition-transform duration-200 group-hover:scale-110" />
@@ -266,6 +282,9 @@ export const Footer = memo(function Footer() {
                 href={`mailto:${personal.email}`}
                 aria-label="Send direct email"
                 title="Send Email"
+                data-track="social_click"
+                data-track-network="email"
+                data-track-location="footer"
                 className="group flex size-10 items-center justify-center rounded-xl border border-border/80 bg-surface/60 text-secondary transition-all duration-200 hover:-translate-y-1 hover:border-accent/40 hover:bg-accent/10 hover:text-accent hover:shadow-[0_4px_16px_rgba(34,211,238,0.2)]"
               >
                 <LuMail className="size-4.5 transition-transform duration-200 group-hover:scale-110" />
@@ -290,6 +309,7 @@ export const Footer = memo(function Footer() {
             <button
               type="button"
               onClick={() => setIsPrivacyOpen(true)}
+              data-track="privacy_modal_open"
               className="group inline-flex items-center gap-1.5 font-medium text-secondary/80 hover:text-accent transition-colors underline underline-offset-4 decoration-border/80 hover:decoration-accent cursor-pointer"
             >
               <LuShieldCheck className="size-3.5 text-accent transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
@@ -301,6 +321,7 @@ export const Footer = memo(function Footer() {
             <button
               type="button"
               onClick={scrollToTop}
+              data-track="back_to_top_click"
               className="group inline-flex items-center gap-2 rounded-xl border border-border/80 bg-surface/60 px-3.5 py-1.5 text-xs sm:text-sm font-medium text-secondary transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40 hover:bg-surface hover:text-primary hover:shadow-xs cursor-pointer active:scale-95"
             >
               <span>Back to top</span>
