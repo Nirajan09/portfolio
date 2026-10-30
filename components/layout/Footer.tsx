@@ -127,7 +127,7 @@ export const Footer = memo(function Footer() {
       />
 
       <PageContainer className="relative">
-        <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between md:gap-14">
+        <div className="footer-directory flex flex-col gap-10 md:flex-row md:items-start md:justify-between md:gap-14">
           {/* ================= Brand & Overview Column ================= */}
           <div className="w-full md:max-w-xl">
             <Link
@@ -298,7 +298,7 @@ export const Footer = memo(function Footer() {
         </div>
 
         {/* ================= Sub-Footer Bar ================= */}
-        <div className="relative mt-10 md:mt-12 flex flex-col gap-3.5 border-t border-border/70 pt-5 text-xs sm:text-sm text-secondary sm:flex-row sm:items-center sm:justify-between min-w-0">
+        <div className="footer-subbar relative mt-10 md:mt-12 flex flex-col gap-3.5 border-t border-border/70 pt-5 text-xs sm:text-sm text-secondary sm:flex-row sm:items-center sm:justify-between min-w-0">
           <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 min-w-0">
             <p className="font-medium text-secondary/90 break-words">
               &copy; {new Date().getFullYear()} {personal.name}. All rights reserved.

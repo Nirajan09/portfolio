@@ -208,3 +208,45 @@ body::before {
     transform: translateY(0);
   }
 }
+
+/* ---------- 404 Clean Immersive Mode (Fullscreen, Zero Scrollbar) ---------- */
+body.not-found-active {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden !important;
+}
+
+body.not-found-active header,
+body.not-found-active footer {
+  display: none !important;
+}
+
+body.not-found-active #main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+/* Subtle laser scan line on 404 number */
+@keyframes laser-scan {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.85;
+  }
+  75% {
+    opacity: 0.85;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
