@@ -39,9 +39,9 @@ export const Contact = memo(function Contact() {
           <div>
             <Reveal>
               <SectionHeading
-                eyebrow="Get In Touch"
-                title="Let's build something exceptional"
-                description="Have a project in mind, an engineering role to discuss, or a technical challenge to solve? Send a message or connect directly."
+                eyebrow="Contact"
+                title="Let's talk about your project or role"
+                description="If you have an open role, a web project, or a technical inquiry, feel free to send a message or reach out directly."
               />
             </Reveal>
 
@@ -61,7 +61,7 @@ export const Contact = memo(function Contact() {
                     </div>
                     <div className="min-w-0">
                       <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-accent">
-                        Primary Inbox
+                        Email
                       </span>
                       <a
                         href={`mailto:${personal.email}`}
@@ -97,9 +97,9 @@ export const Contact = memo(function Contact() {
                 <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-border/70 pt-3.5 text-xs text-muted">
                   <div className="inline-flex items-center gap-2">
                     <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
-                    <span className="text-secondary/90 font-medium">Available for opportunities</span>
+                    <span className="text-secondary/90 font-medium">Open to opportunities</span>
                   </div>
-                  <span className="font-mono text-[11px] text-muted">Response &lt; 24h</span>
+                  <span className="font-mono text-[11px] text-muted">Replies within 24h</span>
                 </div>
               </div>
             </Reveal>

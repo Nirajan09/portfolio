@@ -264,7 +264,7 @@ export function ProjectHero({ project }: ProjectHeroProps) {
                 <span className="size-2.5 shrink-0 rounded-full bg-amber-400" />
                 <span className="size-2.5 shrink-0 rounded-full bg-emerald-400" />
                 <span className="ml-2 sm:ml-3 font-mono text-xs text-muted truncate max-w-[calc(100vw-8rem)] sm:max-w-md">
-                  {project.title} — Full Preview
+                  {project.title} - Preview
                 </span>
               </div>
               <button

@@ -19,7 +19,7 @@ export function ProjectChallengesSection({ project }: ProjectChallengesSectionPr
             <span className="font-mono text-xs font-bold">05</span>
           </span>
           <h2 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-primary">
-            Engineering Challenges & Solutions
+            Challenges & Solutions
           </h2>
           <span aria-hidden="true" className="h-px flex-1 bg-linear-to-r from-border to-transparent" />
         </div>
@@ -47,7 +47,7 @@ export function ProjectChallengesSection({ project }: ProjectChallengesSectionPr
                 <div className="rounded-xl border border-border/70 bg-background-secondary/60 p-4 transition-all duration-300 group-hover/challenge:border-amber-500/30 group-hover/challenge:bg-background-secondary/80 sm:p-5">
                   <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-amber-400">
                     <LuTriangleAlert className="size-3.5" aria-hidden="true" />
-                    <span>The Engineering Challenge</span>
+                    <span>Challenge</span>
                   </div>
                   <p className="mt-2 text-sm leading-relaxed text-secondary sm:text-base">
                     {item.challenge}
@@ -58,7 +58,7 @@ export function ProjectChallengesSection({ project }: ProjectChallengesSectionPr
                 <div className="rounded-xl border border-border/70 bg-background-secondary/60 p-4 transition-all duration-300 group-hover/challenge:border-accent/30 group-hover/challenge:bg-background-secondary/80 sm:p-5">
                   <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent">
                     <LuLightbulb className="size-3.5" aria-hidden="true" />
-                    <span>The Technical Solution</span>
+                    <span>Solution</span>
                   </div>
                   <p className="mt-2 text-sm leading-relaxed text-secondary sm:text-base">
                     {item.solution}

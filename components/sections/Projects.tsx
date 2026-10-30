@@ -13,9 +13,9 @@ type CategoryFilter = "all" | "ecommerce" | "saas" | "media";
 
 const filterOptions: { id: CategoryFilter; label: string; count: number }[] = [
   { id: "all", label: "All Projects", count: 3 },
-  { id: "saas", label: "Recruitment SaaS", count: 1 },
+  { id: "saas", label: "Job Portal", count: 1 },
   { id: "ecommerce", label: "E-Commerce & ML", count: 1 },
-  { id: "media", label: "Media Pipeline", count: 1 },
+  { id: "media", label: "Media Platform", count: 1 },
 ];
 
 export const Projects = memo(function Projects() {
@@ -43,9 +43,9 @@ export const Projects = memo(function Projects() {
       {/* Section Header */}
       <Reveal>
         <SectionHeading
-          eyebrow="Featured Projects"
-          title="Engineered for real-world impact"
-          description="Deep-dive case studies into full-stack web platforms, machine learning recommender engines, and cloud media pipelines built with modern architectures."
+          eyebrow="Portfolio"
+          title="Selected Projects"
+          description="Full-stack web applications I have built, with details on architecture, database design, API implementation, and practical challenges."
         />
       </Reveal>
 

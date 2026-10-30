@@ -417,13 +417,13 @@ export const CareerTimeline = memo(function CareerTimeline({ experience, educati
     () => [
       {
         id: "experience",
-        label: "Professional Experience",
+        label: "Work Experience",
         icon: LuBriefcase,
         count: experienceEntries.length,
       },
       {
         id: "education",
-        label: "Education & Foundation",
+        label: "Education",
         icon: LuGraduationCap,
         count: educationEntries.length,
       },

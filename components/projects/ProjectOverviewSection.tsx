@@ -15,7 +15,7 @@ export function ProjectOverviewSection({ project }: ProjectOverviewSectionProps)
             <span className="font-mono text-xs font-bold">01</span>
           </span>
           <h2 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-primary">
-            Project Overview & Purpose
+            Project Overview
           </h2>
           <span aria-hidden="true" className="h-px flex-1 bg-linear-to-r from-border to-transparent" />
         </div>
@@ -41,7 +41,7 @@ export function ProjectOverviewSection({ project }: ProjectOverviewSectionProps)
                     <LuCircleAlert className="size-4.5 sm:size-5" aria-hidden="true" />
                   </div>
                   <h3 className="font-display text-base sm:text-lg font-semibold text-primary">
-                    The Problem & Challenge
+                    Problem
                   </h3>
                 </div>
                 <p className="mt-4 flex-1 text-sm leading-relaxed text-secondary sm:text-base">
@@ -59,7 +59,7 @@ export function ProjectOverviewSection({ project }: ProjectOverviewSectionProps)
                     <LuCircleCheck className="size-4.5 sm:size-5" aria-hidden="true" />
                   </div>
                   <h3 className="font-display text-base sm:text-lg font-semibold text-primary">
-                    The Engineered Solution
+                    Solution
                   </h3>
                 </div>
                 <p className="mt-4 flex-1 text-sm leading-relaxed text-secondary sm:text-base">
@@ -77,7 +77,7 @@ export function ProjectOverviewSection({ project }: ProjectOverviewSectionProps)
           <Reveal delay={0.2}>
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted mb-4">
               <LuUsers className="size-3.5 text-accent" aria-hidden="true" />
-              <span>Target Users & Workflows</span>
+              <span>Target Users</span>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               {project.targetAudience.map((user) => (

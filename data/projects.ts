@@ -8,23 +8,23 @@ export const projects: readonly Project[] = [
     role: "Full-Stack Developer",
     status: "Live Production",
     summary:
-      "A full-stack bookstore application combining personalized hybrid collaborative filtering, multi-gateway payments (Stripe, eSewa, COD), and an admin analytics dashboard.",
+      "A bookstore web application featuring catalog search, personalized recommendations via collaborative filtering, multi-gateway payments (Stripe, eSewa, COD), and an admin inventory dashboard.",
     overview:
-      "A full-stack bookstore application combining authenticated catalog browsing, user cart and wishlist management, multi-gateway checkout, admin inventory analytics, and personalized recommendations. The system couples a Django REST API backend with a React 19 + Vite frontend, featuring separate user and admin workflows.",
+      "A full-stack bookstore built with a Django REST Framework API and a React 19 frontend. The platform supports user registration, catalog search and filtering, persistent cart and wishlist storage, order management, and an admin view for sales metrics and stock alerts. It integrates a recommendation endpoint using SciPy and scikit-learn that suggests books based on user ratings.",
     problem:
-      "Book shoppers struggle to discover relevant titles without tailored guidance and need flexible payment methods (both local and international), while store administrators need real-time sales metrics, order tracking, and low-stock alerts to manage inventory effectively.",
+      "Online book shoppers often struggle to discover relevant titles without tailored suggestions based on reader ratings, while checkout options in regional markets are frequently limited to single payment methods. Store administrators also need a direct way to monitor order fulfillment, track sales, and identify low-inventory items.",
     solution:
-      "Architected a decoupled client-server platform combining a Django REST Framework API with a modern React + Vite frontend. Implemented a hybrid collaborative filtering recommendation engine using SciPy and scikit-learn (with fallback to popular books for cold-start users), integrated Stripe and Nepal-specific eSewa payment flows, and built role-protected admin controls.",
+      "Developed a decoupled web application with a Django REST API backend and a React 19 frontend. Built a hybrid collaborative filtering engine with SciPy and scikit-learn that falls back to top-rated popular books when user rating history is limited. Integrated Stripe card payments, eSewa digital wallet verification, and Cash on Delivery, alongside role-based route protection for administrative operations.",
     targetAudience: [
       {
         role: "Book Readers & Shoppers",
         description:
-          "Search catalog by title, author, or ISBN; submit ratings and reviews; maintain carts and wishlists; complete checkout via Stripe, eSewa, or Cash on Delivery; track or cancel pending orders.",
+          "Search the catalog by title, author, or ISBN, submit star ratings and reviews, maintain carts and wishlists, and complete orders using Stripe, eSewa, or Cash on Delivery.",
       },
       {
         role: "Bookstore Administrators",
         description:
-          "Access protected dashboard with sales totals, revenue metrics, order status tracking, best-selling titles, and automated low-stock alerts.",
+          "Monitor sales revenue, order fulfillment statuses, best-selling titles, and low-stock inventory alerts from a protected dashboard.",
       },
     ],
     stack: [
@@ -85,13 +85,13 @@ export const projects: readonly Project[] = [
     architecture: {
       style: "Decoupled Client-Server REST Architecture",
       summary:
-        "The Django backend handles authentication, persistence, order processing, and recommendation computations via authenticated REST endpoints. The React frontend manages client-side routing, role-based route guards, cart validation, and responsive book discovery.",
+        "The Django backend provides authenticated REST endpoints for account management, book listings, orders, and recommendation calculations. The React frontend handles user authentication state, role-guarded routes, cart management, and catalog browsing.",
       layers: [
         {
           layer: "Presentation Layer",
           title: "React 19 + Vite Frontend",
           description:
-            "Client-side routing with React Router DOM, form validation with React Hook Form & Yup, role-guarded routes (UserRoute, AdminRoute, GuestRoute), and toast notifications.",
+            "Client routing with React Router DOM, form validation with React Hook Form and Yup, role-guarded routes for users and staff, and toast status notifications.",
           technologies: [
             "React 19",
             "Vite",
@@ -105,7 +105,7 @@ export const projects: readonly Project[] = [
           layer: "Application & API Layer",
           title: "Django 5 REST API",
           description:
-            "RESTful routers and viewsets for accounts, books, cart, wishlist, reviews, orders, payment intent creation, and dashboard statistics.",
+            "REST viewsets for user accounts, book catalog search, cart operations, review submissions, payment verification, and dashboard analytics.",
           technologies: [
             "Django 5.2.8",
             "Django REST Framework",
@@ -117,7 +117,7 @@ export const projects: readonly Project[] = [
           layer: "Intelligence Engine",
           title: "Hybrid Recommendation Pipeline",
           description:
-            "Combines user-based and item-based collaborative filtering matrix calculations, with automated fallback to popular book suggestions when rating data is sparse.",
+            "Matrix calculations for user-based and item-based collaborative filtering, with an automated fallback to popular book suggestions when rating data is sparse.",
           technologies: ["scikit-learn", "SciPy", "NumPy", "pandas"],
         },
         {
@@ -136,21 +136,21 @@ export const projects: readonly Project[] = [
     },
     features: [
       "Token-based authentication with Django default user model and DRF token auth",
-      "Book browsing with search and paginated results by title, author, or ISBN",
-      "Ratings and review submissions feeding collaborative filtering logic",
+      "Book catalog with paginated results and search by title, author, or ISBN",
+      "User ratings and written review submissions feeding collaborative filtering calculations",
       "Per-user persistent cart and wishlist with stock quantity validation",
-      "Checkout flow supporting Stripe, eSewa, and cash-on-delivery options",
+      "Checkout flow supporting Stripe card payments, eSewa wallet verification, and Cash on Delivery",
       "Order creation, status tracking, and self-service cancellation for pending orders",
-      "Admin dashboard with revenue totals, sales counts, best sellers, and low-stock alerts",
+      "Admin dashboard with revenue totals, order counts, best-selling titles, and low-stock alerts",
       "Stock inventory management for admin-added books",
-      "Personalized recommendation engine combining user/item collaborative filtering with popular fallback",
+      "Personalized recommendation endpoint combining user/item collaborative filtering with popular fallback",
       "Responsive frontend built with React 19, Vite, and Tailwind CSS",
     ],
     detailedFeatures: [
       {
         title: "Token-Based Authentication & Role Guards",
         description:
-          "Django authentication returning API tokens saved in localStorage, with frontend route guards segregating user and admin views based on is_staff.",
+          "Django authentication returning API tokens stored in localStorage, with frontend route guards separating customer and admin views based on is_staff.",
         category: "Authentication",
       },
       {
@@ -162,19 +162,19 @@ export const projects: readonly Project[] = [
       {
         title: "Hybrid Recommendation Engine",
         description:
-          "Combines user-based and item-based collaborative filtering using SciPy/scikit-learn, falling back to top-rated popular books when ratings are sparse.",
+          "Combines user-based and item-based collaborative filtering using SciPy and scikit-learn, falling back to top-rated books when ratings are sparse.",
         category: "Machine Learning",
       },
       {
         title: "Cart & Wishlist with Stock Validation",
         description:
-          "Per-user persistent cart and wishlist items validated in real-time against current inventory quantities.",
+          "Per-user persistent cart and wishlist items validated against current inventory quantities.",
         category: "Shopping",
       },
       {
         title: "Multi-Gateway Checkout",
         description:
-          "Unified order creation supporting Stripe Payment Intents, eSewa payment verification, and Cash on Delivery.",
+          "Unified order placement supporting Stripe Payment Intents, eSewa payment verification, and Cash on Delivery.",
         category: "Payments",
       },
       {
@@ -186,7 +186,7 @@ export const projects: readonly Project[] = [
       {
         title: "Admin Analytics & Inventory Controls",
         description:
-          "Admin dashboard computing total revenue, sales counts, best-selling titles, low-stock alerts, and stock adjustments.",
+          "Admin dashboard computing total revenue, order counts, best-selling titles, low-stock alerts, and stock adjustments.",
         category: "Administration",
       },
       {
@@ -200,29 +200,29 @@ export const projects: readonly Project[] = [
       {
         title: "Cold-Start & Rating Sparsity",
         challenge:
-          "Pure collaborative filtering fails for new users or books with limited interaction history.",
+          "Collaborative filtering produces inaccurate or empty recommendations when a user has few or no rating interactions.",
         solution:
-          "Engineered a hybrid recommendation pipeline that evaluates user-item interaction density and gracefully falls back to global popular book rankings.",
+          "Implemented a fallback mechanism that checks rating matrix density. When user rating history is sparse, the system serves popular titles ranked by average community ratings.",
         impact:
-          "Guarantees relevant recommendations even with sparse user rating history.",
+          "Ensures users receive relevant book suggestions regardless of account history.",
       },
       {
         title: "Multi-Gateway Payment Integration",
         challenge:
-          "Unifying synchronous Cash on Delivery, Stripe client-side PaymentIntents, and eSewa redirect-verification flows.",
+          "Handling different verification lifecycles across client-side Stripe PaymentIntents, redirect-based eSewa verification, and immediate Cash on Delivery orders.",
         solution:
-          "Standardized the order data structure on the Django backend while directing Stripe and eSewa through specialized client-side handlers before marking orders confirmed.",
+          "Standardized the order data structure on the Django backend while directing Stripe and eSewa through specialized client-side handlers before confirming orders.",
         impact:
-          "Seamless checkout across both international cards and local Nepali payment rails.",
+          "Provides dependable checkout across international credit cards, regional digital wallets, and cash on delivery.",
       },
       {
         title: "Cart-to-Stock Synchronization",
         challenge:
           "Preventing checkout race conditions where item quantities in carts exceed available store stock.",
         solution:
-          "Implemented server-side validation during cart item updates and checkout processing to verify stock availability before order finalization.",
+          "Added server-side validation during cart updates and verified available inventory before creating order records in the checkout viewset.",
         impact:
-          "Eliminates overselling and prevents inconsistent order states.",
+          "Prevents orders for out-of-stock titles and ensures inventory counts remain accurate.",
       },
     ],
     howItWorks: [
@@ -268,8 +268,8 @@ export const projects: readonly Project[] = [
     ],
     highlights: [
       "Hybrid collaborative filtering recommendation logic combining user and item algorithms with popular fallback",
-      "Dual payment gateways: Stripe Payment Intents for international cards and eSewa for regional payments",
-      "Role-based token authentication separating customer shopping from staff admin analytics",
+      "Payment support for Stripe cards, eSewa digital wallet, and Cash on Delivery",
+      "Role-based token authentication separating customer shopping from staff admin operations",
       "Admin dashboard tracking revenue, order volume, best-selling books, and low-stock alerts",
     ],
     links: {
@@ -285,27 +285,27 @@ export const projects: readonly Project[] = [
   {
     slug: "job-portal",
     title: "JobVista",
-    category: "Recruitment SaaS & Job Platform",
-    role: "Full-Stack Engineer",
+    category: "Job Portal & Recruitment",
+    role: "Full-Stack Developer",
     status: "Live Production",
     summary:
-      "A role-based SaaS job platform built with Next.js App Router and Server Actions, featuring Clerk auth, candidate resume uploads to Supabase, recruiter applicant workflows, and Stripe premium memberships.",
+      "A role-based job application platform built with Next.js App Router and Server Actions, featuring Clerk authentication, candidate resume uploads to Supabase Storage, recruiter candidate screening, and Stripe membership tiers.",
     overview:
-      "JobVista is a full-stack recruitment SaaS application built with Next.js App Router and direct Server Actions. It powers dual workflows for job seekers and recruiters: candidates create rich profiles, upload resumes to Supabase Storage, and track application statuses, while recruiters publish listings, manage posting limits via Stripe memberships, and screen candidates.",
+      "JobVista is a full-stack job platform connecting candidates and recruiters. Built with the Next.js App Router and Server Actions, it provides role-specific onboarding: candidates create profiles, upload PDF resumes to Supabase Storage, and track application statuses, while recruiters post openings, review candidate profiles, and manage posting limits through Stripe memberships.",
     problem:
-      "Traditional job hunting is fragmented, with convoluted application processes and poor status tracking for candidates, while recruiters face cumbersome dashboards, lack of integrated document storage, and inflexible posting limits.",
+      "Job seekers often lack clear visibility into their application statuses across open roles, while recruiters need a centralized dashboard to publish job listings, review applicant profiles, download resumes, and manage posting allowances without complicated toolchains.",
     solution:
-      "Built a modern, unified Next.js App Router application leveraging direct Server Actions to eliminate API boilerplate. Integrated Clerk for seamless authentication, MongoDB Atlas for profile and job data, Supabase Storage for resume files, and Stripe for tiered recruiter memberships.",
+      "Built a Next.js application using Server Actions for direct database queries with Mongoose and MongoDB Atlas. Integrated Clerk for authentication and user sessions, Supabase Storage for candidate resume uploads, and Stripe Checkout to handle recruiter membership tiers and job posting limits.",
     targetAudience: [
       {
         role: "Job Seekers (Candidates)",
         description:
-          "Onboard with custom profiles, upload PDF resumes to Supabase Storage, filter jobs by company, role, type, and location, apply with one click, and track application status in the activity dashboard.",
+          "Complete candidate onboarding, upload PDF resumes to Supabase Storage, filter job listings by company, role type, and location, submit applications, and monitor progress in an activity dashboard.",
       },
       {
         role: "Recruiters & Hiring Managers",
         description:
-          "Post job openings with membership tier limits, review applicants, inspect candidate profiles, download resumes, and mark applicants as selected or rejected.",
+          "Post job openings within tier limits, review incoming applications, inspect candidate profiles, download stored resumes, and update applicant statuses.",
       },
     ],
     stack: [
@@ -350,9 +350,9 @@ export const projects: readonly Project[] = [
       },
     ],
     architecture: {
-      style: "Unified Full-Stack App Router with Server Actions",
+      style: "Full-Stack App Router with Server Actions",
       summary:
-        "Replaces traditional REST APIs with Next.js Server Actions directly querying MongoDB via Mongoose. Integrates 4 external cloud services: Clerk for authentication, MongoDB Atlas for persistent storage, Supabase for resume file buckets, and Stripe for subscription billing.",
+        "Built around Next.js App Router server actions that communicate directly with MongoDB via Mongoose, bypassing the need for separate REST API routes. Integrates Clerk for user identity, MongoDB Atlas for data persistence, Supabase Storage for resume files, and Stripe for subscription billing.",
       layers: [
         {
           layer: "Presentation & Routing",
@@ -371,21 +371,21 @@ export const projects: readonly Project[] = [
           layer: "Business Logic",
           title: "Next.js Server Actions",
           description:
-            "Type-safe server actions managing profile creation, job posting validation, applicant status transitions, and Stripe checkout sessions without REST overhead.",
+            "Server actions handling profile onboarding, job posting validation, applicant status updates, and Stripe checkout session initialization without REST route boilerplate.",
           technologies: ["Server Actions", "Mongoose", "Zod", "React Hook Form"],
         },
         {
           layer: "Identity & Membership",
           title: "Clerk & Stripe",
           description:
-            "Clerk handles authentication and session redirects. Stripe checkout manages recurring premium recruiter subscriptions and validates tier-based posting limits.",
+            "Clerk handles authentication and session state. Stripe Checkout manages recruiter memberships and updates tier-based posting limits.",
           technologies: ["Clerk Auth", "Stripe Checkout", "Webhooks"],
         },
         {
           layer: "Data & Document Storage",
           title: "MongoDB Atlas & Supabase",
           description:
-            "Mongoose models (Profile, Job, Application) stored in MongoDB Atlas; candidate resumes stored in Supabase Storage buckets with public retrieval URLs.",
+            "Mongoose models (Profile, Job, Application) stored in MongoDB Atlas, with candidate resume documents stored in Supabase Storage buckets.",
           technologies: [
             "MongoDB Atlas",
             "Mongoose",
@@ -422,11 +422,11 @@ export const projects: readonly Project[] = [
       {
         title: "Multi-Parametric Job Search & Filter",
         description:
-          "Interactive search filtering jobs by company name, title, employment type, and location, with filter state synced to URL query parameters and session storage.",
+          "Search filters jobs by company name, title, employment type, and location, with filter state synced to URL query parameters and session storage.",
         category: "Discovery",
       },
       {
-        title: "One-Click Application & Resume Access",
+        title: "Application Workflow & Resume Access",
         description:
           "Candidates submit applications referencing their stored Supabase resume; recruiters review candidate profiles and download resumes directly.",
         category: "Applications",
@@ -464,7 +464,7 @@ export const projects: readonly Project[] = [
         solution:
           "Implemented server-side middleware and route checks using currentUser() that detect unprofiled users and enforce the onboarding step before granting application access.",
         impact:
-          "Seamless authentication experience with strict role separation across routes.",
+          "Clear authentication experience with strict role separation across routes.",
       },
       {
         title: "Secure Resume Upload & Cloud Retrieval",
@@ -473,7 +473,7 @@ export const projects: readonly Project[] = [
         solution:
           "Integrated Supabase Storage to manage file uploads directly, persisting the file path in MongoDB and generating public URLs during recruiter applicant reviews.",
         impact:
-          "Scalable document storage with fast resume downloads for hiring managers.",
+          "Document storage with fast resume downloads for hiring managers without local disk writes.",
       },
       {
         title: "URL-Synchronized Filter State",
@@ -482,7 +482,7 @@ export const projects: readonly Project[] = [
         solution:
           "Synchronized active filter states with URL search parameters and session storage, enabling bookmarkable search states and fluid browser history navigation.",
         impact:
-          "Frictionless user experience for candidate job discovery.",
+          "Maintains active search criteria across page refreshes and browser history navigation.",
       },
     ],
     howItWorks: [
@@ -527,10 +527,10 @@ export const projects: readonly Project[] = [
       },
     ],
     highlights: [
-      "Modern Server Actions architecture eliminating REST API boilerplate and client-side fetching overhead",
+      "Server Actions architecture eliminating REST API boilerplate and client-side fetching overhead",
       "Integrated multi-service stack: Clerk, MongoDB Atlas, Supabase Storage, and Stripe",
       "Role-based user journeys with tailored onboarding and dashboards for candidates and recruiters",
-      "Live production deployment on Vercel with active user authentication",
+      "URL-synchronized search filters across company, role, type, and location",
     ],
     links: {
       live: "https://job-portal-liard-one.vercel.app/",
@@ -545,27 +545,27 @@ export const projects: readonly Project[] = [
   {
     slug: "image-sharing-platform",
     title: "Pixify",
-    category: "Media Sharing & Cloud Pipeline",
+    category: "Media Sharing & Cloud Storage",
     role: "Full-Stack Developer",
     status: "Live Production",
     summary:
-      "A modern full-stack media platform featuring stateless JWT authentication, zero-disk memory-buffered Cloudinary stream uploads, granular author-ownership enforcement, and an interactive Radix UI media gallery.",
+      "A full-stack media management platform built with Next.js and Express, featuring memory-buffered Cloudinary stream uploads, JWT authentication, author-based access control, and an interactive media gallery.",
     overview:
-      "Pixify is a modern full-stack media management and image-sharing platform built with a decoupled architecture: a Next.js 16 App Router client and an Express 5 REST API backed by MongoDB and Cloudinary. Authenticated users can securely upload, browse, inspect, replace, and delete media items while enforcing strict user-ownership validation and zero-disk memory-buffered stream uploads.",
+      "Pixify is an image management and sharing application built with a Next.js 16 frontend and an Express 5 REST API backend. It handles image uploads using memory buffering piped directly to Cloudinary, avoiding disk writes on the server. The application implements user authentication with JWTs, author-based ownership checks for updating or deleting media, and a paginated gallery with image metadata inspection.",
     problem:
-      "Hosting and managing media assets on traditional servers often results in disk-bound I/O bottlenecks, complex CDN delivery pipelines, orphaned cloud files, and weak authorization that permits unauthorized asset overwrites or deletions.",
+      "Uploading and storing media files directly on application servers often creates disk-space constraints and slow file I/O. Without automated cloud cleanup, replacing or deleting files also leaves orphaned assets in cloud storage, while missing ownership verification can allow unauthorized modifications.",
     solution:
-      "Engineered a decoupled client-server architecture with Next.js 16 and Express 5. Implemented memory-buffered stream uploads using Multer and Cloudinary SDK (zero disk writes on the server), strict author-ownership authorization middleware, and automated Cloudinary asset destruction upon deletion or replacement.",
+      "Built a decoupled architecture separating the Next.js client from an Express 5 API. Used Multer in-memory storage to stream image buffers directly to Cloudinary without writing files to local disk. Implemented backend middleware verifying that only the original uploader can modify or delete an asset, and added automated Cloudinary asset deletion when images are replaced or removed.",
     targetAudience: [
       {
         role: "Registered Users",
         description:
-          "Upload PNG/JPG images up to 5 MB, browse paginated community galleries with sorting, filter own media, inspect image metadata in modals, replace existing assets in-place, and delete owned media.",
+          "Upload PNG or JPG images up to 5 MB, browse the community gallery with sorting, filter personal media, view image metadata, replace existing files, and delete their own uploads.",
       },
       {
         role: "Guest Visitors",
         description:
-          "Explore the public welcome portal, review platform capabilities, and access registration or sign-in flows.",
+          "Browse public gallery previews, read platform details, and access account registration or sign-in forms.",
       },
     ],
     stack: [
@@ -619,9 +619,9 @@ export const projects: readonly Project[] = [
       },
     ],
     architecture: {
-      style: "Decoupled Client-Server with Zero-Disk Streaming",
+      style: "Decoupled Client-Server with Cloud Streaming",
       summary:
-        "Stateless REST API with Express 5 and Next.js 16 client. File uploads are buffered in RAM with Multer and piped directly to Cloudinary via Node.js Readable streams, eliminating local server disk I/O entirely.",
+        "Decoupled architecture pairing a Next.js 16 frontend with an Express 5 REST API. Uploaded files are held in memory with Multer and piped directly to Cloudinary via Node.js Readable streams, avoiding local disk writes. MongoDB stores user accounts and media metadata.",
       layers: [
         {
           layer: "Frontend Client",
@@ -669,94 +669,93 @@ export const projects: readonly Project[] = [
       ],
     },
     features: [
-      "Stateless JWT authentication (1-hour tokens) with bcrypt password hashing",
-      "Direct memory-buffered stream uploads using Multer memoryStorage to Cloudinary",
-      "Zero server disk writes with Node.js Readable streaming pipelines",
-      "Strict author-ownership authorization middleware on media update and deletion",
-      "In-place image replacement with automatic destruction of old Cloudinary assets",
-      "Community gallery browsing with server-side pagination and sorting options",
-      "Personal media filter endpoint retrieving assets by author ID",
-      "Interactive Radix UI image inspector dialog with metadata and full preview",
-      "Destructive action confirmation dialogs preventing accidental deletions",
-      "Client AuthContext with automated expired session detection and token purge",
+      "User authentication with bcrypt password hashing and 1-hour JWT tokens",
+      "In-memory stream uploads to Cloudinary using Multer memoryStorage without writing files to local disk",
+      "Ownership verification middleware ensuring users can only edit or delete their own uploads",
+      "Asset replacement workflow that deletes previous files from Cloudinary storage before saving new versions",
+      "Paginated community image gallery with sorting options",
+      "User-specific media view displaying assets uploaded by the current account",
+      "Image inspector modal showing upload metadata and full-resolution view",
+      "Confirmation dialogs before destructive operations to prevent accidental deletion",
+      "Client-side session validation that detects expired tokens and resets authentication state",
     ],
     detailedFeatures: [
       {
-        title: "Stateless JWT Authentication",
+        title: "JWT Authentication",
         description:
-          "Secure user registration and login with bcryptjs password hashing (cost factor 10) and signed 1-hour HMAC SHA-256 JWT access tokens.",
-        category: "Security",
+          "User registration and login using bcryptjs password hashing with 10 salt rounds and 1-hour HMAC SHA-256 JWT tokens for API requests.",
+        category: "Authentication",
       },
       {
-        title: "Zero-Disk Memory Stream Uploads",
+        title: "In-Memory Stream Uploads",
         description:
-          "Direct streaming of multipart image files from RAM buffer to Cloudinary using Node.js Readable streams, avoiding server filesystem writes.",
-        category: "Media Pipeline",
+          "Multipart file processing using Multer memoryStorage, streaming buffers directly to Cloudinary using Node.js Readable streams to avoid local temporary files.",
+        category: "Media Handling",
       },
       {
-        title: "Granular Ownership Authorization",
+        title: "Ownership Authorization",
         description:
-          "Backend authMiddleware and controller verification ensuring only the original uploader can modify, replace, or delete an asset.",
+          "Express middleware and route handlers checking that the authenticated user ID matches the uploader ID before allowing asset updates or deletions.",
         category: "Authorization",
       },
       {
-        title: "In-Place Media Replacement",
+        title: "Asset Replacement Workflow",
         description:
-          "Allows asset authors to replace an existing image file, automatically destroying the old asset on Cloudinary before saving the new upload.",
+          "Enables users to replace existing images while deleting the obsolete asset on Cloudinary to prevent unreferenced files from taking up storage.",
         category: "Asset Management",
       },
       {
-        title: "Community Gallery Browsing",
+        title: "Community Gallery",
         description:
-          "Paginated community feed with sorting parameters (sortBy, sortOrder) and populated uploader usernames.",
+          "Paginated image feed supporting sorting by upload date and linking images to uploader account names.",
         category: "Gallery",
       },
       {
-        title: "Personal Media Filtering",
+        title: "User Media Filtering",
         description:
-          "Dedicated endpoint (/api/media/get-media/:id) retrieving only assets uploaded by the authenticated user.",
+          "Dedicated endpoint returning only the assets uploaded by the authenticated user for convenient profile asset management.",
         category: "Filtering",
       },
       {
-        title: "Interactive Image Inspector Dialog",
+        title: "Image Inspection Modal",
         description:
-          "Accessible Radix UI modal displaying high-resolution image preview, Cloudinary publicId, author name, and timestamps.",
-        category: "UI/UX",
+          "Radix UI dialog displaying high-resolution image views, Cloudinary public identifiers, uploader names, and upload dates.",
+        category: "User Interface",
       },
       {
-        title: "Destructive Action Confirmations",
+        title: "Deletion Confirmation Dialog",
         description:
-          "Radix UI AlertDialog modal preventing accidental image deletion, triggering Cloudinary asset destruction and database cleanup.",
-        category: "Safety",
+          "Confirmation step before file deletion, ensuring users confirm destructive actions before files are removed from Cloudinary and MongoDB.",
+        category: "User Interface",
       },
     ],
     challenges: [
       {
-        title: "Eliminating Disk-Bound I/O Bottlenecks",
+        title: "Avoiding Disk-Bound Temporary Files During Uploads",
         challenge:
-          "Standard file upload libraries write temporary files to local server disk before uploading to cloud storage, risking server disk exhaustion and latency.",
+          "Default multipart upload configurations often write temporary files to the server's local disk before uploading to cloud storage, adding disk I/O overhead and consuming local disk space.",
         solution:
-          "Configured Multer with memoryStorage() and bridged the memory buffer directly to Cloudinary using Node.js Readable.from(buffer).pipe(upload_stream).",
+          "Configured Multer with memoryStorage and streamed the file buffer directly to Cloudinary using Node.js Readable streams, bypassing local disk storage entirely.",
         impact:
-          "Zero disk writes on the server with faster streaming upload performance.",
+          "Eliminated local temporary file management and reduced upload processing overhead.",
       },
       {
-        title: "Preventing Orphaned Cloud Assets",
+        title: "Preventing Unreferenced Cloud Storage Files",
         challenge:
-          "Replacing an image or deleting a record can leave obsolete media files consuming Cloudinary storage quotas.",
+          "Updating or deleting media records in MongoDB without cleaning up corresponding Cloudinary assets would leave orphaned files in cloud storage.",
         solution:
-          "Coupled database operations with synchronous Cloudinary asset destruction (cloudinary.uploader.destroy(publicId)) before updating or deleting documents.",
+          "Integrated Cloudinary's asset destruction API into the delete and update controllers, removing previous assets whenever a file is replaced or removed from the database.",
         impact:
-          "Eliminates orphaned cloud storage files and maintains perfect data consistency.",
+          "Prevents orphaned files from accumulating in cloud storage.",
       },
       {
-        title: "Client Session Expiry & Auto-Purge",
+        title: "Handling Expired Client Tokens Gracefully",
         challenge:
-          "Expired JWT tokens in browser localStorage lead to unexpected 401 errors during user interactions.",
+          "Expired JWT tokens stored in browser localStorage caused unexpected 401 API responses during user sessions without clear feedback.",
         solution:
-          "Constructed an AuthContext using jwt-decode that parses token expiry claims on load and route changes, automatically clearing stale credentials and redirecting to sign-in.",
+          "Added an AuthContext that inspects token expiration claims on page load and route changes, clearing expired credentials and redirecting users to the login screen.",
         impact:
-          "Frictionless authentication recovery without broken user flows.",
+          "Ensures predictable authentication states and prevents unexpected API errors.",
       },
     ],
     howItWorks: [
@@ -801,10 +800,10 @@ export const projects: readonly Project[] = [
       },
     ],
     highlights: [
-      "Zero-disk streaming upload pipeline buffering directly in RAM to Cloudinary CDN",
-      "Automated Cloudinary asset destruction on delete and replacement to prevent storage bloat",
-      "Granular server-side ownership authorization protecting every media mutation",
-      "Decoupled architecture: Express 5 REST API paired with Next.js 16 App Router frontend",
+      "Direct memory-to-cloud streaming upload pipeline using Node.js streams and Cloudinary",
+      "Automated Cloudinary asset cleanup when deleting or replacing media files",
+      "Server-side ownership verification protecting media updates and deletions",
+      "Decoupled architecture combining an Express REST API with a Next.js App Router frontend",
     ],
     links: {
       live: "https://image-sharing-platform-two.vercel.app/",

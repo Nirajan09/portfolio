@@ -12,9 +12,9 @@ export function Services() {
     <Section id="services">
       <Reveal>
         <SectionHeading
-          eyebrow="What I Offer"
-          title="Services"
-          description="I build reliable web applications, backend APIs, and modern user interfaces tailored to real-world needs."
+          eyebrow="Areas of Focus"
+          title="Services & Capabilities"
+          description="I help teams and clients build web applications, design backend APIs, and implement responsive frontend interfaces."
         />
       </Reveal>
 
@@ -52,14 +52,14 @@ export function Services() {
               className="size-1.5 rounded-full bg-emerald-400 animate-pulse"
               aria-hidden="true"
             />
-            <span>Available for New Projects</span>
+            <span>Available for Roles & Projects</span>
           </div>
 
           <h3 className="mt-4 font-display text-2xl font-bold tracking-tight text-primary sm:text-3xl">
-            Have a project in mind?
+            Have a project or opportunity?
           </h3>
           <p className="mx-auto mt-2.5 w-full max-w-2xl text-sm sm:text-base text-secondary/90 leading-relaxed">
-            Let&apos;s discuss how I can help bring your idea to life — from technical architecture to production deployment.
+            Let&apos;s discuss how I can contribute to your project or team, from technical architecture to production deployment.
           </p>
 
           <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-3.5 max-w-md mx-auto sm:max-w-none">
@@ -70,7 +70,7 @@ export function Services() {
               data-track="services_cta_click"
               data-track-label="discuss_project"
             >
-              <span>Discuss Your Project</span>
+              <span>Get in Touch</span>
               <LuArrowRight
                 className="size-4 transition-transform duration-200 group-hover:translate-x-1"
                 aria-hidden="true"

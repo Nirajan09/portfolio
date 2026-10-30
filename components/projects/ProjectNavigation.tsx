@@ -39,7 +39,7 @@ export function ProjectNavigation({
 
               <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted group-hover:text-accent">
                 <LuArrowLeft className="size-3.5 shrink-0 transition-transform duration-300 group-hover:-translate-x-2" />
-                <span>Previous Case Study</span>
+                <span>Previous Project</span>
               </div>
               <div className="mt-3">
                 <p className="font-display text-base font-semibold text-primary transition-colors duration-200 group-hover:text-accent sm:text-xl">
@@ -71,7 +71,7 @@ export function ProjectNavigation({
               />
 
               <div className="flex items-center justify-start sm:justify-end gap-2 text-xs font-semibold uppercase tracking-wider text-muted group-hover:text-accent">
-                <span>Next Case Study</span>
+                <span>Next Project</span>
                 <LuArrowRight className="size-3.5 shrink-0 transition-transform duration-300 group-hover:translate-x-2" />
               </div>
               <div className="mt-3">
@@ -111,19 +111,19 @@ export function ProjectNavigation({
           <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <div className="w-full lg:max-w-xl">
               <span className="font-mono text-xs font-semibold uppercase tracking-widest text-accent">
-                Let&apos;s Build Together
+                Get in Touch
               </span>
               <h2 className="mt-2 font-display text-xl font-bold tracking-tight text-primary sm:text-2xl md:text-3xl">
-                Need a full-stack engineer for your next project?
+                Interested in working together?
               </h2>
               <p className="mt-3 text-sm sm:text-base leading-relaxed text-secondary">
-                Whether you need scalable cloud architectures, complex APIs, or polished web applications, I&apos;m ready to collaborate.
+                If you have an engineering role or a web project you&apos;d like to discuss, feel free to reach out.
               </p>
             </div>
 
             <div className="flex flex-col min-[420px]:flex-row items-stretch min-[420px]:items-center gap-3 shrink-0">
               <Button href="/#contact" size="lg" className="hover:scale-[1.02] active:scale-[0.98] justify-center">
-                <span>Start a conversation</span>
+                <span>Send a message</span>
                 <LuArrowUpRight className="size-4" aria-hidden="true" />
               </Button>
               <Button href="/#projects" variant="secondary" size="lg" className="hover:scale-[1.02] active:scale-[0.98] justify-center">
@@ -141,7 +141,7 @@ export function ProjectNavigation({
           <Reveal delay={0.15}>
             <div className="flex items-center justify-between border-b border-border/70 pb-4">
               <h3 className="font-display text-xl font-bold text-primary sm:text-2xl">
-                Explore Other Case Studies
+                Other Projects
               </h3>
               <Link
                 href="/#projects"
@@ -181,7 +181,7 @@ export function ProjectNavigation({
                       {item.summary}
                     </p>
                     <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent transition-transform duration-200 group-hover:translate-x-1.5">
-                      <span>Read case study</span>
+                      <span>View details</span>
                       <LuArrowUpRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </span>
                   </div>

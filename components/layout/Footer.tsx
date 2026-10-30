@@ -146,7 +146,7 @@ export const Footer = memo(function Footer() {
             </Link>
 
             <p className="mt-3 text-sm sm:text-[14.5px] leading-relaxed text-secondary/90">
-              Building scalable web applications, secure backend APIs, and modern user interfaces with React, Next.js, Django, and Node.js.
+              Full-stack developer building web applications with React, Next.js, Django, and Node.js.
             </p>
 
             {/* Interactive Location & Live Kathmandu Time Badge */}
@@ -226,7 +226,7 @@ export const Footer = memo(function Footer() {
             <ColumnHeading>Connect</ColumnHeading>
 
             <p className="mt-3.5 text-sm sm:text-[14.5px] leading-relaxed text-secondary/80">
-              Have a project, engineering opportunity, or technical discussion in mind? Connect directly:
+              Connect on GitHub or LinkedIn, or reach out directly by email:
             </p>
 
             {/* Horizontal Row of Interactive Icon Buttons */}
@@ -292,7 +292,7 @@ export const Footer = memo(function Footer() {
             </div>
 
             <p className="mt-3.5 font-mono text-[11px] text-muted">
-              Response time: &lt; 24 hours
+              Usually replies within 24 hours
             </p>
           </div>
         </div>

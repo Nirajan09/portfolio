@@ -107,19 +107,19 @@ export const ProjectCard = memo(function ProjectCard({
         <div className={cn("relative", reversed && "lg:order-2")}>
           <Link
             href={`/projects/${project.slug}`}
-            aria-label={`View case study: ${project.title}`}
+            aria-label={`View project details: ${project.title}`}
             className="group/preview block focus-visible:outline-hidden"
           >
             <div className="relative overflow-hidden rounded-xl">
               <ProjectCover project={project} zoom priority={index === 0} />
 
-              {/* Floating "View Case Study" badge on image hover */}
+              {/* Floating "View project details" badge on image hover */}
               <div
                 aria-hidden="true"
                 className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-xs opacity-0 transition-all duration-300 group-hover/preview:opacity-100"
               >
                 <span className="inline-flex items-center gap-2 rounded-full border border-accent/50 bg-surface/95 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-primary shadow-glow transition-transform duration-300 group-hover/preview:scale-105">
-                  <span>View case study</span>
+                  <span>View project details</span>
                   <LuArrowUpRight className="size-4 text-accent transition-transform duration-300 group-hover/preview:translate-x-0.5 group-hover/preview:-translate-y-0.5" />
                 </span>
               </div>
@@ -220,7 +220,7 @@ export const ProjectCard = memo(function ProjectCard({
               data-track-project={project.slug}
               data-track-target="case_study_btn"
             >
-              <span>Explore case study</span>
+              <span>View project details</span>
               <LuArrowUpRight className="size-3.5 sm:size-4 transition-transform duration-300 ease-standard group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5" />
             </Link>
 

@@ -20,7 +20,7 @@ export function ProjectArchitectureSection({ project }: ProjectArchitectureSecti
             <span className="font-mono text-xs font-bold">02</span>
           </span>
           <h2 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-primary">
-            System Architecture & Flow
+            System Architecture
           </h2>
           <span aria-hidden="true" className="h-px flex-1 bg-linear-to-r from-border to-transparent" />
         </div>
@@ -48,7 +48,7 @@ export function ProjectArchitectureSection({ project }: ProjectArchitectureSecti
           <Reveal delay={0.1}>
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted mb-4">
               <LuLayers className="size-3.5 text-accent" aria-hidden="true" />
-              <span>Architectural Layers & Separation of Concerns</span>
+              <span>Architectural Layers</span>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -103,7 +103,7 @@ export function ProjectArchitectureSection({ project }: ProjectArchitectureSecti
           <Reveal delay={0.15}>
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted mb-6">
               <LuGitCommitHorizontal className="size-3.5 text-accent" aria-hidden="true" />
-              <span>Step-by-Step Technical Workflow</span>
+              <span>Application Workflow</span>
             </div>
 
             <div className="relative space-y-4 before:absolute before:left-4 before:top-3 before:h-[calc(100%-24px)] before:w-px before:bg-linear-to-b before:from-accent before:via-blue before:to-border sm:before:left-5">

@@ -21,7 +21,7 @@ export const certifications: readonly Certification[] = [
     issuer: "Udemy (Knowledge Nest)",
     date: "Jan 2026",
     description:
-      "Comprehensive course and certification on Django web development, building scalable backend architectures and web applications.",
+      "Hands-on course and certification covering Django web fundamentals, ORM database queries, authentication systems, and backend application structure.",
     credentialUrl: "https://ude.my/UC-2fe1abed-53a6-4fa9-863d-2ae97892b5cb",
     image: {
       src: "/certificates/udemy-django-masterclass.jpg",

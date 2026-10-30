@@ -2,19 +2,19 @@ export const skillGroups = [
   {
     id: "frontend",
     title: "Frontend Development",
-    description: "Interfaces that are fast, accessible, responsive, and polished.",
+    description: "Building accessible, responsive user interfaces with reusable components and predictable state.",
     skills: ["React", "Next.js", "TypeScript", "TailwindCSS", "ShadCN UI"],
   },
   {
     id: "backend",
     title: "Backend Development",
-    description: "APIs and data layers built to scale, stay secure, and remain reliable.",
+    description: "Developing REST APIs, database models, authentication workflows, and server-side business logic.",
     skills: ["Django", "PostgreSQL", "Node.js", "MongoDB", "Express.js"],
   },
   {
     id: "tools",
     title: "Development Tools",
-    description: "The automated workflow that keeps shipping smooth and repeatable.",
+    description: "Version control, containerization, environment management, and API testing tools.",
     skills: ["Docker", "Linux", "Git", "GitHub", "Postman"],
   },
 ] as const;

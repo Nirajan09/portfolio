@@ -21,7 +21,7 @@ export async function generateMetadata({
   if (!project) return {};
 
   return pageMetadata({
-    title: `${project.title} — ${project.category ?? "Case Study"}`,
+    title: `${project.title} | ${project.category ?? "Project Details"}`,
     description: project.summary ?? project.overview,
     path: `/projects/${project.slug}`,
   });

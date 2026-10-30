@@ -18,7 +18,7 @@ export function ProjectStackSection({ project }: ProjectStackSectionProps) {
             <span className="font-mono text-xs font-bold">04</span>
           </span>
           <h2 className="font-display text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-primary">
-            Technology Stack & Tools
+            Technology Stack
           </h2>
           <span aria-hidden="true" className="h-px flex-1 bg-linear-to-r from-border to-transparent" />
         </div>

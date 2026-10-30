@@ -15,7 +15,7 @@ const sections: SectionTab[] = [
   { id: "architecture", label: "Architecture", icon: LuLayers },
   { id: "features", label: "Key Features", icon: LuSparkles },
   { id: "stack", label: "Tech Stack", icon: LuCpu },
-  { id: "challenges", label: "Challenges & Results", icon: LuCircleCheck },
+  { id: "challenges", label: "Challenges", icon: LuCircleCheck },
 ];
 
 export function ProjectSectionNav() {

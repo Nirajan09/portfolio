@@ -83,9 +83,9 @@ export function Hero() {
             {/* Professional Value Proposition Narrative */}
             <StaggerItem>
               <p className="mt-3 sm:mt-4 w-full lg:max-w-xl text-sm leading-relaxed text-secondary/90 sm:text-base sm:leading-7 lg:text-lg lg:leading-8">
-                I engineer production-grade web systems and resilient cloud
-                architectures — bridging fluid React 19 & Next.js user experiences
-                with type-safe APIs in Django and Node.js.
+                I build full-stack web applications and backend services with
+                React, Next.js, Django, and Node.js. My focus is on clear
+                architecture, dependable APIs, and clean, responsive user interfaces.
               </p>
             </StaggerItem>
 
@@ -97,9 +97,9 @@ export function Hero() {
                   size="lg"
                   className="w-full sm:w-auto shadow-[0_0_25px_-5px_rgba(34,211,238,0.35)] hover:shadow-[0_0_35px_rgba(34,211,238,0.5)] cursor-pointer justify-center"
                   data-track="hero_cta_click"
-                  data-track-label="view_work"
+                  data-track-label="view_projects"
                 >
-                  <span>Explore Featured Work</span>
+                  <span>View Projects</span>
                   <LuArrowRight
                     className="size-4 transition-transform duration-200 group-hover:translate-x-1"
                     aria-hidden="true"
