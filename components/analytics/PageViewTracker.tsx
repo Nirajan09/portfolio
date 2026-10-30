@@ -12,7 +12,7 @@ import { trackEvent } from "@/lib/analytics";
 export function PageViewTracker() {
   const pathname = usePathname();
   const prevPathname = useRef<string | null>(null);
-
+  
   useEffect(() => {
     if (!pathname) return;
 
