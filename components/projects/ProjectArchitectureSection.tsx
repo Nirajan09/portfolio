@@ -36,7 +36,7 @@ export function ProjectArchitectureSection({ project }: ProjectArchitectureSecti
             </span>
           </div>
 
-          <p className="mt-4 max-w-3xl text-sm sm:text-base leading-relaxed text-secondary sm:text-lg">
+          <p className="mt-4 w-full lg:max-w-3xl text-sm sm:text-base leading-relaxed text-secondary sm:text-lg">
             {architecture.summary}
           </p>
         </div>

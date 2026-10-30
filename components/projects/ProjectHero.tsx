@@ -112,7 +112,7 @@ export function ProjectHero({ project }: ProjectHeroProps) {
               </h1>
 
               {/* Compelling summary */}
-              <p className="mt-5 max-w-xl text-lg leading-relaxed text-secondary sm:text-xl sm:leading-8">
+              <p className="mt-5 w-full lg:max-w-xl text-lg leading-relaxed text-secondary sm:text-xl sm:leading-8">
                 {project.summary}
               </p>
 

@@ -24,7 +24,7 @@ export function ProjectOverviewSection({ project }: ProjectOverviewSectionProps)
       {/* Main Narrative / Overview */}
       {project.overview && (
         <Reveal delay={0.05}>
-          <p className="mt-6 max-w-3xl text-base sm:text-lg leading-relaxed text-secondary sm:leading-8">
+          <p className="mt-6 w-full lg:max-w-3xl text-base sm:text-lg leading-relaxed text-secondary sm:leading-8">
             {project.overview}
           </p>
         </Reveal>

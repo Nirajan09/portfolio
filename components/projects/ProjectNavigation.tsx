@@ -103,7 +103,7 @@ export function ProjectNavigation({
           />
 
           <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-            <div className="max-w-xl">
+            <div className="w-full lg:max-w-xl">
               <span className="font-mono text-xs font-semibold uppercase tracking-widest text-accent">
                 Let&apos;s Build Together
               </span>

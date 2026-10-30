@@ -115,7 +115,7 @@ function Overview({
   return (
     <div
       className={
-        twoCol ? "grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16" : "max-w-3xl"
+        twoCol ? "grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16" : "w-full lg:max-w-3xl"
       }
     >
       <div>
@@ -245,7 +245,7 @@ function Stepper({ steps }: { steps: readonly string[] }) {
   const atEnd = index === last;
 
   return (
-    <div onKeyDown={onKeyDown} className="max-w-4xl">
+    <div onKeyDown={onKeyDown} className="w-full lg:max-w-4xl">
       {/* Track */}
       <div className="relative">
         <span
@@ -341,7 +341,7 @@ function Stepper({ steps }: { steps: readonly string[] }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className="max-w-2xl text-lg leading-8 text-primary sm:text-xl sm:leading-9"
+              className="w-full lg:max-w-2xl text-lg leading-8 text-primary sm:text-xl sm:leading-9"
             >
               {steps[index]}
             </motion.p>

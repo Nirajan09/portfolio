@@ -4,7 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
 import { LuArrowUpRight, LuMenu, LuX } from "react-icons/lu";
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { navHref, navItems } from "@/data/navigation";
 import { personal } from "@/data/personal";
 import { cn } from "@/lib/utils";
@@ -17,6 +18,14 @@ export const Navbar = memo(function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState<string>("home");
+  const [mounted, setMounted] = useState(false);
+
+  const menuRef = useRef<HTMLElement | null>(null);
+  const toggleButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Page scroll progress, drawn as a thin gradient line on the header's edge.
   const { scrollYProgress } = useScroll();
@@ -117,6 +126,34 @@ export const Navbar = memo(function Navbar() {
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
+  // Close mobile menu when clicking or tapping anywhere outside
+  useEffect(() => {
+    if (!open) return;
+
+    const handleOutsideClick = (event: MouseEvent | TouchEvent) => {
+      const target = event.target as Node | null;
+      if (!target) return;
+
+      // Don't close if click is within the mobile menu or on the toggle button
+      if (
+        menuRef.current?.contains(target) ||
+        toggleButtonRef.current?.contains(target)
+      ) {
+        return;
+      }
+
+      setOpen(false);
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("touchstart", handleOutsideClick, { passive: true });
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("touchstart", handleOutsideClick);
     };
   }, [open]);
 
@@ -262,6 +299,7 @@ export const Navbar = memo(function Navbar() {
           </Link>
 
           <button
+            ref={toggleButtonRef}
             type="button"
             className={cn(
               "inline-flex size-10 items-center justify-center rounded-full border border-border bg-surface/60",
@@ -286,36 +324,48 @@ export const Navbar = memo(function Navbar() {
         </div>
       </PageContainer>
 
-      {/* ---------- Mobile & Tablet: backdrop overlay + floating menu card ---------- */}
+      {/* Backdrop overlay portal: mounted to body so it truly covers the full viewport without being trapped in header containing block */}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setOpen(false)}
+                aria-hidden="true"
+                className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs lg:hidden cursor-pointer"
+              />
+            )}
+          </AnimatePresence>,
+          document.body,
+        )}
+
+      {/* ---------- Mobile & Tablet: floating menu card ---------- */}
       <AnimatePresence>
         {open && (
-          <>
-            {/* Click-outside dismiss backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              onClick={() => setOpen(false)}
-              aria-hidden="true"
-              className="fixed inset-0 top-16 z-40 bg-black/60 backdrop-blur-xs lg:hidden"
-            />
-
-            {/* Floating menu card */}
-            <motion.div
-              id="mobile-menu"
-              className="absolute inset-x-0 top-full z-50 px-4 pt-2 lg:hidden"
-              initial={{ opacity: 0, y: -8, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.98 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
+          <motion.div
+            id="mobile-menu"
+            className="absolute inset-x-0 top-full z-50 px-4 pt-2 lg:hidden"
+            initial={{ opacity: 0, y: -8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setOpen(false);
+              }
+            }}
+          >
+            <nav
+              ref={menuRef}
+              aria-label="Mobile Navigation"
+              aria-modal="true"
+              role="dialog"
+              className="relative mx-auto max-w-lg sm:max-w-md sm:ml-auto sm:mr-0 max-h-[calc(100dvh-5.5rem)] overflow-y-auto rounded-2xl border border-border bg-background/95 p-2.5 sm:p-3 shadow-[0_24px_60px_-12px_rgb(0_0_0/0.85),0_0_30px_rgba(34,211,238,0.1)] backdrop-blur-xl"
             >
-              <nav
-                aria-label="Mobile Navigation"
-                aria-modal="true"
-                role="dialog"
-                className="relative mx-auto max-w-lg sm:max-w-md sm:ml-auto sm:mr-0 max-h-[calc(100dvh-5.5rem)] overflow-y-auto rounded-2xl border border-border bg-background/95 p-2.5 sm:p-3 shadow-[0_24px_60px_-12px_rgb(0_0_0/0.85),0_0_30px_rgba(34,211,238,0.1)] backdrop-blur-xl"
-              >
                 <span
                   aria-hidden="true"
                   className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-accent/50 to-transparent"
@@ -372,7 +422,6 @@ export const Navbar = memo(function Navbar() {
                 </Link>
               </nav>
             </motion.div>
-          </>
         )}
       </AnimatePresence>
     </header>

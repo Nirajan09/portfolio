@@ -58,7 +58,7 @@ export function Services() {
           <h3 className="mt-4 font-display text-2xl font-bold tracking-tight text-primary sm:text-3xl">
             Have a project in mind?
           </h3>
-          <p className="mx-auto mt-2.5 max-w-lg text-sm sm:text-base text-secondary/90 leading-relaxed">
+          <p className="mx-auto mt-2.5 w-full max-w-2xl text-sm sm:text-base text-secondary/90 leading-relaxed">
             Let&apos;s discuss how I can help bring your idea to life — from technical architecture to production deployment.
           </p>
 

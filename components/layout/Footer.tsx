@@ -129,7 +129,7 @@ export const Footer = memo(function Footer() {
       <PageContainer className="relative">
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between md:gap-14">
           {/* ================= Brand & Overview Column ================= */}
-          <div className="max-w-xl">
+          <div className="w-full md:max-w-xl">
             <Link
               href={navHref("home")}
               aria-label={`${personal.name}, back to top`}

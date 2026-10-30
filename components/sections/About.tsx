@@ -100,7 +100,7 @@ export const About = memo(function About() {
       <div className="mt-12 grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14 items-start">
         {/* Left Column: Narrative Story */}
         <Reveal className="space-y-6">
-          <div className="space-y-4 max-w-prose">
+          <div className="space-y-4 w-full lg:max-w-prose">
             <p className="text-base sm:text-lg leading-relaxed text-primary/95">
               {about.paragraphs[0]}
             </p>

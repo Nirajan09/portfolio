@@ -23,7 +23,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative isolate flex min-h-dvh flex-col justify-center overflow-x-clip pt-24 pb-12 sm:pt-28 sm:pb-16 lg:py-0"
+      className="relative isolate flex flex-col overflow-x-clip pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-32 lg:pb-16"
     >
       {/* Background Cyber-Mesh Grid Pattern with Radial Falloff */}
       <div
@@ -43,7 +43,7 @@ export function Hero() {
 
       <PageContainer className="relative z-20 w-full py-4 sm:py-6 lg:py-0">
         <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-12">
-          <Stagger className="max-w-3xl">
+          <Stagger className="w-full lg:max-w-3xl">
             {/* Live Status Eyebrow Badge (Fully Responsive) */}
             <StaggerItem>
               <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400 backdrop-blur-md shadow-[0_0_20px_-5px_rgba(16,185,129,0.25)]">
@@ -83,7 +83,7 @@ export function Hero() {
 
             {/* Professional Value Proposition Narrative */}
             <StaggerItem>
-              <p className="mt-3 sm:mt-4 max-w-xl text-sm leading-relaxed text-secondary/90 sm:text-base sm:leading-7 lg:text-lg lg:leading-8">
+              <p className="mt-3 sm:mt-4 w-full lg:max-w-xl text-sm leading-relaxed text-secondary/90 sm:text-base sm:leading-7 lg:text-lg lg:leading-8">
                 I engineer production-grade web systems and resilient cloud
                 architectures — bridging fluid React 19 & Next.js user experiences
                 with type-safe APIs in Django and Node.js.
