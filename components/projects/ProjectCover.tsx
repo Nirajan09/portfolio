@@ -12,18 +12,21 @@ type Tone = "cyan" | "blue" | "violet";
 const toneClasses: Record<Tone, { from: string; border: string; glow: string }> = {
   cyan: {
     from: "from-accent/20",
-    border: "group-hover:border-accent/50",
-    glow: "rgba(34, 211, 238, 0.2)",
+    border:
+      "group-hover:border-accent/70 group-hover/preview:border-accent group-hover/btn:border-accent hover:border-accent group-hover:shadow-[0_0_25px_-5px_rgba(34,211,238,0.4)] group-hover/preview:shadow-[0_0_25px_-5px_rgba(34,211,238,0.5)] group-hover/btn:shadow-[0_0_25px_-5px_rgba(34,211,238,0.5)] hover:shadow-[0_0_25px_-5px_rgba(34,211,238,0.5)]",
+    glow: "rgba(34, 211, 238, 0.25)",
   },
   blue: {
     from: "from-blue/20",
-    border: "group-hover:border-blue/50",
-    glow: "rgba(59, 130, 246, 0.2)",
+    border:
+      "group-hover:border-blue/70 group-hover/preview:border-blue group-hover/btn:border-blue hover:border-blue group-hover:shadow-[0_0_25px_-5px_rgba(59,130,246,0.4)] group-hover/preview:shadow-[0_0_25px_-5px_rgba(59,130,246,0.5)] group-hover/btn:shadow-[0_0_25px_-5px_rgba(59,130,246,0.5)] hover:shadow-[0_0_25px_-5px_rgba(59,130,246,0.5)]",
+    glow: "rgba(59, 130, 246, 0.25)",
   },
   violet: {
     from: "from-violet/20",
-    border: "group-hover:border-violet/50",
-    glow: "rgba(139, 92, 246, 0.2)",
+    border:
+      "group-hover:border-violet/70 group-hover/preview:border-violet group-hover/btn:border-violet hover:border-violet group-hover:shadow-[0_0_25px_-5px_rgba(139,92,246,0.4)] group-hover/preview:shadow-[0_0_25px_-5px_rgba(139,92,246,0.5)] group-hover/btn:shadow-[0_0_25px_-5px_rgba(139,92,246,0.5)] hover:shadow-[0_0_25px_-5px_rgba(139,92,246,0.5)]",
+    glow: "rgba(139, 92, 246, 0.25)",
   },
 };
 
@@ -87,14 +90,14 @@ export const ProjectCover = memo(function ProjectCover({
   return (
     <div
       className={cn(
-        "relative flex flex-col overflow-hidden rounded-xl border border-border/80 bg-background-secondary shadow-2xl transition-[border-color,box-shadow] duration-500",
+        "relative flex flex-col overflow-hidden rounded-xl border border-border/80 bg-background-secondary shadow-2xl transition-[border-color,box-shadow] duration-500 isolate [transform:translateZ(0)]",
         tone.border,
         className,
       )}
     >
       {/* ---------- Window Title Bar ---------- */}
       {showWindowBar && (
-        <div className="relative z-10 flex h-9 shrink-0 items-center justify-between border-b border-border/70 bg-surface/90 px-2.5 sm:px-3.5 backdrop-blur-md transition-colors duration-300 group-hover:bg-surface">
+        <div className="relative z-10 flex h-9 shrink-0 items-center justify-between overflow-hidden rounded-t-xl rounded-t-[calc(var(--radius-xl)-1px)] border-b border-border/70 bg-surface/90 px-2.5 sm:px-3.5 backdrop-blur-md transition-colors duration-300 group-hover:bg-surface">
           {/* Traffic light dots with glowing hover states */}
           <div className="flex items-center gap-1.5 shrink-0" aria-hidden="true">
             <span className="size-2 sm:size-2.5 rounded-full bg-rose-500/80 transition-all duration-300 group-hover:bg-rose-500 group-hover:shadow-[0_0_8px_rgba(244,63,94,0.7)]" />
@@ -116,7 +119,14 @@ export const ProjectCover = memo(function ProjectCover({
       )}
 
       {/* ---------- Main Viewport Frame ---------- */}
-      <div className="relative aspect-video w-full flex-1 overflow-hidden bg-background">
+      <div
+        className={cn(
+          "relative aspect-video w-full flex-1 overflow-hidden bg-background",
+          showWindowBar
+            ? "rounded-b-xl rounded-b-[calc(var(--radius-xl)-1px)]"
+            : "rounded-xl rounded-[calc(var(--radius-xl)-1px)]",
+        )}
+      >
         {project.cover ? (
           <>
             {/* Ambient subtle glow beneath screenshot */}
@@ -130,7 +140,7 @@ export const ProjectCover = memo(function ProjectCover({
 
             {/* Uncropped screenshot inside styled viewport */}
             <div className="relative size-full p-1.5 sm:p-2.5">
-              <div className="relative size-full overflow-hidden rounded-lg border border-border/40 bg-surface/80 shadow-inner">
+              <div className="relative size-full overflow-hidden rounded-lg border border-border/40 bg-surface/80 shadow-inner [transform:translateZ(0)] transition-colors duration-300 group-hover:border-border/70">
                 {/* Background shimmer skeleton: visible while screenshot loads */}
                 {!isLoaded && (
                   <span

@@ -160,7 +160,7 @@ export function ProjectNavigation({
                   aria-label={`View project: ${item.title}`}
                   className="group flex flex-col overflow-hidden rounded-xl border border-border/80 bg-surface/50 transition-all duration-300 hover:-translate-y-2 hover:border-accent/40 hover:bg-surface/80 hover:shadow-[0_20px_50px_-15px_rgba(0,0,0,0.8),0_0_25px_rgba(34,211,238,0.12)]"
                 >
-                  <ProjectCover project={item} zoom className="border-b border-border/70" />
+                  <ProjectCover project={item} zoom className="rounded-b-none border-x-0 border-t-0 border-b border-border/70 shadow-none" />
                   <div className="flex flex-1 flex-col p-6">
                     <div className="flex items-center justify-between gap-2 text-xs">
                       {item.category && (

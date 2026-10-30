@@ -191,13 +191,13 @@ export function ProjectHero({ project }: ProjectHeroProps) {
                   project={project}
                   zoom
                   priority
-                  className="border-border/80 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)]"
+                  className="shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)]"
                 />
 
                 {/* Hover overlay hint */}
                 <div
                   aria-hidden="true"
-                  className="absolute inset-0 flex items-center justify-center bg-background/40 backdrop-blur-xs opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100 rounded-xl"
+                  className="pointer-events-none absolute inset-px flex items-center justify-center bg-background/40 backdrop-blur-xs opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100 rounded-[calc(var(--radius-xl)-1px)]"
                 >
                   <span className="inline-flex items-center gap-2 rounded-full border border-accent/50 bg-surface/95 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-primary shadow-glow transition-transform duration-300 group-hover/btn:scale-105">
                     <LuExpand className="size-3.5 text-accent" />

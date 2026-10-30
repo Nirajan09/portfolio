@@ -110,13 +110,13 @@ export const ProjectCard = memo(function ProjectCard({
             aria-label={`View project details: ${project.title}`}
             className="group/preview block focus-visible:outline-hidden"
           >
-            <div className="relative overflow-hidden rounded-xl">
+            <div className="relative rounded-xl">
               <ProjectCover project={project} zoom priority={index === 0} />
 
               {/* Floating "View project details" badge on image hover */}
               <div
                 aria-hidden="true"
-                className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-xs opacity-0 transition-all duration-300 group-hover/preview:opacity-100"
+                className="pointer-events-none absolute inset-px flex items-center justify-center rounded-[calc(var(--radius-xl)-1px)] bg-background/50 backdrop-blur-xs opacity-0 transition-all duration-300 group-hover/preview:opacity-100"
               >
                 <span className="inline-flex items-center gap-2 rounded-full border border-accent/50 bg-surface/95 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-primary shadow-glow transition-transform duration-300 group-hover/preview:scale-105">
                   <span>View project details</span>
