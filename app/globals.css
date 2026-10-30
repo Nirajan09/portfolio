@@ -60,6 +60,8 @@
   --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
   --animate-float: float 5s ease-in-out infinite;
   --animate-chip-in: chip-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  --animate-shimmer: shimmer 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-hero-enter: hero-enter 1.15s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* Motion durations (used by Motion variants in later phases) */
@@ -182,5 +184,27 @@ body::before {
   50% {
     opacity: 0.2;
     filter: drop-shadow(0 0 1px rgba(34, 211, 238, 0.2));
+  }
+}
+
+/* Animated shimmering skeleton light sweep */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Immediate CSS hero entrance (silky smooth decelerated glide, zero JS delay) */
+@keyframes hero-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

@@ -31,7 +31,7 @@ export function TypingRole({
   className = "",
 }: TypingRoleProps) {
   const reduce = useReducedMotion();
-  const [text, setText] = useState("");
+  const [text, setText] = useState(roles[0] ?? "");
   const [blink, setBlink] = useState(true);
 
   const rolesKey = roles.join("|");
@@ -41,9 +41,9 @@ export function TypingRole({
     if (reduce || roles.length === 0) return;
 
     let index = 0;
-    let phase: Phase = "gap";
+    let phase: Phase = "hold";
     let phaseStart = performance.now();
-    let shownLen = 0;
+    let shownLen = roles[0]?.length ?? 0;
     let isBlinking = true;
 
     const setBlinking = (v: boolean) => {

@@ -111,10 +111,11 @@ export async function POST(request: Request) {
         { headers: { "Cache-Control": "no-store" } },
       );
     }
-    return fail(
-      sent.error || "Your message couldn't be sent. Please try again.",
-      502,
-    );
+    const errorMessage =
+      "error" in sent && sent.error
+        ? sent.error
+        : "Your message couldn't be sent. Please try again.";
+    return fail(errorMessage, 502);
   }
 
   // B. Client-side provider: Web3Forms free tier

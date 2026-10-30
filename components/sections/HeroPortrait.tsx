@@ -115,6 +115,12 @@ export function HeroPortrait() {
               className="absolute inset-0 bg-[linear-gradient(to_right,rgba(148,163,184,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.06)_1px,transparent_1px)] bg-[size:24px_24px] opacity-40"
             />
 
+            {/* Shimmer skeleton sweep behind the photo while loading */}
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/[0.09] to-transparent animate-shimmer"
+            />
+
             {/* Photo: covers full card edge-to-edge, perfectly framed */}
             <Image
               src={photo.src}
@@ -122,13 +128,13 @@ export function HeroPortrait() {
               fill
               priority
               sizes="(min-width: 1024px) 380px, (min-width: 640px) 340px, 280px"
-              className="object-cover object-[center_65%] transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              className="relative z-10 object-cover object-[center_65%] transition-transform duration-700 ease-out group-hover:scale-[1.04]"
             />
 
             {/* Subtle bottom vignette to blend base seamlessly */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-surface via-surface/40 to-transparent z-10"
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-surface via-surface/40 to-transparent z-20"
             />
           </>
         ) : (

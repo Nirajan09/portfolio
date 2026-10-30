@@ -1,5 +1,4 @@
 import { LuArrowRight, LuDownload, LuMail, LuSparkles } from "react-icons/lu";
-import { Reveal } from "@/components/animation/Reveal";
 import { Stagger, StaggerItem } from "@/components/animation/Stagger";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { Button } from "@/components/ui/Button";
@@ -43,7 +42,7 @@ export function Hero() {
 
       <PageContainer className="relative z-20 w-full py-4 sm:py-6 lg:py-0">
         <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-12">
-          <Stagger className="w-full lg:max-w-3xl">
+          <Stagger className="w-full lg:max-w-3xl animate-hero-enter">
             {/* Live Status Eyebrow Badge (Fully Responsive) */}
             <StaggerItem>
               <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400 backdrop-blur-md shadow-[0_0_20px_-5px_rgba(16,185,129,0.25)]">
@@ -174,13 +173,9 @@ export function Hero() {
           </Stagger>
 
           {/* Hero Portrait Showcase */}
-          <Reveal
-            delay={0.3}
-            y={24}
-            className="mx-auto w-full max-w-[240px] sm:max-w-[300px] lg:max-w-[340px] lg:justify-self-end mt-4 lg:mt-0"
-          >
+          <div className="mx-auto w-full max-w-[240px] sm:max-w-[300px] lg:max-w-[340px] lg:justify-self-end mt-4 lg:mt-0 animate-hero-enter [animation-delay:120ms]">
             <HeroPortrait />
-          </Reveal>
+          </div>
         </div>
       </PageContainer>
     </section>

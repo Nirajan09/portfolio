@@ -96,15 +96,21 @@ export function CertificatePreview({
           </button>
         </div>
 
-        {/* Modal Image Body */}
-        <div className="relative bg-background-secondary/80 p-3 sm:p-6 flex min-h-0 items-center justify-center max-h-[68vh] overflow-auto">
+        {/* Modal Image Body with background shimmer */}
+        <div className="relative bg-background-secondary/80 p-3 sm:p-6 flex min-h-[260px] sm:min-h-[380px] items-center justify-center max-h-[68vh] overflow-auto">
+          {/* Shimmer skeleton sweep behind the certificate */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/[0.06] to-transparent animate-shimmer"
+          />
+
           <Image
             src={src}
             alt={alt}
             width={1600}
             height={1200}
             sizes="(min-width: 1024px) 896px, 100vw"
-            className="h-auto max-h-[64vh] w-auto max-w-full rounded-xl border border-border/80 object-contain shadow-lg"
+            className="relative z-10 h-auto max-h-[64vh] w-auto max-w-full rounded-xl border border-border/80 object-contain shadow-lg"
           />
         </div>
 

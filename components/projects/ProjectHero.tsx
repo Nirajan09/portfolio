@@ -270,14 +270,19 @@ export function ProjectHero({ project }: ProjectHeroProps) {
               </button>
             </div>
 
-            {/* Modal image container */}
+            {/* Modal image container with background shimmer */}
             <div className="relative aspect-video max-h-[75vh] w-full min-h-0 overflow-auto bg-background p-2 sm:p-4">
-              <div className="relative size-full min-h-[220px] sm:min-h-[300px]">
+              <div className="relative size-full min-h-[220px] sm:min-h-[300px] overflow-hidden rounded-lg bg-surface/70">
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/[0.08] to-transparent animate-shimmer"
+                />
+
                 <Image
                   src={project.cover.src}
                   alt={project.cover.alt}
                   fill
-                  className="object-contain"
+                  className="relative z-10 object-contain"
                   sizes="100vw"
                 />
               </div>
