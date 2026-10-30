@@ -1,12 +1,17 @@
 import type { MetadataRoute } from "next";
-import { absoluteUrl, allowIndexing } from "@/lib/seo";
+import { absoluteUrl } from "@/lib/seo";
 
 export default function robots(): MetadataRoute.Robots {
-  if (!allowIndexing) {
-    return { rules: { userAgent: "*", disallow: "/" } };
-  }
+  const isPreview = process.env.VERCEL_ENV === "preview";
+
   return {
-    rules: { userAgent: "*", allow: "/", disallow: "/api/" },
+    rules: [
+      {
+        userAgent: "*",
+        allow: isPreview ? undefined : "/",
+        disallow: isPreview ? "/" : ["/api/"],
+      },
+    ],
     sitemap: absoluteUrl("/sitemap.xml"),
   };
 }
