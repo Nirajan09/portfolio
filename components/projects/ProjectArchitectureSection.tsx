@@ -28,11 +28,11 @@ export function ProjectArchitectureSection({ project }: ProjectArchitectureSecti
 
       {/* Architecture Style Badge & Summary */}
       <Reveal delay={0.05}>
-        <div className="mt-6 rounded-2xl border border-accent/30 bg-linear-to-br from-surface to-background-secondary p-5 sm:p-7 md:p-8 backdrop-blur-xs">
+        <div className="mt-6 rounded-2xl border border-accent/30 bg-linear-to-br from-surface to-background-secondary p-4 sm:p-7 md:p-8 backdrop-blur-xs">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-accent/40 bg-accent/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent shadow-xs">
-              <LuNetwork className="size-3.5" aria-hidden="true" />
-              {architecture.style}
+            <span className="inline-flex max-w-full items-center gap-1.5 rounded-full border border-accent/40 bg-accent/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent shadow-xs">
+              <LuNetwork className="size-3.5 shrink-0" aria-hidden="true" />
+              <span className="truncate">{architecture.style}</span>
             </span>
           </div>
 
@@ -110,10 +110,10 @@ export function ProjectArchitectureSection({ project }: ProjectArchitectureSecti
               {workflow.map((item) => (
                 <div
                   key={item.step}
-                  className="group/step relative flex items-start gap-3 sm:gap-4 rounded-xl border border-border/70 bg-surface/40 p-3.5 pl-11 sm:pl-14 sm:p-5 transition-all duration-300 hover:translate-x-1.5 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs min-w-0"
+                  className="group/step relative flex items-start gap-3 sm:gap-4 rounded-xl border border-border/70 bg-surface/40 p-3.5 pl-10 sm:pl-14 sm:p-5 transition-all duration-300 hover:translate-x-1.5 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs min-w-0"
                 >
                   {/* Step bullet node that reacts on card hover */}
-                  <div className="absolute left-2.5 top-5 flex size-5 -translate-x-1/2 items-center justify-center rounded-full border border-accent bg-background text-[11px] font-bold text-accent shadow-[0_0_8px_var(--color-accent)] transition-all duration-300 group-hover/step:scale-125 group-hover/step:bg-accent group-hover/step:text-background group-hover/step:shadow-[0_0_12px_var(--color-accent)] sm:left-5">
+                  <div className="absolute left-4 top-4.5 sm:left-5 sm:top-5 flex size-5 -translate-x-1/2 items-center justify-center rounded-full border border-accent bg-background text-[11px] font-bold text-accent shadow-[0_0_8px_var(--color-accent)] transition-all duration-300 group-hover/step:scale-125 group-hover/step:bg-accent group-hover/step:text-background group-hover/step:shadow-[0_0_12px_var(--color-accent)]">
                     {item.step}
                   </div>
 

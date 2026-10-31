@@ -27,7 +27,7 @@ export function ProjectStackSection({ project }: ProjectStackSectionProps) {
       {groups.length > 0 ? (
         <div className="mt-8 grid gap-4 sm:gap-5 md:grid-cols-2">
           {groups.map((group, index) => (
-            <Reveal key={group.label} delay={index * 0.05}>
+            <Reveal key={group.label} delay={index * 0.05} className="h-full min-w-0">
               <div className="group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-border/80 bg-surface/40 p-4 sm:p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/75 hover:shadow-[0_20px_45px_-15px_rgba(0,0,0,0.8),0_0_20px_rgba(34,211,238,0.1)]">
                 {/* Top hairline accent draw on hover */}
                 <span

@@ -95,7 +95,7 @@ export function ProjectHero({ project }: ProjectHeroProps) {
         {/* Hero content grid */}
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.95fr)] lg:gap-14">
           {/* Left: Metadata, Title, Summary, Actions */}
-          <div className="flex flex-col">
+          <div className="flex flex-col min-w-0">
             <Reveal delay={0.05}>
               {/* Category and Role pills */}
               <div className="flex flex-wrap items-center gap-2 text-xs">
@@ -114,12 +114,12 @@ export function ProjectHero({ project }: ProjectHeroProps) {
               </div>
 
               {/* Main Title */}
-              <h1 className="mt-4 font-display text-4xl font-bold tracking-tight text-primary sm:text-5xl lg:text-6xl">
+              <h1 className="mt-4 font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-primary break-words">
                 {project.title}
               </h1>
 
               {/* Compelling summary */}
-              <p className="mt-5 w-full lg:max-w-xl text-lg leading-relaxed text-secondary sm:text-xl sm:leading-8">
+              <p className="mt-5 w-full lg:max-w-xl text-base sm:text-lg lg:text-xl leading-relaxed text-secondary sm:leading-8">
                 {project.summary}
               </p>
 
@@ -143,7 +143,7 @@ export function ProjectHero({ project }: ProjectHeroProps) {
                     data-track="project_external_link"
                     data-track-project={project.slug}
                     data-track-kind="live"
-                    className="bg-emerald-500 text-background hover:bg-emerald-400 hover:scale-[1.02] active:scale-[0.98]"
+                    className="w-full min-[420px]:w-auto bg-emerald-500 text-background hover:bg-emerald-400 hover:scale-[1.02] active:scale-[0.98] justify-center"
                   >
                     <span>Live demo</span>
                     <LuExternalLink className="size-4" aria-hidden="true" />
@@ -158,14 +158,14 @@ export function ProjectHero({ project }: ProjectHeroProps) {
                     data-track="project_external_link"
                     data-track-project={project.slug}
                     data-track-kind="repo"
-                    className="hover:scale-[1.02] active:scale-[0.98]"
+                    className="w-full min-[420px]:w-auto hover:scale-[1.02] active:scale-[0.98] justify-center"
                   >
                     <GithubIcon className="size-4" />
                     <span>Source code</span>
                   </Button>
                 )}
 
-                <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs text-muted">
+                <span className="inline-flex items-center gap-2 px-1 py-1.5 text-xs text-muted">
                   <LuClock className="size-3.5 text-accent" aria-hidden="true" />
                   <span>{readTime}</span>
                 </span>
@@ -211,28 +211,28 @@ export function ProjectHero({ project }: ProjectHeroProps) {
 
         {/* Quick Specs Ribbon with interactive card lift */}
         <Reveal delay={0.2}>
-          <div className="mt-12 grid grid-cols-1 gap-3 min-[440px]:grid-cols-2 lg:grid-cols-4 sm:gap-4 border-t border-border/80 pt-8">
-            <div className="group/spec min-w-0 rounded-xl border border-border/60 bg-surface/40 p-3.5 sm:p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs">
-              <span className="block text-[11px] font-semibold uppercase tracking-wider text-muted transition-colors group-hover/spec:text-accent">Domain</span>
-              <span className="mt-1 block font-medium text-primary text-sm sm:text-base truncate">{project.category ?? "Full-Stack Web"}</span>
+          <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4 border-t border-border/80 pt-8">
+            <div className="group/spec min-w-0 rounded-xl border border-border/60 bg-surface/40 p-3 sm:p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs">
+              <span className="block text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-muted transition-colors group-hover/spec:text-accent">Domain</span>
+              <span className="mt-1 block font-medium text-primary text-xs sm:text-base truncate">{project.category ?? "Full-Stack Web"}</span>
             </div>
-            <div className="group/spec min-w-0 rounded-xl border border-border/60 bg-surface/40 p-3.5 sm:p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs">
-              <span className="block text-[11px] font-semibold uppercase tracking-wider text-muted transition-colors group-hover/spec:text-accent">Architecture</span>
-              <span className="mt-1 block font-medium text-primary text-sm sm:text-base truncate">
-                {project.architecture?.style.split(" ")[0]} {project.architecture?.style.split(" ")[1]}
+            <div className="group/spec min-w-0 rounded-xl border border-border/60 bg-surface/40 p-3 sm:p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs">
+              <span className="block text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-muted transition-colors group-hover/spec:text-accent">Architecture</span>
+              <span className="mt-1 block font-medium text-primary text-xs sm:text-base truncate">
+                {project.architecture?.style ? project.architecture.style.split(" ").slice(0, 2).join(" ") : "Decoupled REST"}
               </span>
             </div>
-            <div className="group/spec min-w-0 rounded-xl border border-border/60 bg-surface/40 p-3.5 sm:p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs">
-              <span className="block text-[11px] font-semibold uppercase tracking-wider text-muted transition-colors group-hover/spec:text-accent">Key Database</span>
-              <span className="mt-1 block font-medium text-primary text-sm sm:text-base truncate">
+            <div className="group/spec min-w-0 rounded-xl border border-border/60 bg-surface/40 p-3 sm:p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs">
+              <span className="block text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-muted transition-colors group-hover/spec:text-accent">Key Database</span>
+              <span className="mt-1 block font-medium text-primary text-xs sm:text-base truncate">
                 {project.slug === "book-recommendation-system"
                   ? "PostgreSQL / SQLite"
                   : "MongoDB Atlas"}
               </span>
             </div>
-            <div className="group/spec min-w-0 rounded-xl border border-border/60 bg-surface/40 p-3.5 sm:p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs">
-              <span className="block text-[11px] font-semibold uppercase tracking-wider text-muted transition-colors group-hover/spec:text-accent">Authentication</span>
-              <span className="mt-1 block font-medium text-primary text-sm sm:text-base truncate">
+            <div className="group/spec min-w-0 rounded-xl border border-border/60 bg-surface/40 p-3 sm:p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/80 hover:shadow-xs">
+              <span className="block text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-muted transition-colors group-hover/spec:text-accent">Authentication</span>
+              <span className="mt-1 block font-medium text-primary text-xs sm:text-base truncate">
                 {project.slug === "job-portal"
                   ? "Clerk Auth"
                   : project.slug === "image-sharing-platform"
@@ -279,7 +279,7 @@ export function ProjectHero({ project }: ProjectHeroProps) {
 
             {/* Modal image container with background shimmer while loading */}
             <div className="relative aspect-video max-h-[75vh] w-full min-h-0 overflow-hidden bg-background p-2 sm:p-4">
-              <div className="relative size-full min-h-[220px] sm:min-h-[300px] overflow-hidden rounded-lg bg-surface/70">
+              <div className="relative size-full overflow-hidden rounded-lg bg-surface/70">
                 {!isLightboxLoaded && (
                   <span
                     aria-hidden="true"

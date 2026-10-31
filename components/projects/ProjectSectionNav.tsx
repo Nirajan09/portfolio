@@ -59,8 +59,11 @@ export function ProjectSectionNav() {
   };
 
   return (
-    <div className="sticky top-16 z-20 -mx-4 mb-12 border-y border-border/80 bg-background/90 px-4 py-3 backdrop-blur-md sm:mx-0 sm:rounded-xl sm:border sm:px-6 shadow-sm">
-      <nav aria-label="Project section navigation" className="flex items-center justify-start gap-1 overflow-x-auto no-scrollbar sm:justify-center sm:gap-2">
+    <div className="sticky top-16 z-20 -mx-4 mb-10 border-y border-border/80 bg-background/90 px-3 py-2.5 backdrop-blur-md sm:mx-0 sm:rounded-xl sm:border sm:px-4 sm:py-2.5 shadow-sm">
+      <nav
+        aria-label="Project section navigation"
+        className="flex items-center justify-start gap-1.5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:justify-center sm:gap-2 px-1"
+      >
         {sections.map((section) => {
           const Icon = section.icon;
           const isActive = activeId === section.id;

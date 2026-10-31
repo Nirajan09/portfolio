@@ -28,7 +28,7 @@ export function ProjectDetail({
   const resolvedNext = nextProject !== undefined ? nextProject : nav.next;
 
   return (
-    <article className="min-h-screen">
+    <article className="min-h-screen overflow-x-clip">
       <PageContainer>
         {/* Section A: Hero Showcase */}
         <ProjectHero project={project} />

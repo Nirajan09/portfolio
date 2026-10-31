@@ -44,7 +44,7 @@ export function ProjectChallengesSection({ project }: ProjectChallengesSectionPr
 
               <div className="mt-6 grid gap-4 sm:gap-6 md:grid-cols-2">
                 {/* Challenge description */}
-                <div className="rounded-xl border border-border/70 bg-background-secondary/60 p-4 transition-all duration-300 group-hover/challenge:border-amber-500/30 group-hover/challenge:bg-background-secondary/80 sm:p-5">
+                <div className="min-w-0 rounded-xl border border-border/70 bg-background-secondary/60 p-4 transition-all duration-300 group-hover/challenge:border-amber-500/30 group-hover/challenge:bg-background-secondary/80 sm:p-5">
                   <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-amber-400">
                     <LuTriangleAlert className="size-3.5" aria-hidden="true" />
                     <span>Challenge</span>
@@ -55,7 +55,7 @@ export function ProjectChallengesSection({ project }: ProjectChallengesSectionPr
                 </div>
 
                 {/* Solution description */}
-                <div className="rounded-xl border border-border/70 bg-background-secondary/60 p-4 transition-all duration-300 group-hover/challenge:border-accent/30 group-hover/challenge:bg-background-secondary/80 sm:p-5">
+                <div className="min-w-0 rounded-xl border border-border/70 bg-background-secondary/60 p-4 transition-all duration-300 group-hover/challenge:border-accent/30 group-hover/challenge:bg-background-secondary/80 sm:p-5">
                   <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-accent">
                     <LuLightbulb className="size-3.5" aria-hidden="true" />
                     <span>Solution</span>
@@ -68,9 +68,9 @@ export function ProjectChallengesSection({ project }: ProjectChallengesSectionPr
 
               {/* Outcome / Impact */}
               {item.impact && (
-                <div className="mt-4 flex items-center gap-3 rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-4 py-3 text-xs sm:text-sm text-emerald-300 transition-colors duration-300 group-hover/challenge:border-emerald-500/40 group-hover/challenge:bg-emerald-500/10">
-                  <LuCircleCheck className="size-4 shrink-0 text-emerald-400" aria-hidden="true" />
-                  <span>
+                <div className="mt-4 flex items-start sm:items-center gap-2.5 sm:gap-3 rounded-lg border border-emerald-500/20 bg-emerald-500/5 px-3.5 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-emerald-300 transition-colors duration-300 group-hover/challenge:border-emerald-500/40 group-hover/challenge:bg-emerald-500/10">
+                  <LuCircleCheck className="size-4 shrink-0 text-emerald-400 mt-0.5 sm:mt-0" aria-hidden="true" />
+                  <span className="leading-relaxed">
                     <strong className="font-semibold text-emerald-200">Outcome:</strong>{" "}
                     {item.impact}
                   </span>

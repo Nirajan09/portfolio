@@ -34,7 +34,7 @@ export function ProjectOverviewSection({ project }: ProjectOverviewSectionProps)
       {(project.problem || project.solution) && (
         <div className="mt-8 grid gap-4 sm:gap-6 md:grid-cols-2">
           {project.problem && (
-            <Reveal delay={0.1}>
+            <Reveal delay={0.1} className="h-full min-w-0">
               <div className="group/problem relative flex h-full flex-col overflow-hidden rounded-2xl border border-rose-500/25 bg-rose-500/5 p-4 sm:p-6 md:p-8 backdrop-blur-xs transition-all duration-300 hover:-translate-y-1 hover:border-rose-500/40 hover:bg-rose-500/10 hover:shadow-[0_20px_40px_-15px_rgba(244,63,94,0.18)]">
                 <div className="flex items-center gap-3 text-rose-400">
                   <div className="flex size-8 sm:size-9 shrink-0 items-center justify-center rounded-lg border border-rose-500/30 bg-rose-500/10 transition-transform duration-300 group-hover/problem:scale-110 group-hover/problem:-rotate-3">
@@ -52,7 +52,7 @@ export function ProjectOverviewSection({ project }: ProjectOverviewSectionProps)
           )}
 
           {project.solution && (
-            <Reveal delay={0.15}>
+            <Reveal delay={0.15} className="h-full min-w-0">
               <div className="group/sol relative flex h-full flex-col overflow-hidden rounded-2xl border border-emerald-500/25 bg-emerald-500/5 p-4 sm:p-6 md:p-8 backdrop-blur-xs transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-emerald-500/10 hover:shadow-[0_20px_40px_-15px_rgba(16,185,129,0.18)]">
                 <div className="flex items-center gap-3 text-emerald-400">
                   <div className="flex size-8 sm:size-9 shrink-0 items-center justify-center rounded-lg border border-emerald-500/30 bg-emerald-500/10 transition-transform duration-300 group-hover/sol:scale-110 group-hover/sol:rotate-3">

@@ -27,7 +27,7 @@ export function ProjectFeaturesSection({ project }: ProjectFeaturesSectionProps)
       {detailed && detailed.length > 0 ? (
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {detailed.map((item, index) => (
-            <Reveal key={item.title} delay={index * 0.04}>
+            <Reveal key={item.title} delay={index * 0.04} className="h-full min-w-0">
               <div className="group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-border/80 bg-surface/40 p-4 sm:p-5 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/80 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.8),0_0_20px_rgba(34,211,238,0.1)]">
                 <div>
                   <div className="flex items-center justify-between gap-2">
@@ -58,7 +58,7 @@ export function ProjectFeaturesSection({ project }: ProjectFeaturesSectionProps)
       ) : (
         <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {basic.map((feature, index) => (
-            <Reveal key={feature} delay={index * 0.03}>
+            <Reveal key={feature} delay={index * 0.03} className="h-full min-w-0">
               <div className="group flex items-start gap-3 rounded-xl border border-border/70 bg-surface/40 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:bg-surface/70 hover:shadow-xs">
                 <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent transition-transform duration-200 group-hover:scale-115">
                   <LuCheck className="size-3" aria-hidden="true" />

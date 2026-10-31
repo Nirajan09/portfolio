@@ -29,7 +29,7 @@ export function ProjectNavigation({
               data-track="project_click"
               data-track-project={prevProject.slug}
               data-track-target="prev_case_study"
-              className="group relative overflow-hidden flex flex-col justify-between rounded-xl border border-border/70 bg-surface/40 p-4 sm:p-5 text-left transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/75 hover:shadow-glow"
+              className="group relative overflow-hidden flex flex-col justify-between rounded-xl border border-border/70 bg-surface/40 p-4 sm:p-5 text-left transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/75 hover:shadow-glow min-w-0"
             >
               {/* Top hairline accent draw on hover */}
               <span
@@ -41,12 +41,12 @@ export function ProjectNavigation({
                 <LuArrowLeft className="size-3.5 shrink-0 transition-transform duration-300 group-hover:-translate-x-2" />
                 <span>Previous Project</span>
               </div>
-              <div className="mt-3">
-                <p className="font-display text-base font-semibold text-primary transition-colors duration-200 group-hover:text-accent sm:text-xl">
+              <div className="mt-3 min-w-0">
+                <p className="font-display text-base font-semibold text-primary transition-colors duration-200 group-hover:text-accent sm:text-xl break-words">
                   {prevProject.title}
                 </p>
                 {prevProject.category && (
-                  <p className="mt-1 text-xs text-secondary/80">
+                  <p className="mt-1 text-xs text-secondary/80 truncate">
                     {prevProject.category}
                   </p>
                 )}
@@ -62,7 +62,7 @@ export function ProjectNavigation({
               data-track="project_click"
               data-track-project={nextProject.slug}
               data-track-target="next_case_study"
-              className="group relative overflow-hidden flex flex-col justify-between rounded-xl border border-border/70 bg-surface/40 p-4 sm:p-5 text-left sm:text-right transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/75 hover:shadow-glow"
+              className="group relative overflow-hidden flex flex-col justify-between rounded-xl border border-border/70 bg-surface/40 p-4 sm:p-5 text-left sm:text-right transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/40 hover:bg-surface/75 hover:shadow-glow min-w-0"
             >
               {/* Top hairline accent draw on hover */}
               <span
@@ -74,12 +74,12 @@ export function ProjectNavigation({
                 <span>Next Project</span>
                 <LuArrowRight className="size-3.5 shrink-0 transition-transform duration-300 group-hover:translate-x-2" />
               </div>
-              <div className="mt-3">
-                <p className="font-display text-base font-semibold text-primary transition-colors duration-200 group-hover:text-accent sm:text-xl">
+              <div className="mt-3 min-w-0">
+                <p className="font-display text-base font-semibold text-primary transition-colors duration-200 group-hover:text-accent sm:text-xl break-words">
                   {nextProject.title}
                 </p>
                 {nextProject.category && (
-                  <p className="mt-1 text-xs text-secondary/80">
+                  <p className="mt-1 text-xs text-secondary/80 truncate">
                     {nextProject.category}
                   </p>
                 )}
@@ -93,7 +93,7 @@ export function ProjectNavigation({
 
       {/* ---------- Collaboration CTA Card ---------- */}
       <Reveal delay={0.1}>
-        <div className="relative mt-12 overflow-hidden rounded-2xl border border-border/80 bg-linear-to-br from-surface to-background-secondary p-5 sm:p-10 md:p-12 transition-all duration-300 hover:border-accent/40 hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.8),0_0_30px_rgba(34,211,238,0.1)]">
+        <div className="relative mt-12 overflow-hidden rounded-2xl border border-border/80 bg-linear-to-br from-surface to-background-secondary p-5 sm:p-8 lg:p-10 transition-all duration-300 hover:border-accent/40 hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.8),0_0_30px_rgba(34,211,238,0.1)]">
           {/* Ambient light glow */}
           <span
             aria-hidden="true"
@@ -108,12 +108,12 @@ export function ProjectNavigation({
             className="pointer-events-none absolute -bottom-16 -right-16 size-60 rounded-full bg-violet/10 blur-3xl"
           />
 
-          <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
-            <div className="w-full lg:max-w-xl">
+          <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div className="w-full lg:max-w-xl min-w-0">
               <span className="font-mono text-xs font-semibold uppercase tracking-widest text-accent">
                 Get in Touch
               </span>
-              <h2 className="mt-2 font-display text-xl font-bold tracking-tight text-primary sm:text-2xl md:text-3xl">
+              <h2 className="mt-2 font-display text-xl font-bold tracking-tight text-primary sm:text-2xl md:text-3xl break-words">
                 Interested in working together?
               </h2>
               <p className="mt-3 text-sm sm:text-base leading-relaxed text-secondary">
@@ -121,7 +121,7 @@ export function ProjectNavigation({
               </p>
             </div>
 
-            <div className="flex flex-col min-[420px]:flex-row items-stretch min-[420px]:items-center gap-3 shrink-0">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0 w-full sm:w-auto">
               <Button href="/#contact" size="lg" className="hover:scale-[1.02] active:scale-[0.98] justify-center">
                 <span>Send a message</span>
                 <LuArrowUpRight className="size-4" aria-hidden="true" />
