@@ -157,7 +157,22 @@ function resolveTechMeta(rawName: string): TechMeta | undefined {
   if (lower.includes("react-hook-form") || lower.includes("react hook form")) {
     return techMeta.reacthookform;
   }
-  if (lower.includes("react") && !lower.includes("toastify") && !lower.includes("lucide")) {
+  if (lower.includes("toastify")) {
+    return techMeta.react;
+  }
+  if (lower.includes("next-themes")) {
+    return techMeta.nextjs;
+  }
+  if (lower.includes("cors")) {
+    return techMeta.express;
+  }
+  if (lower.includes("multer")) {
+    return techMeta.nodejs;
+  }
+  if (lower.includes("yup")) {
+    return techMeta.zod;
+  }
+  if (lower.includes("react") && !lower.includes("lucide")) {
     return techMeta.react;
   }
   if (lower.includes("django")) {
