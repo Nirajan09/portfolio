@@ -1,5 +1,9 @@
-/** The "NT." mark, rendered by next/og for favicons and app icons. */
+/** The "N" brand monogram, rendered by next/og for favicons and app icons. */
 export function BrandMark({ size, rounded = true }: { size: number; rounded?: boolean }) {
+  const borderWidth = Math.max(1, Math.round(size * 0.035));
+  const borderRadius = rounded ? Math.round(size * 0.24) : 0;
+  const fontSize = Math.round(size * 0.58);
+
   return (
     <div
       style={{
@@ -8,16 +12,31 @@ export function BrandMark({ size, rounded = true }: { size: number; rounded?: bo
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "#070b14",
-        color: "#f1f5f9",
-        fontSize: Math.round(size * 0.5),
-        fontWeight: 700,
-        letterSpacing: -Math.round(size * 0.02),
-        borderRadius: rounded ? Math.round(size * 0.2) : 0,
+        position: "relative",
+        borderRadius,
+        border: `${borderWidth}px solid rgba(34, 211, 238, 0.45)`,
+        background: "#080d1a",
+        backgroundImage:
+          "radial-gradient(circle at 50% 32%, rgba(34, 211, 238, 0.28) 0%, rgba(59, 130, 246, 0.14) 45%, transparent 75%), linear-gradient(150deg, #0f172a 0%, #080d1a 60%, #030712 100%)",
+        boxShadow: `inset 0 1px 1px 0 rgba(255, 255, 255, 0.2), 0 0 ${Math.round(size * 0.15)}px rgba(34, 211, 238, 0.2)`,
+        overflow: "hidden",
       }}
     >
-      NT
-      <span style={{ color: "#22d3ee" }}>.</span>
+      <span
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#ffffff",
+          fontSize,
+          fontWeight: 800,
+          fontFamily: "system-ui, -apple-system, sans-serif",
+          letterSpacing: "-0.03em",
+          lineHeight: 1,
+        }}
+      >
+        N
+      </span>
     </div>
   );
 }
@@ -50,7 +69,7 @@ export function OgCard({
       }}
     >
       <div style={{ display: "flex", alignItems: "center", fontSize: 30, color: "#22d3ee" }}>
-        NT. · {eyebrow}
+        Nirajan. · {eyebrow}
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div
