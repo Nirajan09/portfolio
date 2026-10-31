@@ -5,35 +5,19 @@ import { useState, type ReactNode } from "react";
 import { personal } from "@/data/personal";
 import { cn } from "@/lib/utils";
 
-// Floating chips around the portrait with desynced drift and glowing pips
+// Floating chips around portrait targeting client & hiring value propositions (at most 2)
 const chips = [
   {
-    label: "React 19 & Next.js",
+    label: "Full-Stack Architecture",
     dot: "bg-accent shadow-[0_0_8px_rgba(34,211,238,0.8)]",
-    place: "-left-2 top-8 sm:-left-6",
+    place: "-left-2 top-10 sm:-left-8",
     delay: "[animation-delay:0s]",
-    hideOnMobile: false,
   },
   {
-    label: "TypeScript",
-    dot: "bg-blue shadow-[0_0_8px_rgba(59,130,246,0.8)]",
-    place: "-right-2 top-20 sm:-right-6",
-    delay: "[animation-delay:-2s]",
-    hideOnMobile: false,
-  },
-  {
-    label: "Django REST",
-    dot: "bg-violet shadow-[0_0_8px_rgba(139,92,246,0.8)]",
-    place: "-left-2 bottom-28 sm:-left-8",
-    delay: "[animation-delay:-3.5s]",
-    hideOnMobile: true,
-  },
-  {
-    label: "PostgreSQL & Redis",
+    label: "Production-Grade Web Apps",
     dot: "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]",
-    place: "-right-2 bottom-16 sm:-right-6",
-    delay: "[animation-delay:-5s]",
-    hideOnMobile: true,
+    place: "-right-2 bottom-16 sm:-right-8",
+    delay: "[animation-delay:-3s]",
   },
 ] as const;
 

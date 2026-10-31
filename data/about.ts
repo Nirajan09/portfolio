@@ -14,7 +14,7 @@ export const about = {
     "PostgreSQL",
     "MongoDB",
   ],
-  status: "Open to full-time roles & project collaborations",
+  status: "Open to new opportunities & technical collaborations",
   highlights: [
     {
       id: "role",
@@ -34,7 +34,7 @@ export const about = {
       id: "location",
       label: "Location",
       title: personal.location,
-      detail: "Open to remote and hybrid opportunities",
+      detail: "Available for remote, hybrid & relocation roles",
     },
     {
       id: "interests",

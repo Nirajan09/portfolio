@@ -1,4 +1,4 @@
-import { LuArrowRight, LuDownload, LuMail, LuSparkles } from "react-icons/lu";
+import { LuArrowRight, LuDownload, LuMail } from "react-icons/lu";
 import { Stagger, StaggerItem } from "@/components/animation/Stagger";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { Button } from "@/components/ui/Button";
@@ -43,20 +43,14 @@ export function Hero() {
       <PageContainer className="relative z-20 w-full py-4 sm:py-6 lg:py-0">
         <div className="grid items-center gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-12">
           <Stagger className="w-full lg:max-w-3xl animate-hero-enter">
-            {/* Live Status Eyebrow Badge (Fully Responsive) */}
+            {/* Live Status Eyebrow Badge (Minimal & Clean) */}
             <StaggerItem>
-              <div className="inline-flex max-w-full items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-medium text-emerald-400 backdrop-blur-md shadow-[0_0_20px_-5px_rgba(16,185,129,0.25)]">
+              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1.5 text-xs font-medium text-emerald-400 backdrop-blur-md shadow-[0_0_20px_-5px_rgba(16,185,129,0.25)]">
                 <span className="relative flex size-2 shrink-0">
                   <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
                 </span>
-                <span className="truncate">Open to Roles & Projects</span>
-                <span className="text-emerald-500/40 hidden sm:inline" aria-hidden="true">
-                  •
-                </span>
-                <span className="font-mono text-[11px] text-emerald-300/80 hidden sm:inline">
-                  Kathmandu, Nepal
-                </span>
+                <span>Open to New Opportunities</span>
               </div>
             </StaggerItem>
 
@@ -158,15 +152,6 @@ export function Hero() {
                   >
                     <LuMail className="size-5" aria-hidden="true" />
                   </IconButton>
-                </div>
-
-                <span className="hidden sm:inline-block h-4 w-px bg-border/80" aria-hidden="true" />
-
-                <div className="flex items-center gap-1.5 text-[11px] sm:text-xs font-mono text-muted min-w-0">
-                  <LuSparkles className="size-3.5 text-accent shrink-0" aria-hidden="true" />
-                  <span className="truncate max-w-[calc(100vw-5rem)] sm:max-w-none">
-                    TypeScript • Python • Next.js • Django
-                  </span>
                 </div>
               </div>
             </StaggerItem>

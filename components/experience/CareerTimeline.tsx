@@ -171,9 +171,9 @@ const TimelineItem = memo(function TimelineItem({
           />
 
           <div className="relative">
-            {/* Header: Organization Monogram + Role Title + Period Badge */}
-            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
-              <div className="flex items-start gap-3.5 min-w-0">
+            {/* Header: Organization Monogram + Role Title + Status & Period Badges */}
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
+              <div className="flex items-start gap-3.5 min-w-0 flex-1">
                 {/* Organization Monogram / Emblem */}
                 <div
                   className={`flex size-11 shrink-0 items-center justify-center rounded-xl border text-xs sm:text-sm font-display font-bold tracking-wider transition-all duration-200 ${
@@ -192,28 +192,10 @@ const TimelineItem = memo(function TimelineItem({
                   )}
                 </div>
 
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="font-display text-base sm:text-lg font-semibold tracking-tight text-primary transition-colors duration-200 group-hover:text-accent">
-                      {entry.title}
-                    </h3>
-
-                    {entry.current && (
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-400">
-                        <span className="relative flex size-1.5">
-                          <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                          <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
-                        </span>
-                        Current Role
-                      </span>
-                    )}
-
-                    {entry.status && (
-                      <span className="inline-flex items-center rounded-full border border-border/80 bg-background-secondary/80 px-2.5 py-0.5 text-[11px] font-medium text-secondary">
-                        {entry.status}
-                      </span>
-                    )}
-                  </div>
+                <div className="min-w-0 flex-1">
+                  <h3 className="font-display text-base sm:text-lg font-semibold tracking-tight text-primary transition-colors duration-200 group-hover:text-accent">
+                    {entry.title}
+                  </h3>
 
                   <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm">
                     <span className="font-medium text-secondary/90">
@@ -233,8 +215,31 @@ const TimelineItem = memo(function TimelineItem({
                 </div>
               </div>
 
-              {/* Date Period Badge */}
-              <div className="flex items-center sm:items-start shrink-0">
+              {/* Status (Current Role / Graduated) & Date Period Badges */}
+              <div className="flex flex-wrap items-center sm:flex-col sm:items-end gap-2 shrink-0">
+                {entry.current && (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/35 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-400 shadow-[0_0_12px_-3px_rgba(16,185,129,0.3)]">
+                    <span className="relative flex size-1.5">
+                      <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                      <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
+                    </span>
+                    Current Role
+                  </span>
+                )}
+
+                {entry.status && (
+                  <span
+                    className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-medium ${
+                      entry.status.toLowerCase() === "graduated"
+                        ? "border border-emerald-500/35 bg-emerald-500/10 text-emerald-300 shadow-[0_0_12px_-3px_rgba(16,185,129,0.3)]"
+                        : "border border-accent/35 bg-accent/10 text-accent"
+                    }`}
+                  >
+                    <span className="size-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
+                    {entry.status}
+                  </span>
+                )}
+
                 <span className="inline-flex items-center gap-1.5 rounded-lg border border-border/80 bg-background/60 px-3 py-1 text-xs font-mono text-secondary transition-colors duration-200 group-hover:border-accent/30 group-hover:text-primary">
                   <LuCalendar className="size-3.5 text-muted" aria-hidden="true" />
                   {entry.period}

@@ -97,7 +97,7 @@ export const Contact = memo(function Contact() {
                 <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-border/70 pt-3.5 text-xs text-muted">
                   <div className="inline-flex items-center gap-2">
                     <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
-                    <span className="text-secondary/90 font-medium">Open to opportunities</span>
+                    <span className="text-secondary/90 font-medium">Open to New Opportunities</span>
                   </div>
                   <span className="font-mono text-[11px] text-muted">Replies within 24h</span>
                 </div>
