@@ -102,7 +102,6 @@ cp .env.example .env.local
 | Variable | Required | Description |
 | --- | --- | --- |
 | `WEB3FORMS_ACCESS_KEY` | For email delivery | Free access key from [Web3Forms](https://web3forms.com). |
-| `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` | For email delivery | Client-safe access key for direct Web3Forms browser dispatch. |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional | GA4 measurement ID (`G-XXXXXXXXXX`). Also unlocks GA origins in the CSP. |
 | `NEXT_PUBLIC_VERCEL_ANALYTICS` | Optional | Set to `true` to enable Vercel Analytics. |
 

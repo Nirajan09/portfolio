@@ -16,7 +16,7 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   `img-src 'self' data: blob:${gaEnabled ? " https://www.google-analytics.com https://www.googletagmanager.com" : ""}`,
   "font-src 'self'",
-  `connect-src 'self' https://va.vercel-scripts.com${
+  `connect-src 'self' https://api.web3forms.com https://va.vercel-scripts.com${
     gaEnabled
       ? " https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com"
       : ""
@@ -27,7 +27,7 @@ const csp = [
   "frame-src 'none'",
   "object-src 'none'",
   "base-uri 'self'",
-  "form-action 'self'",
+  "form-action 'self' https://api.web3forms.com",
   "frame-ancestors 'none'",
 ].join("; ");
 

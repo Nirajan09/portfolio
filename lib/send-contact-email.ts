@@ -18,7 +18,9 @@ export async function sendContactEmail(data: ContactInput): Promise<SendResult> 
   const cleanEmail = sanitizeEmail(data.email);
   const cleanSubject = sanitizeHeader(data.subject);
 
-  const web3FormsKey = process.env.WEB3FORMS_ACCESS_KEY;
+  const web3FormsKey =
+    process.env.WEB3FORMS_ACCESS_KEY ||
+    process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
 
   if (web3FormsKey) {
     try {
