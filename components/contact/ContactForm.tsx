@@ -64,7 +64,7 @@ const controlClass = (invalid: boolean, valid: boolean = false) =>
     invalid
       ? "border-error focus:border-error focus:shadow-[0_0_0_3px_rgb(239_68_68/0.15)]"
       : valid
-        ? "border-success/40 hover:border-success/60 focus:border-success focus:shadow-[0_0_0_3px_rgb(34_197_94/0.15)]"
+        ? "border-success/35 hover:border-success/50 focus:border-accent focus:shadow-[0_0_0_3px_rgb(34_211_238/0.12)]"
         : "border-border hover:border-muted/40 focus:border-accent focus:shadow-[0_0_0_3px_rgb(34_211_238/0.12)]",
   );
 
@@ -101,6 +101,7 @@ const Field = memo(function Field({
 }: FieldProps) {
   const id = `contact-${name}`;
   const errorId = `${id}-error`;
+  const isSuccess = Boolean(valid && !error);
 
   const shared = {
     id,
@@ -168,7 +169,7 @@ const Field = memo(function Field({
             rows={6}
             onChange={(event) => onChange(event.target.value)}
             className={cn(
-              controlClass(Boolean(error), valid),
+              controlClass(Boolean(error), isSuccess),
               "resize-y py-3 pl-9.5 pr-4",
             )}
           />
@@ -178,8 +179,8 @@ const Field = memo(function Field({
             type={type}
             onChange={(event) => onChange(event.target.value)}
             className={cn(
-              controlClass(Boolean(error), valid),
-              "h-11 sm:h-12 pl-9.5 pr-8",
+              controlClass(Boolean(error), isSuccess),
+              "h-11 sm:h-12 pl-9.5 pr-10.5",
             )}
           />
         )}
@@ -188,12 +189,12 @@ const Field = memo(function Field({
           <span
             aria-hidden="true"
             className={cn(
-              "pointer-events-none absolute right-2.5 top-1/2 flex size-4.5 -translate-y-1/2 items-center justify-center rounded-full bg-success/15 text-success",
-              "transition-[opacity,scale] duration-300 ease-standard",
-              valid ? "scale-100 opacity-100" : "scale-50 opacity-0",
+              "pointer-events-none absolute right-3 top-1/2 flex size-5 -translate-y-1/2 items-center justify-center rounded-full bg-success/15 text-success ring-1 ring-success/30 shadow-[0_0_8px_rgb(34_197_94/0.2)]",
+              "transition-all duration-200 ease-out",
+              isSuccess ? "scale-100 opacity-100" : "scale-75 opacity-0 pointer-events-none",
             )}
           >
-            <LuCheck className="size-3" />
+            <LuCheck className="size-3.2 stroke-[2.5]" />
           </span>
         )}
       </div>

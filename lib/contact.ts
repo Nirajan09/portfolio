@@ -1,8 +1,10 @@
 /** Shared by the form (client) and the API route (server). */
 
 export const CONTACT_LIMITS = {
+  nameMin: 2,
   name: 80,
   email: 254,
+  subjectMin: 3,
   subject: 120,
   messageMin: 10,
   message: 2000,
@@ -41,6 +43,12 @@ export function validateField(
   switch (field) {
     case "name":
       if (!clean) return "Please enter your name.";
+      if (clean.length < CONTACT_LIMITS.nameMin) {
+        return `Name must be at least ${CONTACT_LIMITS.nameMin} characters.`;
+      }
+      if (!/\p{L}/u.test(clean)) {
+        return "Name must contain valid alphabetical characters.";
+      }
       if (clean.length > CONTACT_LIMITS.name) {
         return `Name must be ${CONTACT_LIMITS.name} characters or fewer.`;
       }
@@ -55,6 +63,9 @@ export function validateField(
 
     case "subject":
       if (!clean) return "Please enter a subject.";
+      if (clean.length < CONTACT_LIMITS.subjectMin) {
+        return `Subject must be at least ${CONTACT_LIMITS.subjectMin} characters.`;
+      }
       if (clean.length > CONTACT_LIMITS.subject) {
         return `Subject must be ${CONTACT_LIMITS.subject} characters or fewer.`;
       }
@@ -73,7 +84,8 @@ export function validateField(
 }
 
 /**
- * Checks if a field has a valid, non-empty value.
+ * Checks if a field has a valid, non-empty value meeting all validation criteria.
+ * Guarantees zero discrepancy with validateField so green checkmarks are never false positives.
  */
 export function isFieldValid(field: ContactField, value: string): boolean {
   if (!value || value.trim().length === 0) return false;

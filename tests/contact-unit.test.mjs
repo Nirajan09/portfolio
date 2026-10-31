@@ -8,8 +8,10 @@ import assert from "node:assert/strict";
 
 // Mirroring the exact logic & regex defined in lib/contact.ts and lib/rate-limit.ts
 const CONTACT_LIMITS = {
+  nameMin: 2,
   name: 80,
   email: 254,
+  subjectMin: 3,
   subject: 120,
   messageMin: 10,
   message: 2000,
@@ -20,6 +22,57 @@ const EMAIL_PATTERN =
 
 const stripCRLF = (str) =>
   typeof str === "string" ? str.replace(/[\r\n\t]+/g, " ").trim() : "";
+
+function validateField(field, value) {
+  const clean = field === "message" ? (typeof value === "string" ? value.trim() : "") : stripCRLF(value);
+
+  switch (field) {
+    case "name":
+      if (!clean) return "Please enter your name.";
+      if (clean.length < CONTACT_LIMITS.nameMin) {
+        return `Name must be at least ${CONTACT_LIMITS.nameMin} characters.`;
+      }
+      if (!/\p{L}/u.test(clean)) {
+        return "Name must contain valid alphabetical characters.";
+      }
+      if (clean.length > CONTACT_LIMITS.name) {
+        return `Name must be ${CONTACT_LIMITS.name} characters or fewer.`;
+      }
+      return undefined;
+
+    case "email":
+      if (!clean) return "Please enter your email address.";
+      if (clean.length > CONTACT_LIMITS.email || !EMAIL_PATTERN.test(clean)) {
+        return "Please enter a valid email address.";
+      }
+      return undefined;
+
+    case "subject":
+      if (!clean) return "Please enter a subject.";
+      if (clean.length < CONTACT_LIMITS.subjectMin) {
+        return `Subject must be at least ${CONTACT_LIMITS.subjectMin} characters.`;
+      }
+      if (clean.length > CONTACT_LIMITS.subject) {
+        return `Subject must be ${CONTACT_LIMITS.subject} characters or fewer.`;
+      }
+      return undefined;
+
+    case "message":
+      if (!clean) return "Please write a message.";
+      if (clean.length < CONTACT_LIMITS.messageMin) {
+        return `Please write at least ${CONTACT_LIMITS.messageMin} characters.`;
+      }
+      if (clean.length > CONTACT_LIMITS.message) {
+        return `Message must be ${CONTACT_LIMITS.message} characters or fewer.`;
+      }
+      return undefined;
+  }
+}
+
+function isFieldValid(field, value) {
+  if (!value || typeof value !== "string" || value.trim().length === 0) return false;
+  return validateField(field, value) === undefined;
+}
 
 function validateContact(raw) {
   const source = typeof raw === "object" && raw !== null ? raw : {};
@@ -35,33 +88,11 @@ function validateContact(raw) {
 
   const errors = {};
 
-  if (!data.name) {
-    errors.name = "Please enter your name.";
-  } else if (data.name.length > CONTACT_LIMITS.name) {
-    errors.name = `Name must be ${CONTACT_LIMITS.name} characters or fewer.`;
-  }
-
-  if (!data.email) {
-    errors.email = "Please enter your email address.";
-  } else if (
-    data.email.length > CONTACT_LIMITS.email ||
-    !EMAIL_PATTERN.test(data.email)
-  ) {
-    errors.email = "Please enter a valid email address.";
-  }
-
-  if (!data.subject) {
-    errors.subject = "Please enter a subject.";
-  } else if (data.subject.length > CONTACT_LIMITS.subject) {
-    errors.subject = `Subject must be ${CONTACT_LIMITS.subject} characters or fewer.`;
-  }
-
-  if (!data.message) {
-    errors.message = "Please write a message.";
-  } else if (data.message.length < CONTACT_LIMITS.messageMin) {
-    errors.message = `Please write at least ${CONTACT_LIMITS.messageMin} characters.`;
-  } else if (data.message.length > CONTACT_LIMITS.message) {
-    errors.message = `Message must be ${CONTACT_LIMITS.message} characters or fewer.`;
+  for (const field of ["name", "email", "subject", "message"]) {
+    const error = validateField(field, data[field]);
+    if (error) {
+      errors[field] = error;
+    }
   }
 
   return Object.keys(errors).length > 0
@@ -164,6 +195,35 @@ describe("Contact Security & Sanitization Unit Tests", () => {
       assert.strictEqual(result.ok, true);
     });
 
+    it("should reject name shorter than 2 characters", () => {
+      const result = validateContact({
+        ...validBase,
+        name: "A",
+      });
+      assert.strictEqual(result.ok, false);
+      assert.match(result.errors.name, /at least 2 characters/);
+    });
+
+    it("should reject name with no alphabetical characters", () => {
+      const result = validateContact({
+        ...validBase,
+        name: "12345",
+      });
+      assert.strictEqual(result.ok, false);
+      assert.match(result.errors.name, /alphabetical characters/);
+    });
+
+    it("should accept valid international names", () => {
+      const names = ["Al", "René", "Jean-Luc", "O'Connor", "李明"];
+      for (const name of names) {
+        assert.strictEqual(
+          isFieldValid("name", name),
+          true,
+          `Expected "${name}" to be valid`,
+        );
+      }
+    });
+
     it("should reject name exceeding 80 characters", () => {
       const result = validateContact({
         ...validBase,
@@ -171,6 +231,15 @@ describe("Contact Security & Sanitization Unit Tests", () => {
       });
       assert.strictEqual(result.ok, false);
       assert.match(result.errors.name, /80 characters/);
+    });
+
+    it("should reject subject shorter than 3 characters", () => {
+      const result = validateContact({
+        ...validBase,
+        subject: "Hi",
+      });
+      assert.strictEqual(result.ok, false);
+      assert.match(result.errors.subject, /at least 3 characters/);
     });
 
     it("should reject subject exceeding 120 characters", () => {
@@ -198,6 +267,32 @@ describe("Contact Security & Sanitization Unit Tests", () => {
       });
       assert.strictEqual(result.ok, false);
       assert.match(result.errors.message, /2000 characters/);
+    });
+  });
+
+  describe("Real-time isFieldValid (Green Tick Indicator) Precision", () => {
+    it("should never show green tick for single characters in name or subject", () => {
+      assert.strictEqual(isFieldValid("name", "N"), false);
+      assert.strictEqual(isFieldValid("name", " "), false);
+      assert.strictEqual(isFieldValid("name", "12"), false);
+      assert.strictEqual(isFieldValid("name", "Ni"), true);
+
+      assert.strictEqual(isFieldValid("subject", "H"), false);
+      assert.strictEqual(isFieldValid("subject", "Hi"), false);
+      assert.strictEqual(isFieldValid("subject", "Hey"), true);
+    });
+
+    it("should never show green tick for incomplete or malformed emails", () => {
+      assert.strictEqual(isFieldValid("email", "n"), false);
+      assert.strictEqual(isFieldValid("email", "nirajan@"), false);
+      assert.strictEqual(isFieldValid("email", "nirajan@gmail"), false);
+      assert.strictEqual(isFieldValid("email", "nirajan@gmail."), false);
+      assert.strictEqual(isFieldValid("email", "nirajan@gmail.com"), true);
+    });
+
+    it("should accurately reflect message length boundary for validity", () => {
+      assert.strictEqual(isFieldValid("message", "short"), false);
+      assert.strictEqual(isFieldValid("message", "1234567890"), true);
     });
   });
 
