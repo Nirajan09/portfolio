@@ -28,6 +28,58 @@ const EMAIL_PATTERN =
 export const stripCRLF = (str: string): string =>
   str.replace(/[\r\n\t]+/g, " ").trim();
 
+/**
+ * Validates a single contact form field.
+ * Returns an error message string if invalid, or undefined if valid.
+ */
+export function validateField(
+  field: ContactField,
+  value: string,
+): string | undefined {
+  const clean = field === "message" ? value.trim() : stripCRLF(value);
+
+  switch (field) {
+    case "name":
+      if (!clean) return "Please enter your name.";
+      if (clean.length > CONTACT_LIMITS.name) {
+        return `Name must be ${CONTACT_LIMITS.name} characters or fewer.`;
+      }
+      return undefined;
+
+    case "email":
+      if (!clean) return "Please enter your email address.";
+      if (clean.length > CONTACT_LIMITS.email || !EMAIL_PATTERN.test(clean)) {
+        return "Please enter a valid email address.";
+      }
+      return undefined;
+
+    case "subject":
+      if (!clean) return "Please enter a subject.";
+      if (clean.length > CONTACT_LIMITS.subject) {
+        return `Subject must be ${CONTACT_LIMITS.subject} characters or fewer.`;
+      }
+      return undefined;
+
+    case "message":
+      if (!clean) return "Please write a message.";
+      if (clean.length < CONTACT_LIMITS.messageMin) {
+        return `Please write at least ${CONTACT_LIMITS.messageMin} characters.`;
+      }
+      if (clean.length > CONTACT_LIMITS.message) {
+        return `Message must be ${CONTACT_LIMITS.message} characters or fewer.`;
+      }
+      return undefined;
+  }
+}
+
+/**
+ * Checks if a field has a valid, non-empty value.
+ */
+export function isFieldValid(field: ContactField, value: string): boolean {
+  if (!value || value.trim().length === 0) return false;
+  return validateField(field, value) === undefined;
+}
+
 export function validateContact(raw: unknown): ContactValidation {
   const source =
     typeof raw === "object" && raw !== null
@@ -47,33 +99,11 @@ export function validateContact(raw: unknown): ContactValidation {
 
   const errors: ContactErrors = {};
 
-  if (!data.name) {
-    errors.name = "Please enter your name.";
-  } else if (data.name.length > CONTACT_LIMITS.name) {
-    errors.name = `Name must be ${CONTACT_LIMITS.name} characters or fewer.`;
-  }
-
-  if (!data.email) {
-    errors.email = "Please enter your email address.";
-  } else if (
-    data.email.length > CONTACT_LIMITS.email ||
-    !EMAIL_PATTERN.test(data.email)
-  ) {
-    errors.email = "Please enter a valid email address.";
-  }
-
-  if (!data.subject) {
-    errors.subject = "Please enter a subject.";
-  } else if (data.subject.length > CONTACT_LIMITS.subject) {
-    errors.subject = `Subject must be ${CONTACT_LIMITS.subject} characters or fewer.`;
-  }
-
-  if (!data.message) {
-    errors.message = "Please write a message.";
-  } else if (data.message.length < CONTACT_LIMITS.messageMin) {
-    errors.message = `Please write at least ${CONTACT_LIMITS.messageMin} characters.`;
-  } else if (data.message.length > CONTACT_LIMITS.message) {
-    errors.message = `Message must be ${CONTACT_LIMITS.message} characters or fewer.`;
+  for (const field of CONTACT_FIELDS) {
+    const error = validateField(field, data[field]);
+    if (error) {
+      errors[field] = error;
+    }
   }
 
   return Object.keys(errors).length > 0

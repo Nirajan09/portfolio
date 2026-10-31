@@ -22,7 +22,9 @@ import { trackEvent } from "@/lib/analytics";
 import {
   CONTACT_FIELDS,
   CONTACT_LIMITS,
+  isFieldValid,
   validateContact,
+  validateField,
   type ContactErrors,
   type ContactField,
   type ContactInput,
@@ -54,14 +56,16 @@ const emptyValues: ContactInput = {
   message: "",
 };
 
-const controlClass = (invalid: boolean) =>
+const controlClass = (invalid: boolean, valid: boolean = false) =>
   cn(
     "w-full rounded-xl border bg-background-secondary/70 text-sm sm:text-base text-primary placeholder:text-sm placeholder:text-muted/60",
     "transition-[border-color,background-color,box-shadow] duration-200 ease-standard",
     "hover:bg-background-secondary focus:bg-background-secondary focus-visible:outline-none",
     invalid
       ? "border-error focus:border-error focus:shadow-[0_0_0_3px_rgb(239_68_68/0.15)]"
-      : "border-border hover:border-muted/40 focus:border-accent focus:shadow-[0_0_0_3px_rgb(34_211_238/0.12)]",
+      : valid
+        ? "border-success/40 hover:border-success/60 focus:border-success focus:shadow-[0_0_0_3px_rgb(34_197_94/0.15)]"
+        : "border-border hover:border-muted/40 focus:border-accent focus:shadow-[0_0_0_3px_rgb(34_211_238/0.12)]",
   );
 
 type FieldProps = {
@@ -164,7 +168,7 @@ const Field = memo(function Field({
             rows={6}
             onChange={(event) => onChange(event.target.value)}
             className={cn(
-              controlClass(Boolean(error)),
+              controlClass(Boolean(error), valid),
               "resize-y py-3 pl-9.5 pr-4",
             )}
           />
@@ -174,7 +178,7 @@ const Field = memo(function Field({
             type={type}
             onChange={(event) => onChange(event.target.value)}
             className={cn(
-              controlClass(Boolean(error)),
+              controlClass(Boolean(error), valid),
               "h-11 sm:h-12 pl-9.5 pr-8",
             )}
           />
@@ -263,11 +267,21 @@ export const ContactForm = memo(function ContactForm({
       [field]: value,
     }));
 
-    setErrors((current) => {
-      if (!current[field]) return current;
-      const next = { ...current };
-      delete next[field];
-      return next;
+    // If this field was already blurred or form was submitted,
+    // re-validate instantly so any error clears the exact moment it becomes valid,
+    // or shows updated error message if still invalid.
+    setTouched((currentTouched) => {
+      if (currentTouched[field]) {
+        const fieldError = validateField(field, value);
+        setErrors((currentErrors) => {
+          if (currentErrors[field] === fieldError) return currentErrors;
+          return {
+            ...currentErrors,
+            [field]: fieldError,
+          };
+        });
+      }
+      return currentTouched;
     });
   }, []);
 
@@ -278,21 +292,18 @@ export const ContactForm = memo(function ContactForm({
     }));
 
     setValues((latestValues) => {
-      const result = validateContact(latestValues);
+      const fieldError = validateField(field, latestValues[field]);
       setErrors((currentErrors) => ({
         ...currentErrors,
-        [field]: result.ok ? undefined : result.errors[field],
+        [field]: fieldError,
       }));
       return latestValues;
     });
   }, []);
 
   const isValid = useCallback(
-    (field: ContactField) =>
-      Boolean(touched[field]) &&
-      !errors[field] &&
-      values[field].trim().length > 0,
-    [touched, errors, values],
+    (field: ContactField) => isFieldValid(field, values[field]),
+    [values],
   );
 
   const resetForm = useCallback(() => {
@@ -338,6 +349,12 @@ export const ContactForm = memo(function ContactForm({
     const result = validateContact(values);
 
     if (!result.ok) {
+      setTouched({
+        name: true,
+        email: true,
+        subject: true,
+        message: true,
+      });
       setErrors(result.errors);
 
       const first = CONTACT_FIELDS.find(
