@@ -52,10 +52,11 @@ export function Button({
 
   if (rest.href !== undefined) {
     const { href, ...anchor } = rest;
-    const isExternal = /^(https?:|mailto:|tel:)/.test(href);
+    const isFileOrDownload = Boolean(anchor.download) || /\.(pdf|zip|docx?|xlsx?)$/i.test(href);
+    const isExternal = /^(https?:|mailto:|tel:)/.test(href) || isFileOrDownload;
 
     if (isExternal) {
-      const opensNewTab = href.startsWith("http");
+      const opensNewTab = href.startsWith("http") && !anchor.download;
       return (
         <a
           href={href}
