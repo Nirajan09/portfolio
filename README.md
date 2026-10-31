@@ -8,7 +8,7 @@ A personal portfolio site built with Next.js (App Router), React, TypeScript, an
 
 - Single-page landing layout with eight sections: Hero, About, Skills, Services, Projects, Experience, Certifications, Contact
 - Dynamic project detail pages at `/projects/[slug]` with grouped stack, features, how-it-works flow, and highlights
-- Server-side contact form (`POST /api/contact`) with validation, rate limiting, and Resend email delivery
+- Server-side contact form (`POST /api/contact`) with validation, rate limiting, and Web3Forms email delivery
 - Full SEO setup: metadata, Open Graph, Twitter cards, JSON-LD (Person + WebSite), sitemap, robots.txt, and per-project OG images
 - Security headers: CSP (production), `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, HSTS, and more
 - Optional analytics: Google Analytics 4 and Vercel Analytics, with a `data-track-*` attribute convention
@@ -20,7 +20,7 @@ A personal portfolio site built with Next.js (App Router), React, TypeScript, an
 - [Next.js](https://nextjs.org) 16 (App Router) + React 19 + TypeScript 5
 - [Tailwind CSS](https://tailwindcss.com) 4 with CSS-variable design tokens (`app/globals.css`)
 - [motion](https://motion.dev) for animation, [react-icons](https://react-icons.github.io) for icons
-- [Resend](https://resend.com) for contact email delivery
+- [Web3Forms](https://web3forms.com) for contact email delivery
 - [@vercel/analytics](https://vercel.com/docs/analytics) (optional)
 
 ## Project structure
@@ -54,7 +54,7 @@ portfolio-nextjs/
 ├── data/                      # All site content (see below)
 ├── lib/                       # Shared + server-only logic
 │   ├── contact.ts             # Validation schema and limits (client + server)
-│   ├── send-contact-email.ts  # Resend delivery ("server-only" import)
+│   ├── send-contact-email.ts  # Web3Forms delivery helper ("server-only" import)
 │   ├── rate-limit.ts          # Fixed-window, in-memory limiter
 │   ├── seo.ts                 # siteConfig, metadata helpers, JSON-LD builders
 │   ├── analytics.ts           # trackEvent + data-track-* param reader
@@ -101,13 +101,12 @@ cp .env.example .env.local
 
 | Variable | Required | Description |
 | --- | --- | --- |
-| `RESEND_API_KEY` | For email delivery | API key from [Resend](https://resend.com). |
-| `CONTACT_TO_EMAIL` | For email delivery | Inbox that receives portfolio messages. |
-| `CONTACT_FROM_EMAIL` | For email delivery | Verified sender, e.g. `Portfolio <contact@yourdomain.com>`. For testing, `onboarding@resend.dev` only delivers to your own Resend account email. |
+| `WEB3FORMS_ACCESS_KEY` | For email delivery | Free access key from [Web3Forms](https://web3forms.com). |
+| `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` | For email delivery | Client-safe access key for direct Web3Forms browser dispatch. |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional | GA4 measurement ID (`G-XXXXXXXXXX`). Also unlocks GA origins in the CSP. |
 | `NEXT_PUBLIC_VERCEL_ANALYTICS` | Optional | Set to `true` to enable Vercel Analytics. |
 
-All `RESEND_*` / `CONTACT_*` variables are server-only and never reach the client bundle. Without them the form reports "not available" (HTTP 503) and points visitors to your email address instead — no broken submissions.
+Without a valid Web3Forms access key, the form reports "not available" (HTTP 503) and points visitors directly to your personal email address.
 
 ## How the contact form works
 
@@ -116,9 +115,9 @@ The form posts to `/api/contact`, the single entry point for messages. The route
 1. Accepts same-origin requests only (`Sec-Fetch-Site`, with an `Origin`/host fallback)
 2. Rate limits per client IP (5 messages per 10 minutes, in-memory fixed window)
 3. Caps the body at 10 KB and parses JSON
-4. Silently accepts anything that fills the hidden honeypot field
+4. Silently absorbs anything that fills the hidden honeypot field or submits faster than human threshold (< 1.5s)
 5. Re-validates every field server-side (`lib/contact.ts`, shared with the client but never trusted)
-6. Delivers via Resend with a 10-second timeout; returns `503` when unconfigured and `502` on provider failure
+6. Returns the validated access key and sanitized data so the client browser dispatches directly to Web3Forms (avoiding datacenter IP blocks); returns `503` when unconfigured.
 
 API routes are sent with `Cache-Control: no-store`. On serverless hosts the rate limiter is per-instance — use a shared store (Upstash/Redis) if you need strict global limits.
 

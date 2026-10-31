@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { validateContact } from "@/lib/contact";
 import { rateLimit } from "@/lib/rate-limit";
-import { sendContactEmail } from "@/lib/send-contact-email";
 
 const MAX_BODY_CHARS = 10_000;
 const MIN_HUMAN_COMPLETION_TIME_MS = 1_500; // Bots submit in < 1.5 seconds
@@ -100,27 +99,8 @@ export async function POST(request: Request) {
     );
   }
 
-  // 8. Secure Delivery Layer
-  // A. Server-side provider: Resend (if configured)
-  const resendApiKey = process.env.RESEND_API_KEY;
-  if (resendApiKey) {
-    const sent = await sendContactEmail(result.data);
-    if (sent.status === "sent") {
-      return NextResponse.json(
-        { ok: true, provider: "resend" },
-        { headers: { "Cache-Control": "no-store" } },
-      );
-    }
-    const errorMessage =
-      "error" in sent && sent.error
-        ? sent.error
-        : "Your message couldn't be sent. Please try again.";
-    return fail(errorMessage, 502);
-  }
-
-  // B. Client-side provider: Web3Forms free tier
-  // Web3Forms free tier rejects server-side Node.js IPs with 403 Forbidden.
-  // We return the validated access key and sanitized data so the client browser dispatches directly.
+  // 8. Secure Delivery Layer: Web3Forms
+  // Free tier Web3Forms is dispatched directly from the client browser using the validated access key and sanitized data.
   const web3FormsKey =
     process.env.WEB3FORMS_ACCESS_KEY ||
     process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;

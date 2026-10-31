@@ -392,7 +392,7 @@ export const ContactForm = memo(function ContactForm({
       type ContactApiResponse = {
         ok?: boolean;
         message?: string;
-        provider?: "web3forms" | "resend";
+        provider?: "web3forms";
         accessKey?: string;
         sanitizedData?: {
           name: string;
@@ -463,7 +463,7 @@ export const ContactForm = memo(function ContactForm({
           }
         }
 
-        // Resend or honeypot silent absorption
+        // Honeypot silent absorption
         trackEvent("contact_form_submit", {
           result: "success",
         });
