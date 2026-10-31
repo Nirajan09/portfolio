@@ -19,9 +19,9 @@ export const absoluteUrl = (path = "/") =>
  * deployments set VERCEL_ENV=preview; development environments are unindexed.
  */
 export const allowIndexing =
-  process.env.NODE_ENV === "production" &&
-  ((process.env.VERCEL_ENV ?? "production") === "production" ||
-    process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true");
+  process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true" ||
+  (process.env.NODE_ENV === "production" &&
+    (process.env.VERCEL_ENV ?? "production") === "production");
 
 /** Canonical + Open Graph + Twitter metadata for one page. */
 export function pageMetadata({

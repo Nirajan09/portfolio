@@ -161,15 +161,15 @@ export const About = memo(function About() {
                 )}
               </div>
 
-              <dl className="divide-y divide-border/50">
+              <ul role="list" className="divide-y divide-border/50">
                 {about.highlights.map((highlight) => {
                   const Icon = highlightIcons[highlight.id];
                   const isRole = highlight.id === "role";
 
                   return (
-                    <div
+                    <li
                       key={highlight.id}
-                      className="group/row py-3.5 first:pt-3.5 last:pb-0 transition-colors duration-150 rounded-xl px-2 -mx-2 hover:bg-surface-elevated/50"
+                      className="group/row py-3.5 first:pt-3.5 last:pb-0 transition-colors duration-150 rounded-xl px-2 -mx-2 hover:bg-surface-elevated/50 list-none"
                     >
                       <div className="flex items-start gap-3.5">
                         <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-border/70 bg-surface-elevated text-accent transition-all duration-200 group-hover/row:scale-110 group-hover/row:border-accent/40 group-hover/row:bg-accent/15">
@@ -178,9 +178,9 @@ export const About = memo(function About() {
 
                         <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between gap-2">
-                            <dt className="text-[11px] font-mono uppercase tracking-wider text-muted group-hover/row:text-accent transition-colors">
+                            <span className="block text-[11px] font-mono uppercase tracking-wider text-muted group-hover/row:text-accent transition-colors">
                               {highlight.label}
-                            </dt>
+                            </span>
                             {isRole && "href" in highlight && (
                               <Link
                                 href={highlight.href}
@@ -195,19 +195,19 @@ export const About = memo(function About() {
                             )}
                           </div>
 
-                          <dd className="mt-0.5 text-sm sm:text-base font-semibold text-primary">
+                          <h4 className="mt-0.5 text-sm sm:text-base font-semibold text-primary">
                             {highlight.title}
-                          </dd>
+                          </h4>
 
                           <p className="mt-0.5 text-xs text-secondary/80">
                             {highlight.detail}
                           </p>
                         </div>
                       </div>
-                    </div>
+                    </li>
                   );
                 })}
-              </dl>
+              </ul>
             </div>
           </div>
         </Reveal>

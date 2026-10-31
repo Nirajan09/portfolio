@@ -42,7 +42,7 @@ const securityHeaders = [
       "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()",
   },
   { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
-  { key: "Strict-Transport-Security", value: "max-age=63072000" },
+  { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
   // CSP only in production: the dev server needs eval and websockets for HMR.
   ...(isProduction ? [{ key: "Content-Security-Policy", value: csp }] : []),
 ];
