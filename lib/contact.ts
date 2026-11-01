@@ -32,7 +32,7 @@ export const stripCRLF = (str: string): string =>
 
 /**
  * Validates a single contact form field.
- * Returns an error message string if invalid, or undefined if valid.
+ * Returns a specific, user-friendly error message string if invalid, or undefined if valid.
  */
 export function validateField(
   field: ContactField,
@@ -41,27 +41,56 @@ export function validateField(
   const clean = field === "message" ? value.trim() : stripCRLF(value);
 
   switch (field) {
-    case "name":
+    case "name": {
       if (!clean) return "Please enter your name.";
       if (clean.length < CONTACT_LIMITS.nameMin) {
         return `Name must be at least ${CONTACT_LIMITS.nameMin} characters.`;
       }
-      if (!/\p{L}/u.test(clean)) {
-        return "Name must contain valid alphabetical characters.";
-      }
       if (clean.length > CONTACT_LIMITS.name) {
         return `Name must be ${CONTACT_LIMITS.name} characters or fewer.`;
       }
+      if (/\d/.test(clean)) {
+        return "Name cannot contain numbers.";
+      }
+      if (/[^\p{L}\s.'-]/u.test(clean)) {
+        return "Name can only contain letters, spaces, hyphens, and apostrophes.";
+      }
+      if (!/^[\p{L}]/u.test(clean)) {
+        return "Name must start with a letter.";
+      }
+      const letters = (clean.match(/\p{L}/gu) || []).length;
+      if (letters < CONTACT_LIMITS.nameMin) {
+        return `Name must contain at least ${CONTACT_LIMITS.nameMin} letters.`;
+      }
       return undefined;
+    }
 
-    case "email":
+    case "email": {
       if (!clean) return "Please enter your email address.";
-      if (clean.length > CONTACT_LIMITS.email || !EMAIL_PATTERN.test(clean)) {
+      if (clean.length > CONTACT_LIMITS.email) {
+        return `Email must be ${CONTACT_LIMITS.email} characters or fewer.`;
+      }
+      if (/\s/.test(clean)) {
+        return "Email address cannot contain spaces.";
+      }
+      if (!clean.includes("@")) {
+        return "Email address must include an '@' symbol.";
+      }
+      const parts = clean.split("@");
+      if (parts.length !== 2 || !parts[0] || !parts[1]) {
+        return "Please enter a valid email address.";
+      }
+      const domain = parts[1];
+      if (!domain.includes(".")) {
+        return "Email domain must include a top-level domain (e.g. .com).";
+      }
+      if (!EMAIL_PATTERN.test(clean)) {
         return "Please enter a valid email address.";
       }
       return undefined;
+    }
 
-    case "subject":
+    case "subject": {
       if (!clean) return "Please enter a subject.";
       if (clean.length < CONTACT_LIMITS.subjectMin) {
         return `Subject must be at least ${CONTACT_LIMITS.subjectMin} characters.`;
@@ -69,9 +98,20 @@ export function validateField(
       if (clean.length > CONTACT_LIMITS.subject) {
         return `Subject must be ${CONTACT_LIMITS.subject} characters or fewer.`;
       }
+      if (/<[^>]*>/.test(clean)) {
+        return "Subject cannot contain HTML tags.";
+      }
+      const letters = (clean.match(/\p{L}/gu) || []).length;
+      if (letters < 2) {
+        if (/^\d+$/.test(clean)) {
+          return "Subject cannot contain only numbers.";
+        }
+        return "Subject must contain meaningful text.";
+      }
       return undefined;
+    }
 
-    case "message":
+    case "message": {
       if (!clean) return "Please write a message.";
       if (clean.length < CONTACT_LIMITS.messageMin) {
         return `Please write at least ${CONTACT_LIMITS.messageMin} characters.`;
@@ -79,7 +119,18 @@ export function validateField(
       if (clean.length > CONTACT_LIMITS.message) {
         return `Message must be ${CONTACT_LIMITS.message} characters or fewer.`;
       }
+      if (/<script/i.test(clean)) {
+        return "Message cannot contain script tags.";
+      }
+      const letters = (clean.match(/\p{L}/gu) || []).length;
+      if (letters < 5) {
+        if (/^[\d\s.,!?-]+$/.test(clean)) {
+          return "Message cannot contain only numbers.";
+        }
+        return "Message must contain meaningful text.";
+      }
       return undefined;
+    }
   }
 }
 

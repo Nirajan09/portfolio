@@ -27,27 +27,56 @@ function validateField(field, value) {
   const clean = field === "message" ? (typeof value === "string" ? value.trim() : "") : stripCRLF(value);
 
   switch (field) {
-    case "name":
+    case "name": {
       if (!clean) return "Please enter your name.";
       if (clean.length < CONTACT_LIMITS.nameMin) {
         return `Name must be at least ${CONTACT_LIMITS.nameMin} characters.`;
       }
-      if (!/\p{L}/u.test(clean)) {
-        return "Name must contain valid alphabetical characters.";
-      }
       if (clean.length > CONTACT_LIMITS.name) {
         return `Name must be ${CONTACT_LIMITS.name} characters or fewer.`;
       }
+      if (/\d/.test(clean)) {
+        return "Name cannot contain numbers.";
+      }
+      if (/[^\p{L}\s.'-]/u.test(clean)) {
+        return "Name can only contain letters, spaces, hyphens, and apostrophes.";
+      }
+      if (!/^[\p{L}]/u.test(clean)) {
+        return "Name must start with a letter.";
+      }
+      const letters = (clean.match(/\p{L}/gu) || []).length;
+      if (letters < CONTACT_LIMITS.nameMin) {
+        return `Name must contain at least ${CONTACT_LIMITS.nameMin} letters.`;
+      }
       return undefined;
+    }
 
-    case "email":
+    case "email": {
       if (!clean) return "Please enter your email address.";
-      if (clean.length > CONTACT_LIMITS.email || !EMAIL_PATTERN.test(clean)) {
+      if (clean.length > CONTACT_LIMITS.email) {
+        return `Email must be ${CONTACT_LIMITS.email} characters or fewer.`;
+      }
+      if (/\s/.test(clean)) {
+        return "Email address cannot contain spaces.";
+      }
+      if (!clean.includes("@")) {
+        return "Email address must include an '@' symbol.";
+      }
+      const parts = clean.split("@");
+      if (parts.length !== 2 || !parts[0] || !parts[1]) {
+        return "Please enter a valid email address.";
+      }
+      const domain = parts[1];
+      if (!domain.includes(".")) {
+        return "Email domain must include a top-level domain (e.g. .com).";
+      }
+      if (!EMAIL_PATTERN.test(clean)) {
         return "Please enter a valid email address.";
       }
       return undefined;
+    }
 
-    case "subject":
+    case "subject": {
       if (!clean) return "Please enter a subject.";
       if (clean.length < CONTACT_LIMITS.subjectMin) {
         return `Subject must be at least ${CONTACT_LIMITS.subjectMin} characters.`;
@@ -55,9 +84,20 @@ function validateField(field, value) {
       if (clean.length > CONTACT_LIMITS.subject) {
         return `Subject must be ${CONTACT_LIMITS.subject} characters or fewer.`;
       }
+      if (/<[^>]*>/.test(clean)) {
+        return "Subject cannot contain HTML tags.";
+      }
+      const letters = (clean.match(/\p{L}/gu) || []).length;
+      if (letters < 2) {
+        if (/^\d+$/.test(clean)) {
+          return "Subject cannot contain only numbers.";
+        }
+        return "Subject must contain meaningful text.";
+      }
       return undefined;
+    }
 
-    case "message":
+    case "message": {
       if (!clean) return "Please write a message.";
       if (clean.length < CONTACT_LIMITS.messageMin) {
         return `Please write at least ${CONTACT_LIMITS.messageMin} characters.`;
@@ -65,7 +105,18 @@ function validateField(field, value) {
       if (clean.length > CONTACT_LIMITS.message) {
         return `Message must be ${CONTACT_LIMITS.message} characters or fewer.`;
       }
+      if (/<script/i.test(clean)) {
+        return "Message cannot contain script tags.";
+      }
+      const letters = (clean.match(/\p{L}/gu) || []).length;
+      if (letters < 5) {
+        if (/^[\d\s.,!?-]+$/.test(clean)) {
+          return "Message cannot contain only numbers.";
+        }
+        return "Message must contain meaningful text.";
+      }
       return undefined;
+    }
   }
 }
 
@@ -204,17 +255,35 @@ describe("Contact Security & Sanitization Unit Tests", () => {
       assert.match(result.errors.name, /at least 2 characters/);
     });
 
-    it("should reject name with no alphabetical characters", () => {
+    it("should reject name containing numeric digits", () => {
       const result = validateContact({
         ...validBase,
-        name: "12345",
+        name: "John123",
       });
       assert.strictEqual(result.ok, false);
-      assert.match(result.errors.name, /alphabetical characters/);
+      assert.match(result.errors.name, /cannot contain numbers/);
     });
 
-    it("should accept valid international names", () => {
-      const names = ["Al", "René", "Jean-Luc", "O'Connor", "李明"];
+    it("should reject name containing special symbols or punctuation", () => {
+      const result = validateContact({
+        ...validBase,
+        name: "John@Doe#",
+      });
+      assert.strictEqual(result.ok, false);
+      assert.match(result.errors.name, /letters, spaces, hyphens/);
+    });
+
+    it("should reject name not starting with a letter", () => {
+      const result = validateContact({
+        ...validBase,
+        name: "-John",
+      });
+      assert.strictEqual(result.ok, false);
+      assert.match(result.errors.name, /start with a letter/);
+    });
+
+    it("should accept valid international names with hyphens and apostrophes", () => {
+      const names = ["Al", "René", "Jean-Luc", "O'Connor", "李明", "Dr. Smith"];
       for (const name of names) {
         assert.strictEqual(
           isFieldValid("name", name),
@@ -242,6 +311,24 @@ describe("Contact Security & Sanitization Unit Tests", () => {
       assert.match(result.errors.subject, /at least 3 characters/);
     });
 
+    it("should reject subject containing only numbers", () => {
+      const result = validateContact({
+        ...validBase,
+        subject: "12345",
+      });
+      assert.strictEqual(result.ok, false);
+      assert.match(result.errors.subject, /cannot contain only numbers/);
+    });
+
+    it("should reject subject containing HTML tags", () => {
+      const result = validateContact({
+        ...validBase,
+        subject: "<script>alert(1)</script>",
+      });
+      assert.strictEqual(result.ok, false);
+      assert.match(result.errors.subject, /cannot contain HTML tags/);
+    });
+
     it("should reject subject exceeding 120 characters", () => {
       const result = validateContact({
         ...validBase,
@@ -258,6 +345,24 @@ describe("Contact Security & Sanitization Unit Tests", () => {
       });
       assert.strictEqual(result.ok, false);
       assert.match(result.errors.message, /at least 10 characters/);
+    });
+
+    it("should reject message containing only numbers", () => {
+      const result = validateContact({
+        ...validBase,
+        message: "123456789012345",
+      });
+      assert.strictEqual(result.ok, false);
+      assert.match(result.errors.message, /cannot contain only numbers/);
+    });
+
+    it("should reject message containing script tags", () => {
+      const result = validateContact({
+        ...validBase,
+        message: "Check this out <script>alert('xss')</script>",
+      });
+      assert.strictEqual(result.ok, false);
+      assert.match(result.errors.message, /cannot contain script tags/);
     });
 
     it("should reject message exceeding 2000 characters", () => {
@@ -282,17 +387,34 @@ describe("Contact Security & Sanitization Unit Tests", () => {
       assert.strictEqual(isFieldValid("subject", "Hey"), true);
     });
 
+    it("should never show green tick for names with numbers or symbols", () => {
+      assert.strictEqual(isFieldValid("name", "John123"), false);
+      assert.strictEqual(isFieldValid("name", "Nirajan99"), false);
+      assert.strictEqual(isFieldValid("name", "Alex@Smith"), false);
+      assert.strictEqual(isFieldValid("name", "John Doe"), true);
+      assert.strictEqual(isFieldValid("name", "Jean-Luc"), true);
+      assert.strictEqual(isFieldValid("name", "O'Connor"), true);
+    });
+
     it("should never show green tick for incomplete or malformed emails", () => {
       assert.strictEqual(isFieldValid("email", "n"), false);
       assert.strictEqual(isFieldValid("email", "nirajan@"), false);
       assert.strictEqual(isFieldValid("email", "nirajan@gmail"), false);
       assert.strictEqual(isFieldValid("email", "nirajan@gmail."), false);
+      assert.strictEqual(isFieldValid("email", "nirajan @gmail.com"), false);
       assert.strictEqual(isFieldValid("email", "nirajan@gmail.com"), true);
     });
 
-    it("should accurately reflect message length boundary for validity", () => {
+    it("should never show green tick for subjects with only numbers or symbols", () => {
+      assert.strictEqual(isFieldValid("subject", "12345"), false);
+      assert.strictEqual(isFieldValid("subject", "???!!!"), false);
+      assert.strictEqual(isFieldValid("subject", "Project inquiry 2026"), true);
+    });
+
+    it("should accurately reflect message validity without allowing purely numeric messages", () => {
       assert.strictEqual(isFieldValid("message", "short"), false);
-      assert.strictEqual(isFieldValid("message", "1234567890"), true);
+      assert.strictEqual(isFieldValid("message", "123456789012345"), false);
+      assert.strictEqual(isFieldValid("message", "Hello Nirajan, let us collaborate on a project!"), true);
     });
   });
 
