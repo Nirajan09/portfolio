@@ -9,7 +9,7 @@ export const experience: readonly Experience[] = [
     period: "Apr 2026 - Present",
     current: true,
     location: "Kathmandu, Nepal",
-    mode: "On-site",
+    mode: "Hybrid",
     employmentType: "Full-time",
     department: "Core Engineering",
   },
