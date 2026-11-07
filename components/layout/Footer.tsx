@@ -18,12 +18,6 @@ import { personal } from "@/data/personal";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
 import { PageContainer } from "./PageContainer";
 
-// Lazy-load the heavy Privacy Modal only when requested by the user
-const PrivacyModal = dynamic(
-  () => import("@/components/ui/PrivacyModal").then((mod) => mod.PrivacyModal),
-  { ssr: false }
-);
-
 // Cache formatter to avoid instantiating Intl.DateTimeFormat every second
 const kathmanduTimeFormatter = new Intl.DateTimeFormat("en-US", {
   timeZone: "Asia/Kathmandu",
@@ -42,7 +36,6 @@ function ColumnHeading({ children }: { children: ReactNode }) {
 }
 
 export const Footer = memo(function Footer() {
-  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [timeString, setTimeString] = useState<string>("");
   const [showTimeDetails, setShowTimeDetails] = useState(false);
@@ -306,15 +299,14 @@ export const Footer = memo(function Footer() {
             <span className="hidden text-border sm:inline" aria-hidden="true">
               •
             </span>
-            <button
-              type="button"
-              onClick={() => setIsPrivacyOpen(true)}
-              data-track="privacy_modal_open"
+            <Link
+              href="/privacy"
+              data-track="privacy_page_click"
               className="group inline-flex items-center gap-1.5 font-medium text-secondary/80 hover:text-accent transition-colors underline underline-offset-4 decoration-border/80 hover:decoration-accent cursor-pointer"
             >
               <LuShieldCheck className="size-3.5 text-accent transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
               <span>Privacy Policy</span>
-            </button>
+            </Link>
           </div>
 
           <div className="flex items-center gap-4 self-start sm:self-auto">
@@ -330,12 +322,6 @@ export const Footer = memo(function Footer() {
           </div>
         </div>
       </PageContainer>
-
-      {/* Accessible Privacy Policy Modal */}
-      <PrivacyModal
-        isOpen={isPrivacyOpen}
-        onClose={() => setIsPrivacyOpen(false)}
-      />
     </footer>
   );
 });

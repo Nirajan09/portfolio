@@ -13,6 +13,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1.0,
       images: [absoluteUrl("/profile.png")],
     },
+    {
+      url: absoluteUrl("/privacy"),
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
     ...projects.map((project) => ({
       url: absoluteUrl(`/projects/${project.slug}`),
       lastModified,
