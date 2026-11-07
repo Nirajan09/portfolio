@@ -4,7 +4,7 @@ export const about = {
   paragraphs: [
     "I'm a full-stack developer based in Kathmandu, Nepal, currently working at Cherdung Info Tech. I build web applications and backend services, working across database design, REST APIs, and responsive frontend interfaces.",
     "My core technologies include React, Next.js, Django, Node.js, PostgreSQL, and MongoDB. I focus on practical architecture: designing clear database schemas, building predictable APIs, and delivering responsive, straightforward user interfaces.",
-    "Outside of technology, I stay consistent with workouts, enjoy travelling, and unwind with gaming.",
+    "Outside of technology, I stay consistent with workouts, enjoy travelling, and play sports.",
   ],
   coreTechnologies: [
     "React",
@@ -39,8 +39,8 @@ export const about = {
     {
       id: "interests",
       label: "Outside Technology",
-      title: "Workouts, Travelling & Gaming",
-      detail: "Staying active, exploring new places, and downtime",
+      title: "Workouts, Travelling & Sports",
+      detail: "Staying active, exploring new places, and sports",
     },
   ],
 } as const;
