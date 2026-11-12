@@ -9,37 +9,33 @@ import { ProjectCard } from "@/components/projects/ProjectCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { projects } from "@/data/projects";
 
-type CategoryFilter = "all" | "ecommerce" | "saas" | "media";
-
-const filterOptions: { id: CategoryFilter; label: string; count: number }[] = [
-  { id: "all", label: "All Projects", count: 3 },
-  { id: "saas", label: "Job Portal", count: 1 },
-  { id: "ecommerce", label: "E-Commerce & ML", count: 1 },
-  { id: "media", label: "Media Platform", count: 1 },
-];
-
 export const Projects = memo(function Projects() {
-  const [selectedFilter, setSelectedFilter] = useState<CategoryFilter>("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+
+  const filterOptions = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const project of projects) {
+      if (!project.category) continue;
+      counts.set(project.category, (counts.get(project.category) ?? 0) + 1);
+    }
+
+    return [
+      { id: "all", label: "All Projects", count: projects.length },
+      ...Array.from(counts.entries()).map(([category, count]) => ({
+        id: category,
+        label: category,
+        count,
+      })),
+    ];
+  }, []);
 
   const filteredProjects = useMemo(() => {
-    if (selectedFilter === "all") return projects;
-    if (selectedFilter === "ecommerce")
-      return projects.filter((p) => p.slug === "book-recommendation-system");
-    if (selectedFilter === "saas")
-      return projects.filter((p) => p.slug === "job-portal");
-    if (selectedFilter === "media")
-      return projects.filter((p) => p.slug === "image-sharing-platform");
-    return projects;
-  }, [selectedFilter]);
+    if (selectedCategory === "all") return projects;
+    return projects.filter((p) => p.category === selectedCategory);
+  }, [selectedCategory]);
 
   return (
     <Section id="projects" className="relative">
-      {/* Background ambient lighting */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-20 -z-10 -translate-x-1/2 size-96 rounded-full bg-accent/5 blur-3xl"
-      />
-
       {/* Section Header */}
       <Reveal>
         <SectionHeading
@@ -53,22 +49,21 @@ export const Projects = memo(function Projects() {
       <Reveal delay={0.1}>
         <div className="mt-10 flex flex-wrap items-center gap-2 border-b border-border/70 pb-6">
           <span className="mr-2 hidden items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-muted sm:inline-flex">
-            <LuFilter className="size-3.5 text-accent" />
+            <LuFilter className="size-3.5 text-accent" aria-hidden="true" />
             Filter by:
           </span>
           {filterOptions.map((filter) => {
-            const isActive = selectedFilter === filter.id;
+            const isActive = selectedCategory === filter.id;
             return (
               <button
                 key={filter.id}
                 type="button"
-                onClick={() => setSelectedFilter(filter.id)}
+                onClick={() => setSelectedCategory(filter.id)}
                 aria-pressed={isActive}
                 data-track="project_filter"
                 data-track-category={filter.id}
-                className="group relative inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium transition-colors duration-200 focus-visible:outline-hidden"
+                className="group relative inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium transition-colors duration-200 focus-visible:outline-hidden cursor-pointer"
               >
-                {/* Gliding animated background pill */}
                 {isActive && (
                   <motion.span
                     layoutId="projectActiveFilterPill"
@@ -82,16 +77,16 @@ export const Projects = memo(function Projects() {
 
                 <span
                   className={`relative z-10 font-medium ${
-                    isActive ? "text-background font-semibold" : "text-secondary group-hover:text-primary"
+                    isActive ? "font-semibold text-background" : "text-secondary group-hover:text-primary"
                   }`}
                 >
                   {filter.label}
                 </span>
 
                 <span
-                  className={`relative z-10 rounded-full px-1.5 py-0.2 text-[10px] transition-colors ${
+                  className={`relative z-10 rounded-full px-1.5 py-0.5 font-mono text-[10px] transition-colors ${
                     isActive
-                      ? "bg-background/25 text-background font-bold"
+                      ? "bg-background/25 font-bold text-background"
                       : "bg-surface-elevated text-muted group-hover:text-secondary"
                   }`}
                 >
@@ -103,7 +98,7 @@ export const Projects = memo(function Projects() {
         </div>
       </Reveal>
 
-      {/* Projects List with fluid layout animations */}
+      {/* Projects List */}
       <motion.ul layout className="mt-10 space-y-12 sm:space-y-16 lg:space-y-20">
         <AnimatePresence mode="popLayout" initial={false}>
           {filteredProjects.map((project, index) => (

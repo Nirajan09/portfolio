@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { memo, useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
+import { memo, useEffect, useState } from "react";
 import type { IconType } from "react-icons";
 import {
   LuArrowUpRight,
   LuBriefcase,
+  LuClock,
   LuDumbbell,
   LuGraduationCap,
   LuMapPin,
@@ -34,9 +35,6 @@ const aboutTimeFormatter = new Intl.DateTimeFormat("en-US", {
 export const About = memo(function About() {
   const [kathmanduTime, setKathmanduTime] = useState<string>("");
 
-  const rectRef = useRef<DOMRect | null>(null);
-  const rafRef = useRef<number | null>(null);
-
   // Live Kathmandu time update
   useEffect(() => {
     const updateTime = () => {
@@ -52,56 +50,17 @@ export const About = memo(function About() {
     return () => clearInterval(interval);
   }, []);
 
-  // Spotlight mouse tracking on the overview card
-  const handleMouseEnter = useCallback((event: MouseEvent<HTMLDivElement>) => {
-    rectRef.current = event.currentTarget.getBoundingClientRect();
-  }, []);
-
-  const handleMouseMove = useCallback((event: MouseEvent<HTMLDivElement>) => {
-    const clientX = event.clientX;
-    const clientY = event.clientY;
-    const currentTarget = event.currentTarget;
-
-    if (rafRef.current !== null) return;
-
-    rafRef.current = requestAnimationFrame(() => {
-      rafRef.current = null;
-      if (!rectRef.current) {
-        rectRef.current = currentTarget.getBoundingClientRect();
-      }
-      currentTarget.style.setProperty(
-        "--mx",
-        `${clientX - rectRef.current.left}px`,
-      );
-      currentTarget.style.setProperty(
-        "--my",
-        `${clientY - rectRef.current.top}px`,
-      );
-    });
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    rectRef.current = null;
-    if (rafRef.current !== null) {
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = null;
-    }
-  }, []);
-
   return (
     <Section id="about">
       <Reveal>
-        <SectionHeading
-          eyebrow="About Me"
-          title="Background & Overview"
-        />
+        <SectionHeading eyebrow="About Me" title="Background & Overview" />
       </Reveal>
 
-      <div className="mt-12 grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14 items-start">
+      <div className="mt-12 grid items-start gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-14">
         {/* Left Column: Narrative Story */}
         <Reveal className="space-y-6">
-          <div className="space-y-4 w-full lg:max-w-prose">
-            <p className="text-base sm:text-lg leading-relaxed text-primary/95">
+          <div className="w-full space-y-4 lg:max-w-prose">
+            <p className="text-base leading-relaxed text-primary/95 sm:text-lg">
               {about.paragraphs[0]}
             </p>
 
@@ -110,7 +69,7 @@ export const About = memo(function About() {
                 {about.paragraphs[1]}
               </p>
 
-              {/* Interactive Core Tech Stack Explorer */}
+              {/* Core Tech Stack */}
               <div className="flex flex-wrap gap-2 pt-1">
                 {about.coreTechnologies.map((tech) => (
                   <TechChip key={tech} name={tech} as="span" />
@@ -118,97 +77,74 @@ export const About = memo(function About() {
               </div>
             </div>
 
-            <p className="text-base leading-relaxed text-secondary/80 pt-1">
+            <p className="pt-1 text-base leading-relaxed text-secondary/80">
               {about.paragraphs[2]}
             </p>
           </div>
         </Reveal>
 
-        {/* Right Column: Interactive Overview Spotlight Card */}
+        {/* Right Column: Overview Card */}
         <Reveal delay={0.1}>
-          <div
-            onMouseEnter={handleMouseEnter}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            className="group relative overflow-hidden rounded-2xl border border-border/70 bg-surface/40 p-5 sm:p-7 backdrop-blur-xs transition-[border-color,box-shadow] duration-300 hover:border-accent/40 hover:shadow-glow"
-          >
-            {/* Dynamic cursor-following spotlight beam */}
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-              style={{
-                background:
-                  "radial-gradient(350px circle at var(--mx, 50%) var(--my, 0%), rgb(34 211 238 / 0.12), transparent 70%)",
-              }}
-            />
-
-            {/* Hairline accent line that sweeps across the top on hover */}
-            <span
-              aria-hidden="true"
-              className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-linear-to-r from-accent via-blue to-violet transition-[scale] duration-500 ease-standard group-hover:scale-x-100"
-            />
-
-            <div className="relative">
-              <div className="flex items-center justify-between gap-2 border-b border-border/50 pb-3.5">
-                <h3 className="text-xs font-mono uppercase tracking-wider text-muted shrink-0">
-                  Overview
-                </h3>
-                {kathmanduTime && (
-                  <span className="inline-flex items-center gap-1.5 text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-2.5 py-0.5 shrink-0">
-                    <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-                    <span className="truncate">{kathmanduTime} (NPT)</span>
-                  </span>
-                )}
-              </div>
-
-              <ul role="list" className="divide-y divide-border/50">
-                {about.highlights.map((highlight) => {
-                  const Icon = highlightIcons[highlight.id];
-                  const isRole = highlight.id === "role";
-
-                  return (
-                    <li
-                      key={highlight.id}
-                      className="group/row py-3.5 first:pt-3.5 last:pb-0 transition-colors duration-150 rounded-xl px-2 -mx-2 hover:bg-surface-elevated/50 list-none"
-                    >
-                      <div className="flex items-start gap-3.5">
-                        <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-border/70 bg-surface-elevated text-accent transition-all duration-200 group-hover/row:scale-110 group-hover/row:border-accent/40 group-hover/row:bg-accent/15">
-                          <Icon className="size-4" aria-hidden="true" />
-                        </div>
-
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center justify-between gap-2">
-                            <span className="block text-[11px] font-mono uppercase tracking-wider text-muted group-hover/row:text-accent transition-colors">
-                              {highlight.label}
-                            </span>
-                            {isRole && "href" in highlight && (
-                              <Link
-                                href={highlight.href}
-                                className="inline-flex items-center gap-1 text-[11px] font-mono text-accent hover:underline"
-                              >
-                                <span>Experience</span>
-                                <LuArrowUpRight
-                                  className="size-3 transition-transform duration-200 group-hover/row:translate-x-0.5 group-hover/row:-translate-y-0.5"
-                                  aria-hidden="true"
-                                />
-                              </Link>
-                            )}
-                          </div>
-
-                          <h4 className="mt-0.5 text-sm sm:text-base font-semibold text-primary">
-                            {highlight.title}
-                          </h4>
-
-                          <p className="mt-0.5 text-xs text-secondary/80">
-                            {highlight.detail}
-                          </p>
-                        </div>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
+          <div className="rounded-2xl border border-border/75 bg-surface/50 p-5 backdrop-blur-xs transition-[border-color,box-shadow] duration-300 hover:border-accent/40 hover:shadow-glow sm:p-7">
+            <div className="flex items-center justify-between gap-2 border-b border-border/60 pb-3.5">
+              <h3 className="shrink-0 font-mono text-xs uppercase tracking-wider text-muted">
+                Overview
+              </h3>
+              {kathmanduTime && (
+                <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border/80 bg-background-secondary/70 px-2.5 py-0.5 font-mono text-xs text-secondary">
+                  <LuClock className="size-3 text-accent" aria-hidden="true" />
+                  <span className="truncate">{kathmanduTime} (NPT)</span>
+                </span>
+              )}
             </div>
+
+            <ul role="list" className="divide-y divide-border/50">
+              {about.highlights.map((highlight) => {
+                const Icon = highlightIcons[highlight.id];
+                const isRole = highlight.id === "role";
+
+                return (
+                  <li
+                    key={highlight.id}
+                    className="group/row -mx-2 rounded-xl px-2 py-3.5 list-none transition-colors duration-150 first:pt-3.5 last:pb-0 hover:bg-surface-elevated/50"
+                  >
+                    <div className="flex items-start gap-3.5">
+                      <div className="flex size-8 shrink-0 items-center justify-center rounded-lg border border-border/70 bg-surface-elevated text-accent transition-colors duration-200 group-hover/row:border-accent/40 group-hover/row:bg-accent/10">
+                        <Icon className="size-4" aria-hidden="true" />
+                      </div>
+
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="block font-mono text-[11px] uppercase tracking-wider text-muted transition-colors group-hover/row:text-accent">
+                            {highlight.label}
+                          </span>
+                          {isRole && "href" in highlight && (
+                            <Link
+                              href={highlight.href}
+                              className="inline-flex items-center gap-1 font-mono text-[11px] text-accent hover:underline"
+                            >
+                              <span>Experience</span>
+                              <LuArrowUpRight
+                                className="size-3 transition-transform duration-200 group-hover/row:translate-x-0.5 group-hover/row:-translate-y-0.5"
+                                aria-hidden="true"
+                              />
+                            </Link>
+                          )}
+                        </div>
+
+                        <h4 className="mt-0.5 text-sm font-semibold text-primary sm:text-base">
+                          {highlight.title}
+                        </h4>
+
+                        <p className="mt-0.5 text-xs text-secondary/80">
+                          {highlight.detail}
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </Reveal>
       </div>

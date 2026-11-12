@@ -49,18 +49,6 @@ export function CertificationCard({ certification }: { certification: Certificat
           image ? "cursor-pointer focus-visible:outline-accent" : ""
         }`}
       >
-        {/* Top accent hairline that draws across on hover */}
-        <span
-          aria-hidden="true"
-          className="absolute inset-x-0 top-0 z-20 h-[2px] origin-left scale-x-0 bg-linear-to-r from-accent via-blue to-violet transition-transform duration-500 ease-standard group-hover:scale-x-100"
-        />
-
-        {/* Ambient corner glow */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-12 -top-12 size-44 rounded-full bg-accent/10 opacity-30 blur-3xl transition-opacity duration-500 ease-standard group-hover:opacity-75"
-        />
-
         {/* Decorative certificate seal watermark */}
         <LuAward
           aria-hidden="true"
@@ -73,10 +61,6 @@ export function CertificationCard({ certification }: { certification: Certificat
             <div className="flex flex-wrap items-center justify-between gap-2.5">
               {/* Verified credential badge */}
               <div className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-emerald-400">
-                <span className="relative flex size-2 shrink-0">
-                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex size-2 rounded-full bg-emerald-400" />
-                </span>
                 <LuShieldCheck className="size-3.5 shrink-0" aria-hidden="true" />
                 <span>Verified Credential</span>
               </div>

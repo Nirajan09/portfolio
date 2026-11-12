@@ -104,22 +104,6 @@ export const Footer = memo(function Footer() {
 
   return (
     <footer className="relative overflow-hidden border-t border-border/80 bg-linear-to-b from-surface/90 via-background-secondary to-background pt-12 pb-8 md:pt-14 md:pb-9">
-      {/* Top Hairline Accent Gradient Beam */}
-      <span
-        aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-accent/50 to-transparent"
-      />
-
-      {/* Atmospheric Ambient Glows */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-24 -top-24 size-80 rounded-full bg-accent/6 blur-3xl"
-      />
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-28 -right-24 size-80 rounded-full bg-violet/6 blur-3xl"
-      />
-
       <PageContainer className="relative">
         <div className="footer-directory flex flex-col gap-10 md:flex-row md:items-start md:justify-between md:gap-14">
           {/* ================= Brand & Overview Column ================= */}
@@ -149,19 +133,10 @@ export const Footer = memo(function Footer() {
                 type="button"
                 onClick={() => setShowTimeDetails((prev) => !prev)}
                 title="Click to toggle timezone & relative offset"
-                className="group/time inline-flex max-w-full min-w-0 items-center gap-2 rounded-xl border border-border/80 bg-surface/60 px-3.5 py-1.5 text-xs font-mono text-secondary backdrop-blur-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-emerald-500/40 hover:bg-emerald-500/5 hover:text-primary hover:shadow-[0_0_16px_-3px_rgba(52,211,153,0.25)] cursor-pointer active:scale-95"
+                className="group/time inline-flex max-w-full min-w-0 items-center gap-2 rounded-xl border border-border/80 bg-surface/60 px-3.5 py-1.5 text-xs font-mono text-secondary backdrop-blur-xs transition-all duration-200 hover:border-accent/40 hover:text-primary cursor-pointer active:scale-95"
               >
-                {/* Radar Pulse Beacon */}
-                <span className="relative flex size-2 shrink-0">
-                  <span
-                    aria-hidden="true"
-                    className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-60"
-                  />
-                  <span className="relative inline-flex size-2 rounded-full bg-emerald-400" />
-                </span>
-
                 <LuClock
-                  className="size-3.5 shrink-0 text-muted transition-transform duration-300 group-hover/time:rotate-45 group-hover/time:text-emerald-400"
+                  className="size-3.5 shrink-0 text-accent transition-transform duration-300 group-hover/time:rotate-45"
                   aria-hidden="true"
                 />
 

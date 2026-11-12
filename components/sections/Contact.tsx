@@ -47,13 +47,7 @@ export const Contact = memo(function Contact() {
 
             {/* Primary Email Hero Card */}
             <Reveal delay={0.1}>
-              <div className="group relative mt-8 overflow-hidden rounded-2xl border border-border/80 bg-linear-to-b from-surface/90 via-surface/60 to-background-secondary/90 p-5 sm:p-6 backdrop-blur-md transition-all duration-300 hover:border-accent/40 hover:shadow-[0_16px_40px_-15px_rgba(0,0,0,0.85),0_0_25px_-5px_rgba(34,211,238,0.18)]">
-                {/* Hairline top gradient */}
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-linear-to-r from-accent via-blue to-violet transition-[scale] duration-500 ease-standard group-hover:scale-x-100"
-                />
-
+              <div className="group relative mt-8 rounded-2xl border border-border/80 bg-surface/60 p-5 backdrop-blur-xs transition-all duration-300 hover:border-accent/40 hover:shadow-glow sm:p-6">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3.5">
                   <div className="flex items-center gap-3 min-w-0">
                     <div className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-border/80 bg-background-secondary text-accent transition-all duration-300 group-hover:scale-105 group-hover:border-accent/40 group-hover:bg-accent/15 group-hover:shadow-[0_0_15px_-3px_rgba(34,211,238,0.3)]">
@@ -96,7 +90,7 @@ export const Contact = memo(function Contact() {
                 {/* Status Bar */}
                 <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-border/70 pt-3.5 text-xs text-muted">
                   <div className="inline-flex items-center gap-2">
-                    <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
+                    <span className="size-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
                     <span className="text-secondary/90 font-medium">Open to New Opportunities</span>
                   </div>
                   <span className="font-mono text-[11px] text-muted">Replies within 24h</span>

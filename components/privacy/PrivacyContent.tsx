@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useCallback, useMemo, useState, type MouseEvent } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import {
@@ -289,27 +289,8 @@ export const PrivacyContent = memo(function PrivacyContent() {
     }
   }, []);
 
-  // Spotlight mouse tracking effect for cards
-  const handleMouseMove = useCallback((e: MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
-    e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
-  }, []);
-
   return (
-    <article className="min-h-screen py-14 sm:py-20 overflow-x-clip select-text">
-      {/* Background ambient lighting */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-20 -z-10 -translate-x-1/2 size-[420px] sm:size-[640px] rounded-full bg-accent/6 blur-3xl"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute right-1/4 top-1/3 -z-10 size-[320px] sm:size-[480px] rounded-full bg-blue/5 blur-3xl"
-      />
-
+    <article className="min-h-screen overflow-x-clip pt-28 pb-20 select-text sm:pt-36 sm:pb-24">
       <PageContainer className="max-w-4xl">
         {/* Top Header Breadcrumbs & Action Toolbar */}
         <div className="flex flex-wrap items-center justify-between gap-3.5 border-b border-border/70 pb-5">
@@ -372,19 +353,8 @@ export const PrivacyContent = memo(function PrivacyContent() {
             return (
               <div
                 key={pillar.title}
-                onMouseMove={handleMouseMove}
-                className="group relative flex flex-col justify-between rounded-2xl border border-border/80 bg-linear-to-b from-surface/80 to-surface/40 p-4 sm:p-5 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_12px_30px_-10px_rgba(34,211,238,0.15)] overflow-hidden cursor-default"
+                className="group flex flex-col justify-between rounded-2xl border border-border/80 bg-surface/60 p-4 backdrop-blur-xs transition-all duration-200 hover:-translate-y-1 hover:border-accent/40 hover:shadow-glow sm:p-5"
               >
-                {/* Mouse spotlight overlay */}
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  style={{
-                    background:
-                      "radial-gradient(280px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(34, 211, 238, 0.08), transparent 75%)",
-                  }}
-                />
-
                 <div>
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex size-9 items-center justify-center rounded-xl border border-border/80 bg-surface text-accent shadow-xs transition-transform duration-300 group-hover:scale-110 group-hover:border-accent/40">
@@ -467,7 +437,7 @@ export const PrivacyContent = memo(function PrivacyContent() {
                   className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium transition-all duration-200 cursor-pointer ${
                     isActive
                       ? "border border-accent/40 bg-accent/15 text-accent shadow-[0_0_12px_-3px_rgba(34,211,238,0.3)]"
-                      : "border border-border/70 bg-surface/60 text-secondary hover:border-border-accent hover:text-primary"
+                      : "border border-border/70 bg-surface/60 text-secondary hover:border-accent/40 hover:text-primary"
                   }`}
                 >
                   <Icon className="size-3" />
@@ -519,19 +489,8 @@ export const PrivacyContent = memo(function PrivacyContent() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.25, delay: Math.min(index * 0.04, 0.2) }}
-                    onMouseMove={handleMouseMove}
-                    className="group relative rounded-2xl border border-border/80 bg-linear-to-b from-surface/80 via-surface/60 to-surface/40 p-5 sm:p-7 backdrop-blur-md transition-all duration-300 hover:border-border-accent hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)] scroll-mt-24 overflow-hidden"
+                    className="group scroll-mt-24 rounded-2xl border border-border/80 bg-surface/60 p-5 backdrop-blur-xs transition-all duration-200 hover:border-accent/40 hover:shadow-glow sm:p-7"
                   >
-                    {/* Radial Spotlight on Hover */}
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                      style={{
-                        background:
-                          "radial-gradient(420px circle at var(--mouse-x, 50%) var(--mouse-y, 20%), rgba(34, 211, 238, 0.05), transparent 75%)",
-                      }}
-                    />
-
                     {/* Section Header */}
                     <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 pb-4">
                       <div className="flex items-center gap-3">

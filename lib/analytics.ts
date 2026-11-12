@@ -17,11 +17,8 @@ export type AnalyticsEvent =
   | "resume_download"
   | "social_click"
   | "copy_email"
-  | "services_cta_click"
-  | "services_email_click"
   | "certificate_view"
   | "certificate_verify"
-  | "privacy_modal_open"
   | "back_to_top_click"
   | "contact_form_start"
   | "contact_form_submit";

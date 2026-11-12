@@ -77,9 +77,6 @@ const TimelineItem = memo(function TimelineItem({
   icon: IconType;
 }) {
   const itemRef = useRef<HTMLLIElement>(null);
-  const [spotlightPos, setSpotlightPos] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const rafRef = useRef<number | null>(null);
 
   // Synchronized rail lighting as entry crosses viewport reading line
   const { scrollYProgress: reached } = useScroll({
@@ -90,16 +87,6 @@ const TimelineItem = memo(function TimelineItem({
   const glow = useTransform(reached, [0, 1], [0, 1]);
   const glowScale = useTransform(reached, [0, 1], [0.85, 1]);
   const iconColor = useTransform(reached, [0, 1], ["#9fb0c7", "#22d3ee"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(() => {
-      setSpotlightPos({ x, y });
-    });
-  };
 
   return (
     <motion.li
@@ -123,53 +110,14 @@ const TimelineItem = memo(function TimelineItem({
           className="absolute inset-0 rounded-full border border-accent/60 bg-accent/15 shadow-[0_0_14px_rgba(34,211,238,0.4)]"
         />
 
-        {/* Pulsing halo for active current role */}
-        {entry.current && (
-          <span
-            aria-hidden="true"
-            className="absolute -inset-1 animate-ping rounded-full bg-emerald-400/20"
-          />
-        )}
-
         <motion.span style={{ color: iconColor }} className="relative flex">
           <Icon className="size-4" aria-hidden="true" />
         </motion.span>
       </motion.span>
 
-      {/* Modern Executive Card */}
+      {/* Card */}
       <motion.div variants={cardVariants}>
-        <div
-          onMouseMove={handleMouseMove}
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => {
-            setIsHovered(false);
-            if (rafRef.current) cancelAnimationFrame(rafRef.current);
-          }}
-          className="relative overflow-hidden rounded-xl border border-border/80 bg-surface/70 p-4 sm:p-6 backdrop-blur-md transition-all duration-300 ease-out hover:-translate-y-1 hover:border-accent/40 hover:shadow-[0_16px_36px_-12px_rgba(34,211,238,0.12)]"
-        >
-          {/* Mouse Spotlight */}
-          {isHovered && (
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -inset-px rounded-xl transition-opacity duration-300"
-              style={{
-                background: `radial-gradient(450px circle at ${spotlightPos.x}px ${spotlightPos.y}px, rgba(34, 211, 238, 0.08), transparent 75%)`,
-              }}
-            />
-          )}
-
-          {/* Top Hairline Gradient Highlight */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-accent/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-          />
-
-          {/* Left Vertical Accent Indicator */}
-          <span
-            aria-hidden="true"
-            className="absolute inset-y-0 left-0 w-1 origin-top scale-y-0 rounded-l-xl bg-linear-to-b from-accent via-blue to-violet transition-transform duration-500 ease-out group-hover:scale-y-100"
-          />
-
+        <div className="relative rounded-xl border border-border/80 bg-surface/70 p-4 backdrop-blur-xs transition-[transform,border-color,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:border-accent/40 hover:shadow-glow sm:p-6">
           <div className="relative">
             {/* Header: Organization Monogram + Role Title + Status & Period Badges */}
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 sm:gap-4">
@@ -218,11 +166,8 @@ const TimelineItem = memo(function TimelineItem({
               {/* Status (Current Role / Graduated) & Date Period Badges */}
               <div className="flex flex-wrap items-center sm:flex-col sm:items-end gap-2 shrink-0">
                 {entry.current && (
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/35 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-400 shadow-[0_0_12px_-3px_rgba(16,185,129,0.3)]">
-                    <span className="relative flex size-1.5">
-                      <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                      <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
-                    </span>
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/35 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-400">
+                    <span className="size-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
                     Current Role
                   </span>
                 )}

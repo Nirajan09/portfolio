@@ -60,7 +60,7 @@ export function BlogTableOfContents({
                     heading.level === 3 ? "pl-6" : "pl-3.5",
                     isActive
                       ? "border-accent font-medium text-accent"
-                      : "border-transparent text-muted hover:border-border-accent hover:text-primary",
+                      : "border-transparent text-muted hover:border-accent/50 hover:text-primary",
                   )}
                 >
                   {heading.text}

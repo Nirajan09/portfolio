@@ -76,15 +76,14 @@ This application moves beyond a static resume by combining verified architectura
 
 ### 1. Landing Page Sections (`app/page.tsx`)
 The home route composes 8 landing sections cleanly inside Server and Client boundaries:
-- **Hero (`Hero.tsx`, `HeroPortrait.tsx`, `TypingRole.tsx`)**: Ambient cyber grid, availability status beacon, cyclical role typing animation, resume download CTA, social links, and portrait frame.
-- **About (`About.tsx`)**: Mouse-tracked radial spotlight card (`requestAnimationFrame`), live Kathmandu timezone clock (`Asia/Kathmandu`, UTC+5:45), core technology chips, and highlight tiles (role, B.Sc. CSIT, location, outside technology interests: workouts, travelling & sports).
+- **Hero (`Hero.tsx`, `HeroPortrait.tsx`)**: Ambient cyber grid, availability status indicator, static role headline, resume download CTA, social links, and portrait frame.
+- **About (`About.tsx`)**: Overview card with live Kathmandu timezone clock (`Asia/Kathmandu`, UTC+5:45), core technology chips, and highlight tiles (role, B.Sc. CSIT, location, outside technology interests: workouts, travelling & sports).
 - **Technical Skills (`Skills.tsx`, `SkillCard.tsx`)**: Categorized Frontend, Backend, and Tools matrix.
-- **Projects (`Projects.tsx`, `ProjectCard.tsx`)**: Interactive category filtering (`layoutId="activeFilterIndicator"`), skeleton image loading (`ImageWithSkeleton.tsx`), live demo and GitHub repo links, plus deep-dive case study routes.
+- **Projects (`Projects.tsx`, `ProjectCard.tsx`)**: Data-driven category filtering (`layoutId="projectActiveFilterPill"`), skeleton image loading (`ImageWithSkeleton.tsx`), live demo and GitHub repo links, plus deep-dive case study routes.
 - **Experience & Education (`Experience.tsx`, `CareerTimeline.tsx`)**: Unified timeline merging industry roles and academic milestones alongside a sticky left heading column.
 - **Certifications (`Certifications.tsx`, `CertificationCard.tsx`, `CertificatePreview.tsx`)**: Verified credentials with preview modal lightbox and credential verification links.
 - **Latest Articles (`LatestPosts.tsx`)**: Homepage writing showcase displaying featured posts with quick links to `/blog` and `/rss.xml`.
 - **Contact (`Contact.tsx`, `ContactForm.tsx`, `ContactStatusModal.tsx`)**: Dual-validated inquiry form with real-time valid-field checkmarks, character counter bar, and accessible success/error status modals.
-- *(Standalone Component)* **Services (`components/sections/Services.tsx` & `services/*`)**: Pre-built interactive service cards and visual sandboxes (`FullStackSandbox`, `FrontendSandbox`, `BackendSandbox`, `BusinessSandbox`).
 
 ### 2. Technical Blog & RSS System (`/blog`, `/blog/[slug]`, `/rss.xml`)
 - **File-Based Markdown Authoring (`content/blog/*.md`)**: YAML frontmatter parsed via `gray-matter` with build-time word-count reading time calculation and `draft: true` filtering in production.
@@ -95,7 +94,7 @@ The home route composes 8 landing sections cleanly inside Server and Client boun
 
 ### 3. Dedicated Interactive Privacy Policy (`/privacy`)
 - Standalone SSR/SSG privacy page (`components/privacy/PrivacyContent.tsx`) replacing the legacy modal dialog.
-- Features real-time topic search, category filter pills (*All Topics*, *Contact Form*, *Cookies & Analytics*, *Hosting & Logs*, *Your Rights*), mouse-spotlight trust pillars, copyable section anchors, copy-email feedback, and Print/PDF support.
+- Features real-time topic search, category filter pills (*All Topics*, *Contact Form*, *Cookies & Analytics*, *Hosting & Logs*, *Your Rights*), trust principle cards, copyable section anchors, copy-email feedback, and Print/PDF support.
 - Explicitly documents Web3Forms and Vercel data processing, IP usage for rate limiting and security, analytics/cookie behavior, retention schedules, international transfers, GDPR/CCPA rights, and under-16 exclusions.
 
 ### 4. Comprehensive Project Case Studies (`/projects/[slug]`)
@@ -264,7 +263,7 @@ portfolio-nextjs/
 │
 ├── components/
 │   ├── analytics/                         # Analytics.tsx, ClickTracker.tsx, GoogleAnalytics.tsx, PageViewTracker.tsx
-│   ├── animation/                         # MotionConfig.tsx, Reveal.tsx, Stagger.tsx, TypingRole.tsx
+│   ├── animation/                         # MotionConfig.tsx, Reveal.tsx, Stagger.tsx
 │   ├── background/InteractiveMesh.tsx     # Canvas 2D sprite-cached particle mesh
 │   ├── blog/                              # BlogCard, BlogList, BlogNavigation, BlogShareCopy,
 │   │                                      # BlogTableOfContents, CodeBlock, CopyCodeButton, MarkdownContent
@@ -276,15 +275,14 @@ portfolio-nextjs/
 │   ├── projects/                          # ProjectDetail, ProjectHero, ProjectCover, ProjectTabs,
 │   │                                      # ProjectNavigation, ProjectSectionNav, & detail sections
 │   ├── sections/                          # About, Certifications, Contact, Experience, Hero,
-│   │   ├── services/                      # BackendSandbox, BusinessSandbox, FrontendSandbox, FullStackSandbox
-│   │   └── ...                            # HeroPortrait, LatestPosts, Projects, Services, Skills
+│   │                                      # HeroPortrait, LatestPosts, Projects, Skills
 │   ├── seo/JsonLd.tsx                     # JSON-LD script renderer
 │   └── ui/                                # Badge, Button, Card, IconButton, ImageWithSkeleton,
-│                                          # SectionHeading, ServiceCard, Skeleton, SkillCard, TechChip, icons
+│                                          # SectionHeading, Skeleton, SkillCard, TechChip, icons
 │
 ├── data/                                  # Strongly typed static content modules
 │   ├── about.ts, certifications.ts, education.ts, experience.ts,
-│   └── navigation.ts, personal.ts, projects.ts, services.ts, skills.ts
+│   └── navigation.ts, personal.ts, projects.ts, skills.ts
 │
 ├── lib/                                   # Shared server & client utilities
 │   ├── analytics.ts                       # Typed AnalyticsEvent emitter & data-track parser
@@ -490,7 +488,6 @@ TEST_URL=http://localhost:3000
 ### Potential Future Enhancements
 - [ ] Replace in-memory limiter in `lib/rate-limit.ts` with a shared Upstash Redis store for global rate enforcement.
 - [ ] Add automated Playwright end-to-end tests covering contact submission, blog filtering, and project navigation.
-- [ ] Mount `components/sections/Services.tsx` into a dedicated homepage section or `/services` route if service inquiries become a primary focus.
 
 ---
 
