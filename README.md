@@ -1,13 +1,13 @@
-# Nirajan Tiwari - Full Stack Developer Portfolio
+# Nirajan Tiwari — Full Stack Developer Portfolio
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.4.3-black?style=flat&logo=next.js&logoColor=white)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.2.8-blue?style=flat&logo=react&logoColor=white)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.1.18-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
+[![TypeScript](https://img.shields.io/badge/TypeScript-%5E5-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
 [![Motion](https://img.shields.io/badge/Motion-13.4.6-black?style=flat&logo=framer&logoColor=white)](https://motion.dev)
-[![Tests](https://img.shields.io/badge/Tests-27%20Passing-brightgreen?style=flat&logo=node.js&logoColor=white)](https://nodejs.org)
+[![Tests](https://img.shields.io/badge/Unit_Tests-27%20Passing-brightgreen?style=flat&logo=node.js&logoColor=white)](https://nodejs.org)
 
-A modern, high-performance developer portfolio and digital case-study platform built by **Nirajan Tiwari**. Engineered with the **Next.js 16 App Router**, **React 19**, **TypeScript**, and **Tailwind CSS v4**, this application delivers a cyber-dark aesthetic, deep technical project breakdowns, an interactive HTML5 Canvas 2D background, and an enterprise-grade 8-layer contact security workflow.
+A modern, high-performance developer portfolio, architectural case-study showcase, and technical engineering blog built by **Nirajan Tiwari**. Engineered with the **Next.js 16 App Router (Turbopack)**, **React 19**, **TypeScript**, and **Tailwind CSS v4**, featuring a cyber-dark design system, static Markdown + build-time Shiki blogging with RSS, a dedicated interactive privacy policy, a closure-isolated Canvas 2D backdrop, and an 8-layer defensive contact endpoint.
 
 ---
 
@@ -40,21 +40,22 @@ A modern, high-performance developer portfolio and digital case-study platform b
 ## 1. Project Overview
 
 ### Purpose & Vision
-The primary objective of this portfolio is to move beyond superficial bullet points and static resumes. It serves as an interactive engineering platform showcasing full-stack capabilities, system design philosophies, clean architectural patterns, and production-tested applications.
+This application moves beyond a static resume by combining verified architectural case studies, interactive service previews, engineering blog posts, and production-hardened serverless APIs into a single fast, statically generated web platform.
 
 ### Problems Addressed
-- **Superficial Project Summaries**: Standard portfolios present brief descriptions without technical depth. This platform delivers multi-section, in-depth architectural case studies complete with problem-solution matrices, system data flows, database schemas, and engineering trade-offs.
-- **Form Spam & Datacenter Blocks**: Contact forms on developer portfolios frequently suffer from automated bot spam or failure when serverless functions get blocked by third-party mail APIs. This project incorporates an 8-layer validation pipeline paired with a secure direct browser delivery fallback.
-- **Heavy Asset Bloat**: Modern web apps often suffer high First Contentful Paint (FCP) and Cumulative Layout Shift (CLS) from unoptimized 3D libraries (Three.js/WebGL). This application uses an ultra-lightweight, native HTML5 Canvas 2D spatial particle mesh ($O(N \log N)$ distance pruning) running at a continuous 60 FPS without external dependencies.
-- **Accessibility & Motion Fatigue**: Provides high-contrast dark cyber styling (WCAG AA/AAA compliant) while strictly honoring `prefers-reduced-motion` settings.
+- **Superficial Project Summaries**: Dedicated `/projects/[slug]` routes present full problem-solution matrices, system architecture layers, workflow steps, and engineering trade-offs.
+- **Technical Knowledge Sharing Without Client JS Bloat**: A Git-versioned Markdown blog (`/blog` and `/blog/[slug]`) parses Markdown ASTs and runs VS Code-quality syntax highlighting purely at build time, shipping zero parser JavaScript to the browser while maintaining strict Content Security Policy (CSP) compliance.
+- **Contact Spam & Cloud IP Blocking**: The `/api/contact` handler enforces an 8-stage defense pipeline (CSRF, body cap, IP rate limiting, honeypot, timing check, schema + CRLF sanitization) paired with browser-direct Web3Forms dispatch to avoid cloud IP anti-bot blocks.
+- **Heavy WebGL Backdrop Overhead**: Uses a native Canvas 2D backdrop (`InteractiveMesh`) with pre-rendered radial glow sprites and closure-isolated state rather than heavy WebGL/Three.js bundles.
+- **Accessibility & Motion Sensitivity**: High-contrast dark theme tokens with skip navigation, keyboard-accessible dialogs, and full `prefers-reduced-motion` support.
 
 ### Target Audience
-- **Technical Recruiters & Engineering Hiring Managers**: Evaluating code quality, system design competence, and full-stack execution.
-- **Software Architects & Senior Peers**: Reviewing clean separation of concerns, defensive programming patterns, and edge optimization.
-- **Clients & Technical Stakeholders**: Reviewing verified credentials, real-world case studies, and initiating secure project inquiries.
+- **Technical Recruiters & Engineering Hiring Managers** evaluating architectural judgment, full-stack execution, and written communication.
+- **Software Engineers & Senior Peers** reviewing modular Server/Client boundaries, security defense layers, and system design write-ups.
+- **Clients & Technical Stakeholders** exploring service capabilities and initiating direct project inquiries.
 
 ### About the Developer
-**Nirajan Tiwari** is a Full Stack Developer based in Kathmandu, Nepal. Currently completing his **B.Sc. CSIT** at Orchid International College (Affiliated with Tribhuvan University, 2022–2026), he has gained hands-on industry experience building scalable web solutions at **Cherdung Info Tech** and **Vyomite IT Services**. His core engineering competencies include Python (Django, FastAPI), React, Next.js, TypeScript, PostgreSQL, and RESTful API architecture.
+**Nirajan Tiwari** is a Full Stack Developer based in Kathmandu, Nepal, pursuing a **B.Sc. in CSIT** at Orchid International College (affiliated with Tribhuvan University, 2022–2026) with industry experience at **Cherdung Info Tech** and **Vyomite IT Services**. His core stack centers on Python (Django, FastAPI), React, Next.js, TypeScript, Node.js, PostgreSQL, and MongoDB.
 
 ---
 
@@ -63,158 +64,157 @@ The primary objective of this portfolio is to move beyond superficial bullet poi
 | Resource | URL |
 | :--- | :--- |
 | **Production Website** | [https://www.nirajantiwari.com.np](https://www.nirajantiwari.com.np) |
-| **Canonical Hostname** | `www.nirajantiwari.com.np` (apex domain `nirajantiwari.com.np` permanently 308-redirects to `www`) |
-| **Source Repository** | [https://github.com/Nirajan09/portfolio-nextjs](https://github.com/Nirajan09/portfolio-nextjs) |
-| **Open Graph Preview** | Dynamic Edge-generated 1200x630 cards at `https://www.nirajantiwari.com.np/opengraph-image` |
-| **Project OG Previews** | Dynamic case-study OG previews at `/projects/[slug]/opengraph-image` |
+| **Canonical Redirect** | `nirajantiwari.com.np` -> `https://www.nirajantiwari.com.np` (HTTP 308 permanent redirect) |
+| **Source Repository** | [https://github.com/Nirajan09/portfolio](https://github.com/Nirajan09/portfolio) |
+| **Blog Archive & RSS** | `/blog` and `/rss.xml` |
+| **Privacy Policy** | `/privacy` |
+| **Dynamic Open Graph Cards** | `/opengraph-image`, `/projects/[slug]/opengraph-image`, and `/blog/[slug]/opengraph-image` |
 
 ---
 
 ## 3. Key Features
 
-### 1. Responsive Cyber-Dark Landing Page
-- **Hero Section**: Dynamic headline with cyclical typed role carousel (`TypingRole.tsx`), pulsating "Open to New Opportunities" live status beacon, direct PDF resume download CTA with click event tracking, and ambient glowing radial cyber grids.
-- **About Section**: Interactive spotlight card with mouse-coordinate radial glow (`requestAnimationFrame`), live Kathmandu timezone clock (`Intl.DateTimeFormat` for `Asia/Kathmandu`, UTC+5:45) updated every 30 seconds, narrative background, and core technology badges.
-- **Technical Skills Showcase**: Categorized grid (Frontend, Backend, Development Tools) with iconography, proficiency levels, and responsive hover highlights.
-- **Projects Showcase**: Interactive category filtering ("All Projects", "Job Portal", "E-Commerce & ML", "Media Platform") utilizing Motion layout animations (`layoutId="activeFilterIndicator"`) with direct links to live deployments, GitHub repositories, and full case studies.
-- **Career & Education Timeline**: Chronological, unified career timeline rendering industry experience (Cherdung Info Tech, Vyomite IT Services) alongside formal academic milestones (B.Sc. CSIT, +2 Science, SEE) with sticky side-navigation headers.
-- **Verified Credentials & Certifications**: Grid of verified certificates (Broadway Infosys Python/Django, Udemy Django Masterclass) with direct credential verification links and preview modals.
-- **Services & Capabilities**: Component (`components/sections/Services.tsx`) detailing Full-Stack Web Development, Backend & API Engineering, and Modern Frontend Architecture with deliverables, tooling, and communication channels.
+### 1. Landing Page Sections (`app/page.tsx`)
+The home route composes 8 landing sections cleanly inside Server and Client boundaries:
+- **Hero (`Hero.tsx`, `HeroPortrait.tsx`, `TypingRole.tsx`)**: Ambient cyber grid, availability status beacon, cyclical role typing animation, resume download CTA, social links, and portrait frame.
+- **About (`About.tsx`)**: Mouse-tracked radial spotlight card (`requestAnimationFrame`), live Kathmandu timezone clock (`Asia/Kathmandu`, UTC+5:45), core technology chips, and highlight tiles (role, B.Sc. CSIT, location, outside technology interests: workouts, travelling & sports).
+- **Technical Skills (`Skills.tsx`, `SkillCard.tsx`)**: Categorized Frontend, Backend, and Tools matrix.
+- **Projects (`Projects.tsx`, `ProjectCard.tsx`)**: Interactive category filtering (`layoutId="activeFilterIndicator"`), skeleton image loading (`ImageWithSkeleton.tsx`), live demo and GitHub repo links, plus deep-dive case study routes.
+- **Experience & Education (`Experience.tsx`, `CareerTimeline.tsx`)**: Unified timeline merging industry roles and academic milestones alongside a sticky left heading column.
+- **Certifications (`Certifications.tsx`, `CertificationCard.tsx`, `CertificatePreview.tsx`)**: Verified credentials with preview modal lightbox and credential verification links.
+- **Latest Articles (`LatestPosts.tsx`)**: Homepage writing showcase displaying featured posts with quick links to `/blog` and `/rss.xml`.
+- **Contact (`Contact.tsx`, `ContactForm.tsx`, `ContactStatusModal.tsx`)**: Dual-validated inquiry form with real-time valid-field checkmarks, character counter bar, and accessible success/error status modals.
+- *(Standalone Component)* **Services (`components/sections/Services.tsx` & `services/*`)**: Pre-built interactive service cards and visual sandboxes (`FullStackSandbox`, `FrontendSandbox`, `BackendSandbox`, `BusinessSandbox`).
 
-### 2. Comprehensive Project Detail Pages (`/projects/[slug]`)
-- Fully static generated routes (`generateStaticParams`, `dynamicParams = false`) for instant page loads.
-- **Hero Showcase**: Project category, live status, quick link triggers, and high-resolution thumbnail.
-- **In-Page Sticky Navigation**: Smooth-scrolling table of contents highlighting the active section during read-through.
-- **Problem & Solution Matrix**: Clear breakdown of real-world problems solved and architectural approaches taken.
-- **System Architecture & Data Flow**: Deep-dive explanation of client-server models, caching layers, and database relationships.
-- **Key Features & Capabilities**: Bulleted technical specifications with performance benchmarks.
-- **Grouped Technology Stack**: Frontend, Backend, Database, and DevOps tooling tags with version context.
-- **Engineering Challenges & Technical Outcomes**: Real-world bugs, performance bottlenecks, and the technical solutions applied.
-- **Previous/Next & Related Projects Navigation**: Seamless inter-case-study routing.
+### 2. Technical Blog & RSS System (`/blog`, `/blog/[slug]`, `/rss.xml`)
+- **File-Based Markdown Authoring (`content/blog/*.md`)**: YAML frontmatter parsed via `gray-matter` with build-time word-count reading time calculation and `draft: true` filtering in production.
+- **Interactive Blog Index (`/blog`)**: Live keyword search across titles, summaries, categories, and tags alongside animated category filter pills (`BlogList.tsx`) and live result counts.
+- **Zero-Runtime Markdown + Shiki Reader (`/blog/[slug]`)**: Compiles Markdown AST -> HAST -> React 19 Server Component JSX via `unified`, `remark-gfm`, `rehype-slug`, `shiki/bundle/web`, and `hast-util-to-jsx-runtime`. Supports filename headers, copyable `<CodeBlock>` snippets, responsive tables, anchor headings, Prev/Next pagination, related post matching, and copy/native share controls.
+- **Sticky Table of Contents (`BlogTableOfContents.tsx`)**: Auto-extracted `h2`/`h3` headings using `rehype-slug` IDs with `IntersectionObserver` scroll-spy highlighting.
+- **RSS 2.0 Feed & Blog OG Cards**: Static `/rss.xml` feed with HTML `<link rel="alternate">` discovery and auto-generated per-post `1200x630` Open Graph cards.
 
-### 3. Fortified 8-Layer Contact System
-- Dual-validation pipeline executing identical RFC-compliant schema validation on both client and server.
-- Real-time validity indicators with animated checkmarks, interactive character countdown bars, and auto-focus error navigation.
-- Multi-proxy rate limiting, double bot traps (honeypot + machine timing threshold), CRLF injection sanitization, and client-direct delivery fallback to eliminate serverless datacenter IP blocking.
+### 3. Dedicated Interactive Privacy Policy (`/privacy`)
+- Standalone SSR/SSG privacy page (`components/privacy/PrivacyContent.tsx`) replacing the legacy modal dialog.
+- Features real-time topic search, category filter pills (*All Topics*, *Contact Form*, *Cookies & Analytics*, *Hosting & Logs*, *Your Rights*), mouse-spotlight trust pillars, copyable section anchors, copy-email feedback, and Print/PDF support.
+- Explicitly documents Web3Forms and Vercel data processing, IP usage for rate limiting and security, analytics/cookie behavior, retention schedules, international transfers, GDPR/CCPA rights, and under-16 exclusions.
 
-### 4. Interactive Canvas 2D Particle Mesh
-- Custom HTML5 Canvas 2D engine rendering 120 floating nodes with velocity vectors, edge deflection, and mouse repulsion/attraction.
-- Axis-aligned 1D spatial sorting ($O(N \log N)$) enabling high-density particle networks at a rock-solid 60 FPS without WebGL overhead or mobile battery drain.
+### 4. Comprehensive Project Case Studies (`/projects/[slug]`)
+- Statically generated routes (`generateStaticParams`, `dynamicParams = false`) with `loading.tsx` skeleton fallback, sticky in-page section nav, Overview/Problem/Solution matrix, Architecture layers, Challenges & Outcomes, Workflow steps, and Prev/Next + Related navigation.
 
-### 5. Zero-JS Declarative Event Tracking
-- Event delegation pattern using HTML5 `data-track` attributes (`ClickTracker.tsx`). Captures interactions across the entire DOM without attaching client event listeners to Server Components.
+### 5. Closure-Isolated Canvas 2D Backdrop (`InteractiveMesh.tsx`)
+- Deterministic seeded (`mulberry32`) particle network using pre-rendered `48x48` offscreen radial-gradient sprites (`createGlowSprite`), responsive node budgets (`45` / `70` / `120`), pointer repulsion within `150 px`, `visibilitychange` pausing, DPR capping (`<= 2`), and zero React re-renders.
+
+### 6. Declarative Zero-JS Click Tracking (`ClickTracker.tsx`, `PageViewTracker.tsx`)
+- Global click delegation reads `data-track` and `data-track-*` attributes without wiring client handlers into Server Components, while `PageViewTracker` fires SPA transitions (`page_view`, `project_view`, `blog_view`).
 
 ---
 
 ## 4. Technology Stack
 
-### Frontend Core
-| Technology | Version | Purpose in Project |
+### Core Framework & Language
+| Technology | Package Version | Purpose in Project |
 | :--- | :--- | :--- |
-| **Next.js** | `16.4.3` | React meta-framework utilizing the App Router, Static Site Generation (SSG), Edge Image generation, and Route Handlers. |
-| **React** | `19.2.8` | UI library utilizing the latest React 19 concurrency, Server Components, and client hooks. |
-| **React DOM** | `19.2.8` | DOM rendering and portal integration for modals. |
-| **TypeScript** | `^5` | Strict static typing across domain data, component props, and API request/response contracts. |
+| **Next.js** | `16.4.3` | App Router, Static Site Generation (SSG), Edge `ImageResponse` generation, Route Handlers, CSP/security headers, and canonical redirects. |
+| **React & React DOM** | `19.2.8` | Server Components, Client Component islands, and JSX runtime rendering. |
+| **TypeScript** | `^5` | Strict static typing across domain models, component contracts, and API validation. |
 
-### Styling & Animation
-| Technology | Version | Purpose in Project |
+### Styling, Animation & UI
+| Technology | Package Version | Purpose in Project |
 | :--- | :--- | :--- |
-| **Tailwind CSS** | `^4.1.18` | Next-generation utility-first styling engine running via `@tailwindcss/postcss`. |
-| **Motion (`motion/react`)** | `^13.4.6` | Performant spring animations, layout transitions, and entrance effects. |
-| **React Icons** | `^5.7.0` | Feather, Lucide, and Simple icon sets with tree-shaken imports. |
-| **Google Fonts** | Native Next.js | Self-hosted, zero-layout-shift `Inter` (body) and `Space Grotesk` (display) font variables. |
+| **Tailwind CSS** | `^4` (`@tailwindcss/postcss`) | CSS-variable design tokens and utility classes in `app/globals.css`. |
+| **Motion (`motion/react`)** | `^13.4.6` | Reduced-motion-aware viewport reveals, staggered entrances, and pill `layoutId` transitions. |
+| **React Icons** | `^5.7.0` | Tree-shaken Lucide (`lu`) and Simple Icons (`si`) sets (`optimizePackageImports`). |
+| **Google Fonts** | `next/font/google` | Self-hosted `Inter` (body) and `Space Grotesk` (display) with `display: "swap"`. |
 
-### Backend & API
-| Technology | Version | Purpose in Project |
+### Blog Markdown & Syntax Pipeline
+| Technology | Package Version | Purpose in Project |
 | :--- | :--- | :--- |
-| **Next.js Route Handlers** | `16.4.3` | `/api/contact` serverless endpoint enforcing security checks, rate limiting, and sanitization. |
-| **Web3Forms API** | REST | External transactional email dispatch delivering contact inquiries directly to developer inbox. |
+| **gray-matter** | `^4.0.3` | Extracts YAML frontmatter and Markdown content on the server. |
+| **unified / remark-parse / remark-gfm** | `^11.0.5` / `^11.0.0` / `^4.0.1` | Parses GitHub-Flavored Markdown (tables, lists, code fences) into AST. |
+| **remark-rehype & rehype-slug** | `^11.1.2` / `^6.0.0` | Transforms MDAST to HAST and generates deterministic heading anchor `id` attributes. |
+| **shiki (`shiki/bundle/web`)** | `^4.6.0` | Build-time syntax highlighting using `github-dark-default` with zero client JS shipped. |
+| **hast-util-to-jsx-runtime** | `^2.3.7` | Converts highlighted HAST nodes directly to React 19 JSX elements (no `dangerouslySetInnerHTML` or `eval`). |
 
-### Analytics & SEO
-| Technology | Version | Purpose in Project |
+### API, Analytics & Tooling
+| Technology | Package Version | Purpose in Project |
 | :--- | :--- | :--- |
-| **@vercel/analytics** | `^1.6.1` | Real-time Core Web Vitals and visitor privacy-first metrics. |
-| **@next/third-parties**| Built-in | Optimized Google Analytics 4 integration script loader. |
-| **JSON-LD Engine** | Custom | Structured data generation for `Person`, `WebSite`, and `SoftwareApplication` schemas. |
-
-### Development, Testing & Quality Assurance
-| Technology | Version | Purpose in Project |
-| :--- | :--- | :--- |
-| **Node.js Test Runner** | `v18+ / v20+` | Built-in native test runner (`node --test`) for zero-dependency unit and security tests. |
-| **ESLint** | `^9` | Flat-config linter paired with `eslint-config-next`. |
-| **Prettier** | `^3.6.2` | Code formatting with `prettier-plugin-tailwindcss` class sorting. |
+| **Web3Forms API** | External REST | Email relay receiving browser-direct contact submissions. |
+| **@vercel/analytics** | `^2.0.1` | Optional privacy-friendly aggregated analytics in production. |
+| **Google Analytics 4** | Custom `next/script` | Optional GA4 loader (`lazyOnload`) gated behind indexing/env checks. |
+| **Node.js Test Runner** | Built-in (`node --test`) | Native unit and HTTP integration test execution without external test frameworks. |
+| **ESLint** | `^9` | Flat config with `eslint-config-next/core-web-vitals` and `typescript`. |
 
 ---
 
 ## 5. Project Architecture
 
-The application adopts the **Next.js App Router hybrid architecture**:
-1. **Static Shell & Server Components**: Core pages (`/` and `/projects/[slug]`) are pre-rendered at build time (SSG) with zero JavaScript footprint for static content.
-2. **Client Component Islands**: Interactivity (Canvas mesh, contact form, modal previews, typing animations, spotlight cards) is scoped strictly to interactive leaf components marked with `"use client"`.
-3. **Edge SEO & Metadata**: Dynamically generated Open Graph images (`@vercel/og`), XML sitemaps, and robots.txt are computed at the edge.
-4. **Defensive API Gateway**: The contact route acts as a security barrier, validating and sanitizing payloads before passing an authorized authorization envelope back to the browser for Web3Forms dispatch.
+The application follows a **Server-First Static Hybrid Architecture** under Next.js 16 App Router:
 
-### High-Level Architecture Diagram
+1. **Static Prerendering (SSG)**: Home (`/`), `/blog`, `/blog/[slug]`, `/projects/[slug]`, `/privacy`, `/rss.xml`, `/sitemap.xml`, and OG images render into static artifacts at build time.
+2. **Client Islands**: Interactive leaves (`Navbar`, `InteractiveMesh`, `ContactForm`, `BlogList`, `BlogTableOfContents`, `PrivacyContent`) carry `"use client"` boundaries cleanly separated from data fetching and Markdown compilation.
+3. **API Security Gateway**: `/api/contact` validates headers, rate-limits IPs in memory, traps bots, sanitizes strings, and passes an authorized envelope back to the browser for Web3Forms submission.
 
 ```mermaid
 flowchart TD
     subgraph Client["Client Browser"]
-        User["Visitor / Recruiter"]
-        Mesh["HTML5 Canvas Mesh (60 FPS)"]
-        Track["Declarative ClickTracker (data-track)"]
-        Form["Contact Form (Client Validation)"]
+        Visitor["Visitor / Recruiter"]
+        Mesh["InteractiveMesh Canvas 2D"]
+        ClickTrack["Delegated ClickTracker & PageViewTracker"]
+        Form["ContactForm (Client Validation & Dispatch)"]
     end
 
-    subgraph Edge["Vercel Edge Network / CDN"]
-        DNS["DNS / SSL Canonical Redirect\n(nirajantiwari.com.np -> www)"]
-        SecHeaders["Security Headers (CSP, HSTS, X-Frame)"]
-        Cache["Edge Cache & Static Assets"]
-        OGGen["Dynamic OpenGraph Image Generator\n(/opengraph-image)"]
+    subgraph Edge["Vercel Edge / Headers Layer (next.config.ts)"]
+        Redirect["Apex Canonical Redirect (308 to www)"]
+        Headers["Security Headers & Production CSP"]
+        OG["Dynamic ImageResponse (/opengraph-image, /icons)"]
     end
 
-    subgraph AppRouter["Next.js 16 App Router (SSG / SSR)"]
-        Layout["Root Layout (Fonts, Theme, JSON-LD)"]
-        HomePage["Home Page (Static Server Component)"]
-        ProjectPages["Project Detail Pages (/projects/[slug])\n(generateStaticParams)"]
-        APIContact["POST /api/contact Route Handler"]
+    subgraph App["Next.js 16 App Router"]
+        Root["RootLayout (Fonts, JSON-LD Person & WebSite)"]
+        Home["/ (8 Portfolio Sections + LatestPosts)"]
+        BlogIdx["/blog (BlogList Search & Filter)"]
+        BlogPost["/blog/[slug] (Unified + Shiki Server Render + TOC)"]
+        ProjectPage["/projects/[slug] (Case Study SSG)"]
+        Privacy["/privacy (Interactive Search & Filter Policy)"]
+        RSS["/rss.xml & /sitemap.xml & /robots.txt"]
+        ContactAPI["POST /api/contact"]
     end
 
-    subgraph SecurityPipeline["Contact 8-Layer Security Pipeline"]
-        SecSite["1. Sec-Fetch-Site Check (CSRF)"]
-        ContentType["2. Content-Type Check (415)"]
-        PayloadLimit["3. Payload Size Cap (10 KB)"]
-        RateLimit["4. Multi-Proxy IP Rate Limiter (5 req / 10 min)"]
-        BotTraps["5. Honeypot + Speed Traps (<1500ms)"]
-        Sanitize["6. RFC 5322 & CRLF Sanitization"]
+    subgraph SecurityFunnel["Contact 8-Stage Security Pipeline"]
+        S1["1. JSON Content-Type (415)"]
+        S2["2. Sec-Fetch-Site / Origin CSRF (403)"]
+        S3["3. Fixed-Window IP Rate Limiter (429)"]
+        S4["4. Body Limit 10K Chars (413) & JSON Parse (400)"]
+        S5["5. Honeypot & 1500ms Speed Traps (Fake 200)"]
+        S6["6. Schema Validation & CRLF Sanitization (400)"]
     end
 
-    subgraph ExternalServices["External Third-Party APIs"]
-        Web3Forms["Web3Forms API (Transactional Email)"]
-        GA4["Google Analytics 4 (Consent Guarded)"]
-        VercelAn["Vercel Web Vitals Analytics"]
-        DevInbox["Developer Email Inbox"]
+    subgraph External["Third-Party Services"]
+        Web3Forms["Web3Forms REST API"]
+        GA4["Google Analytics 4 (Env Guarded)"]
+        VercelAn["Vercel Analytics (Env Guarded)"]
     end
 
-    User --> DNS
-    DNS --> SecHeaders
-    SecHeaders --> Cache
+    Visitor --> Redirect --> Headers
+    Headers --> Root
+    Headers --> OG
+    Root --> Home
+    Root --> BlogIdx
+    Root --> BlogPost
+    Root --> ProjectPage
+    Root --> Privacy
+    Root --> RSS
 
-    Cache --> Layout
-    Layout --> HomePage
-    Layout --> ProjectPages
-    Layout --> OGGen
+    Visitor <--> Mesh
+    Visitor --> ClickTrack
+    ClickTrack -.-> GA4
+    ClickTrack -.-> VercelAn
 
-    User <--> Mesh
-    User --> Track
-    Track -.-> GA4
-    Track -.-> VercelAn
-
-    User --> Form
-    Form -->|1. Submit Payload| APIContact
-    APIContact --> SecSite --> ContentType --> PayloadLimit --> RateLimit --> BotTraps --> Sanitize
-    Sanitize -->|2. Validated Auth Envelope| Form
-    Form -->|3. Client-Direct Dispatch| Web3Forms
-    Web3Forms --> DevInbox
+    Visitor --> Form
+    Form -->|POST Payload| ContactAPI
+    ContactAPI --> S1 --> S2 --> S3 --> S4 --> S5 --> S6
+    S6 -->|Sanitized Key + Data| Form
+    Form -->|Browser Direct HTTPS POST| Web3Forms
 ```
 
 ---
@@ -223,507 +223,305 @@ flowchart TD
 
 ```text
 portfolio-nextjs/
-├── .env.example                     # Environment template with safe placeholders
-├── .gitignore                       # Git ignore specifications
-├── .prettierrc                      # Prettier code formatting rules
-├── AGENTS.md                        # Next.js agent operational instructions
-├── eslint.config.mjs                # ESLint configuration
-├── next.config.ts                   # Next.js configuration (security headers & redirects)
-├── package.json                     # Project manifest, dependencies, and scripts
-├── postcss.config.mjs               # PostCSS configuration for Tailwind CSS v4
-├── tsconfig.json                    # TypeScript compiler configuration
+├── .env.example                           # Environment variable template with safe placeholders
+├── .gitignore                             # Git ignore rules
+├── AGENTS.md / CLAUDE.md                  # Next.js agent development instructions
+├── eslint.config.mjs                      # Flat ESLint configuration (next/core-web-vitals + ts)
+├── next.config.ts                         # CSP, security headers, image formats, canonical redirect
+├── package.json                           # Dependencies and npm scripts
+├── postcss.config.mjs                     # PostCSS pipeline with @tailwindcss/postcss
+├── tsconfig.json                          # Strict TypeScript compiler config
 │
-├── app/                             # Next.js App Router directory
-│   ├── api/
-│   │   └── contact/
-│   │       └── route.ts             # 8-layer contact security Route Handler
-│   ├── icons/
-│   │   └── [size]/
-│   │       └── route.tsx            # Dynamic multi-size PNG icon generator
-│   ├── projects/
+├── content/
+│   └── blog/                              # Markdown blog posts with YAML frontmatter
+│       ├── 8-layer-contact-api-nextjs.md
+│       └── high-fps-canvas-particle-mesh.md
+│
+├── app/                                   # Next.js 16 App Router routes & metadata routes
+│   ├── api/contact/route.ts               # POST /api/contact defensive validation route
+│   ├── blog/
+│   │   ├── page.tsx                       # /blog listing route
 │   │   └── [slug]/
-│   │       ├── opengraph-image.tsx  # Dynamic OG image per project
-│   │       └── page.tsx             # Static case study page (dynamicParams = false)
-│   ├── apple-icon.tsx               # Dynamic Apple Touch Icon
-│   ├── globals.css                  # Tailwind v4 theme, design tokens, utility classes
-│   ├── icon.tsx                     # Dynamic browser favicon
-│   ├── layout.tsx                   # Root HTML shell, fonts, JSON-LD, global nav/footer
-│   ├── manifest.ts                  # Web App Manifest generator
-│   ├── not-found.tsx                # Custom 404 error page
-│   ├── opengraph-image.tsx          # Dynamic site-wide Open Graph card
-│   ├── page.tsx                     # Home landing page composition
-│   ├── robots.ts                    # Dynamic robots.txt with indexing guards
-│   ├── sitemap.ts                   # Dynamic XML sitemap generator
-│   └── twitter-image.tsx            # Dynamic Twitter card image generator
+│   │       ├── opengraph-image.tsx        # Dynamic per-article OG image
+│   │       └── page.tsx                   # Static article reader (dynamicParams = false)
+│   ├── icons/[size]/route.tsx             # Dynamic PNG icon endpoint (192, 512)
+│   ├── privacy/page.tsx                   # Dedicated interactive Privacy Policy page
+│   ├── projects/[slug]/
+│   │   ├── loading.tsx                    # Skeleton loading UI for project routes
+│   │   ├── opengraph-image.tsx            # Dynamic per-project OG image
+│   │   └── page.tsx                       # Static case study page (dynamicParams = false)
+│   ├── rss.xml/route.ts                   # Static RSS 2.0 XML feed
+│   ├── apple-icon.tsx                     # Apple Touch icon route
+│   ├── globals.css                        # Tailwind v4 design tokens, keyframes, scrollbar styles
+│   ├── icon.tsx                           # Dynamic site favicon route
+│   ├── layout.tsx                         # Root layout, Google fonts, JSON-LD, analytics, nav/footer
+│   ├── manifest.ts                        # Web app manifest
+│   ├── not-found.tsx                      # Custom 404 route
+│   ├── opengraph-image.tsx                # Default site OG card
+│   ├── page.tsx                           # Homepage composition
+│   ├── robots.ts                          # Dynamic robots.txt
+│   └── sitemap.ts                         # Dynamic XML sitemap (/, /blog, /privacy, posts, projects)
 │
-├── components/                      # Modular UI component system
-│   ├── analytics/                   # Analytics instrumentation
-│   │   ├── Analytics.tsx            # Production/indexing conditional loader
-│   │   ├── ClickTracker.tsx         # Delegated click listener for [data-track]
-│   │   ├── GoogleAnalytics.tsx      # GA4 script injector
-│   │   └── PageViewTracker.tsx      # Route change SPA page-view tracker
-│   ├── animation/                   # Motion animation wrappers
-│   │   ├── MotionConfig.tsx         # Global reduced-motion provider
-│   │   ├── Reveal.tsx               # IntersectionObserver viewport reveal
-│   │   ├── Stagger.tsx              # Staggered entrance orchestrator
-│   │   └── TypingRole.tsx           # Continuous typewriter role cycling
-│   ├── background/
-│   │   └── InteractiveMesh.tsx      # High-performance 2D Canvas particle mesh
-│   ├── certifications/
-│   │   ├── CertificatePreview.tsx   # Lightbox modal for certificate viewing
-│   │   └── CertificationCard.tsx    # Card with credential ID & verification links
-│   ├── contact/
-│   │   ├── ContactForm.tsx          # Form with real-time feedback & dual validation
-│   │   └── ContactStatusModal.tsx   # Accessible success/error dialog portals
-│   ├── experience/
-│   │   └── CareerTimeline.tsx       # Chronological experience & education timeline
-│   ├── layout/
-│   │   ├── Footer.tsx               # Site footer with back-to-top & copyright
-│   │   ├── Navbar.tsx               # Sticky nav with scroll progress indicator
-│   │   ├── PageContainer.tsx        # Standardized responsive max-width wrapper
-│   │   └── Section.tsx              # Semantic section container with anchor IDs
-│   ├── projects/                    # Case study & project showcase components
-│   │   ├── ProjectArchitectureSection.tsx # Architecture & system data flow
-│   │   ├── ProjectCard.tsx          # Home project preview card
-│   │   ├── ProjectChallengesSection.tsx   # Engineering hurdles & outcomes
-│   │   ├── ProjectDetail.tsx        # Case study master template
-│   │   ├── ProjectFeaturesSection.tsx     # Capabilities & specifications
-│   │   ├── ProjectHero.tsx          # Project case study hero header
-│   │   ├── ProjectNavigation.tsx    # Prev/Next & related projects footer
-│   │   ├── ProjectOverviewSection.tsx     # Problem & solution matrix
-│   │   ├── ProjectSectionNav.tsx    # Sticky in-page section jump nav
-│   │   └── ProjectStackSection.tsx  # Categorized project tech tags
-│   ├── sections/                    # Homepage section assemblies
-│   │   ├── About.tsx                # About bio, live clock & mouse spotlight
-│   │   ├── Certifications.tsx       # Certifications grid
-│   │   ├── Contact.tsx              # Contact section container & direct info
-│   │   ├── Experience.tsx           # Experience section container
-│   │   ├── Hero.tsx                 # Hero section layout & action CTAs
-│   │   ├── HeroPortrait.tsx         # Profile image with animated gradient ring
-│   │   ├── Projects.tsx             # Projects section with category filter pills
-│   │   ├── Services.tsx             # Standalone 3-column service capabilities
-│   │   └── Skills.tsx               # Categorized skills matrix
-│   └── ui/                          # Atomic, accessible design primitives
-│       ├── Button.tsx               # Polymorphic button/anchor component
-│       ├── Dialog.tsx               # Accessible modal overlay dialog
-│       ├── IconButton.tsx           # Accessible icon button
-│       ├── SectionHeading.tsx       # Standardized eyebrow, title, and subtitle
-│       ├── ServiceCard.tsx          # Card displaying service specifications
-│       ├── SkillCard.tsx            # Card displaying grouped skills
-│       └── TechChip.tsx             # Compact badge for technologies
+├── components/
+│   ├── analytics/                         # Analytics.tsx, ClickTracker.tsx, GoogleAnalytics.tsx, PageViewTracker.tsx
+│   ├── animation/                         # MotionConfig.tsx, Reveal.tsx, Stagger.tsx, TypingRole.tsx
+│   ├── background/InteractiveMesh.tsx     # Canvas 2D sprite-cached particle mesh
+│   ├── blog/                              # BlogCard, BlogList, BlogNavigation, BlogShareCopy,
+│   │                                      # BlogTableOfContents, CodeBlock, CopyCodeButton, MarkdownContent
+│   ├── certifications/                    # CertificatePreview.tsx, CertificationCard.tsx
+│   ├── contact/                           # ContactForm.tsx, ContactStatusModal.tsx
+│   ├── experience/CareerTimeline.tsx      # Unified career & education timeline
+│   ├── layout/                            # Footer, Navbar, NotFoundContent, PageContainer, Section
+│   ├── privacy/PrivacyContent.tsx         # Interactive privacy search/filter/copy page UI
+│   ├── projects/                          # ProjectDetail, ProjectHero, ProjectCover, ProjectTabs,
+│   │                                      # ProjectNavigation, ProjectSectionNav, & detail sections
+│   ├── sections/                          # About, Certifications, Contact, Experience, Hero,
+│   │   ├── services/                      # BackendSandbox, BusinessSandbox, FrontendSandbox, FullStackSandbox
+│   │   └── ...                            # HeroPortrait, LatestPosts, Projects, Services, Skills
+│   ├── seo/JsonLd.tsx                     # JSON-LD script renderer
+│   └── ui/                                # Badge, Button, Card, IconButton, ImageWithSkeleton,
+│                                          # SectionHeading, ServiceCard, Skeleton, SkillCard, TechChip, icons
 │
-├── data/                            # Static, strongly typed domain models
-│   ├── about.ts                     # Biography, highlights, and personal background
-│   ├── certifications.ts            # Verified credentials, issuers, and verification URLs
-│   ├── education.ts                 # Formal academic degrees and institutions
-│   ├── experience.ts                # Professional work history and achievements
-│   ├── navigation.ts                # Main header navigation item declarations
-│   ├── personal.ts                  # Contact details, social links, and metadata
-│   ├── projects.ts                  # Complete project case study content
-│   ├── services.ts                  # Service capabilities and deliverables
-│   └── skills.ts                    # Technical skill groups and proficiency levels
+├── data/                                  # Strongly typed static content modules
+│   ├── about.ts, certifications.ts, education.ts, experience.ts,
+│   └── navigation.ts, personal.ts, projects.ts, services.ts, skills.ts
 │
-├── lib/                             # Utility libraries and helpers
-│   ├── analytics.ts                 # GA4 event tracking helpers and data-track parser
-│   ├── contact.ts                   # Validation rules, limits, and CRLF sanitizer
-│   ├── seo.ts                      # JSON-LD structured data and metadata builders
-│   └── utils.ts                    # Tailwind `cn` class merger (`clsx` + `tailwind-merge`)
+├── lib/                                   # Shared server & client utilities
+│   ├── analytics.ts                       # Typed AnalyticsEvent emitter & data-track parser
+│   ├── blog.ts                            # Markdown/frontmatter loader, TOC extractor, Shiki highlighter
+│   ├── brand.tsx                          # BrandMark & OgCard shared by OG & icon routes
+│   ├── contact.ts                         # Shared RFC 5322 validation & CRLF sanitization
+│   ├── rate-limit.ts                      # Fixed-window in-memory IP limiter
+│   ├── readTime.ts                        # Read-time estimator for project case studies
+│   ├── send-contact-email.ts              # Client Web3Forms fetch helper
+│   ├── seo.ts                             # siteConfig, pageMetadata, Person/WebSite/Software/BlogPosting JSON-LD
+│   └── utils.ts                           # Class concatenation helper
 │
-├── public/                          # Static public assets
-│   ├── Nirajan_Tiwari_Resume.pdf    # Official downloadable CV
-│   └── profile.png                  # Developer portrait photo
+├── public/                                # Static local assets (CSP 'self' safe)
+│   ├── Nirajan_Tiwari_Resume.pdf
+│   ├── profile.png & profile_original_beach.png
+│   ├── certificates/                      # Certificate images
+│   └── projects/                          # Project preview screenshots
 │
-├── scripts/                         # Operational & automated test scripts
-│   └── test-contact-security.mjs    # 16-test automated security & API integration suite
-│
-├── tests/                           # Unit test suites
-│   └── contact-unit.test.mjs        # 27 unit tests running via `node --test`
-│
-└── types/                           # Global TypeScript declarations
-    └── index.ts                     # TypeScript interfaces (Project, Experience, Skill, etc.)
+├── scripts/test-contact-security.mjs      # Live HTTP integration tests against /api/contact
+├── tests/contact-unit.test.mjs            # 27 unit tests via node --test
+└── types/index.ts                         # Domain TypeScript types (Project, BlogPost, Experience, etc.)
 ```
 
 ---
 
 ## 7. Detailed Feature Implementation
 
-### 1. Contact Security Pipeline (`app/api/contact/route.ts`)
-The contact endpoint implements an 8-stage defensive funnel:
-1. **CSRF & Origin Gate**: Inspects `Sec-Fetch-Site`. If present and marked as `cross-site`, the request is immediately terminated with `403 Forbidden`.
-2. **Strict Media Type Check**: Rejects any request whose `Content-Type` header is not strictly `application/json` (`415 Unsupported Media Type`), preventing simple-form CSRF exploits.
-3. **Payload Memory Exhaustion Guard**: Reads raw chunks up to a strict limit of 10 KB ($10,240$ bytes). Payloads exceeding this threshold return `413 Payload Too Large`.
-4. **Malformed JSON Handling**: Gracefully catches JSON parsing syntax exceptions, returning `400 Bad Request` without stack trace leakage.
-5. **Multi-Proxy Rate Limiting**: Resolves client IP across Cloudflare (`cf-connecting-ip`), NGINX (`x-real-ip`), and multi-hop proxies (`x-forwarded-for`). An in-memory sliding window allows a maximum of 5 submissions per 10-minute window per IP. Breaches yield `429 Too Many Requests` with a `Retry-After` header.
-6. **Honeypot Bot Trap**: Features an invisible field (`website`). If filled by automated scrapers, the endpoint silently returns a fake `200 OK` without performing any email dispatch.
-7. **Speed Threshold Trap**: Verifies that time elapsed between form rendering and submission (`timeTakenMs`) is $\ge 1,500$ ms. Instantaneous bot scripts are absorbed with a silent `200 OK`.
-8. **CRLF Injection Stripping & RFC 5322 Validation**: Strips all carriage returns (`\r`) and linefeeds (`\n`) from single-line fields (name, email, subject) using `stripCRLF`. Validates email addresses using strict RFC 5322 regex. Names must contain only Unicode letters, spaces, hyphens, and apostrophes.
+### 1. Contact Security Pipeline (`app/api/contact/route.ts` & `lib/rate-limit.ts`)
+Each `POST /api/contact` call runs through 8 ordered checks before issuing a Web3Forms dispatch envelope:
+1. **Media Type Enforcement**: Rejects non-JSON submissions (`415 Unsupported Media Type`) to neutralize simple HTML form CSRF attacks.
+2. **Same-Origin Enforcement**: Inspects `sec-fetch-site === "same-origin"` or falls back to strict `origin` vs. `host` comparison (`403 Forbidden`).
+3. **Fixed-Window IP Rate Limiter (`lib/rate-limit.ts`)**: Extracts client IP (`cf-connecting-ip`, `x-real-ip`, `x-forwarded-for`), limiting to **5 requests per 10-minute window** (`429 Too Many Requests` with `Retry-After` header) and opportunistically cleaning expired entries when `hits.size > 500`.
+4. **Payload Cap**: Rejects raw bodies exceeding `10,000` characters (`413 Payload Too Large`).
+5. **Malformed JSON Guard**: Catches `JSON.parse` errors cleanly (`400 Bad Request`).
+6. **Honeypot Trap**: If hidden field `website` is non-empty, returns a silent fake `200 OK` without proceeding.
+7. **Timing Trap**: Rejects automated submissions completed faster than `1,500 ms` silently with `200 OK`.
+8. **Shared Schema & CRLF Sanitization (`lib/contact.ts`)**: Strips `\r` and `\n`, enforces RFC 5322 email syntax and Unicode letter rules, then hands the sanitized payload + key back to the browser (`ContactForm.tsx`) via `send-contact-email.ts` for direct Web3Forms dispatch, mitigating datacenter IP blocks.
 
-#### Client-Side Direct Dispatch Architecture
-When validation succeeds, the server does **not** make the outbound call to Web3Forms from the datacenter (which frequently gets blacklisted by shared cloud IP blocks). Instead, it returns an authorized payload with the sanitized data and access key back to the user's browser, which performs the final `POST` to Web3Forms directly from the user's residential/mobile connection.
+### 2. Static Markdown + Shiki Blog Pipeline (`lib/blog.ts` & `components/blog/MarkdownContent.tsx`)
+- Markdown files live in `content/blog/<slug>.md` with validated `[a-z0-9-]+` slugs.
+- React `cache()` wraps `getAllPostsMeta`, `compileMarkdown`, and `getPostBySlug` to deduplicate file reads across `generateStaticParams`, `generateMetadata`, `sitemap.ts`, and page rendering.
+- `unified` parses GFM Markdown, generates heading anchors via `rehype-slug`, extracts `h2`/`h3` items directly from the HAST AST so TOC links always match DOM IDs, highlights fenced code blocks statically via `shiki/bundle/web` (`github-dark-default`, falling back gracefully to `"text"`), and renders JSX cleanly via `hast-util-to-jsx-runtime` without `dangerouslySetInnerHTML` or runtime JS bloat.
+- `<a href>` sanitization blocks unsafe URI protocols (only `https://`, `http://`, `/`, `#` are rendered as interactive links).
 
-### 2. High-Performance Canvas 2D Particle Mesh (`components/background/InteractiveMesh.tsx`)
-Rather than pulling in heavy WebGL or Three.js dependencies (which add >500 KB to bundles), the particle network is implemented in native Canvas 2D:
-- **Node Count**: 120 floating particles.
-- **Physics**: Constant velocity displacement with edge boundary reflection ($v_x = -v_x$).
-- **Interaction**: Calculates Euclidean distance from mouse position. If distance is $< 140$ px, particles accelerate away via an inverse-proportional repulsion vector:
-  $$\vec{F} = \left(\frac{r - d}{r}\right) \cdot \hat{u}$$
-- **Spatial Optimization**: Before connecting lines between particles, nodes are sorted along the X-axis ($O(N \log N)$). When comparing pairs, the inner loop breaks immediately as soon as $\Delta x > d_{\max}$, discarding distant particle pairs without calculating expensive square roots.
-
-### 3. Dynamic Project Case Studies (`app/projects/[slug]/page.tsx`)
-- Project routes are statically computed at build time via `generateStaticParams()`.
-- Route segments set `export const dynamicParams = false`, returning automatic 404s for unregistered slugs without querying runtime handlers.
-- Each project generates dedicated metadata and a customized Open Graph preview card containing the project's title, category, and tech stack.
-
-### 4. Interactive Spotlight Effect (`components/sections/About.tsx`)
-The primary card in the About section features a dynamic radial spotlight that follows the cursor:
-- Tracks `clientX` and `clientY` relative to the bounding box via `useCallback`.
-- Schedules updates via `requestAnimationFrame` to decouple mousemove events from paint cycles.
-- Updates CSS custom properties `--mouse-x` and `--mouse-y` dynamically on the DOM element without triggering React state re-renders.
+### 3. Closure-Isolated Canvas 2D Mesh (`components/background/InteractiveMesh.tsx`)
+- **Zero React Re-renders**: Node coordinates, velocities, pointer coordinates, and `requestAnimationFrame` handles stay completely inside a `useEffect` closure.
+- **Pre-rendered Radial Glow Sprites**: Rather than calling `ctx.createRadialGradient` on every frame, `createGlowSprite` caches three `48x48` offscreen canvases at mount time and blits them via `ctx.drawImage`.
+- **Adaptive Density & Reduced Motion**: Scales max node budgets (`45` < 640px, `70` < 1024px, `120` desktop), clamps DPR to `<= 2`, uses squared-distance checks to skip distant links before `Math.sqrt`, pauses via `visibilitychange` when backgrounded, and draws a static frame when `prefers-reduced-motion: reduce` matches.
 
 ---
 
 ## 8. UI/UX and Design System
 
-### Design Philosophy
-The portfolio employs a **Cyber-Dark Obsidian** visual language: deep, neutral slate backgrounds paired with high-energy electric cyan and violet accents, evocative of modern developer tools, terminal interfaces, and high-performance engineering suites.
-
 ### Color Tokens (`app/globals.css`)
-| Token | Value | Tailwind Role | Usage |
-| :--- | :--- | :--- | :--- |
-| `--background` | `#070b14` | `bg-background` | Deep obsidian page canvas background. |
-| `--surface` | `#0c1322` | `bg-surface` | Card and container elevation layer. |
-| `--surface-elevated` | `#111a2e` | `bg-surface-elevated` | Hover states, modals, and raised popovers. |
-| `--border` | `#1e293b` | `border-border` | Subtle structural division lines (Slate 800). |
-| `--border-accent` | `#334155` | `border-border-accent` | Highlighted borders and active interactive boundaries. |
-| `--text-primary` | `#f1f5f9` | `text-primary` | High-contrast body and heading copy (Slate 100). |
-| `--text-secondary` | `#94a3b8` | `text-secondary` | Descriptive subtitles and meta labels (Slate 400). |
-| `--text-muted` | `#64748b` | `text-muted` | Captions, inactive dates, and placeholder text (Slate 500). |
-| `--accent` | `#22d3ee` | `text-accent` / `bg-accent` | Electric cyan brand accent and focus rings. |
-| `--accent-hover` | `#06b6d4` | `hover:bg-accent-hover` | Interactive hover state for accent controls. |
-| `--blue` | `#3b82f6` | `bg-blue` | Complementary sapphire gradient accents. |
-| `--violet` | `#8b5cf6` | `bg-violet` | Ambient atmospheric orb glows. |
+| CSS Variable | Value | Role |
+| :--- | :--- | :--- |
+| `--background` | `#070b14` | Primary deep obsidian page canvas |
+| `--background-secondary` | `#0b1120` | Secondary surface backdrop and code containers |
+| `--surface` | `#0f172a` | Cards, panels, and navbar container (`Slate 900`) |
+| `--surface-elevated` | `#111827` | Elevated popovers and inline code pills (`Gray 900`) |
+| `--border` | `#1e293b` | Structural dividers and card strokes (`Slate 800`) |
+| `--text-primary` | `#f1f5f9` | Primary headings and emphasized copy (`Slate 100`) |
+| `--text-secondary` | `#cbd5e1` | Body prose and card summaries (`Slate 300`) |
+| `--text-muted` | `#9fb0c7` | Captions, dates, read times, and subtle labels |
+| `--accent` / `--accent-hover` | `#22d3ee` / `#06b6d4` | Electric cyan interactive highlights & focus rings |
+| `--blue` / `--violet` | `#3b82f6` / `#8b5cf6` | Complementary gradient beams and backdrop glows |
+| `--success` / `--error` / `--warning` | `#22c55e` / `#ef4444` / `#f59e0b` | Validation, error states, and draft badges |
 
-### Typography
-- **Display Headings**: `Space Grotesk` (weights 500, 600, 700) via `--font-space-grotesk` - technical, geometric, and modern.
-- **Body & Tabular Data**: `Inter` (weights 400, 500, 600) via `--font-inter` - highly legible across all viewport sizes with tabular numeric alignment (`tabular-nums`) for clocks and counters.
-
-### Accessibility (a11y)
-- **Reduced Motion**: Encapsulated by `MotionConfig` and a global CSS media query:
-  ```css
-  @media (prefers-reduced-motion: reduce) {
-    *, ::before, ::after {
-      animation-duration: 0.01ms !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
-  ```
-- **Skip Navigation**: Accessible hidden skip link (`#main-content`) rendering immediately on keyboard focus.
-- **Color Contrast**: All primary text satisfies WCAG AAA contrast ratios ($\ge 7:1$) against `#070b14`.
-- **Keyboard Trapping**: Modals trap focus and bind `Escape` keys to close.
+### Typography & Accessibility
+- **Fonts**: `Space Grotesk` (`--font-space-grotesk`, weights 500/600/700) for headings, `Inter` (`--font-inter`, weights 400/500/600) for prose, paired with custom gradient scrollbars and accent text `::selection`.
+- **Accessibility**: `#main-content` skip link in `app/layout.tsx`, `2px solid var(--accent)` `:focus-visible` outlines, semantic ARIA landmarks, keyboard `Escape` + backdrop traps in dialogs, and global `@media (prefers-reduced-motion: reduce)` CSS + `MotionConfig` overrides.
 
 ---
 
 ## 9. API and Third-Party Integrations
 
-### 1. Web3Forms API
-- **Purpose**: Serverless email relay dispatching contact form messages directly to developer inbox without maintaining private SMTP servers.
-- **Workflow**: Contact form submits to local `/api/contact` -> Endpoint validates and returns access token -> Browser client executes `POST https://api.web3forms.com/submit`.
-- **Configuration**: Requires `WEB3FORMS_ACCESS_KEY` in environment variables.
-
-### 2. Google Analytics 4 (GA4)
-- **Purpose**: Privacy-conscious tracking of page views and user engagement events.
-- **Privacy Controls**: Automatically disabled in development environments. In production, it only activates if `NEXT_PUBLIC_ALLOW_INDEXING="true"` or if explicitly bypassed with `NEXT_PUBLIC_ENABLE_ANALYTICS_IN_DEV="true"`.
-- **Configuration**: Requires `NEXT_PUBLIC_GA_MEASUREMENT_ID` (format: `G-XXXXXXXXXX`).
-
-### 3. Vercel Analytics
-- **Purpose**: Real-time performance tracking and Core Web Vitals monitoring.
-- **Configuration**: Enabled when `NEXT_PUBLIC_VERCEL_ANALYTICS="true"`.
+1. **Web3Forms (`https://api.web3forms.com/submit`)**: Processes and emails contact form submissions dispatched from the browser after `/api/contact` verification; requires `WEB3FORMS_ACCESS_KEY`.
+2. **Vercel Analytics (`@vercel/analytics/next`)**: Optional aggregated visitor metrics, enabled only when `NEXT_PUBLIC_VERCEL_ANALYTICS="true"` in production (or `NEXT_PUBLIC_ENABLE_ANALYTICS_IN_DEV="true"` locally).
+3. **Google Analytics 4 (`components/analytics/GoogleAnalytics.tsx`)**: Optional `gtag.js` script injected with `strategy="lazyOnload"` when `NEXT_PUBLIC_GA_MEASUREMENT_ID` matches `^G-[A-Z0-9]+$` and indexing is permitted.
 
 ---
 
 ## 10. Environment Variables and Configuration
 
-The application uses environment variables for third-party service connections and indexing policies. Create a `.env.local` file in the root directory:
+Copy `.env.example` to `.env.local`:
 
-### `.env.example`
 ```bash
-# ==============================================================================
-# Contact Form (Web3Forms)
-# ==============================================================================
-# Access key obtained from https://web3forms.com
-# Required for contact form submissions.
+# Access key from https://web3forms.com (Required for contact submissions)
 WEB3FORMS_ACCESS_KEY=your_web3forms_access_key_here
 
-# ==============================================================================
-# Analytics Configuration
-# ==============================================================================
-# Google Analytics 4 Measurement ID (format: G-XXXXXXXXXX)
+# Optional analytics (disabled unless configured)
 NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
-
-# Enable Vercel Web Analytics in production (set to "true" to activate)
 NEXT_PUBLIC_VERCEL_ANALYTICS=false
-
-# Force analytics to load in local development (default: false)
 NEXT_PUBLIC_ENABLE_ANALYTICS_IN_DEV=false
 
-# ==============================================================================
-# Search Engine Indexing & Robots Policy
-# ==============================================================================
-# Controls robots.txt and meta robots tag ("true" for production, "false" for staging/preview)
+# Search indexing policy ("true" in production)
 NEXT_PUBLIC_ALLOW_INDEXING=true
 
-# ==============================================================================
-# Automated Testing Configuration
-# ==============================================================================
-# Base URL targeted by scripts/test-contact-security.mjs
+# Target base URL for scripts/test-contact-security.mjs
 TEST_URL=http://localhost:3000
 ```
 
-### Variable Reference Table
-
-| Variable Name | Required | Default / Format | Scope | Purpose |
-| :--- | :---: | :--- | :--- | :--- |
-| `WEB3FORMS_ACCESS_KEY` | **Yes** | UUID string | Server Route | Authorizes email delivery through Web3Forms. |
-| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional | `G-[A-Z0-9]+` | Client / Browser | Google Analytics 4 stream measurement ID. |
-| `NEXT_PUBLIC_VERCEL_ANALYTICS` | Optional | `"true"` / `"false"` | Client / Browser | Toggles Vercel Analytics tracking script. |
-| `NEXT_PUBLIC_ENABLE_ANALYTICS_IN_DEV` | Optional | `"false"` | Client / Browser | Allows verifying analytics events on `localhost`. |
-| `NEXT_PUBLIC_ALLOW_INDEXING` | Optional | `"true"` | Client / Server | Instructs web crawlers whether to index the site. |
-| `TEST_URL` | Optional | `http://localhost:3000` | Node.js Test Runner | Base URL target for integration security tests. |
+| Variable | Required | Scope | Purpose |
+| :--- | :---: | :--- | :--- |
+| `WEB3FORMS_ACCESS_KEY` | **Yes** | Server Route (`/api/contact`) | Authorizes Web3Forms submission relay (also accepts `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` fallback). |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional | Client | GA4 measurement ID (`G-...`). Automatically stripped from CSP when unset. |
+| `NEXT_PUBLIC_VERCEL_ANALYTICS` | Optional | Client | Activates `@vercel/analytics/next` when `"true"`. |
+| `NEXT_PUBLIC_ENABLE_ANALYTICS_IN_DEV` | Optional | Client | Forces analytics rendering during `next dev` verification. |
+| `NEXT_PUBLIC_ALLOW_INDEXING` | Optional | Server/Client | Controls robots indexing eligibility alongside `VERCEL_ENV`. |
+| `TEST_URL` | Optional | Test Script | Target server origin for `npm run test:security`. |
 
 ---
 
 ## 11. Installation and Local Development
 
-### Prerequisites
-- **Node.js**: `v18.18.0` or `v20.0.0+` (LTS recommended)
-- **Package Manager**: `npm` (v9+), `pnpm` (v8+), or `yarn` (v1.22+)
-- **Git**: Installed and configured
-
-### Step-by-Step Setup
-
-1. **Clone the Repository**
+1. **Prerequisites**: Node.js `v20+` (required by `shiki` engine), `npm` `v9+`, Git.
+2. **Clone & Install**:
    ```bash
-   git clone https://github.com/Nirajan09/portfolio-nextjs.git
-   cd portfolio-nextjs
-   ```
-
-2. **Install Dependencies**
-   ```bash
+   git clone https://github.com/Nirajan09/portfolio.git
+   cd portfolio
    npm install
    ```
-
-3. **Configure Environment Variables**
+3. **Configure Environment**:
    ```bash
    cp .env.example .env.local
    ```
-   Open `.env.local` and add your `WEB3FORMS_ACCESS_KEY`.
-
-4. **Start the Development Server**
+   Set `WEB3FORMS_ACCESS_KEY` inside `.env.local` to enable live form submissions.
+4. **Run Development Server**:
    ```bash
    npm run dev
    ```
-
-5. **Access the Application**
-   Open your browser and navigate to `http://localhost:3000`.
+   Open [http://localhost:3000](http://localhost:3000) in your browser. *(Draft blog posts with `draft: true` are visible locally in dev mode and excluded automatically in production builds.)*
 
 ---
 
 ## 12. Available Scripts
 
-The following scripts are defined in `package.json`:
-
-| Command | Action | Description |
+| Command | Underlying Command | Purpose |
 | :--- | :--- | :--- |
-| `npm run dev` | `next dev` | Launches the local Next.js development server with Fast Refresh. |
-| `npm run build` | `next build` | Builds the optimized production application with static generation. |
-| `npm run start` | `next start` | Runs the compiled production server locally. |
-| `npm run lint` | `next lint` | Executes ESLint to check for code style issues and Next.js antipatterns. |
-| `npm run typecheck` | `tsc --noEmit` | Executes TypeScript type-checking across all `.ts` and `.tsx` files. |
-| `npm run test` | `npm run test:unit && npm run test:security` | Runs the full automated verification test suite. |
-| `npm run test:unit` | `node --test tests/contact-unit.test.mjs` | Executes 27 native unit tests for validation, rate limiting, and sanitization. |
-| `npm run test:security` | `node scripts/test-contact-security.mjs` | Runs 16 HTTP integration tests verifying endpoint defense layers. |
+| `npm run dev` | `next dev` | Starts local development server with Turbopack Fast Refresh. |
+| `npm run build` | `next build` | Compiles production bundle, runs TypeScript check, and statically prerenders routes. |
+| `npm run start` | `next start` | Serves the compiled `.next` production build locally. |
+| `npm run lint` | `eslint` | Runs flat-config ESLint checks across project source files. |
+| `npm run typecheck` | `tsc --noEmit` | Runs full TypeScript static type validation. |
+| `npm run test` | `node --test tests/contact-unit.test.mjs && node scripts/test-contact-security.mjs` | Runs unit tests followed by live HTTP security integration tests. |
+| `npm run test:unit` | `node --test tests/contact-unit.test.mjs` | Executes 27 isolated unit tests for validation, sanitization, and rate limiting. |
+| `npm run test:security` | `node scripts/test-contact-security.mjs` | Tests `/api/contact` defense layers against a running server at `TEST_URL`. |
 
 ---
 
 ## 13. Build and Production Deployment
 
-### Production Build
-Execute the production build locally to verify static generation:
-```bash
-npm run build
-```
-This produces an optimized `.next` build output, compiling static HTML for `/`, `/projects/[slug]`, `/sitemap.xml`, and `/robots.txt`.
-
-### Deployment to Vercel (Recommended)
-1. Push your repository to GitHub.
-2. Import the project in the [Vercel Dashboard](https://vercel.com).
-3. Vercel automatically detects Next.js.
-4. Add your environment variables (`WEB3FORMS_ACCESS_KEY`, `NEXT_PUBLIC_ALLOW_INDEXING="true"`).
-5. Click **Deploy**.
-
-### Canonical Domain & Redirects Configuration
-Configured in `next.config.ts`:
-```typescript
-async redirects() {
-  return [
-    {
-      source: "/:path*",
-      has: [{ type: "host", value: "nirajantiwari.com.np" }],
-      destination: "https://www.nirajantiwari.com.np/:path*",
-      permanent: true,
-    },
-  ];
-}
-```
-Any incoming request to apex `nirajantiwari.com.np` is permanently (HTTP 308) redirected to `www.nirajantiwari.com.np`, preserving SEO equity and link canonicalization.
+- **Production Build**: Running `npm run build` outputs a verified static + serverless build in `.next/`, pre-generating `/`, `/blog`, `/blog/[slug]`, `/blog/[slug]/opengraph-image`, `/projects/[slug]`, `/projects/[slug]/opengraph-image`, `/privacy`, `/rss.xml`, `/sitemap.xml`, `/robots.txt`, and dynamic icons, with `/api/contact` deployed as an on-demand serverless route.
+- **Hosting (Vercel)**: Deploy directly from GitHub to Vercel, configure `WEB3FORMS_ACCESS_KEY` and optional analytics environment variables, and assign `www.nirajantiwari.com.np` + apex `nirajantiwari.com.np` (which automatically 308-redirects to `www` via `next.config.ts`).
 
 ---
 
 ## 14. SEO and Performance
 
-### Technical SEO Implementation
-- **Dynamic Sitemap**: Automatically generated at `/sitemap.xml` via `app/sitemap.ts`, indexing `/` and all project detail URLs with accurate `lastModified` timestamps.
-- **Dynamic Robots**: Configured via `app/robots.ts`. Automatically disallows `/api/` from crawlers and respects `NEXT_PUBLIC_ALLOW_INDEXING`.
-- **Dynamic Open Graph & Twitter Cards**: High-definition (1200x630) social sharing preview images rendered dynamically at the edge via `@vercel/og` (`app/opengraph-image.tsx` and `app/projects/[slug]/opengraph-image.tsx`).
-- **Structured Data (JSON-LD)**: Injected in `<head>` via `JsonLd.tsx`:
-  - `Person`: Full biographical details, job title, social profiles, and alumni institutions.
-  - `WebSite`: Search configuration and author attribution.
-  - `SoftwareApplication`: Per-project schema detailing application category and feature highlights.
-
-### Performance Optimizations
-- **Image Formats**: Configured in `next.config.ts` to prefer modern AVIF and WebP formats (`formats: ["image/avif", "image/webp"]`).
-- **Console Stripping**: Production compiler configuration removes all `console.log` statements while preserving `console.error` and `console.warn`.
-- **Package Import Optimization**: Experimental package tree-shaking enabled for `react-icons` and `motion` (`optimizePackageImports`).
-- **Font Optimization**: Google Fonts (`Inter` and `Space Grotesk`) loaded using `next/font/google` with zero layout shift (CSS `size-adjust` fallback).
-- **Framework Fingerprinting**: Disabled `x-powered-by` header (`poweredByHeader: false`).
+- **Dynamic Sitemap & Robots**: `app/sitemap.ts` indexes `/`, `/blog`, `/privacy`, all projects, and all published blog posts with accurate `lastModified` dates; `app/robots.ts` disallows `/api/` and blocks preview deployments (`VERCEL_ENV === "preview"`).
+- **Dynamic OG Cards & RSS**: Uses `next/og` (`OgCard`) for site, project, and blog previews, plus `/rss.xml` linked via `<link rel="alternate" type="application/rss+xml">`.
+- **Structured Data (JSON-LD)**: Emits `Person` (`/#person`), `WebSite` (`/#website`), `SoftwareApplication` (on projects), and `BlogPosting` (on blog posts) schemas.
+- **Asset & Bundle Discipline**: Prefer local AVIF/WebP images, strip `console.*` (except `error`/`warn`) in production, optimize `react-icons` & `motion` imports via `optimizePackageImports`, and compile Markdown/Shiki exclusively at build time.
 
 ---
 
 ## 15. Security Considerations
 
-### 1. HTTP Security Headers
-Every HTTP response is fortified with industry-standard headers configured in `next.config.ts`:
-```typescript
-const securityHeaders = [
-  { key: "X-Content-Type-Options", value: "nosniff" },
-  { key: "X-Frame-Options", value: "DENY" },
-  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-  {
-    key: "Permissions-Policy",
-    value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()",
-  },
-  { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
-  { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
-];
-```
+`next.config.ts` applies hardened response headers on all routes (`/:path*`), sets `poweredByHeader: false`, sets `Cache-Control: no-store` on `/api/:path*`, and enables a strict **production Content Security Policy (CSP)**:
 
-### 2. Cache Invalidation on Sensitive Endpoints
-The `/api/:path*` route explicitly sets `Cache-Control: no-store` to prevent intermediary proxies or CDNs from caching sensitive contact requests.
-
-### 3. Defensive Sanitization
-All inputs are stripped of carriage returns and newlines before email composition to prevent SMTP header injection. Special HTML tags (`<script>`, `<iframe>`) are strictly blocked during schema validation.
+- `X-Content-Type-Options: nosniff`
+- `X-Frame-Options: DENY` & `frame-ancestors 'none'`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `Permissions-Policy`: disables camera, microphone, geolocation, payment, usb, browsing-topics
+- `Cross-Origin-Opener-Policy: same-origin`
+- `Strict-Transport-Security: max-age=63072000; includeSubDomains; preload`
+- `Content-Security-Policy` (production): Locks scripts (`'self' 'unsafe-inline'` + allowed analytics domains), images (`'self' data: blob:` + GA if configured), frames/objects (`'none'`), and form actions (`'self' https://api.web3forms.com`).
 
 ---
 
 ## 16. Testing and Quality Assurance
 
-The codebase includes automated unit and integration tests powered by the **Node.js native test runner** (`node --test`).
-
-### 1. Unit Test Suite (`tests/contact-unit.test.mjs`)
-Run with:
-```bash
-npm run test:unit
-```
-Covers **27 test assertions**:
-- **CRLF Injection Prevention**: Verifies `\r` and `\n` stripping across multiple input configurations.
-- **RFC 5322 Email Validation**: Rejects malformed addresses, header injection strings, and invalid domains.
-- **Boundary Limit Enforcement**: Validates minimum/maximum length constraints for Name, Email, Subject, and Message.
-- **Real-Time UI Indicator Accuracy**: Ensures the green confirmation checkmark never triggers prematurely on invalid inputs.
-- **Rate Limiter Mechanics**: Tests sliding-window request throttling and per-IP boundary isolation.
-
-### 2. Security Integration Suite (`scripts/test-contact-security.mjs`)
-Run with a local server active:
-```bash
-npm run test:security
-```
-Tests all 8 security layers against HTTP status expectations (`403`, `415`, `413`, `400`, `429`, `200`).
+- **Unit Test Suite (`tests/contact-unit.test.mjs`)**: 27 assertions via native `node --test` verifying CRLF injection stripping (`stripCRLF`), RFC 5322 email regex validation, length & character bounds, UI indicator precision (`isFieldValid`), and fixed-window IP rate limiter mechanics.
+- **HTTP Integration Security Suite (`scripts/test-contact-security.mjs`)**: Verifies live HTTP responses from `POST /api/contact` for `403` CSRF blocks, `415` content-type rejections, `413` oversized body rejections, `400` invalid JSON/fields, silent `200` honeypot & timing traps, `429` rate limit + `Retry-After`, and `Cache-Control: no-store` headers.
+- **Build & Type Checks**: Verified with `npm run typecheck` (`tsc --noEmit`) and `npm run build` (`next build`).
 
 ---
 
 ## 17. Browser and Device Compatibility
 
-| Browser | Supported Versions | Notes |
-| :--- | :--- | :--- |
-| **Google Chrome** | Latest 2 versions | Fully tested; Canvas 2D runs at 60 FPS. |
-| **Mozilla Firefox** | Latest 2 versions | Full support; handles custom scrollbar and backdrop blurs. |
-| **Apple Safari** | Latest 2 versions (macOS & iOS) | Full webkit prefix support; tested with dynamic viewport units. |
-| **Microsoft Edge** | Latest 2 versions | Native Chromium performance. |
-
-### Responsive Breakpoints
-- **Mobile** (`< 640px`): Single-column layouts, touch-friendly tap targets ($\ge 44 \times 44$ px), mobile drawer menu.
-- **Tablet** (`640px - 1023px`): Two-column project and certification grids.
-- **Desktop** (`1024px - 1279px`): Sticky sidebar timeline navigation, multi-column feature layouts.
-- **Large Display** (`\ge 1280px`): Full max-width page container constraints (`max-w-6xl` / `max-w-7xl`).
+- Tested across modern Chromium (Chrome, Edge), Firefox, and Safari viewports.
+- **Breakpoints**: Mobile (`< 640px`, drawer navigation & stacked grids), Tablet (`640px – 1023px`, 2-column grids), Desktop (`>= 1024px`, sticky case-study/blog TOC sidebars, 8-pill centered navbar, and multi-column layouts).
 
 ---
 
 ## 18. Known Limitations and Future Improvements
 
-### Identified Limitations
-- **In-Memory Rate Limiting**: The current rate limiter in `/api/contact` stores counters in serverless memory. Under distributed multi-region serverless scaling, rate limits are isolated per warm instance rather than globally synchronized.
-- **Single Active Theme**: The user interface is intentionally locked to the cyber-dark palette (`colorScheme: "dark"`); no light theme toggle is currently provided.
+### Existing Limitations
+- **Per-Instance In-Memory Rate Limiter**: Serverless cold starts or horizontal scaling isolate `lib/rate-limit.ts` per warm Node instance rather than globally synchronizing across edge regions.
+- **Dark Theme Only**: Interface is intentionally locked to the cyber-dark scheme (`colorScheme: "dark"`).
+- **Static Local Markdown**: Blog articles require adding `.md` files in `content/blog/` and pushing a commit rather than editing via a hosted CMS UI.
 
-### Future Architectural Roadmap
-- [ ] **Distributed Rate Limiting**: Integrate Upstash Redis via `@upstash/ratelimit` for globally synchronized rate limiting across edge regions.
-- [ ] **Adaptive Particle Density**: Adjust particle count dynamically using the Network Information API and Hardware Concurrency API (e.g., 60 nodes on low-power mobile, 120 on desktop).
-- [ ] **Automated E2E Testing**: Add Playwright test suites for end-to-end user journeys (navigating case studies, submitting valid forms).
+### Potential Future Enhancements
+- [ ] Replace in-memory limiter in `lib/rate-limit.ts` with a shared Upstash Redis store for global rate enforcement.
+- [ ] Add automated Playwright end-to-end tests covering contact submission, blog filtering, and project navigation.
+- [ ] Mount `components/sections/Services.tsx` into a dedicated homepage section or `/services` route if service inquiries become a primary focus.
 
 ---
 
 ## 19. Contributing
 
-Contributions, feedback, and issue reports are welcome.
-
-1. **Fork the Repository** on GitHub.
-2. **Create a Feature Branch**:
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. **Commit Your Changes** following Conventional Commits:
-   ```bash
-   git commit -m "feat(ui): add new interactive case study diagram"
-   ```
-4. **Run Verification Commands**:
+1. Fork the repository (`https://github.com/Nirajan09/portfolio`).
+2. Create a feature branch (`git checkout -b feat/your-feature`).
+3. Verify changes before committing:
    ```bash
    npm run typecheck
-   npm run lint
    npm run test:unit
+   npm run build
    ```
-5. **Push to Your Fork**:
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-6. **Open a Pull Request** against the `main` branch.
+4. Open a pull request against `main` using Conventional Commits.
 
 ---
 
 ## 20. License
 
-No open-source license is granted for this repository. All rights are reserved by **Nirajan Tiwari**. 
-
-The source code is published publicly for viewing, architectural inspection, and portfolio evaluation purposes. You may not distribute, reproduce, or claim commercial ownership of any portions of this codebase or its contents without explicit written permission.
+No open-source license is specified for this repository. All rights are reserved by **Nirajan Tiwari**. Source code is made publicly viewable for portfolio evaluation and architectural review.
 
 ---
 
 ## 21. Author and Contact
 
-**Nirajan Tiwari**  
-*Full Stack Developer*  
-Kathmandu, Bagmati, Nepal
+**Nirajan Tiwari** — *Full Stack Developer*  
+Kathmandu, Nepal
 
-- **Website**: [https://www.nirajantiwari.com.np](https://www.nirajantiwari.com.np)
+- **Portfolio**: [https://www.nirajantiwari.com.np](https://www.nirajantiwari.com.np)
 - **Email**: [nirajantiwari09@gmail.com](mailto:nirajantiwari09@gmail.com)
 - **Phone**: [+977-9765973464](tel:+9779765973464)
-- **LinkedIn**: [https://www.linkedin.com/in/nirajan-tiwari](https://www.linkedin.com/in/nirajan-tiwari)
 - **GitHub**: [https://github.com/Nirajan09](https://github.com/Nirajan09)
-- **Resume**: [Download Curriculum Vitae (PDF)](https://www.nirajantiwari.com.np/Nirajan_Tiwari_Resume.pdf)
+- **LinkedIn**: [https://www.linkedin.com/in/nirajan-tiwari](https://www.linkedin.com/in/nirajan-tiwari)
+- **Resume**: [Nirajan Tiwari Resume (PDF)](https://www.nirajantiwari.com.np/Nirajan_Tiwari_Resume.pdf)
