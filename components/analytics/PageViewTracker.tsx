@@ -29,6 +29,11 @@ export function PageViewTracker() {
         if (slug) {
           trackEvent("project_view", { project: slug });
         }
+      } else if (pathname.startsWith("/blog/")) {
+        const slug = pathname.replace(/^\/blog\//, "").split("/")[0];
+        if (slug) {
+          trackEvent("blog_view", { post: slug });
+        }
       }
     }
   }, [pathname]);

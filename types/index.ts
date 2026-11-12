@@ -98,3 +98,35 @@ export type Certification = {
   /** Certificate image in /public. Enables the preview modal. */
   image?: { src: string; alt: string };
 };
+
+export type BlogHeading = {
+  id: string;
+  text: string;
+  level: 2 | 3;
+};
+
+export type BlogPostMeta = {
+  slug: string;
+  title: string;
+  summary: string;
+  /** ISO date string, e.g. "2026-11-10". */
+  publishedAt: string;
+  updatedAt?: string;
+  category: string;
+  tags: readonly string[];
+  readingTime: string;
+  readingMinutes: number;
+  featured?: boolean;
+  /** Hidden in production builds; visible during local development. */
+  draft?: boolean;
+  /** Local image in /public/blog/. Without it, a generated OG card is used. */
+  cover?: {
+    src: string;
+    alt: string;
+  };
+};
+
+export type BlogPost = BlogPostMeta & {
+  content: string;
+  headings: readonly BlogHeading[];
+};

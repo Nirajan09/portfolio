@@ -1,15 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import { memo, useCallback, useEffect, useState, type ReactNode } from "react";
 import {
   LuArrowUp,
+  LuBookOpen,
   LuCheck,
   LuClock,
   LuCopy,
   LuFileText,
   LuMail,
+  LuRss,
   LuShieldCheck,
 } from "react-icons/lu";
 
@@ -301,11 +302,35 @@ export const Footer = memo(function Footer() {
             </span>
             <Link
               href="/privacy"
-              data-track="privacy_page_click"
               className="group inline-flex items-center gap-1.5 font-medium text-secondary/80 hover:text-accent transition-colors underline underline-offset-4 decoration-border/80 hover:decoration-accent cursor-pointer"
             >
               <LuShieldCheck className="size-3.5 text-accent transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
               <span>Privacy Policy</span>
+            </Link>
+            <span className="hidden text-border sm:inline" aria-hidden="true">
+              •
+            </span>
+            <Link
+              href="/blog"
+              data-track="blog_click"
+              data-track-location="footer"
+              className="group inline-flex items-center gap-1.5 font-medium text-secondary/80 hover:text-accent transition-colors underline underline-offset-4 decoration-border/80 hover:decoration-accent cursor-pointer"
+            >
+              <LuBookOpen className="size-3.5 text-accent transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
+              <span>Blog</span>
+            </Link>
+            <span className="hidden text-border sm:inline" aria-hidden="true">
+              •
+            </span>
+            <Link
+              href="/rss.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="RSS Feed"
+              className="group inline-flex items-center gap-1.5 font-medium text-secondary/80 hover:text-accent transition-colors underline underline-offset-4 decoration-border/80 hover:decoration-accent cursor-pointer"
+            >
+              <LuRss className="size-3.5 text-accent transition-transform duration-200 group-hover:scale-110" aria-hidden="true" />
+              <span>RSS</span>
             </Link>
           </div>
 

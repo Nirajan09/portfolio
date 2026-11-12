@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { personal } from "@/data/personal";
-import type { Project } from "@/types";
+import type { BlogPostMeta, Project } from "@/types";
 
 export const siteConfig = {
   name: personal.name,
@@ -28,23 +28,42 @@ export function pageMetadata({
   title,
   description,
   path,
+  article,
 }: {
   title: string;
   description: string;
   path: string;
+  article?: {
+    publishedTime: string;
+    modifiedTime?: string;
+    tags?: readonly string[];
+  };
 }): Metadata {
   return {
     title,
     description,
     alternates: { canonical: path },
-    openGraph: {
-      type: "website",
-      siteName: siteConfig.name,
-      locale: siteConfig.locale,
-      url: path,
-      title: `${title} | ${siteConfig.name}`,
-      description,
-    },
+    openGraph: article
+      ? {
+          type: "article",
+          siteName: siteConfig.name,
+          locale: siteConfig.locale,
+          url: path,
+          title: `${title} | ${siteConfig.name}`,
+          description,
+          publishedTime: article.publishedTime,
+          ...(article.modifiedTime && { modifiedTime: article.modifiedTime }),
+          authors: [siteConfig.name],
+          ...(article.tags && { tags: [...article.tags] }),
+        }
+      : {
+          type: "website",
+          siteName: siteConfig.name,
+          locale: siteConfig.locale,
+          url: path,
+          title: `${title} | ${siteConfig.name}`,
+          description,
+        },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${siteConfig.name}`,
@@ -101,5 +120,28 @@ export function projectJsonLd(project: Project) {
     ...(project.links?.repo && { codeRepository: project.links.repo }),
     ...(project.links?.live && { url: project.links.live }),
     keywords: project.stack.join(", "),
+  };
+}
+
+export function blogPostingJsonLd(post: BlogPostMeta) {
+  const url = absoluteUrl(`/blog/${post.slug}`);
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": url,
+    url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    headline: post.title,
+    description: post.summary,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt ?? post.publishedAt,
+    articleSection: post.category,
+    keywords: post.tags.join(", "),
+    inLanguage: "en",
+    author: { "@id": absoluteUrl("/#person") },
+    publisher: { "@id": absoluteUrl("/#person") },
+    image: absoluteUrl(
+      post.cover ? post.cover.src : `/blog/${post.slug}/opengraph-image`,
+    ),
   };
 }

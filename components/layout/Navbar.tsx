@@ -87,7 +87,7 @@ export const Navbar = memo(function Navbar() {
     (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
       setOpen(false);
 
-      if (!isHome) return;
+      if (!isHome || id === "blog") return;
 
       e.preventDefault();
 
@@ -172,7 +172,9 @@ export const Navbar = memo(function Navbar() {
     ? activeId
     : pathname.startsWith("/projects")
       ? "projects"
-      : null;
+      : pathname.startsWith("/blog")
+        ? "blog"
+        : null;
 
   return (
     <header
@@ -245,7 +247,7 @@ export const Navbar = memo(function Navbar() {
                     aria-current={isActive ? "true" : undefined}
                     onClick={(e) => handleNavClick(e, item.id)}
                     className={cn(
-                      "relative block rounded-full px-4 py-1.5 text-sm font-medium",
+                      "relative block rounded-full px-3 xl:px-4 py-1.5 text-sm font-medium",
                       "transition-colors duration-200",
                       isActive
                         ? "text-primary"

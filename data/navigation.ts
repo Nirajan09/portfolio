@@ -7,6 +7,7 @@ const allNavItems = [
   { label: "Projects", id: "projects" },
   { label: "Experience", id: "experience" },
   { label: "Certifications", id: "certifications" },
+  { label: "Blog", id: "blog" },
   { label: "Contact", id: "contact" },
 ] as const;
 
@@ -17,4 +18,5 @@ export const navItems: readonly NavItem[] = allNavItems.filter(
   (item) => item.id !== "certifications" || certifications.length > 0,
 );
 
-export const navHref = (id: NavItem["id"]) => `/#${id}`;
+export const navHref = (id: NavItem["id"]) =>
+  id === "blog" ? "/blog" : `/#${id}`;
