@@ -284,6 +284,9 @@ portfolio-nextjs/
 │   ├── about.ts, certifications.ts, education.ts, experience.ts,
 │   └── navigation.ts, personal.ts, projects.ts, skills.ts
 │
+├── hooks/                                 # Custom client hooks
+│   └── useIsMounted.ts                    # Hydration-safe mount hook using useSyncExternalStore
+│
 ├── lib/                                   # Shared server & client utilities
 │   ├── analytics.ts                       # Typed AnalyticsEvent emitter & data-track parser
 │   ├── blog.ts                            # Markdown/frontmatter loader, TOC extractor, Shiki highlighter
@@ -332,6 +335,11 @@ Each `POST /api/contact` call runs through 8 ordered checks before issuing a Web
 - **Pre-rendered Radial Glow Sprites**: Rather than calling `ctx.createRadialGradient` on every frame, `createGlowSprite` caches three `48x48` offscreen canvases at mount time and blits them via `ctx.drawImage`.
 - **Adaptive Density & Reduced Motion**: Scales max node budgets (`45` < 640px, `70` < 1024px, `120` desktop), clamps DPR to `<= 2`, uses squared-distance checks to skip distant links before `Math.sqrt`, pauses via `visibilitychange` when backgrounded, and draws a static frame when `prefers-reduced-motion: reduce` matches.
 
+### 4. Clean Navigation & Accessible Stretched-Link Cards
+- **Zero `/#` URL Fragments**: Eliminates unsightly `/#section` fragments entirely. On the homepage, navigation links use clean semantic anchors (`#about`, `#skills`, `#projects`, `#experience`, `#certifications`, `#contact`, and `/` for home). When navigating from sub-pages (`/blog`, `/projects/[slug]`, `/privacy`), links route to `/?section=name`.
+- **Seamless Landing Auto-Scroll**: When a visitor lands on the homepage with `?section=name` (or a legacy hash `#name`), `Navbar.tsx` detects the target, smoothly scrolls to the section element, sets the active pill indicator, and immediately sanitizes the URL to clean `/` via `window.history.replaceState`.
+- **Accessible Stretched-Link Pattern (`BlogCard.tsx`)**: The primary article link on the title expands over the entire card surface via `after:absolute after:inset-0 after:z-10`. Visitors can click anywhere on the card (cover, badges, summary, tags, footer) to navigate to `/blog/[slug]`, eliminating redundant duplicate anchor tags, keeping HTML strictly valid (no nested `<a>`), and preserving single clear tab stops for screen readers and keyboard navigation.
+
 ---
 
 ## 8. UI/UX and Design System
@@ -354,6 +362,11 @@ Each `POST /api/contact` call runs through 8 ordered checks before issuing a Web
 ### Typography & Accessibility
 - **Fonts**: `Space Grotesk` (`--font-space-grotesk`, weights 500/600/700) for headings, `Inter` (`--font-inter`, weights 400/500/600) for prose, paired with custom gradient scrollbars and accent text `::selection`.
 - **Accessibility**: `#main-content` skip link in `app/layout.tsx`, `2px solid var(--accent)` `:focus-visible` outlines, semantic ARIA landmarks, keyboard `Escape` + backdrop traps in dialogs, and global `@media (prefers-reduced-motion: reduce)` CSS + `MotionConfig` overrides.
+
+### Restrained, Professional Visual Polish
+- **Static Confident Role Copy**: Avoided simulated typewriter loops and cycling headlines on the Hero in favor of crisp, confident static copy that immediately communicates core full-stack competencies to recruiters.
+- **Hardware-Accelerated Card Transitions**: Replaced CPU-heavy cursor spotlight radial gradients with GPU-accelerated micro-lift (`hover:-translate-y-1`), subtle border transitions (`hover:border-accent/40`), and soft glow shadows (`hover:shadow-glow`).
+- **Live Kathmandu Time & Offset Badge**: Replaced static location text in About and Footer with a live Kathmandu clock (`Asia/Kathmandu`, UTC+5:45) that dynamically calculates the visitor's relative timezone difference.
 
 ---
 
@@ -465,6 +478,7 @@ TEST_URL=http://localhost:3000
 
 ## 16. Testing and Quality Assurance
 
+- **Linting & Code Quality**: Enforced via ESLint flat config (`npm run lint`), passing with **0 errors and 0 warnings** across all components, lib modules, and route handlers.
 - **Unit Test Suite (`tests/contact-unit.test.mjs`)**: 27 assertions via native `node --test` verifying CRLF injection stripping (`stripCRLF`), RFC 5322 email regex validation, length & character bounds, UI indicator precision (`isFieldValid`), and fixed-window IP rate limiter mechanics.
 - **HTTP Integration Security Suite (`scripts/test-contact-security.mjs`)**: Verifies live HTTP responses from `POST /api/contact` for `403` CSRF blocks, `415` content-type rejections, `413` oversized body rejections, `400` invalid JSON/fields, silent `200` honeypot & timing traps, `429` rate limit + `Retry-After`, and `Cache-Control: no-store` headers.
 - **Build & Type Checks**: Verified with `npm run typecheck` (`tsc --noEmit`) and `npm run build` (`next build`).
@@ -497,6 +511,7 @@ TEST_URL=http://localhost:3000
 2. Create a feature branch (`git checkout -b feat/your-feature`).
 3. Verify changes before committing:
    ```bash
+   npm run lint
    npm run typecheck
    npm run test:unit
    npm run build
