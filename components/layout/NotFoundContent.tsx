@@ -186,7 +186,7 @@ export function NotFoundContent() {
 
           {/* Explore Projects Button */}
           <Link
-            href="/#projects"
+            href="/?section=projects"
             data-track="not_found_projects_click"
             className="group inline-flex items-center justify-center gap-2 rounded-xl border border-border/80 bg-surface/80 px-5 sm:px-6 py-2.5 text-xs sm:text-sm font-medium text-primary backdrop-blur-xs transition-all duration-200 hover:scale-[1.03] hover:border-accent/50 hover:bg-surface-elevated hover:text-accent active:scale-[0.98]"
           >

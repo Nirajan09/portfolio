@@ -122,11 +122,11 @@ export function ProjectNavigation({
             </div>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0 w-full sm:w-auto">
-              <Button href="/#contact" size="lg" className="hover:scale-[1.02] active:scale-[0.98] justify-center">
+              <Button href="/?section=contact" size="lg" className="hover:scale-[1.02] active:scale-[0.98] justify-center">
                 <span>Send a message</span>
                 <LuArrowUpRight className="size-4" aria-hidden="true" />
               </Button>
-              <Button href="/#projects" variant="secondary" size="lg" className="hover:scale-[1.02] active:scale-[0.98] justify-center">
+              <Button href="/?section=projects" variant="secondary" size="lg" className="hover:scale-[1.02] active:scale-[0.98] justify-center">
                 <LuLayoutGrid className="size-4" />
                 <span>All projects</span>
               </Button>
@@ -144,7 +144,7 @@ export function ProjectNavigation({
                 Other Projects
               </h3>
               <Link
-                href="/#projects"
+                href="/?section=projects"
                 className="group inline-flex items-center gap-1.5 text-xs font-semibold text-accent transition-colors hover:underline"
               >
                 <span>View all projects</span>

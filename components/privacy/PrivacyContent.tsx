@@ -609,7 +609,7 @@ export const PrivacyContent = memo(function PrivacyContent() {
               </button>
 
               <Link
-                href="/#contact"
+                href="/?section=contact"
                 className="inline-flex items-center gap-1.5 rounded-xl border border-border/80 bg-surface/60 px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-secondary transition-all duration-200 hover:border-accent/40 hover:bg-surface hover:text-primary cursor-pointer active:scale-95"
               >
                 <span>Contact Form</span>

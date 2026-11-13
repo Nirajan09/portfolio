@@ -18,5 +18,8 @@ export const navItems: readonly NavItem[] = allNavItems.filter(
   (item) => item.id !== "certifications" || certifications.length > 0,
 );
 
-export const navHref = (id: NavItem["id"]) =>
-  id === "blog" ? "/blog" : `/#${id}`;
+export const navHref = (id: NavItem["id"], isHome: boolean = true) => {
+  if (id === "blog") return "/blog";
+  if (id === "home") return "/";
+  return isHome ? `#${id}` : `/?section=${id}`;
+};

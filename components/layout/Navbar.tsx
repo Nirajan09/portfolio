@@ -47,13 +47,19 @@ export const Navbar = memo(function Navbar() {
   useEffect(() => {
     if (!isHome) return;
 
-    // If page is loaded with a hash, scroll smoothly to section and clean hash from URL bar
-    if (window.location.hash) {
-      const targetId = window.location.hash.replace("#", "");
+    // If page is loaded with a section query parameter (?section=projects) or legacy hash, scroll smoothly and clean URL
+    const searchParams = new URLSearchParams(window.location.search);
+    const sectionParam = searchParams.get("section");
+    const hashTarget = window.location.hash ? window.location.hash.replace("#", "") : null;
+    const rawTarget = sectionParam || hashTarget;
+    const targetId = rawTarget === "certificates" ? "certifications" : rawTarget;
+
+    if (targetId) {
       const element = document.getElementById(targetId);
       if (element) {
         setTimeout(() => {
           element.scrollIntoView({ behavior: "smooth" });
+          setActiveId(targetId);
           window.history.replaceState(null, "", window.location.pathname);
         }, 100);
       } else {
@@ -87,11 +93,16 @@ export const Navbar = memo(function Navbar() {
     (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
       setOpen(false);
 
-      if (!isHome || id === "blog") return;
+      if (id === "blog") return;
+
+      if (!isHome) {
+        // Allow default Next.js navigation back to homepage with ?section=...
+        return;
+      }
 
       e.preventDefault();
 
-      if (window.location.hash) {
+      if (window.location.hash || window.location.search) {
         window.history.replaceState(null, "", window.location.pathname);
       }
 
@@ -207,7 +218,7 @@ export const Navbar = memo(function Navbar() {
       >
         {/* ---------- Logo: monogram badge + name ---------- */}
         <Link
-          href={navHref("home")}
+          href={navHref("home", isHome)}
           aria-label={`${personal.name}, back to top`}
           className="group font-display text-xl font-bold tracking-tight text-primary"
           onClick={(e) => handleNavClick(e, "home")}
@@ -243,7 +254,7 @@ export const Navbar = memo(function Navbar() {
               return (
                 <li key={item.id}>
                   <Link
-                    href={navHref(item.id)}
+                    href={navHref(item.id, isHome)}
                     aria-current={isActive ? "true" : undefined}
                     onClick={(e) => handleNavClick(e, item.id)}
                     className={cn(
@@ -281,7 +292,7 @@ export const Navbar = memo(function Navbar() {
         {/* ---------- Right: CTA + mobile toggle ---------- */}
         <div className="flex items-center gap-3 justify-self-end">
           <Link
-            href="/#contact"
+            href={isHome ? "#contact" : "/?section=contact"}
             onClick={(e) => handleNavClick(e, "contact")}
             className={cn(
               "group/cta hidden h-10 items-center gap-1.5 rounded-full px-5 lg:inline-flex",
@@ -368,62 +379,62 @@ export const Navbar = memo(function Navbar() {
               role="dialog"
               className="relative mx-auto max-w-lg sm:max-w-md sm:ml-auto sm:mr-0 max-h-[calc(100dvh-5.5rem)] overflow-y-auto rounded-2xl border border-border bg-background/95 p-2.5 sm:p-3 shadow-[0_24px_60px_-12px_rgb(0_0_0/0.85),0_0_30px_rgba(34,211,238,0.1)] backdrop-blur-xl"
             >
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-accent/50 to-transparent"
-                />
+              <span
+                aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-accent/50 to-transparent"
+              />
 
-                <ul className="flex flex-col gap-1">
-                  {navItems.map((item) => {
-                    const isActive = currentId === item.id;
+              <ul className="flex flex-col gap-1">
+                {navItems.map((item) => {
+                  const isActive = currentId === item.id;
 
-                    return (
-                      <li key={item.id}>
-                        <Link
-                          href={navHref(item.id)}
-                          aria-current={isActive ? "true" : undefined}
-                          onClick={(e) => handleNavClick(e, item.id)}
-                          className={cn(
-                            "group flex h-11 sm:h-12 items-center justify-between rounded-xl px-4",
-                            "text-sm sm:text-base font-medium",
-                            "transition-[color,background-color] duration-200",
-                            isActive
-                              ? "bg-accent/10 text-accent font-semibold"
-                              : "text-secondary hover:bg-primary/5 hover:text-primary focus-visible:text-primary",
-                          )}
-                          data-track="nav_click"
-                          data-track-target={item.id}
-                          data-track-location="mobile_menu"
-                        >
-                          {/* Only the label slides, so the tap target stays put */}
-                          <span className="transition-transform duration-200 ease-standard group-hover:translate-x-1">
-                            {item.label}
-                          </span>
-                          {isActive && (
-                            <span
-                              aria-hidden="true"
-                              className="size-1.5 rounded-full bg-accent shadow-[0_0_8px_var(--color-accent)]"
-                            />
-                          )}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
+                  return (
+                    <li key={item.id}>
+                      <Link
+                        href={navHref(item.id, isHome)}
+                        aria-current={isActive ? "true" : undefined}
+                        onClick={(e) => handleNavClick(e, item.id)}
+                        className={cn(
+                          "group flex h-11 sm:h-12 items-center justify-between rounded-xl px-4",
+                          "text-sm sm:text-base font-medium",
+                          "transition-[color,background-color] duration-200",
+                          isActive
+                            ? "bg-accent/10 text-accent font-semibold"
+                            : "text-secondary hover:bg-primary/5 hover:text-primary focus-visible:text-primary",
+                        )}
+                        data-track="nav_click"
+                        data-track-target={item.id}
+                        data-track-location="mobile_menu"
+                      >
+                        {/* Only the label slides, so the tap target stays put */}
+                        <span className="transition-transform duration-200 ease-standard group-hover:translate-x-1">
+                          {item.label}
+                        </span>
+                        {isActive && (
+                          <span
+                            aria-hidden="true"
+                            className="size-1.5 rounded-full bg-accent shadow-[0_0_8px_var(--color-accent)]"
+                          />
+                        )}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
 
-                <Link
-                  href="/#contact"
-                  onClick={(e) => handleNavClick(e, "contact")}
-                  className="mt-2.5 flex h-11 sm:h-12 items-center justify-center gap-1.5 rounded-xl bg-accent text-sm font-semibold text-background transition-all duration-200 hover:bg-accent-hover hover:shadow-glow active:scale-[0.98]"
-                  data-track="nav_click"
-                  data-track-target="contact"
-                  data-track-location="mobile_menu_cta"
-                >
-                  Let&apos;s talk
-                  <LuArrowUpRight className="size-4" aria-hidden="true" />
-                </Link>
-              </nav>
-            </motion.div>
+              <Link
+                href={isHome ? "#contact" : "/?section=contact"}
+                onClick={(e) => handleNavClick(e, "contact")}
+                className="mt-2.5 flex h-11 sm:h-12 items-center justify-center gap-1.5 rounded-xl bg-accent text-sm font-semibold text-background transition-all duration-200 hover:bg-accent-hover hover:shadow-glow active:scale-[0.98]"
+                data-track="nav_click"
+                data-track-target="contact"
+                data-track-location="mobile_menu_cta"
+              >
+                Let&apos;s talk
+                <LuArrowUpRight className="size-4" aria-hidden="true" />
+              </Link>
+            </nav>
+          </motion.div>
         )}
       </AnimatePresence>
     </header>

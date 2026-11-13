@@ -61,7 +61,7 @@ export function Hero() {
             <StaggerItem>
               <div className="mt-6 sm:mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <Button
-                  href="/#projects"
+                  href="#projects"
                   size="lg"
                   className="w-full sm:w-auto cursor-pointer justify-center"
                   data-track="hero_cta_click"

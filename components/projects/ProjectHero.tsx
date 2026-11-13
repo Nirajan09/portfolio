@@ -58,7 +58,7 @@ export function ProjectHero({ project }: ProjectHeroProps) {
         <Reveal>
           <div className="mb-6 flex items-center justify-between">
             <Link
-              href="/#projects"
+              href="/?section=projects"
               className="group inline-flex items-center gap-2 rounded-full border border-border/80 bg-surface/70 px-4 py-1.5 text-xs font-medium text-secondary backdrop-blur-xs transition-all duration-200 hover:border-accent/40 hover:bg-surface hover:text-primary hover:scale-[1.02] active:scale-[0.98]"
             >
               <LuArrowLeft
