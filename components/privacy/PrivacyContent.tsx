@@ -22,7 +22,6 @@ import {
   LuSearch,
   LuServer,
   LuShieldCheck,
-  LuTrash2,
   LuUserCheck,
   LuX,
 } from "react-icons/lu";

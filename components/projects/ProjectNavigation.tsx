@@ -13,7 +13,6 @@ type ProjectNavigationProps = {
 };
 
 export function ProjectNavigation({
-  currentProject,
   prevProject,
   nextProject,
   relatedProjects,

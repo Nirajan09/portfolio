@@ -218,7 +218,8 @@ export const getAllPostsMeta = cache((): readonly BlogPostMeta[] => {
 
     if (isProd && parsed.draft) continue;
 
-    const { content: _content, ...meta } = parsed;
+    const { content, ...meta } = parsed;
+    void content;
     posts.push(meta);
   }
 

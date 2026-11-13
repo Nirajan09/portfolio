@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { LuExternalLink, LuX } from "react-icons/lu";
+import { useIsMounted } from "@/hooks/useIsMounted";
 
 type CertificatePreviewProps = {
   isOpen: boolean;
@@ -27,19 +28,9 @@ export function CertificatePreview({
   date,
   credentialUrl,
 }: CertificatePreviewProps) {
-  const [mounted, setMounted] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Reset loaded state when closed or src changes
-  useEffect(() => {
-    if (!isOpen) {
-      setIsLoaded(false);
-    }
-  }, [isOpen, src]);
+  const mounted = useIsMounted();
+  const [loadedSrc, setLoadedSrc] = useState<string | null>(null);
+  const isLoaded = loadedSrc === src;
 
   // Handle ESC key press and scroll locking when open
   useEffect(() => {
@@ -120,7 +111,7 @@ export function CertificatePreview({
             width={1600}
             height={1200}
             sizes="(min-width: 1024px) 896px, 100vw"
-            onLoad={() => setIsLoaded(true)}
+            onLoad={() => setLoadedSrc(src)}
             className="relative z-10 h-auto max-h-[58vh] sm:max-h-[62vh] w-auto max-w-full rounded-xl border border-border/80 object-contain shadow-lg"
           />
         </div>

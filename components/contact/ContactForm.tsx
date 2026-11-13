@@ -237,7 +237,7 @@ export const ContactForm = memo(function ContactForm({
 }) {
   const [values, setValues] = useState<ContactInput>(emptyValues);
   const [errors, setErrors] = useState<ContactErrors>({});
-  const [touched, setTouched] = useState<
+  const [, setTouched] = useState<
     Partial<Record<ContactField, boolean>>
   >({});
   const [status, setStatus] = useState<Status>("idle");

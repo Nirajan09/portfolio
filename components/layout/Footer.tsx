@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { memo, useCallback, useEffect, useState, type ReactNode } from "react";
+import { memo, useCallback, useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 import {
   LuArrowUp,
   LuBookOpen,
@@ -28,6 +28,29 @@ const kathmanduTimeFormatter = new Intl.DateTimeFormat("en-US", {
   hour12: true,
 });
 
+const emptySubscribe = () => () => {};
+
+function getUserOffsetMsg(): string {
+  try {
+    const visitorOffsetMinutes = -new Date().getTimezoneOffset();
+    const nepalOffsetMinutes = 345; // UTC+5:45
+    const diffMinutes = nepalOffsetMinutes - visitorOffsetMinutes;
+    if (diffMinutes === 0) {
+      return "Same timezone as you";
+    } else if (diffMinutes > 0) {
+      const hours = Math.floor(diffMinutes / 60);
+      const mins = diffMinutes % 60;
+      return `+${hours}h ${mins ? `${mins}m ` : ""}ahead of you`;
+    } else {
+      const hours = Math.floor(Math.abs(diffMinutes) / 60);
+      const mins = Math.abs(diffMinutes) % 60;
+      return `-${hours}h ${mins ? `${mins}m ` : ""}behind you`;
+    }
+  } catch {
+    return "Nepal Standard Time (UTC+5:45)";
+  }
+}
+
 function ColumnHeading({ children }: { children: ReactNode }) {
   return (
     <h2 className="font-mono text-xs font-bold uppercase tracking-wider text-muted">
@@ -40,7 +63,7 @@ export const Footer = memo(function Footer() {
   const [copied, setCopied] = useState(false);
   const [timeString, setTimeString] = useState<string>("");
   const [showTimeDetails, setShowTimeDetails] = useState(false);
-  const [userOffsetMsg, setUserOffsetMsg] = useState<string>("");
+  const userOffsetMsg = useSyncExternalStore(emptySubscribe, getUserOffsetMsg, () => "");
 
   const { github, linkedin } = personal.socials;
 
@@ -51,26 +74,6 @@ export const Footer = memo(function Footer() {
 
     updateTime();
     const interval = setInterval(updateTime, 1000);
-
-    // Calculate relative timezone difference compared to visitor's device
-    try {
-      const visitorOffsetMinutes = -new Date().getTimezoneOffset();
-      const nepalOffsetMinutes = 345; // UTC+5:45
-      const diffMinutes = nepalOffsetMinutes - visitorOffsetMinutes;
-      if (diffMinutes === 0) {
-        setUserOffsetMsg("Same timezone as you");
-      } else if (diffMinutes > 0) {
-        const hours = Math.floor(diffMinutes / 60);
-        const mins = diffMinutes % 60;
-        setUserOffsetMsg(`+${hours}h ${mins ? `${mins}m ` : ""}ahead of you`);
-      } else {
-        const hours = Math.floor(Math.abs(diffMinutes) / 60);
-        const mins = Math.abs(diffMinutes) % 60;
-        setUserOffsetMsg(`-${hours}h ${mins ? `${mins}m ` : ""}behind you`);
-      }
-    } catch {
-      setUserOffsetMsg("Nepal Standard Time (UTC+5:45)");
-    }
 
     return () => clearInterval(interval);
   }, []);

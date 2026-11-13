@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { LuCircleAlert, LuCircleCheck, LuRotateCcw, LuX } from "react-icons/lu";
 
 import { Button } from "@/components/ui/Button";
+import { useIsMounted } from "@/hooks/useIsMounted";
 
 type ModalShellProps = {
   children: ReactNode;
@@ -21,12 +22,8 @@ function ModalShell({
   descriptionId,
   tone,
 }: ModalShellProps) {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsMounted();
   const dialogRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   useEffect(() => {
     if (!mounted) return;

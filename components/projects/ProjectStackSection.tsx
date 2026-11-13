@@ -1,4 +1,4 @@
-import { LuCpu, LuLayers } from "react-icons/lu";
+import { LuLayers } from "react-icons/lu";
 import { Reveal } from "@/components/animation/Reveal";
 import { TechChip } from "@/components/ui/TechChip";
 import type { Project } from "@/types";

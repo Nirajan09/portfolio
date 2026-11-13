@@ -15,14 +15,14 @@ import {
 import { cn } from "@/lib/utils";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { personal } from "@/data/personal";
+import { useIsMounted } from "@/hooks/useIsMounted";
 
 export function NotFoundContent() {
   const pathname = usePathname();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useIsMounted();
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     // Lock viewport to 100vh/100dvh with zero scrollbar
     document.body.classList.add("not-found-active");
 

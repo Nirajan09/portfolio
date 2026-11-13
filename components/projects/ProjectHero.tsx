@@ -19,17 +19,12 @@ type ProjectHeroProps = {
 
 export function ProjectHero({ project }: ProjectHeroProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [isLightboxLoaded, setIsLightboxLoaded] = useState(false);
+  const [loadedLightboxSrc, setLoadedLightboxSrc] = useState<string | null>(null);
+  const isLightboxLoaded = Boolean(project.cover?.src && loadedLightboxSrc === project.cover.src);
   const { links } = project;
   const readTime = formatReadTime(getReadTimeMinutes(project));
   const heroStack = project.stack.slice(0, 6);
   const heroHidden = project.stack.length - heroStack.length;
-
-  useEffect(() => {
-    if (!lightboxOpen) {
-      setIsLightboxLoaded(false);
-    }
-  }, [lightboxOpen]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -291,7 +286,9 @@ export function ProjectHero({ project }: ProjectHeroProps) {
                   src={project.cover.src}
                   alt={project.cover.alt}
                   fill
-                  onLoad={() => setIsLightboxLoaded(true)}
+                  onLoad={() => {
+                    if (project.cover) setLoadedLightboxSrc(project.cover.src);
+                  }}
                   className="relative z-10 object-contain"
                   sizes="100vw"
                 />

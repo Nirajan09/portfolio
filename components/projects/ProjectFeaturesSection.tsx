@@ -1,4 +1,4 @@
-import { LuCheck, LuSparkles, LuTag } from "react-icons/lu";
+import { LuCheck, LuTag } from "react-icons/lu";
 import { Reveal } from "@/components/animation/Reveal";
 import type { Project } from "@/types";
 

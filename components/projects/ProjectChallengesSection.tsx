@@ -1,4 +1,4 @@
-import { LuCircleCheck, LuLightbulb, LuShieldCheck, LuTriangleAlert } from "react-icons/lu";
+import { LuCircleCheck, LuLightbulb, LuTriangleAlert } from "react-icons/lu";
 import { Reveal } from "@/components/animation/Reveal";
 import type { Project } from "@/types";
 

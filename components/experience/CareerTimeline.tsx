@@ -12,7 +12,6 @@ import {
 import type { IconType } from "react-icons";
 import {
   LuBriefcase,
-  LuBuilding2,
   LuCalendar,
   LuGraduationCap,
   LuLaptop,

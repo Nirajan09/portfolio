@@ -1,4 +1,4 @@
-import { LuArrowDown, LuCpu, LuGitCommitHorizontal, LuLayers, LuNetwork } from "react-icons/lu";
+import { LuGitCommitHorizontal, LuLayers, LuNetwork } from "react-icons/lu";
 import { Reveal } from "@/components/animation/Reveal";
 import { TechChip } from "@/components/ui/TechChip";
 import type { Project } from "@/types";
