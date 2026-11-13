@@ -30,7 +30,7 @@ export function BlogCard({ post, location = "blog_index" }: BlogCardProps) {
     <Card
       interactive
       padding="none"
-      className="group relative flex h-full flex-col overflow-hidden"
+      className="group relative flex h-full flex-col overflow-hidden cursor-pointer"
     >
       {/* Top gradient hairline accent */}
       <span
@@ -39,13 +39,7 @@ export function BlogCard({ post, location = "blog_index" }: BlogCardProps) {
       />
 
       {post.cover && (
-        <Link
-          href={href}
-          data-track="blog_click"
-          data-track-post={post.slug}
-          data-track-location={location}
-          className="relative block aspect-16/9 w-full overflow-hidden border-b border-border/70 bg-background-secondary"
-        >
+        <div className="relative block aspect-16/9 w-full overflow-hidden border-b border-border/70 bg-background-secondary">
           <Image
             src={post.cover.src}
             alt={post.cover.alt}
@@ -53,7 +47,7 @@ export function BlogCard({ post, location = "blog_index" }: BlogCardProps) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover transition-transform duration-500 ease-standard group-hover:scale-105"
           />
-        </Link>
+        </div>
       )}
 
       <div className="flex flex-1 flex-col p-6">
@@ -87,7 +81,7 @@ export function BlogCard({ post, location = "blog_index" }: BlogCardProps) {
             data-track="blog_click"
             data-track-post={post.slug}
             data-track-location={location}
-            className="focus-visible:outline-hidden focus-visible:underline"
+            className="focus-visible:outline-hidden focus-visible:underline after:absolute after:inset-0 after:z-10"
           >
             {post.title}
           </Link>
@@ -107,21 +101,18 @@ export function BlogCard({ post, location = "blog_index" }: BlogCardProps) {
           </ul>
         )}
 
-        {/* Footer Read Link */}
+        {/* Footer Read Indicator */}
         <div className="mt-6 border-t border-border/60 pt-4">
-          <Link
-            href={href}
-            data-track="blog_click"
-            data-track-post={post.slug}
-            data-track-location={location}
-            className="inline-flex items-center gap-2 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
+          <div
+            aria-hidden="true"
+            className="inline-flex items-center gap-2 text-sm font-medium text-accent transition-colors group-hover:text-accent-hover"
           >
             <span>Read article</span>
             <LuArrowRight
               className="size-4 transition-transform duration-200 group-hover:translate-x-1"
               aria-hidden="true"
             />
-          </Link>
+          </div>
         </div>
       </div>
     </Card>
