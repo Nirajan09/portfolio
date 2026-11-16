@@ -5,7 +5,6 @@ export const projects: readonly Project[] = [
     slug: "book-recommendation-system",
     title: "Book Recommendation System",
     category: "E-Commerce & Machine Learning",
-    role: "Full-Stack Developer",
     status: "Live Production",
     summary:
       "Full-stack bookstore with personalized recommendations, multi-gateway checkout (Stripe, eSewa, COD), and inventory controls.",
@@ -286,7 +285,6 @@ export const projects: readonly Project[] = [
     slug: "job-portal",
     title: "JobVista",
     category: "Job Portal & Recruitment",
-    role: "Full-Stack Developer",
     status: "Live Production",
     summary:
       "Recruitment platform built with Next.js Server Actions, Clerk authentication, Supabase resume storage, and Stripe tiers.",
@@ -546,7 +544,6 @@ export const projects: readonly Project[] = [
     slug: "image-sharing-platform",
     title: "Pixify",
     category: "Media Sharing & Cloud Storage",
-    role: "Full-Stack Developer",
     status: "Live Production",
     summary:
       "Media management platform featuring in-memory Cloudinary streaming uploads, JWT authentication, and owner-based controls.",

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LuArrowLeft, LuClock, LuExpand, LuExternalLink, LuLayers, LuSparkles, LuX } from "react-icons/lu";
+import { LuArrowLeft, LuClock, LuExpand, LuExternalLink, LuLayers, LuX } from "react-icons/lu";
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/animation/Reveal";
@@ -92,21 +92,15 @@ export function ProjectHero({ project }: ProjectHeroProps) {
           {/* Left: Metadata, Title, Summary, Actions */}
           <div className="flex flex-col min-w-0">
             <Reveal delay={0.05}>
-              {/* Category and Role pills */}
-              <div className="flex flex-wrap items-center gap-2 text-xs">
-                {project.category && (
+              {/* Category pill */}
+              {project.category && (
+                <div className="flex flex-wrap items-center gap-2 text-xs">
                   <span className="inline-flex items-center gap-1.5 rounded-md border border-accent/30 bg-accent/10 px-3 py-1 font-medium text-accent">
                     <LuLayers className="size-3" aria-hidden="true" />
                     {project.category}
                   </span>
-                )}
-                {project.role && (
-                  <span className="inline-flex items-center gap-1.5 rounded-md border border-border/80 bg-surface/80 px-3 py-1 text-secondary">
-                    <LuSparkles className="size-3 text-muted" aria-hidden="true" />
-                    {project.role}
-                  </span>
-                )}
-              </div>
+                </div>
+              )}
 
               {/* Main Title */}
               <h1 className="mt-4 font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-primary break-words">
